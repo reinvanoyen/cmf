@@ -1,0 +1,27 @@
+@include block(pagination)
+{
+    display: flex;
+    width: 100%;
+
+    @include element(prev)
+    {
+        display: flex;
+        justify-content: flex-start;
+        width: 25%;
+    }
+
+    @include element(next)
+    {
+        display: flex;
+        justify-content: flex-end;
+        width: 25%;
+    }
+
+    @include element(status)
+    {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        width: 50%;
+    }
+}

@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Providers;
+
+use ReinVanOyen\Cmf\CmfApplicationServiceProvider;
+
+class CmfServiceProvider extends CmfApplicationServiceProvider
+{
+    public function modules(): array
+    {
+        return [];
+    }
+}

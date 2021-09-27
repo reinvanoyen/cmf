@@ -1,0 +1,21 @@
+@include block(link)
+{
+    cursor: pointer;
+    white-space: nowrap;
+    color: $color10;
+    border-bottom: $border-width-1 dotted $color10;
+
+    @include modifier(alt)
+    {
+        color: $color01;
+        border-color: $color01;
+    }
+
+    @include modifier(disabled)
+    {
+        color: $color02;
+        border-color: $color02;
+        opacity: .3;
+        cursor: default;
+    }
+}

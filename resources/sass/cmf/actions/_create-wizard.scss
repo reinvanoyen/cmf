@@ -1,0 +1,13 @@
+@include block(create-wizard)
+{
+    display: flex;
+    justify-content: center;
+    background-color: $color01;
+    border-radius: $border-radius-1;
+    padding: $rule / 2 $rule;
+
+    @include element(wizard)
+    {
+        width: 80%;
+    }
+}

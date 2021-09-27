@@ -1,0 +1,17 @@
+@include block(field)
+{
+    display: block;
+    width: 100%;
+
+    @include element(label)
+    {
+        display: block;
+        width: 100%;
+        margin-bottom: $rule / 4;
+    }
+
+    @include element(input)
+    {
+        // for ref
+    }
+}

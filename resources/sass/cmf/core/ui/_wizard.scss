@@ -1,0 +1,131 @@
+@include block(wizard)
+{
+    $disc-size: $rule * 1.5;
+
+    display: block;
+    width: 100%;
+    border-radius: $border-radius-2;
+    border: $border-width-1 solid $color06;
+
+    @include element(nav)
+    {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: $rule 0;
+        border-bottom: $border-width-1 solid $color06;
+    }
+
+    @include element(steps)
+    {
+        display: flex;
+    }
+
+    @include element(step)
+    {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 $rule * 2;
+        @include type-9;
+        color: $color03;
+
+        &:after
+        {
+            content: '';
+            display: block;
+            position: absolute;
+            top: $disc-size / 2;
+            left: 0;
+            right: 0;
+            height: $border-width-1;
+            background-color: $color03;
+        }
+
+        &:first-child:after
+        {
+            left: 50%;
+        }
+
+        &:last-child:after
+        {
+            right: 50%;
+        }
+
+        span
+        {
+            position: relative;
+            z-index: 1;
+            content: '';
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: $disc-size;
+            height: $disc-size;
+            background-color: $color03;
+            border-radius: 50%;
+            margin-bottom: $rule / 3;
+            @include type-3;
+            color: $color01;
+            border: $border-width-1 solid $color03;
+            transition: background-color .25s;
+        }
+
+        @include modifier(active)
+        {
+            color: $color10;
+
+            span
+            {
+                background-color: $color10;
+                border-color: $color10;
+            }
+
+            &:after
+            {
+                background-color: $color10;
+            }
+        }
+    }
+
+    @include element(content)
+    {
+        padding: $rule 20%;
+        padding-top: $rule * 2;
+    }
+
+    @include element(step-content)
+    {
+        //
+    }
+
+    @include element(component)
+    {
+        margin-bottom: $rule;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+
+    @include element(footer)
+    {
+        display: flex;
+        justify-content: flex-end;
+        padding: $rule;
+    }
+
+    @include element(footer-component)
+    {
+        display: flex;
+        align-items: center;
+        margin-left: $rule / 2;
+
+        &:first-child
+        {
+            margin-left: 0;
+        }
+    }
+}

@@ -1,0 +1,8 @@
+@include block(color-view)
+{
+    display: block;
+    width: $rule * 1.5;
+    height: $rule * 1.5;
+    border-radius: $border-radius-3;
+    background-color: $color06;
+}

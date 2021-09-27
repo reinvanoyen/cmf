@@ -1,0 +1,8 @@
+@include block(file-upload)
+{
+    display: block;
+    text-align: center;
+    border-radius: $border-radius-2;
+    background-color: $color05;
+    padding: $rule / 2 $rule;
+}

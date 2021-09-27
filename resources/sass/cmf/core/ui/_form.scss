@@ -1,0 +1,41 @@
+@include block(form)
+{
+    position: relative;
+
+    @include element(inputs)
+    {
+        // for ref
+    }
+
+    @include element(input)
+    {
+        margin-bottom: $rule;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+
+    @include element(footer)
+    {
+        margin-top: $rule;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    @include modifier(submitting)
+    {
+        &:after
+        {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: block;
+            background-color: rgba($color01, .5);
+        }
+    }
+}

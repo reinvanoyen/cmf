@@ -1,0 +1,20 @@
+@include block(notification)
+{
+    position: fixed;
+    bottom: $rule;
+    right: $rule;
+    display: block;
+    width: $rule * 10;
+    padding: $rule / 2 $rule;
+    border-radius: $border-radius-1;
+    background-color: $color12;
+    color: $color01;
+    transition: transform .25s, opacity .25s;
+    animation: slidein .25s;
+
+    @include modifier(hidden)
+    {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}

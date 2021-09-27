@@ -1,0 +1,18 @@
+@mixin global-modifier( $class_names... )
+{
+    @include parent-option( 'body', $class_names )
+    {
+        @content;
+    }
+}
+
+@mixin parent-option( $selector, $class_names )
+{
+    @for $i from 1 through length( $class_names )
+    {
+        #{$selector}.#{nth( $class_names, $i )} &
+        {
+            @content;
+        }
+    }
+}

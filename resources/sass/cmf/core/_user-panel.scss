@@ -1,0 +1,28 @@
+@include block(user-panel)
+{
+    display: flex;
+    align-items: center;
+
+    @include element(avatar)
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: $rule;
+        height: $rule;
+        margin-right: $rule / 2;
+        background-color: $color03;
+        border-radius: 50%;
+    }
+
+    @include element(name)
+    {
+        color: $color13;
+        margin-right: $rule / 2;
+    }
+
+    @include element(actions)
+    {
+        //
+    }
+}

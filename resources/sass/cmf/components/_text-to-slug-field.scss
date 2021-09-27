@@ -1,0 +1,29 @@
+@include block(text-to-slug-field)
+{
+    @include element(field)
+    {
+        //
+    }
+
+    @include element(slug)
+    {
+        margin-top: $rule / 3;
+    }
+
+    @include element(slug-prefix)
+    {
+        color: $color07;
+    }
+
+    @include element(slug-slug)
+    {
+        color: $color07;
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:hover
+        {
+            color: $color03;
+        }
+    }
+}

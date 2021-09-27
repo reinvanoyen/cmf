@@ -1,0 +1,72 @@
+@include block(section)
+{
+    border-radius: $border-radius-2;
+
+    @include element(content)
+    {
+        padding: $rule / 2;
+        border-top: 0;
+        border-bottom-left-radius: $border-radius-2;
+        border-bottom-right-radius: $border-radius-2;
+        background-color: $color04;
+
+        @include block-modifier(closed)
+        {
+            display: none;
+        }
+    }
+
+    @include element(component)
+    {
+        margin-bottom: $rule;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+
+    @include element(header)
+    {
+        display: flex;
+        justify-content: space-between;
+        padding: $rule / 2;
+        border-top-left-radius: $border-radius-2;
+        border-top-right-radius: $border-radius-2;
+        @include type-5;
+        background-color: $color04;
+
+        @include block-modifier(closed)
+        {
+            border-radius: $border-radius-2;
+            border-bottom: 0;
+        }
+    }
+
+    @include element(collapse-button)
+    {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:after
+        {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: $rule / 5 solid transparent;
+            border-right: $rule / 5 solid transparent;
+            border-top: $rule / 5 solid $color07;
+            transform: rotate(180deg);
+            opacity: .5;
+            transition: opacity .25s;
+
+            @include block-modifier(closed)
+            {
+                transform: initial;
+                opacity: 1;
+            }
+        }
+    }
+}

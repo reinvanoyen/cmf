@@ -1,0 +1,32 @@
+@include block(module)
+{
+    @include element(header)
+    {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $rule / 2;
+        padding: 0 $rule;
+    }
+
+    @include element(header-components)
+    {
+        display: flex;
+    }
+
+    @include element(header-component)
+    {
+        display: flex;
+        align-items: center;
+        margin-left: $rule / 3;
+
+        &:first-child
+        {
+            margin-left: 0;
+        }
+    }
+
+    @include element(main)
+    {
+        padding: 0 $rule;
+    }
+}

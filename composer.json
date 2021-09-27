@@ -1,0 +1,17 @@
+{
+    "name": "reinvanoyen/cmf",
+    "description": "CMF",
+    "authors": [
+        {
+            "name": "Rein Van Oyen",
+            "email": "reinvanoyen@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "ReinVanOyen\\Cmf\\": "src/"
+        }
+    }
+}

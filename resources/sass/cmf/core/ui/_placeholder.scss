@@ -1,0 +1,41 @@
+@include block(placeholder)
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px dashed $color06;
+    border-radius: $border-radius-2;
+    padding: $rule / 2 $rule / 4;
+    text-align: center;
+
+    &:hover
+    {
+        border-color: $color03;
+    }
+
+    @include element(icon)
+    {
+        display: block;
+        margin: auto;
+        width: $rule * 4;
+
+        svg
+        {
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            *
+            {
+                fill: $color05;
+            }
+        }
+    }
+
+    @include element(text)
+    {
+        margin-top: $rule / 2;
+        @include type-3;
+        color: $color07;
+    }
+}

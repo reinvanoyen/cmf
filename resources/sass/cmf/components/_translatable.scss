@@ -1,0 +1,63 @@
+@include block(translatable)
+{
+    display: block;
+    width: 100%;
+
+    @include element(tabs)
+    {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    @include element(components)
+    {
+        display: none;
+
+        @include modifier(active)
+        {
+            display: block;
+        }
+    }
+
+    @include element(component)
+    {
+        margin-bottom: $rule;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+
+    @include element(button)
+    {
+        position: relative;
+        padding: $rule / 6 0;
+        margin-right: $rule / 2;
+        @include type-3;
+        color: $color13;
+        cursor: pointer;
+
+        &:last-child
+        {
+            margin-right: 0;
+        }
+
+        @include modifier(active)
+        {
+            color: $color12;
+
+            &:after
+            {
+                content: '';
+                position: absolute;
+                bottom: -$border-width-2;
+                left: 0;
+                right: 0;
+                height: $border-width-2;
+                background-color: $color12;
+            }
+        }
+    }
+}
+

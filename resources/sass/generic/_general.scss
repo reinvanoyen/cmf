@@ -1,0 +1,31 @@
+html
+{
+    font-size: 85%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-y: scroll;
+}
+
+body
+{
+    color: $color02;
+    background-color: $color01;
+    @include default-font;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: $color12 !important;
+}
+
+*
+{
+    -webkit-tap-highlight-color: transparent;
+}

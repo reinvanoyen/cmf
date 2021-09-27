@@ -1,0 +1,40 @@
+@include block(search)
+{
+    position: relative;
+    display: block;
+
+    @include element(icon)
+    {
+        position: absolute;
+        z-index: 1;
+        left: $rule / 3;
+        top: 50%;
+        width: $rule;
+        height: $rule;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: -$rule / 2;
+        pointer-events: none;
+    }
+
+    @include element(input)
+    {
+        @include type-2;
+        line-height: initial;
+        position: relative;
+        padding: $rule / 4 $rule / 1.5;
+        padding-left: $rule * 1.5;
+        transition: background-color .25s;
+        border-radius: $border-radius-1;
+        color: $color02;
+        background-color: $color01;
+        -webkit-appearance: none;
+        border: $border-width-1 solid $color03;
+
+        &:focus
+        {
+            border-color: desaturate(darken($color03, 5%), 5%);
+        }
+    }
+}

@@ -1,0 +1,15 @@
+@include block(stack)
+{
+    display: grid;
+    grid-gap: $rule;
+
+    @include modifier(horizontal)
+    {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include modifier(gapless)
+    {
+        grid-gap: 0;
+    }
+}

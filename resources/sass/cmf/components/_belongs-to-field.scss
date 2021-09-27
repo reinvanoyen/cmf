@@ -1,0 +1,11 @@
+@include block(belongs-to-field)
+{
+    @include element(select)
+    {
+        display: block;
+        width: 100%;
+        border: 1px solid $color06;
+        border-radius: $border-radius-3;
+        padding: $rule / 4;
+    }
+}

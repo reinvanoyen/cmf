@@ -1,0 +1,125 @@
+@include block(index)
+{
+    border-radius: $border-radius-1;
+    border: $border-width-2 solid $color03;
+    background-color: $color01;
+
+    @include element(rows)
+    {
+        @include block-modifier(grid)
+        {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: $rule;
+            padding: 0 $rule;
+        }
+    }
+
+    @include element(row)
+    {
+        display: grid;
+        grid-gap: $rule / 2;
+        padding: $rule / 2 $rule;
+        border-bottom: $border-width-1 solid $color05;
+        transition: background-color .25s;
+
+        &:hover
+        {
+            background-color: $color08;
+        }
+
+        @include block-modifier(grid)
+        {
+            display: block;
+            padding: 0;
+            border: 0;
+            background-color: $color01;
+
+            &:hover
+            {
+                background-color: $color01;
+            }
+        }
+
+        @include modifier(clickable)
+        {
+            cursor: pointer;
+        }
+    }
+
+    @include element(component)
+    {
+        @include block-modifier(grid)
+        {
+            display: flex;
+            flex-grow: 1;
+        }
+    }
+
+    @include element(placeholder)
+    {
+        text-align: center;
+        border-radius: $border-radius-1;
+        background-color: $color04;
+        padding: $rule / 2 $rule;
+        margin: 0 $rule / 2;
+        margin-bottom: $rule / 2;
+    }
+
+    @include element(header)
+    {
+        display: flex;
+        align-items: center;
+        padding: $rule / 2 $rule;
+    }
+
+    @include element(header-title)
+    {
+        @include type-9;
+    }
+
+    @include element(header-options)
+    {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-grow: 1;
+    }
+
+    @include element(header-search)
+    {
+        margin-right: $rule / 2;
+
+        &:last-child
+        {
+            margin-right: 0;
+        }
+    }
+
+    @include element(header-filter)
+    {
+        margin-left: $rule / 2;
+
+        &:first-child
+        {
+            margin-left: 0;
+        }
+    }
+
+    @include element(header-filters-tool)
+    {
+        display: flex;
+        align-items: center;
+    }
+
+    @include element(header-clear-filters)
+    {
+        margin-left: $rule / 2;
+    }
+
+    @include element(footer)
+    {
+        width: 100%;
+        padding: $rule / 2 $rule;
+    }
+}

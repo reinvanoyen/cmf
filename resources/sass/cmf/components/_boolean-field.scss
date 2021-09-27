@@ -1,0 +1,17 @@
+@include block(boolean-field)
+{
+    cursor: pointer;
+    display: inline-block;
+    color: $color03;
+    border: 1px solid $color03;
+    padding: $rule / 6 $rule / 6;
+    border-radius: $border-radius-3;
+    transition: background-color .25s;
+    @include type-2;
+
+    @include modifier(checked)
+    {
+        color: $color01;
+        background-color: $color03;
+    }
+}

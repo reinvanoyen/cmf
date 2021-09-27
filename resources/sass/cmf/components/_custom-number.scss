@@ -1,0 +1,8 @@
+@include block(custom-number)
+{
+    @include modifier(large)
+    {
+        @include type-4;
+        color: $color13;
+    }
+}

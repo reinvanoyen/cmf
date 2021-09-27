@@ -1,0 +1,10 @@
+@include block(label)
+{
+    @include type-6;
+
+    @include modifier(primary)
+    {
+        @include type-6;
+        text-transform: uppercase;
+    }
+}

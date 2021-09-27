@@ -1,0 +1,56 @@
+@include block(button)
+{
+    color: $color01;
+    border-radius: $border-radius-1;
+    background-color: $color12;
+    padding: $rule / 2 $rule;
+    cursor: pointer;
+    transition: background-color .25s;
+    @include type-2;
+
+    &:hover
+    {
+        background-color: lighten($color12, 5%);
+    }
+
+    @include modifier(secondary)
+    {
+        color: $color02;
+        background-color: $color03;
+
+        &:hover
+        {
+            background-color: desaturate(darken($color03, 5%), 5%);
+        }
+    }
+
+    @include modifier(outline)
+    {
+        background-color: $color01;
+        border: $border-width-2 solid $color03;
+        color: $color12;
+
+        &:hover
+        {
+            background-color: $color01;
+        }
+    }
+
+    @include modifier(full)
+    {
+        text-align: center;
+        width: 100%;
+    }
+
+    @include modifier(small)
+    {
+        padding: $rule / 3 $rule / 1.5;
+    }
+
+    @include modifier(large)
+    {
+        @include type-3;
+        padding: $rule / 2 $rule;
+        border-radius: $border-radius-1;
+    }
+}

@@ -1,0 +1,35 @@
+@include block(text-view)
+{
+    display: flex;
+    align-items: center;
+
+    @include element(label)
+    {
+        margin-right: $rule;
+        opacity: .75;
+        width: 25%;
+    }
+
+    @include element(value)
+    {
+        display: inline-flex;
+        align-items: center;
+        width: 75%;
+    }
+
+    @include element(url)
+    {
+        text-decoration: underline;
+    }
+
+    @include element(copy)
+    {
+        margin-left: $rule / 5;
+    }
+
+    @include modifier(primary)
+    {
+        @include type-3;
+        color: $color13;
+    }
+}

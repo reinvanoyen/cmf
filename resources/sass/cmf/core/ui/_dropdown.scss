@@ -1,0 +1,70 @@
+@include block(dropdown)
+{
+    position: relative;
+
+    @include element(trigger)
+    {
+        //
+    }
+
+    @include element(button)
+    {
+        @include type-2;
+        line-height: initial;
+        position: relative;
+        padding: $rule / 4 $rule / 1.5;
+        padding-right: $rule * 1.25;
+        transition: background-color .25s;
+        cursor: pointer;
+        border-radius: $border-radius-1;
+        color: $color02;
+        background-color: $color03;
+        -webkit-appearance: none;
+
+        &:hover
+        {
+            background-color: desaturate(darken($color03, 5%), 5%);
+        }
+    }
+
+    @include element(label)
+    {
+        color: $color02;
+        opacity: .65;
+        margin-right: $rule / 3;
+    }
+
+    @include element(icon)
+    {
+        pointer-events: none;
+        opacity: .65;
+        position: absolute;
+        top: 50%;
+        right: $rule / 4;
+        margin-top: -$rule / 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: $rule;
+        height: $rule;
+    }
+
+    @include element(content)
+    {
+        position: absolute;
+        right: 0;
+        margin-top: $rule / 3;
+        padding: $rule / 3;
+        border: $border-width-2 solid $color03;
+        background-color: $color01;
+        border-radius: $border-radius-1;
+        width: $rule * 10;
+        box-shadow: $box-shadow-1;
+        display: none;
+
+        @include block-modifier(open)
+        {
+            display: block;
+        }
+    }
+}

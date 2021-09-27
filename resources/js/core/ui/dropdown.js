@@ -1,0 +1,85 @@
+import React from 'react';
+import Icon from "./icon";
+
+class Dropdown extends React.Component {
+
+    static defaultProps = {
+        label: '',
+        text: ''
+    };
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isOpen: false
+        };
+
+        this.dropdownRef = React.createRef();
+        this.handleDocumentClick = this.onDocumentClick.bind(this);
+    }
+
+    componentWillUnmount() {
+        this.unbindDocumentClick();
+    }
+
+    bindDocumentClick() {
+        document.addEventListener('click', this.handleDocumentClick);
+    }
+
+    unbindDocumentClick() {
+        document.removeEventListener('click', this.handleDocumentClick);
+    }
+
+    onDocumentClick(e) {
+        if (! this.dropdownRef.current.contains(e.target)) {
+            this.close();
+        }
+    }
+
+    toggle() {
+        if (this.state.isOpen) {
+            this.close();
+        } else {
+            this.open();
+        }
+    }
+
+    open() {
+        this.setState({
+            isOpen: true
+        });
+        this.bindDocumentClick();
+    }
+
+    close() {
+        this.setState({
+            isOpen: false
+        });
+        this.unbindDocumentClick();
+    }
+
+    render() {
+
+        let label = (this.props.label ? <span className={'dropdown__label'}>{this.props.label}</span> : null);
+
+        return (
+            <div className={'dropdown'+(this.state.isOpen ? ' dropdown--open' : '')} ref={this.dropdownRef}>
+                <div className="dropdown__trigger">
+                    <button className={'dropdown__button'} onClick={this.toggle.bind(this)}>
+                        {label}
+                        {this.props.text}
+                        <span className={'dropdown__icon'}>
+                            <Icon name={(this.state.isOpen ? 'expand_less' : 'expand_more')} />
+                        </span>
+                    </button>
+                </div>
+                <div className="dropdown__content">
+                    {this.props.children}
+                </div>
+            </div>
+        );
+    }
+}
+
+export default Dropdown;

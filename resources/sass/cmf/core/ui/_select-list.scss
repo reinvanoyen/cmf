@@ -1,0 +1,48 @@
+@include block(select-list)
+{
+    @include element(options)
+    {
+        //
+    }
+
+    @include element(option)
+    {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: $rule / 3;
+        border-radius: $border-radius-1;
+        margin-bottom: $border-width-1;
+        transition: background-color .25s;
+        user-select: none;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+
+        &:hover
+        {
+            background-color: $color04;
+        }
+
+        @include modifier(selected)
+        {
+            background-color: $color04;
+        }
+    }
+
+    @include element(option-icon)
+    {
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: $rule / 3;
+    }
+
+    @include element(option-value)
+    {
+        //
+    }
+}

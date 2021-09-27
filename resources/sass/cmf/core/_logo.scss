@@ -1,0 +1,31 @@
+@include block(logo)
+{
+    display: flex;
+    align-items: center;
+    color: $color07;
+
+    @include element(emblem)
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: $logo-emblem-block;
+        width: $logo-emblem-block;
+        background-color: $color10;
+        color: lighten($color12, 15%);
+        border-radius: $border-radius-1;
+        @include type-4;
+    }
+
+    @include element(name)
+    {
+        @include type-5;
+        margin-left: $rule / 2;
+        color: $color10;
+
+        span
+        {
+            color: $color13;
+        }
+    }
+}

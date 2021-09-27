@@ -1,0 +1,10 @@
+@include block(title)
+{
+    @include type-4;
+    color: $color13;
+
+    @include modifier(small)
+    {
+        @include type-3;
+    }
+}

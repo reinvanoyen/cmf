@@ -1,0 +1,77 @@
+@mixin block($name)
+{
+    $_current-block-scope-name: $name !global;
+    $_in-element: false !global;
+
+    .#{$name}
+    {
+        @content;
+    }
+}
+
+@mixin element($name)
+{
+    $_in-element: true !global;
+
+    $selector: #{&};
+    $block_selector: #{'.'+$_current-block-scope-name};
+
+    @if $selector == $block_selector
+    {
+        &__#{$name}
+        {
+            @content;
+        }
+    }
+    @else
+    {
+        & #{'.'+$_current-block-scope-name}__#{$name}
+        {
+            @content;
+        }
+    }
+
+    $_in-element: false !global;
+}
+
+@mixin modifier($name)
+{
+    $_current-modifier-name: $name !global;
+
+    @if $_in-element
+    {
+        &--#{$name}
+        {
+            @content;
+        }
+    }
+    @else
+    {
+        @at-root
+        {
+            .#{$_current-block-scope-name}--#{$name}
+            {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin combine-modifier($name)
+{
+    @at-root
+    {
+        .#{$_current-block-scope-name}--#{$_current-modifier-name}.#{$_current-block-scope-name}--#{$name}
+        {
+            @content;
+        }
+    }
+}
+
+@mixin block-modifier($name)
+{
+    .#{$_current-block-scope-name}--#{$name} &
+    {
+        @content;
+    }
+}

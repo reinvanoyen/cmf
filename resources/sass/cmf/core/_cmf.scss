@@ -1,0 +1,95 @@
+@include block(cmf)
+{
+    @include element(header)
+    {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        background-color: $color04;
+    }
+
+    @include element(logo)
+    {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: $nav-width;
+        padding: $rule / 2;
+        cursor: pointer;
+        background-color: $color03;
+    }
+
+    @include element(user)
+    {
+        padding-right: $rule;
+    }
+
+    @include element(main)
+    {
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 100vh;
+    }
+
+    @include element(nav)
+    {
+        display: flex;
+        flex-direction: column;
+        width: $nav-width;
+        background-color: $color04;
+        padding: $rule $rule / 2;
+    }
+
+    @include element(content)
+    {
+        width: 100% - $nav-width;
+    }
+
+    @include element(module)
+    {
+        padding: $rule 0;
+    }
+
+    @include global-modifier(api-loading)
+    {
+        &:before
+        {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            width: $rule * 3;
+            height: $rule * 3;
+            margin-top: -$rule * 1.5;
+            margin-left: -$rule * 1.5;
+            background-color: $color01;
+            border-radius: 50%;
+            border: $border-width-1 solid $color05;
+            box-shadow: $box-shadow-1;
+        }
+
+        &:after
+        {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 9999;
+            box-sizing: border-box;
+            top: 50%;
+            left: 50%;
+            width: $rule;
+            height: $rule;
+            margin-top: -$rule / 2;
+            margin-left: -$rule / 2;
+            border-radius: 50%;
+            border-top: 3px solid $color12;
+            border-right: 3px solid transparent;
+            border-bottom: 3px solid $color12;
+            border-left: 3px solid $color12;
+            animation: spin .5s linear;
+        }
+    }
+}

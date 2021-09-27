@@ -1,0 +1,70 @@
+@include block(richtext-field)
+{
+    trix-editor
+    {
+        strong
+        {
+            font-weight: bold;
+        }
+
+        em
+        {
+            font-style: italic;
+        }
+
+        ol,
+        ul,
+        div,
+        pre,
+        blockquote
+        {
+            padding: $rule / 4;
+            border: 1px dashed $color06;
+            margin-bottom: $rule / 4;
+
+            &:last-child
+            {
+                margin-bottom: 0;
+            }
+        }
+
+        blockquote
+        {
+            text-align: center;
+        }
+
+        ul, ol
+        {
+            li
+            {
+                list-style: square;
+                padding-left: $rule / 2;
+                margin-left: $rule / 2;
+            }
+        }
+
+        ol li
+        {
+            list-style-type: decimal;
+        }
+
+        h1
+        {
+            padding: $rule / 4;
+            border: 1px dashed $color06;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: $rule / 4;
+
+            &:last-child
+            {
+                margin-bottom: 0;
+            }
+        }
+
+        a
+        {
+            text-decoration: underline;
+        }
+    }
+}
