@@ -26,7 +26,7 @@ class FrontController extends Controller
     }
 
     /**
-     * @return array
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {

@@ -135,7 +135,11 @@ trait BuildsQuery
         /*
          * Build a base query
          * */
-        $query = ($this->restrictByFk ? $this->model::where($this->restrictByFk, $request->input('fk')) : $this->model::query());
+        if ($this->restrictByFk) {
+            $query = $this->model::where($this->restrictByFk, $request->input('fk'));
+        } else {
+            $query = $this->model::query();
+        }
 
         /*
          * If a where clause is specified, use it on the query

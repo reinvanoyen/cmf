@@ -5,6 +5,7 @@ namespace ReinVanOyen\Cmf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use JsonSerializable;
+use phpDocumentor\Reflection\Types\Boolean;
 use ReinVanOyen\Cmf\Action\Action;
 
 abstract class Module implements JsonSerializable
@@ -22,6 +23,17 @@ abstract class Module implements JsonSerializable
         return Str::slug($this->title(), '-');
     }
 
+    /**
+     * @return bool
+     */
+    protected function inNavigation(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return string
+     */
     protected function icon()
     {
         return 'layers';
@@ -33,20 +45,6 @@ abstract class Module implements JsonSerializable
     abstract public function index(): Action;
 
     /**
-     * @param string $name
-     * @param Request $request
-     * @return mixed
-     */
-    final public function getAction(Request $request, string $name): ?Action
-    {
-        if ($action = $this->$name($request)) {
-            return $action;
-        }
-
-        return null;
-    }
-
-    /**
      *
      * @return mixed|void
      */
@@ -56,6 +54,7 @@ abstract class Module implements JsonSerializable
             'title' => $this->title(),
             'id' => $this->id(),
             'icon' => $this->icon(),
+            'inNavigation' => $this->inNavigation(),
             'path' => [
                 'module' => $this->id(),
             ],

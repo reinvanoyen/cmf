@@ -15,7 +15,12 @@ class CmfServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Cmf::class, Cmf::class);
+        $this->app->singleton(MakeableStorage::class, MakeableStorage::class);
         $this->app->bind(PathResolver::class, PathResolver::class);
+
+        $this->app->when(Cmf::class)
+            ->needs('$title')
+            ->giveConfig('cmf.title');
 
         $this->commands([
             UserCommand::class,

@@ -31,7 +31,7 @@ class ModelCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => ModelResource::collection($this->collection)
+            'data' => ModelResource::collection($this->collection),
         ];
     }
 }

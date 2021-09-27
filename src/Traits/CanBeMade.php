@@ -18,7 +18,7 @@ trait CanBeMade
     public static function make(...$arguments)
     {
         $component = new static(...$arguments);
-        MakeableStorage::store($component);
+        app(MakeableStorage::class)->store($component);
         return $component;
     }
 

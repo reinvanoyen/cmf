@@ -25,6 +25,8 @@ class PathResolver
     }
 
     /**
+     * Get a module from the CMF by module id
+     *
      * @param string $moduleId
      * @return Module|null
      */
@@ -34,6 +36,8 @@ class PathResolver
     }
 
     /**
+     * Get an action by module id and action id. Also pass the request.
+     *
      * @param string $moduleId
      * @param string $actionId
      * @return Action|null
@@ -42,28 +46,24 @@ class PathResolver
     {
         $module = $this->module($moduleId);
 
+        // No module found?
         if (! $module) {
             return null;
         }
 
-        $action = $module->getAction($request, $actionId);
+        $action = (method_exists($module, $actionId) ? $module->$actionId($request) : null);
 
+        // No action found?
         if (! $action) {
             return null;
         }
 
+        // Set the action id to the action
         $action->id($actionId);
+
+        // Give the action the module id
         $action->module($moduleId);
 
         return $action;
-    }
-
-    public function execute(Request $request, string $moduleId, string $actionId, string $executeId)
-    {
-        if ($action = $this->action($moduleId, $actionId)) {
-            return $action->$executeId($request);
-        }
-
-        return null;
     }
 }

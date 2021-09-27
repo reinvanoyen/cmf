@@ -2,8 +2,6 @@
 
 namespace ReinVanOyen\Cmf\Components;
 
-use ReinVanOyen\Cmf\Action\Index;
-
 class Stack extends Compound
 {
     /**

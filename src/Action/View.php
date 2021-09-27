@@ -15,7 +15,7 @@ class View extends Action
     /**
      * @var array $components
      */
-    private $components;
+    protected $components;
 
     /**
      * Edit constructor.
@@ -26,7 +26,7 @@ class View extends Action
     {
         $this->model = $model;
         $this->components = $components;
-        $this->export('components', $components);
+        $this->export('components', $this->components);
     }
 
     /**

@@ -15,7 +15,6 @@ Route::middleware([
     'web',
     Authenticate::class,
     DispatchServingCmfEvent::class,
-    //SetLocale::class,
 ])
     ->namespace('ReinVanOyen\Cmf\Http\Controllers')
     ->prefix('cmf/api')

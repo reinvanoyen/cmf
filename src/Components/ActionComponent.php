@@ -7,18 +7,18 @@ use ReinVanOyen\Cmf\Action\Action;
 class ActionComponent extends Component
 {
     /**
-     * @var Action $action
+     * @var Action $childAction
      */
-    private $action;
+    private $childAction;
 
     /**
      * ActionComponent constructor.
-     * @param Action $action
+     * @param Action $childAction
      */
-    public function __construct(Action $action)
+    public function __construct(Action $childAction)
     {
-        $this->action = $action;
-        $this->export('action', $this->action);
+        $this->childAction = $childAction;
+        $this->export('action', $this->childAction);
     }
 
     /**

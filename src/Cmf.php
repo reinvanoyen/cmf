@@ -12,21 +12,38 @@ use ReinVanOyen\Cmf\Events\ServingCmf;
 class Cmf
 {
     /**
+     * Title of the CMF application
+     *
      * @var string $title
      */
     private $title;
 
     /**
+     * The modules of the CMF application
+     *
      * @var array $modules
      */
     private $modules;
 
     /**
+     * An associative array holding the modules, for easier access
+     *
      * @var array $modulesMap
      */
     private $modulesMap = [];
 
     /**
+     * Cmf constructor.
+     * @param string $title
+     */
+    public function __construct(string $title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get the title of the CMF application
+     *
      * @return string
      */
     public function getTitle(): string
@@ -35,14 +52,8 @@ class Cmf
     }
 
     /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
-    {
-        $this->title = $title;
-    }
-
-    /**
+     * Register modules to the CMF
+     *
      * @param array $modules
      */
     public function registerModules(array $modules)
@@ -56,6 +67,8 @@ class Cmf
     }
 
     /**
+     * Get a module by id
+     *
      * @param string $id
      * @return Module
      */
@@ -65,6 +78,8 @@ class Cmf
     }
 
     /**
+     * Get all modules
+     *
      * @return array
      */
     public function getModules(): array
@@ -73,6 +88,8 @@ class Cmf
     }
 
     /**
+     * Call a callback function when the CMF is serving
+     *
      * @param $call
      */
     public function serving($call)

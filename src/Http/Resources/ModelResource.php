@@ -44,6 +44,7 @@ class ModelResource extends JsonResource
             'id' => $this->id,
         ];
 
+        // Provision the API with the needed data from the components
         foreach (self::$components as $component) {
             $component->provision($this, $attributes);
         }

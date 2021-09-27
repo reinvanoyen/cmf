@@ -11,40 +11,49 @@ use ReinVanOyen\Cmf\Contracts\Makeable;
 class MakeableStorage
 {
     /**
+     * The last created id
+     *
      * @var int $id
      */
-    private static $id;
+    private $id;
 
     /**
+     * An associative array holding all makeables, the key is the id, the value is the makeable
+     *
      * @var array $makeable
      */
-    private static $makeables = [];
+    private $makeables = [];
 
     /**
+     * Store the makeable in the storage
+     *
      * @param Makeable $makeable
      */
-    public static function store(Makeable $makeable)
+    public function store(Makeable $makeable)
     {
-        self::$id++;
-
-        $makeable->setId(self::getLastCreatedId());
-        self::$makeables[self::getLastCreatedId()] = $makeable;
+        $this->id++;
+        $makeable->setId($this->getLastCreatedId());
+        $this->makeables[$this->getLastCreatedId()] = $makeable;
     }
 
     /**
+     * Get the makeable from the storage by id
+     *
      * @param int $id
      * @return Makeable
      */
-    public static function get(int $id): Makeable
+    public function get(int $id): Makeable
     {
-        return self::$makeables[$id];
+        return $this->makeables[$id];
     }
 
     /**
+     * Get the last created id
+     *
      * @return mixed
      */
-    public static function getLastCreatedId()
+    public function getLastCreatedId()
     {
-        return self::$id;
+        return $this->id;
     }
 }

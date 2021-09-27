@@ -4,7 +4,6 @@ namespace ReinVanOyen\Cmf\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use ReinVanOyen\Cmf\Cmf;
 use ReinVanOyen\Cmf\MakeableStorage;
 use ReinVanOyen\Cmf\PathResolver;
 
@@ -15,6 +14,11 @@ use ReinVanOyen\Cmf\PathResolver;
 class ComponentsController extends Controller
 {
     /**
+     * @var MakeableStorage $makeableStorage
+     */
+    private $makeableStorage;
+
+    /**
      * @var PathResolver $pathResolver
      */
     private $pathResolver;
@@ -22,27 +26,31 @@ class ComponentsController extends Controller
     /**
      * ModulesController constructor.
      * @param PathResolver $pathResolver
-     * @param Cmf $cmf
      */
-    public function __construct(PathResolver $pathResolver)
+    public function __construct(MakeableStorage $makeableStorage, PathResolver $pathResolver)
     {
+        $this->makeableStorage = $makeableStorage;
         $this->pathResolver = $pathResolver;
     }
 
     /**
-     * @param string $slug
-     * @param string $action
-     * @return array
+     * @param Request $request
+     * @param string $moduleId
+     * @param string $actionId
+     * @param int $componentId
+     * @param string $executeId
+     * @return mixed
      */
     public function execute(Request $request, string $moduleId, string $actionId, int $componentId, string $executeId)
     {
         $action = $this->pathResolver->action($request, $moduleId, $actionId);
 
         if ($action) {
-            $makeable = MakeableStorage::get($componentId);
 
-            if ($makeable) {
-                return $makeable->$executeId($request);
+            $component = $this->makeableStorage->get($componentId);
+
+            if ($component && method_exists($component, $executeId)) {
+                return $component->$executeId($request);
             }
         }
 

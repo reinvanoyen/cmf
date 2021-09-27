@@ -59,7 +59,7 @@ class Index extends React.Component {
 
     load(params = {}) {
 
-        // Add FK to the params by default
+        // Add FK to the params
         if (this.props.restrictByFk) {
             params.fk = this.props.data.id;
         }

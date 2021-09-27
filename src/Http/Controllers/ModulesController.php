@@ -44,10 +44,12 @@ class ModulesController extends Controller
      */
     public function action(Request $request, string $moduleId, string $actionId)
     {
-        if ($action = $this->pathResolver->action($request, $moduleId, $actionId)) {
-            return $action;
+        $action = $this->pathResolver->action($request, $moduleId, $actionId);
+
+        if (! $action) {
+            abort(404);
         }
 
-        abort(404);
+        return $action;
     }
 }
