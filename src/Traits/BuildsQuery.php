@@ -8,12 +8,12 @@ use ReinVanOyen\Cmf\Filters\Filter;
 trait BuildsQuery
 {
     /**
-     * @var string $model
+     * @var string $relationship
      */
-    private $model;
+    private $relationship;
 
     /**
-     * @var $restrictByFk
+     * @var string $restrictByFk
      */
     private $restrictByFk;
 
@@ -51,15 +51,6 @@ trait BuildsQuery
      * @var array $filters
      */
     private $filters = [];
-
-    /**
-     * @param Filter $filter
-     */
-    public function filter(Filter $filter)
-    {
-        $this->filters[] = $filter;
-        $this->export('filters', $this->filters);
-    }
 
     /**
      * @param string $column
@@ -127,6 +118,17 @@ trait BuildsQuery
     }
 
     /**
+     * @param string $relationship
+     * @return $this
+     */
+    public function relationship(string $relationship)
+    {
+        $this->relationship = $relationship;
+        $this->export('relationship', true);
+        return $this;
+    }
+
+    /**
      * @param Request $request
      * @return mixed
      */
@@ -136,7 +138,14 @@ trait BuildsQuery
          * Build a base query
          * */
         if ($this->restrictByFk) {
-            $query = $this->model::where($this->restrictByFk, $request->input('fk'));
+
+            $query = $this->model::where($this->restrictByFk, $request->input('foreign'));
+
+        } else if ($this->relationship) {
+
+            $query = $this->model::find($request->input('relation'))
+                ->{$this->relationship}();
+
         } else {
             $query = $this->model::query();
         }

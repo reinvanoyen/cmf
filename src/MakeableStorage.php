@@ -31,8 +31,13 @@ class MakeableStorage
      */
     public function store(Makeable $makeable)
     {
+        // Increment id
         $this->id++;
+
+        // Assign the id to the makeable
         $makeable->setId($this->getLastCreatedId());
+
+        // Store it
         $this->makeables[$this->getLastCreatedId()] = $makeable;
     }
 

@@ -8,25 +8,14 @@ use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 class View extends Action
 {
     /**
-     * @var string $model
-     */
-    private $model;
-
-    /**
-     * @var array $components
-     */
-    protected $components;
-
-    /**
      * Edit constructor.
-     * @param string $model
+     * @param string $meta
      * @param array $components
      */
-    public function __construct(string $model, array $components)
+    public function __construct(string $meta, array $components)
     {
-        $this->model = $model;
-        $this->components = $components;
-        $this->export('components', $this->components);
+        $this->meta($meta);;
+        $this->components($components);
     }
 
     /**
@@ -40,10 +29,12 @@ class View extends Action
     /**
      * @return array|mixed
      */
-    public function load(Request $request)
+    public function apiLoad(Request $request)
     {
+        $modelClass = $this->getMeta()::getModel();
+
         ModelResource::provision($this->components);
 
-        return new ModelResource($this->model::findOrFail($request->get('id')));
+        return new ModelResource($modelClass::findOrFail($request->get('id')));
     }
 }

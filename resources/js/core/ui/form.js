@@ -4,6 +4,7 @@ import Button from "./button";
 export default class Form extends React.Component {
 
     static defaultProps = {
+        errors: {},
         submitButtonText: 'Submit',
         onSubmit: () => {}
     };
@@ -36,11 +37,9 @@ export default class Form extends React.Component {
         e.preventDefault();
 
         if (! this.state.isSubmitting) {
-
             this.setState({
                 isSubmitting: true
             });
-
             this.submit();
         }
     }
@@ -60,12 +59,10 @@ export default class Form extends React.Component {
             this.props.children.forEach((child, i) => {
                 this.childRefs[i].current.handleSubmit(data);
             });
-
             return data;
         }
 
         this.childRefs[0].current.handleSubmit(data);
-
         return data;
     }
 
@@ -80,7 +77,7 @@ export default class Form extends React.Component {
                 const TagName = child.type;
                 return (
                     <div key={i} className="form__input">
-                        <TagName ref={this.childRefs[i]} {...child.props} />
+                        <TagName ref={this.childRefs[i]} {...child.props} errors={this.props.errors} />
                     </div>
                 );
             });

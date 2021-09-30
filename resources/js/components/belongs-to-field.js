@@ -8,8 +8,8 @@ class BelongsToField extends React.Component {
         data: {},
         label: '',
         name: '',
-        titleField: '',
-        allowNull: false
+        titleColumn: '',
+        nullable: false
     };
 
     constructor(props) {
@@ -50,7 +50,7 @@ class BelongsToField extends React.Component {
         api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
             // Set the data to the state
             this.setState({
-                value: (this.state.value ? this.state.value : (this.props.allowNull ? '' : response.data[0].id)),
+                value: (this.state.value ? this.state.value : (this.props.nullable ? '' : response.data[0].id)),
                 data: response.data
             });
         });
@@ -60,7 +60,7 @@ class BelongsToField extends React.Component {
 
         let options = [];
 
-        if (this.props.allowNull) {
+        if (this.props.nullable) {
             options.push(
                 <option value={''} key={'null'}>
                     -
@@ -71,7 +71,7 @@ class BelongsToField extends React.Component {
         this.state.data.forEach(row => {
             options.push(
                 <option value={row.id} key={row.id}>
-                    {row[this.props.titleField]}
+                    {row[this.props.titleColumn]}
                 </option>
             );
         });

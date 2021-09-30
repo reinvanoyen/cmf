@@ -59,7 +59,7 @@ class TextField extends Component
      */
     public function save(Model $model, $request)
     {
-        $model->{$this->getName()} = $request->input($this->name);
+        $model->{$this->getName()} = $request->input($this->getName());
     }
 
     /**

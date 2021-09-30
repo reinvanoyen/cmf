@@ -17,20 +17,26 @@ class Create extends React.Component {
         params: null,
         redirect: 'index',
         redirectBack: false,
-        restrictByFk: null
+        restrictByFk: null,
+        attachToRelation: null
     };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            data: {}
+            data: {},
+            formErrors: {}
         };
 
         this.formRef = React.createRef();
     }
 
     save(data) {
+
+        if (this.props.attachToRelation) {
+            data[this.props.attachToRelation] = this.props.path.params.id;
+        }
 
         if (this.props.restrictByFk) {
             data[this.props.restrictByFk] = this.props.path.params.id;
@@ -39,49 +45,39 @@ class Create extends React.Component {
         // Post the data to the backend
         api.execute.post(this.props.path, this.props.id, 'save', http.formData(data))
             .then(response => {
-
+                // Set the form to ready
                 this.formRef.current.ready();
-
+                // Redirect
                 this.redirect(response);
-
                 // Notify the user
-                ui.notify('Item was created');
+                ui.notify(`${this.props.singular} was created`);
 
-            }, error => {
-
+            }, response => {
+                // Set the form to ready
                 this.formRef.current.ready();
-
-                // @TODO standardize validation error handling
-                for (let k in error.body.errors) {
-                    ui.notify(error.body.errors[k]);
-                }
+                // Set the error messages
+                this.setState({
+                    formErrors: response.body.errors
+                });
+                // Notify the user
+                ui.notify('The form contains errors');
             });
     }
 
     redirect(response) {
-
-        if (this.props.redirectBack) {
-            path.goBack();
-        } else {
-            // Redirect
-            path.goTo(this.props.path.module, this.props.redirect, {
-                id: response.data.id
-            });
-        }
+        path.handleRedirect(this.props, {id: response.data.id});
     }
 
     render() {
-
-        let componentList = components.renderComponents(this.props.components, this.state.data, this.props.path);
-
         return (
             <div className="create">
                 <Form
                     ref={this.formRef}
+                    errors={this.state.formErrors}
                     onSubmit={this.save.bind(this)}
-                    submitButtonText={'Create'}
+                    submitButtonText={`Create ${this.props.singular}`}
                 >
-                    {componentList}
+                    {components.renderComponents(this.props.components, this.state.data, this.props.path)}
                 </Form>
             </div>
         );

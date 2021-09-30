@@ -7,6 +7,7 @@ import Loader from "../core/ui/loader";
 import Pagination from "../core/ui/pagination";
 import Search from "../core/ui/search";
 import Link from "../core/ui/link";
+import str from "../util/str";
 
 class Index extends React.Component {
 
@@ -17,8 +18,8 @@ class Index extends React.Component {
         id: 0,
         data: {},
         params: null,
-        redirect: '',
         search: false,
+        relationship: false,
         filters: [],
         restrictByFk: null,
         action: '',
@@ -44,7 +45,7 @@ class Index extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.restrictByFk) {
+        if (this.props.restrictByFk || this.props.relationship) {
             if (this.props.data.id !== prevProps.data.id) {
                 this.load();
             }
@@ -52,7 +53,7 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        if (! this.props.restrictByFk) {
+        if (! this.props.restrictByFk && ! this.props.relationship) {
             this.load();
         }
     }
@@ -61,7 +62,12 @@ class Index extends React.Component {
 
         // Add FK to the params
         if (this.props.restrictByFk) {
-            params.fk = this.props.data.id;
+            params.foreign = this.props.data.id;
+        }
+
+        // Add the current data id to the params because we need it to fetch the relationship
+        if (this.props.relationship) {
+            params.relation = this.props.data.id;
         }
 
         // Search for search keyword
@@ -144,7 +150,7 @@ class Index extends React.Component {
         return (
             <div className="index__header">
                 <div className="index__header-title">
-                    {this.props.plural} ({this.state.meta.total})
+                    {str.toUpperCaseFirst(this.props.plural)} ({this.state.meta.total})
                 </div>
                 <div className="index__header-options">
                     {indexSearch}
@@ -181,7 +187,7 @@ class Index extends React.Component {
 
             return (
                 <div className="index__placeholder">
-                    No {this.props.plural.toLowerCase()} found for your search "{this.state.searchKeyword}".
+                    No {this.props.plural} found for your search "{this.state.searchKeyword}".
                 </div>
             );
         }

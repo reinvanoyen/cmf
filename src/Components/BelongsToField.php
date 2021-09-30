@@ -5,6 +5,7 @@ namespace ReinVanOyen\Cmf\Components;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
+use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
 use ReinVanOyen\Cmf\Traits\BuildsQuery;
 use ReinVanOyen\Cmf\Traits\HasLabel;
@@ -17,22 +18,27 @@ class BelongsToField extends Component
     use BuildsQuery;
 
     /**
-     * @var string $titleField
+     * @var string $titleColumn
      */
-    private $titleField;
+    private $titleColumn;
+
+    /**
+     * @var bool $isNullable
+     */
+    private $isNullable;
 
     /**
      * BelongsToField constructor.
      * @param string $name
-     * @param string $model
      */
-    public function __construct(string $name, string $model)
+    public function __construct(string $name)
     {
         $this->name($name);
         $this->label(Str::labelify($name));
-        $this->titleField('title');
 
-        $this->model = $model;
+        $meta = RelationshipMetaGuesser::getMeta($this->getName());
+        $this->model = $meta::getModel();
+        $this->titleColumn($meta::getTitleColumn());
     }
 
     /**
@@ -46,20 +52,21 @@ class BelongsToField extends Component
     /**
      * @return $this
      */
-    public function allowNull()
+    public function nullable()
     {
-        $this->export('allowNull', true);
+        $this->isNullable = true;
+        $this->export('nullable', $this->isNullable);
         return $this;
     }
 
     /**
-     * @param string $field
+     * @param string $column
      * @return $this
      */
-    public function titleField(string $field)
+    public function titleColumn(string $column)
     {
-        $this->titleField = $field;
-        $this->export('titleField', $this->titleField);
+        $this->titleColumn = $column;
+        $this->export('titleColumn', $this->titleColumn);
         return $this;
     }
 
@@ -76,9 +83,9 @@ class BelongsToField extends Component
      * @param Request $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function load(Request $request)
+    public function apiLoad(Request $request)
     {
-        ModelResource::fields([$this->titleField,]);
+        ModelResource::fields([$this->titleColumn,]);
 
         return ModelResource::collection(
             $this->getResults($request)
@@ -101,6 +108,8 @@ class BelongsToField extends Component
             return;
         }
 
-        $relation->dissociate();
+        if ($this->isNullable) {
+            $relation->dissociate();
+        }
     }
 }

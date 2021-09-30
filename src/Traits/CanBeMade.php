@@ -12,14 +12,20 @@ trait CanBeMade
     private $id;
 
     /**
+     * @var bool $isResolved
+     */
+    private $isResolved = false;
+
+    /**
      * @param mixed ...$arguments
      * @return static
      */
     public static function make(...$arguments)
     {
-        $component = new static(...$arguments);
-        app(MakeableStorage::class)->store($component);
-        return $component;
+        $storage = app(MakeableStorage::class);
+        $makeable = new static(...$arguments);
+        $storage->store($makeable);
+        return $makeable;
     }
 
     /**

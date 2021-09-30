@@ -30,9 +30,9 @@ export default class ActionComponent extends React.Component {
         return null;
     }
 
-    render() {
-        return (
-            <div className="action-component">
+    renderHeader() {
+        if (this.props.title || this.props.action.title || this.props.action.header) {
+            return (
                 <div className="action-component__header">
                     <div className="action-component__title">
                         <Title style={'small'}>{this.props.title || this.props.action.title}</Title>
@@ -41,6 +41,16 @@ export default class ActionComponent extends React.Component {
                         {this.renderHeaderComponents()}
                     </div>
                 </div>
+            );
+        }
+
+        return null;
+    }
+
+    render() {
+        return (
+            <div className="action-component">
+                {this.renderHeader()}
                 <div className="action-component__content">
                     {actions.renderAction(this.props.action, this.props.data, this.props.path)}
                 </div>

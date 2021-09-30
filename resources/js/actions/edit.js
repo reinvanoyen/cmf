@@ -16,7 +16,9 @@ class Edit extends React.Component {
         data: {},
         params: null,
         redirect: 'index',
-        redirectBack: false
+        redirectBack: false,
+        singular: '',
+        plural: ''
     };
 
     constructor(props) {
@@ -27,7 +29,8 @@ class Edit extends React.Component {
         }
 
         this.state = {
-            data: {}
+            data: {},
+            formErrors: {}
         };
 
         this.formRef = React.createRef();
@@ -55,50 +58,37 @@ class Edit extends React.Component {
         // Post the data to the backend
         api.execute.post(this.props.path, this.props.id,'save', http.formData(data))
             .then(response => {
-
+                // Ready the form
                 this.formRef.current.ready();
-
+                // Redirect
                 this.redirect(response);
-
                 // Notify the user
-                ui.notify('Save was successful');
-            }, error => {
-
+                ui.notify(`${this.props.singular} was successfully updated`);
+            }, response => {
+                // Ready the form
                 this.formRef.current.ready();
-
-                // @TODO standardize validation error handling
-                for (let k in error.body.errors) {
-                    ui.notify(error.body.errors[k]);
-                }
+                // Set the error messages
+                this.setState({
+                    formErrors: response.body.errors
+                });
+                ui.notify('The form contains errors');
             });
     }
 
     redirect(response) {
-
-        if (this.props.redirectBack) {
-
-            path.goBack();
-
-        } else {
-            // Redirect
-            path.goTo(this.props.path.module, this.props.redirect, {
-                id: response.data.id
-            });
-        }
+        path.handleRedirect(this.props, {id: response.data.id});
     }
 
     render() {
-
-        let componentList = components.renderComponents(this.props.components, this.state.data, this.props.path);
-
         return (
             <div className="edit">
                 <Form
                     ref={this.formRef}
+                    errors={this.state.formErrors}
                     onSubmit={this.save.bind(this)}
-                    submitButtonText={'Save'}
+                    submitButtonText={`Save ${this.props.singular}`}
                 >
-                    {componentList}
+                    {components.renderComponents(this.props.components, this.state.data, this.props.path)}
                 </Form>
             </div>
         );

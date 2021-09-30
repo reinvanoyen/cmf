@@ -36,7 +36,7 @@ class CustomController extends Action
      * @param Request $request
      * @return mixed
      */
-    public function controller(Request $request)
+    public function apiController(Request $request)
     {
         $controller = $this->controller;
         return $controller($request);

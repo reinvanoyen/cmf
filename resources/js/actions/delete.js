@@ -14,7 +14,9 @@ class Delete extends React.Component {
         data: {},
         params: null,
         redirect: 'index',
-        redirectBack: false
+        redirectBack: false,
+        singular: '',
+        plural: ''
     };
 
     constructor(props) {
@@ -33,28 +35,27 @@ class Delete extends React.Component {
             this.redirect();
 
             // Notify the user
-            ui.notify('Item was deleted');
+            ui.notify(`${this.props.singular} was successfully deleted`);
         });
     }
 
     redirect() {
-        if (this.props.redirectBack) {
-            path.goBack();
-        } else {
-            // Redirect
-            path.goTo(this.props.path.module, this.props.redirect);
-        }
+        path.handleRedirect(this.props);
     }
 
     render() {
         return (
             <div className="delete">
                 <div className="delete__text">
-                    Are you sure you wish to delete this item?
+                    {`Are you sure you wish to delete this ${this.props.singular}?`}
                 </div>
                 <div className="delete__footer">
-                    <Button onClick={this.delete.bind(this)} text={'Yes, delete item'} />
-                    <Button onClick={this.redirect.bind(this)} text={'No'} style={'outline'} />
+                    <div className="delete__confirm">
+                        <Button onClick={this.delete.bind(this)} text={`Yes, delete ${this.props.singular}`} />
+                    </div>
+                    <div className="delete__cancel">
+                        <Button onClick={this.redirect.bind(this)} text={'No'} style={'secondary'} />
+                    </div>
                 </div>
             </div>
         );

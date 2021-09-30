@@ -4,8 +4,10 @@ namespace ReinVanOyen\Cmf\Action;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use ReinVanOyen\Cmf\Filters\Filter;
 use ReinVanOyen\Cmf\Http\Resources\ModelCollection;
 use ReinVanOyen\Cmf\Traits\BuildsQuery;
+use ReinVanOyen\Cmf\Traits\HasSingularPlural;
 
 /**
  * Class CollectionAction
@@ -14,6 +16,7 @@ use ReinVanOyen\Cmf\Traits\BuildsQuery;
 abstract class CollectionAction extends Action
 {
     use BuildsQuery;
+    use HasSingularPlural;
 
     /**
      * @var array $components
@@ -21,46 +24,25 @@ abstract class CollectionAction extends Action
     protected $components;
 
     /**
-     * @var string $plurel
-     */
-    private $plural;
-
-    /**
-     * @var string $plural
-     */
-    private $singular;
-
-    /**
-     * CollectionAction constructor.
-     * @param string $model
-     */
-    public function __construct(string $model)
-    {
-        $this->model = $model;
-        $modelName = class_basename($model);
-        $this->plural(Str::plural($modelName));
-        $this->singular(Str::singular($modelName));
-    }
-
-    /**
-     * @param string $plural
+     * @param Filter $filter
      * @return $this
      */
-    public function plural(string $plural)
+    public function filter(Filter $filter)
     {
-        $this->plural = $plural;
-        $this->export('plural', $plural);
+        $filter->resolve($this);
+        $this->filters[] = $filter;
+        $this->export('filters', $this->filters);
         return $this;
     }
 
     /**
-     * @param string $singular
+     * @param string $relationship
      * @return $this
      */
-    public function singular(string $singular)
+    public function relationship(string $relationship)
     {
-        $this->singular = $singular;
-        $this->export('singular', $singular);
+        $this->relationship = $relationship;
+        $this->export('relationship', true);
         return $this;
     }
 
@@ -68,7 +50,7 @@ abstract class CollectionAction extends Action
      * @param Request $request
      * @return ModelCollection
      */
-    public function load(Request $request)
+    public function apiLoad(Request $request)
     {
         ModelCollection::provision($this->components);
 

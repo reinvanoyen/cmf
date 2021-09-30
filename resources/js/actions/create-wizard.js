@@ -19,7 +19,9 @@ class CreateWizard extends React.Component {
         redirect: 'index',
         redirectBack: false,
         restrictByFk: null,
-        steps: {}
+        steps: {},
+        singular: '',
+        plural: ''
     };
 
     constructor(props) {
@@ -45,7 +47,7 @@ class CreateWizard extends React.Component {
                 this.redirect(response);
 
                 // Notify the user
-                ui.notify('Item was created');
+                ui.notify(`${this.props.singular} was successfully created`);
 
             }, error => {
 
@@ -57,21 +59,14 @@ class CreateWizard extends React.Component {
     }
 
     redirect(response) {
-        if (this.props.redirectBack) {
-            path.goBack();
-        } else {
-            // Redirect
-            path.goTo(this.props.path.module, this.props.redirect, {
-                id: response.data.id
-            });
-        }
+        path.handleRedirect(this.props, {id: response.data.id});
     }
 
     renderWizard() {
 
         let steps = this.props.steps.map((step, i) => {
             return (
-                <li className={'wizard__step'+(i <= this.state.currentStepIndex ? ' wizard__step--active' : '')} key={i} onClick={e => this.goTo(i)}>
+                <li className={'wizard__step'+(i <= this.state.currentStepIndex ? ' wizard__step--active' : '')} onClick={e => this.goTo(i)} key={i}>
                     <span>{i+1}</span>
                     {step.title}
                 </li>
@@ -97,15 +92,15 @@ class CreateWizard extends React.Component {
 
     renderWizardFooter() {
         return [
-            (this.state.currentStepIndex > 0 ? <div className="wizard__footer-component"><Link onClick={this.goToPrev.bind(this)} text={'Previous'} /></div> : null),
-            <div className="wizard__footer-component"><Button style={'large'} onClick={this.goToNext.bind(this)} text={this.isLastStep() ? 'Create' : 'Next'} /></div>
+            (this.state.currentStepIndex > 0 ? <div className="wizard__footer-component" key={1}><Link onClick={this.goToPrev.bind(this)} text={'Previous'} /></div> : null),
+            <div className="wizard__footer-component" key={2}><Button style={'large'} onClick={this.goToNext.bind(this)} text={this.isLastStep() ? 'Create' : 'Next'} /></div>
         ];
     }
 
     renderWizardContent() {
         return this.props.steps.map((step, i) => {
             return (
-                <div className="wizard__step-content" key={i} style={{display: (i === this.state.currentStepIndex ? 'block' : 'none')}}>
+                <div className="wizard__step-content" style={{display: (i === this.state.currentStepIndex ? 'block' : 'none')}} key={i}>
                     {this.componentLists[i].map(obj => obj.component)}
                 </div>
             );

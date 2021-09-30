@@ -5,20 +5,12 @@ namespace ReinVanOyen\Cmf\Action;
 use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Traits\CanRedirect;
+use ReinVanOyen\Cmf\Traits\HasSingularPlural;
 
 class Create extends Action
 {
     use CanRedirect;
-
-    /**
-     * @var string $model
-     */
-    private $model;
-
-    /**
-     * @var array $components
-     */
-    private $components;
+    use HasSingularPlural;
 
     /**
      * @var int $restrictByFk
@@ -26,15 +18,29 @@ class Create extends Action
     private $restrictByFk;
 
     /**
+     * @var string $attachToRelation
+     */
+    private $attachToRelation;
+
+    /**
      * Create constructor.
-     * @param string $model
+     * @param string $meta
      * @param array $components
      */
-    public function __construct(string $model, array $components)
+    public function __construct(string $meta, array $components)
     {
-        $this->model = $model;
-        $this->components = $components;
-        $this->export('components', $components);
+        $this->meta($meta);
+        $this->singular($meta::getSingular());
+        $this->plural($meta::getPlural());
+        $this->components($components);
+    }
+
+    /**
+     * @return string
+     */
+    public function type(): string
+    {
+        return 'create';
     }
 
     /**
@@ -49,19 +55,24 @@ class Create extends Action
     }
 
     /**
-     * @return string
+     * @param string $attachToRelation
+     * @return $this
      */
-    public function type(): string
+    public function attachTo(string $attachToRelation)
     {
-        return 'create';
+        $this->attachToRelation = $attachToRelation;
+        $this->export('attachToRelation', $this->attachToRelation);
+        return $this;
     }
 
     /**
      * @param Request $request
      * @return array|mixed
      */
-    public function save(Request $request)
+    public function apiSave(Request $request)
     {
+        $modelClass = $this->getMeta()::getModel();
+
         // Validate
         $validationRules = [];
         foreach ($this->components as $component) {
@@ -70,16 +81,20 @@ class Create extends Action
 
         $request->validate($validationRules);
 
-        // Save
-        $modelClass = $this->model;
+        // Create a new item
         $model = new $modelClass();
 
+        // Save every component to the model
         foreach ($this->components as $component) {
             $component->save($model, $request);
         }
 
         if ($this->restrictByFk) {
             $model->{$this->restrictByFk} = $request->input($this->restrictByFk);
+        }
+
+        if ($this->attachToRelation) {
+            $model->{$this->attachToRelation}()->associate($request->input($this->attachToRelation));
         }
 
         $model->save();

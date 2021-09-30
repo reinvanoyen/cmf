@@ -1,8 +1,9 @@
 @include block(delete)
 {
-    background-color: $color01;
     border-radius: $border-radius-1;
-    padding: $rule / 2 $rule;
+    border: $border-width-2 solid $color03;
+    background-color: $color01;
+    padding: $rule;
 
     @include element(text)
     {
@@ -11,6 +12,17 @@
 
     @include element(footer)
     {
+        display: flex;
         margin-top: $rule;
+    }
+
+    @include element(confirm)
+    {
+         margin-right: $rule / 3;
+    }
+
+    @include element(cancel)
+    {
+        //
     }
 }

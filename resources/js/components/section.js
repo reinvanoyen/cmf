@@ -34,14 +34,18 @@ class Section extends React.Component {
 
     render() {
 
-        let title = (
-            <div className="section__header">
-                <div className="section__title">
-                    {this.props.title}
+        let title;
+
+        if (this.props.title) {
+            title = (
+                <div className="section__header">
+                    <div className="section__title">
+                        {this.props.title}
+                    </div>
+                    <div className="section__collapse-button" onClick={this.toggle.bind(this)}></div>
                 </div>
-                <div className="section__collapse-button" onClick={this.toggle.bind(this)}></div>
-            </div>
-        );
+            );
+        }
 
         this.componentList = components.renderComponentsWith(this.props.components, this.props.data, this.props.path, (component, i) => {
             return (

@@ -1,11 +1,13 @@
 import React from 'react';
 import Icon from "./icon";
+import helpers from "../../util/helpers";
 
 class Dropdown extends React.Component {
 
     static defaultProps = {
         label: '',
-        text: ''
+        text: '',
+        style: null
     };
 
     constructor(props) {
@@ -37,7 +39,8 @@ class Dropdown extends React.Component {
         }
     }
 
-    toggle() {
+    toggle(e) {
+        e.stopPropagation();
         if (this.state.isOpen) {
             this.close();
         } else {
@@ -64,7 +67,7 @@ class Dropdown extends React.Component {
         let label = (this.props.label ? <span className={'dropdown__label'}>{this.props.label}</span> : null);
 
         return (
-            <div className={'dropdown'+(this.state.isOpen ? ' dropdown--open' : '')} ref={this.dropdownRef}>
+            <div className={helpers.className('dropdown', this.props.style)+(this.state.isOpen ? ' dropdown--open' : '')} ref={this.dropdownRef}>
                 <div className="dropdown__trigger">
                     <button className={'dropdown__button'} onClick={this.toggle.bind(this)}>
                         {label}

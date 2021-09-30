@@ -5,6 +5,7 @@ namespace ReinVanOyen\Cmf\Components;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Contracts\{Exportable, Makeable};
+use ReinVanOyen\Cmf\Action\Action;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Traits\CanExport;
 use ReinVanOyen\Cmf\Traits\CanBeMade;
@@ -18,6 +19,11 @@ abstract class Component implements Exportable, Makeable, \JsonSerializable
      * @var int $id
      */
     private $id;
+
+    /**
+     * @var Action $action
+     */
+    private $action;
 
     /**
      * @param int $id
@@ -44,6 +50,14 @@ abstract class Component implements Exportable, Makeable, \JsonSerializable
     public function provision(ModelResource $model, array &$attributes)
     {
         //
+    }
+
+    /**
+     * @param Action $action
+     */
+    public function resolve(Action $action)
+    {
+        $this->action = $action;
     }
 
     /**

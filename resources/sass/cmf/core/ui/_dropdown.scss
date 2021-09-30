@@ -25,6 +25,13 @@
         {
             background-color: desaturate(darken($color03, 5%), 5%);
         }
+
+        @include block-modifier(small)
+        {
+            @include type-2;
+            padding: $rule / 3 $rule / 1.5;
+            padding-right: $rule * 1.25;
+        }
     }
 
     @include element(label)
@@ -52,6 +59,7 @@
     @include element(content)
     {
         position: absolute;
+        z-index: 1;
         right: 0;
         margin-top: $rule / 3;
         padding: $rule / 3;

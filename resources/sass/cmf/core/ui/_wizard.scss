@@ -5,7 +5,7 @@
     display: block;
     width: 100%;
     border-radius: $border-radius-2;
-    border: $border-width-1 solid $color06;
+    border: $border-width-2 solid $color03;
 
     @include element(nav)
     {
@@ -13,7 +13,7 @@
         justify-content: center;
         width: 100%;
         padding: $rule 0;
-        border-bottom: $border-width-1 solid $color06;
+        border-bottom: $border-width-2 solid $color03;
     }
 
     @include element(steps)
@@ -39,7 +39,7 @@
             top: $disc-size / 2;
             left: 0;
             right: 0;
-            height: $border-width-1;
+            height: $border-width-2;
             background-color: $color03;
         }
 

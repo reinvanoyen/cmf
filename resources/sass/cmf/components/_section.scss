@@ -1,14 +1,11 @@
 @include block(section)
 {
     border-radius: $border-radius-2;
+    background-color: $color04;
 
     @include element(content)
     {
         padding: $rule / 2;
-        border-top: 0;
-        border-bottom-left-radius: $border-radius-2;
-        border-bottom-right-radius: $border-radius-2;
-        background-color: $color04;
 
         @include block-modifier(closed)
         {
@@ -31,20 +28,12 @@
         display: flex;
         justify-content: space-between;
         padding: $rule / 2;
-        border-top-left-radius: $border-radius-2;
-        border-top-right-radius: $border-radius-2;
         @include type-5;
-        background-color: $color04;
-
-        @include block-modifier(closed)
-        {
-            border-radius: $border-radius-2;
-            border-bottom: 0;
-        }
     }
 
     @include element(collapse-button)
     {
+        user-select: none;
         display: flex;
         align-items: center;
         cursor: pointer;

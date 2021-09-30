@@ -5,18 +5,24 @@ namespace ReinVanOyen\Cmf\Action;
 class Index extends CollectionAction
 {
     /**
+     * @var string $model
+     */
+    protected $model;
+
+    /**
      * Index constructor.
-     * @param string $model
+     * @param string $meta
      * @param array $components
      */
-    public function __construct(string $model, array $components)
+    public function __construct(string $meta, array $components)
     {
-        parent::__construct($model);
+        $this->meta($meta);
+        $this->singular($meta::getSingular());
+        $this->plural($meta::getPlural());
+        $this->paginate($meta::getPerPage());
+        $this->components($components);
 
-        $this->components = $components;
-        $this->export('components', $this->components);
-
-        $this->paginate(10);
+        $this->model = $meta::getModel();
     }
 
     /**

@@ -11,7 +11,8 @@ export default class TextField extends React.Component {
         disabled: false,
         showRequiredIndicator: false,
         htmlType: 'text',
-        multiline: false
+        multiline: false,
+        errors: {}
     };
 
     constructor(props) {
@@ -72,7 +73,7 @@ export default class TextField extends React.Component {
         }
 
         return (
-            <Field name={this.props.name} required={this.props.showRequiredIndicator} label={this.props.label}>
+            <Field name={this.props.name} required={this.props.showRequiredIndicator} label={this.props.label} errors={this.props.errors}>
                 {input}
             </Field>
         );

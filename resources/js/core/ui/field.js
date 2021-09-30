@@ -6,7 +6,8 @@ class Field extends React.Component {
     static defaultProps = {
         name: '',
         label: '',
-        required: false
+        required: false,
+        errors: {}
     };
 
     constructor(props) {
@@ -19,6 +20,7 @@ class Field extends React.Component {
     render() {
 
         let label;
+        let error;
         let requiredIndicator;
 
         if (this.props.showRequiredIndicator) {
@@ -34,12 +36,21 @@ class Field extends React.Component {
             );
         }
 
+        if (this.props.errors[this.props.name]) {
+            error = (
+                <span className="field__error">
+                    {this.props.errors[this.props.name]}
+                </span>
+            );
+        }
+
         return (
             <div className="field">
                 {label}
                 <div className="field__input">
                     {this.props.children}
                 </div>
+                {error}
             </div>
         );
     }

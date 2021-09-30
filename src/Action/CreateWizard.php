@@ -5,15 +5,12 @@ namespace ReinVanOyen\Cmf\Action;
 use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Traits\CanRedirect;
+use ReinVanOyen\Cmf\Traits\HasSingularPlural;
 
 class CreateWizard extends Action
 {
     use CanRedirect;
-
-    /**
-     * @var string $model
-     */
-    private $model;
+    use HasSingularPlural;
 
     /**
      * @var array $steps
@@ -27,11 +24,13 @@ class CreateWizard extends Action
 
     /**
      * Create constructor.
-     * @param string $model
+     * @param string $meta
      */
-    public function __construct(string $model)
+    public function __construct(string $meta)
     {
-        $this->model = $model;
+        $this->meta($meta);
+        $this->singular($meta::getSingular());
+        $this->plural($meta::getPlural());
     }
 
     /**
@@ -72,8 +71,10 @@ class CreateWizard extends Action
      * @param Request $request
      * @return array|mixed
      */
-    public function save(Request $request)
+    public function apiSave(Request $request)
     {
+        $modelClass = $this->getMeta()::getModel();
+
         $components = [];
 
         // Validate
@@ -88,7 +89,6 @@ class CreateWizard extends Action
         $request->validate($validationRules);
 
         // Save
-        $modelClass = $this->model;
         $model = new $modelClass();
 
         foreach ($this->steps as $step) {

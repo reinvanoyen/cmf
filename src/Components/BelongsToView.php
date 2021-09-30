@@ -3,6 +3,7 @@
 namespace ReinVanOyen\Cmf\Components;
 
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
+use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
 use ReinVanOyen\Cmf\Traits\BuildsQuery;
 use ReinVanOyen\Cmf\Traits\HasLabel;
@@ -15,20 +16,21 @@ class BelongsToView extends Component
     use BuildsQuery;
 
     /**
-     * @var string $titleField
+     * @var string $titleColumn
      */
-    private $titleField;
+    private $titleColumn;
 
     /**
      * BelongsToField constructor.
      * @param string $name
-     * @param string $model
      */
     public function __construct(string $name)
     {
         $this->name($name);
         $this->label(Str::labelify($name));
-        $this->titleField('title');
+
+        $meta = RelationshipMetaGuesser::getMeta($name);
+        $this->titleColumn($meta::getTitleColumn());
     }
 
     /**
@@ -43,10 +45,9 @@ class BelongsToView extends Component
      * @param string $field
      * @return $this
      */
-    public function titleField(string $field)
+    public function titleColumn(string $field)
     {
-        $this->titleField = $field;
-        $this->export('titleField', $this->titleField);
+        $this->titleColumn = $field;
         return $this;
     }
 
@@ -57,6 +58,6 @@ class BelongsToView extends Component
     public function provision(ModelResource $model, array &$attributes)
     {
         $foreign = $model->{$this->getName()};
-        $attributes[$this->getName()] = ($foreign ? $foreign->{$this->titleField} : null);
+        $attributes[$this->getName()] = ($foreign ? $foreign->{$this->titleColumn} : null);
     }
 }

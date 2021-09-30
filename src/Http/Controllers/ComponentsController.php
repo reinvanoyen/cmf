@@ -48,9 +48,10 @@ class ComponentsController extends Controller
         if ($action) {
 
             $component = $this->makeableStorage->get($componentId);
+            $methodName = 'api'.ucfirst($executeId);
 
-            if ($component && method_exists($component, $executeId)) {
-                return $component->$executeId($request);
+            if ($component && method_exists($component, $methodName)) {
+                return $component->$methodName($request);
             }
         }
 

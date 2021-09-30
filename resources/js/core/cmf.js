@@ -49,21 +49,17 @@ class Cmf extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
 
         if (
-            this.state.path.module !== path.currentPath.module
-            || this.state.path.action !== path.currentPath.action
+            path.forceRefresh ||
+            this.state.path.module !== path.currentPath.module ||
+            this.state.path.action !== path.currentPath.action
         ) {
 
             let module = this.state.modules.find(module => (module.id === path.currentPath.module));
 
             api.modules.action(path.currentPath, path.currentPath.params).then(result => {
-
                 this.setState({
                     isLoading: false,
-                    path: {
-                        module: path.currentPath.module,
-                        action: path.currentPath.action,
-                        params: path.currentPath.params
-                    },
+                    path: path.currentPath,
                     module: module,
                     action: result
                 });

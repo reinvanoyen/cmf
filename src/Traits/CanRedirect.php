@@ -14,7 +14,18 @@ trait CanRedirect
         return $this;
     }
 
+    /**
+     * @return $this
+     */
+    public function refresh()
+    {
+        $this->export('refresh', true);
+        return $this;
+    }
 
+    /**
+     * @return $this
+     */
     public function redirectBack()
     {
         $this->export('redirectBack', true);

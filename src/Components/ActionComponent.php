@@ -17,8 +17,18 @@ class ActionComponent extends Component
      */
     public function __construct(Action $childAction)
     {
-        $this->childAction = $childAction;
+        $this->childAction($childAction);
+    }
+
+    /**
+     * @param Action $action
+     * @return $this
+     */
+    protected function childAction(Action $action)
+    {
+        $this->childAction = $action;
         $this->export('action', $this->childAction);
+        return $this;
     }
 
     /**

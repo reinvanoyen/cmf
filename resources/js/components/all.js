@@ -26,6 +26,7 @@ import BooleanField from "./boolean-field";
 import DateTimeView from "./date-time-view";
 import Thumbnail from "./thumbnail";
 import Card from "./card";
+import Dropdown from "./dropdown";
 
 export default {
     'date-time-field': DateTimeField,
@@ -55,5 +56,6 @@ export default {
     'richtext-field': RichtextField,
     'boolean-field': BooleanField,
     'thumbnail': Thumbnail,
-    'card': Card
+    'card': Card,
+    'dropdown': Dropdown
 };

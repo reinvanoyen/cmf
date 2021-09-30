@@ -13,6 +13,11 @@ abstract class Action implements Exportable, Makeable, \JsonSerializable
     use CanBeMade;
 
     /**
+     * @var string $meta
+     */
+    protected $meta;
+
+    /**
      * @var Module $module
      */
     private $moduleId;
@@ -23,11 +28,53 @@ abstract class Action implements Exportable, Makeable, \JsonSerializable
     private $id;
 
     /**
+     * @var string $model
+     */
+    protected $model;
+
+    /**
+     * @var array $components
+     */
+    protected $components;
+
+    /**
      * @param string $id
      */
     final public function id(string $id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @param string $meta
+     * @return $this
+     */
+    public function meta(string $meta)
+    {
+        $this->meta = $meta;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMeta(): ?string
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @param array $components
+     */
+    final public function components(array $components)
+    {
+        $this->components = $components;
+
+        foreach ($this->components as $component) {
+            $component->resolve($this);
+        }
+
+        $this->export('components', $this->components);
     }
 
     /**

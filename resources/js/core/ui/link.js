@@ -5,13 +5,15 @@ class Link extends React.Component {
 
     static defaultProps = {
         'text': '',
-        onClick: () => {},
-        style: 'default'
+        style: 'default',
+        onClick: () => {}
     };
 
     onClick(e) {
         e.stopPropagation();
-        this.props.onClick();
+        if (this.props.onClick) {
+            this.props.onClick();
+        }
     }
 
     render() {

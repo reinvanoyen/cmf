@@ -4,6 +4,7 @@ import http from "../util/http";
 
 export default {
     cmf: null,
+    forceRefresh: false,
     currentPath: {},
     history: [],
     setCmf(cmf) {
@@ -26,6 +27,16 @@ export default {
             params: params
         };
     },
+    update(module, action, params) {
+
+        this.currentPath = {
+            module: module,
+            action: action,
+            params: params
+        };
+
+        this.cmf.forceUpdate(() => this.forceRefresh = false);
+    },
     goTo(module, action, params = {}) {
 
         let query = http.query(params);
@@ -40,19 +51,32 @@ export default {
 
         this.update(module, action, params);
     },
+    refresh() {
+        this.cmf.setLoadingState();
+        this.forceRefresh = true;
+        this.goTo(this.currentPath.module, this.currentPath.action, this.currentPath.params);
+    },
     goBack() {
 
         let {module, action, params} = this.history[this.history.length - 2];
         this.goTo(module, action, params);
     },
-    update(module, action, params) {
+    handleRedirect(props, params = {}) {
 
-        this.currentPath = {
-            module: module,
-            action: action,
-            params: params
-        };
+        if (props.refresh) {
 
-        this.cmf.forceUpdate();
+            this.refresh();
+
+        } else if (props.redirectBack) {
+
+            this.goBack();
+
+        } else {
+
+            // @TODO parse path, so we can also go to other modules
+
+            // Redirect
+            this.goTo(props.path.module, props.redirect, params);
+        }
     }
 };

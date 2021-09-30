@@ -4,23 +4,22 @@ namespace ReinVanOyen\Cmf\Action;
 
 use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Traits\CanRedirect;
+use ReinVanOyen\Cmf\Traits\HasSingularPlural;
 
 class Delete extends Action
 {
     use CanRedirect;
-
-    /**
-     * @var string $model
-     */
-    private $model;
+    use HasSingularPlural;
 
     /**
      * Delete constructor.
-     * @param string $model
+     * @param string $meta
      */
-    public function __construct(string $model)
+    public function __construct(string $meta)
     {
-        $this->model = $model;
+        $this->meta($meta);
+        $this->singular($meta::getSingular());
+        $this->plural($meta::getPlural());
     }
 
     /**
@@ -31,10 +30,16 @@ class Delete extends Action
         return 'delete';
     }
 
-    public function delete(Request $request)
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function apiDelete(Request $request)
     {
+        $modelClass = $this->getMeta()::getModel();
+
         // Delete model
-        $model = $this->model::findOrFail($request->input('id'));
+        $model = $modelClass::findOrFail($request->input('id'));
         $model->delete();
 
         return true;
