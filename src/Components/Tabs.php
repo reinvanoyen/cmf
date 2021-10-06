@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use ReinVanOyen\Cmf\Action\Action;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 
 class Tabs extends Component
@@ -34,6 +35,20 @@ class Tabs extends Component
         ];
         $this->export('tabs', $this->tabs);
         return $this;
+    }
+
+    /**
+     * @param Action $action
+     */
+    public function resolve(Action $action)
+    {
+        foreach ($this->tabs as $tab) {
+            foreach ($tab['components'] as $component) {
+                $component->resolve($action);
+            }
+        }
+
+        parent::resolve($action);
     }
 
     /**
