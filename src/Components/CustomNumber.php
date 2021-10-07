@@ -45,7 +45,7 @@ class CustomNumber extends Component
      * @param Request $request
      * @return mixed
      */
-    public function load(Request $request)
+    public function apiLoad(Request $request)
     {
         $load = $this->load;
         return $load($request);

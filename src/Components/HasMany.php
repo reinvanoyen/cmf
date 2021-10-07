@@ -40,6 +40,11 @@ class HasMany extends ActionComponent
     private $filters = [];
 
     /**
+     * @var array $grid
+     */
+    private $grid = [];
+
+    /**
      * HasMany constructor.
      * @param string $relationship
      * @param array $components
@@ -80,6 +85,10 @@ class HasMany extends ActionComponent
             }
         }
 
+        if (count($this->grid)) {
+            $this->index->grid($this->grid);
+        }
+
         // Set the index as the child action
         $this->childAction($this->index);
 
@@ -113,6 +122,16 @@ class HasMany extends ActionComponent
     public function filter(Filter $filter)
     {
         $this->filters[] = $filter;
+        return $this;
+    }
+
+    /**
+     * @param array $grid
+     * @return $this
+     */
+    public function grid(array $grid)
+    {
+        $this->grid = $grid;
         return $this;
     }
 }
