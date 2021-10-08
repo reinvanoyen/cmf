@@ -17,12 +17,12 @@ class Edit extends Action
      * @param string $meta
      * @param array $components
      */
-    public function __construct(string $meta, array $components)
+    public function __construct(string $meta, array $components = [])
     {
         $this->meta($meta);
         $this->singular($meta::getSingular());
         $this->plural($meta::getPlural());
-        $this->components($components);
+        $this->components(count($components) ? $components : $meta::edit());
     }
 
     /**
@@ -52,7 +52,7 @@ class Edit extends Action
     public function apiSave(Request $request)
     {
         $modelClass = $this->getMeta()::getModel();
-        
+
         // Validate
         $validationRules = [];
         foreach ($this->components as $component) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from "./link";
+import Button from "./button";
 
 class Pagination extends React.Component {
 
@@ -23,13 +24,13 @@ class Pagination extends React.Component {
 
         if (this.props.currentPage > 1) {
             prevBtn = (
-                <Link text="Previous" onClick={e => this.changePage(this.props.currentPage - 1)} />
+                <Button style={['secondary', 'small']} text="Previous" onClick={e => this.changePage(this.props.currentPage - 1)} />
             );
         }
 
         if (this.props.currentPage < this.props.lastPage) {
             nextBtn = (
-                <Link text="Next" onClick={e => this.changePage(this.props.currentPage + 1)} />
+                <Button style={['secondary', 'small']} text="Next" onClick={e => this.changePage(this.props.currentPage + 1)} />
             );
         }
 

@@ -1,0 +1,44 @@
+@mixin loading
+{
+    @include global-modifier(api-loading)
+    {
+        &:before
+        {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            width: $rule * 3;
+            height: $rule * 3;
+            margin-top: -$rule * 1.5;
+            margin-left: -$rule * 1.5;
+            background-color: $color01;
+            border-radius: 50%;
+            border: $border-width-1 solid $color05;
+            box-shadow: $box-shadow-1;
+        }
+
+        &:after
+        {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 9999;
+            box-sizing: border-box;
+            top: 50%;
+            left: 50%;
+            width: $rule;
+            height: $rule;
+            margin-top: -$rule / 2;
+            margin-left: -$rule / 2;
+            border-radius: 50%;
+            border-top: 3px solid $color12;
+            border-right: 3px solid transparent;
+            border-bottom: 3px solid $color12;
+            border-left: 3px solid $color12;
+            animation: spin .5s linear;
+        }
+    }
+}

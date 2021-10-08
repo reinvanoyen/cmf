@@ -12,10 +12,10 @@ class View extends Action
      * @param string $meta
      * @param array $components
      */
-    public function __construct(string $meta, array $components)
+    public function __construct(string $meta, array $components = [])
     {
-        $this->meta($meta);;
-        $this->components($components);
+        $this->meta($meta);
+        $this->components(count($components) ? $components : $meta::view());
     }
 
     /**

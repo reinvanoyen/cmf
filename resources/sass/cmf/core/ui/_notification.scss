@@ -1,20 +1,33 @@
 @include block(notification)
 {
-    position: fixed;
-    bottom: $rule;
-    right: $rule;
     display: block;
-    width: $rule * 10;
     padding: $rule / 2 $rule;
     border-radius: $border-radius-1;
     background-color: $color12;
     color: $color01;
     transition: transform .25s, opacity .25s;
     animation: slidein .25s;
+    margin-bottom: $rule / 3;
+
+    &:last-child
+    {
+        margin-bottom: 0;
+    }
 
     @include modifier(hidden)
     {
         transform: translateY(100%);
         opacity: 0;
+        pointer-events: none;
     }
+}
+
+@include block(notification-stack)
+{
+    position: fixed;
+    bottom: $rule;
+    right: $rule;
+    display: block;
+    width: $rule * 10;
+    pointer-events: none;
 }

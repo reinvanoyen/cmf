@@ -70,4 +70,36 @@ abstract class Meta
     {
         return static::$perPage;
     }
+
+    /**
+     * @return array
+     */
+    public static function index(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public static function create(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public static function edit(): array
+    {
+        return self::create();
+    }
+
+    /**
+     * @return array
+     */
+    public static function view(): array
+    {
+        return [];
+    }
 }

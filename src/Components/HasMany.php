@@ -49,7 +49,7 @@ class HasMany extends ActionComponent
      * @param string $relationship
      * @param array $components
      */
-    public function __construct(string $relationship, array $components)
+    public function __construct(string $relationship, array $components = [])
     {
         $this->relationship = $relationship;
         $this->components = $components;
@@ -60,31 +60,37 @@ class HasMany extends ActionComponent
      */
     public function resolve(Action $action)
     {
+        $meta = RelationshipMetaGuesser::getMeta($this->relationship);
+        $components = (count($this->components) ? $this->components : $meta::index());
+
         // Make a new index with the model of the action
-        $this->index = Index::make($action->getMeta(), $this->components)
+        $this->index = Index::make($action->getMeta(), $components)
             ->relationship($this->relationship);
 
-        $meta = RelationshipMetaGuesser::getMeta($this->relationship);
-
+        // Copy some options from $meta
         $this->index
             ->singular($meta::getSingular())
             ->plural($meta::getPlural())
             ->paginate($meta::getPerPage());
 
+        // Header
         if (count($this->header)) {
             $this->index->header($this->header);
         }
 
+        // Search
         if (count($this->searchColumns)) {
             $this->index->search($this->searchColumns);
         }
 
+        // Filters
         if (count($this->filters)) {
             foreach ($this->filters as $filter) {
                 $this->index->filter($filter);
             }
         }
 
+        // Grid
         if (count($this->grid)) {
             $this->index->grid($this->grid);
         }

@@ -1,5 +1,7 @@
 @include block(page)
 {
+    @include loading;
+
     $padding-top: 58vh;
 
     display: flex;

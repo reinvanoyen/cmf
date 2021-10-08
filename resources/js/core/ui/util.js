@@ -2,12 +2,22 @@
 
 export default {
     notify(text) {
+
+        if (! this.notificationStackEl) {
+            this.notificationStackEl = document.createElement('div');
+            this.notificationStackEl.classList.add('notification-stack');
+            document.body.appendChild(this.notificationStackEl);
+        }
+
         let el = document.createElement('div');
         el.classList.add('notification');
         el.textContent = text;
-        document.body.appendChild(el);
+        this.notificationStackEl.appendChild(el);
 
-        setTimeout(() => el.classList.add('notification--hidden'), 3000);
+        setTimeout(() => {
+            el.classList.add('notification--hidden');
+            setTimeout(() => this.notificationStackEl.removeChild(el), 250);
+        }, 3000);
     },
     copyText(text, cb) {
         let textArea = document.createElement('textarea');

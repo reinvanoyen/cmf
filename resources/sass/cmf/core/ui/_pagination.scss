@@ -1,6 +1,7 @@
 @include block(pagination)
 {
     display: flex;
+    align-items: center;
     width: 100%;
 
     @include element(prev)

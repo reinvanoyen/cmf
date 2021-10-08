@@ -14,14 +14,13 @@ class Index extends CollectionAction
      * @param string $meta
      * @param array $components
      */
-    public function __construct(string $meta, array $components)
+    public function __construct(string $meta, array $components = [])
     {
         $this->meta($meta);
         $this->singular($meta::getSingular());
         $this->plural($meta::getPlural());
         $this->paginate($meta::getPerPage());
-        $this->components($components);
-
+        $this->components(count($components) ? $components : $meta::index());
         $this->model = $meta::getModel();
     }
 
