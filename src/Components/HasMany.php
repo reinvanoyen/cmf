@@ -6,6 +6,7 @@ use ReinVanOyen\Cmf\Action\Action;
 use ReinVanOyen\Cmf\Action\Index;
 use ReinVanOyen\Cmf\Filters\Filter;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
+use ReinVanOyen\Cmf\Traits\BuildsQuery;
 
 class HasMany extends ActionComponent
 {
@@ -43,6 +44,21 @@ class HasMany extends ActionComponent
      * @var array $grid
      */
     private $grid = [];
+
+    /**
+     * @var string $action
+     */
+    private $action;
+
+    /**
+     * @var string $orderByColumn
+     */
+    private $orderByColumn;
+
+    /**
+     * @var string $orderByMethod
+     */
+    private $orderByMethod;
 
     /**
      * HasMany constructor.
@@ -90,6 +106,16 @@ class HasMany extends ActionComponent
             }
         }
 
+        // Action
+        if ($this->action) {
+            $this->index->action($this->action);
+        }
+
+        // Order by
+        if ($this->orderByColumn) {
+            $this->index->orderBy($this->orderByColumn, $this->orderByMethod);
+        }
+
         // Grid
         if (count($this->grid)) {
             $this->index->grid($this->grid);
@@ -108,6 +134,28 @@ class HasMany extends ActionComponent
     public function header(array $components)
     {
         $this->header = $components;
+        return $this;
+    }
+
+    /**
+     * @param string $action
+     * @return $this
+     */
+    public function action(string $action)
+    {
+        $this->action = $action;
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     * @param string $method
+     * @return $this
+     */
+    public function orderBy(string $column, string $method = 'asc')
+    {
+        $this->orderByColumn = $column;
+        $this->orderByMethod = $method;
         return $this;
     }
 
