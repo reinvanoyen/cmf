@@ -92,7 +92,7 @@ abstract class Meta
      */
     public static function edit(): array
     {
-        return self::create();
+        return static::create();
     }
 
     /**
