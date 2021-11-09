@@ -1,19 +1,30 @@
 {
     "name": "reinvanoyen/cmf",
     "description": "CMF",
+    "keywords": [
+        "cmf",
+        "cms",
+        "laravel",
+        "framework",
+        "content",
+        "media"
+    ],
     "authors": [
         {
             "name": "Rein Van Oyen",
-            "email": "reinvanoyen@gmail.com"
+            "email": "reinvanoyen@gmail.com",
+            "homepage": "http://reinvanoyen.be",
+            "role": "Developer"
         }
     ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "spatie/temporary-directory": "^1.3",
+        "intervention/image": "^2.7"
+    },
     "autoload": {
         "psr-4": {
             "ReinVanOyen\\Cmf\\": "src/"
         }
-    },
-    "require": {
-        "spatie/temporary-directory": "^1.3",
-        "intervention/image": "^2.7"
     }
 }
