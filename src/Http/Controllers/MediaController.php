@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use ReinVanOyen\Cmf\Http\Resources\MediaDirectoryCollection;
 use ReinVanOyen\Cmf\Http\Resources\MediaDirectoryResource;
+use ReinVanOyen\Cmf\Http\Resources\MediaFileCollection;
 use ReinVanOyen\Cmf\Http\Resources\MediaFileResource;
 use ReinVanOyen\Cmf\Models\MediaDirectory;
 use ReinVanOyen\Cmf\Models\MediaFile;
@@ -104,6 +106,59 @@ class MediaController extends Controller
         $mediaFile->save();
 
         return new MediaFileResource($mediaFile);
+    }
+
+    /**
+     * @param Request $request
+     * @return MediaDirectoryCollection
+     */
+    public function loadDirectories(Request $request)
+    {
+        if ($request->get('directory')) {
+            $directory = MediaDirectory::findOrFail($request->get('directory'));
+            $directories = $directory->directories;
+        } else {
+            $directories = MediaDirectory::whereNull('media_directory_id')->orderBy('name')->get();
+        }
+
+        return new MediaDirectoryCollection($directories);
+    }
+
+    /**
+     * @param Request $request
+     * @return MediaFileCollection
+     */
+    public function loadFiles(Request $request)
+    {
+        if ($request->get('directory')) {
+            $directory = MediaDirectory::findOrFail($request->get('directory'));
+            $files = $directory->files;
+        } else {
+            $files = MediaFile::whereNull('media_directory_id')->orderBy('name')->get();
+        }
+
+        return new MediaFileCollection($files);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function path(Request $request)
+    {
+        if (! $request->input('directory')) {
+            return [];
+        }
+
+        $mediaDirectory = MediaDirectory::findOrFail($request->input('directory'));
+        $path = [$mediaDirectory,];
+
+        while ($mediaDirectory->directory) {
+            $mediaDirectory = $mediaDirectory->directory;
+            array_unshift($path, $mediaDirectory);
+        }
+
+        return $path;
     }
 
     /**

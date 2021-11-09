@@ -48,6 +48,39 @@ api.media.upload = (file, directoryId = null) => {
     return api.post('cmf/api/media/upload', http.formData(body));
 };
 
+api.media.path = (id = null) => {
+
+    let body = {};
+
+    if (id) {
+        body.directory = id;
+    }
+
+    return api.get('cmf/api/media/path', body);
+};
+
+api.media.loadDirectories = (id = null) => {
+
+    let body = {};
+
+    if (id) {
+        body.directory = id;
+    }
+
+    return api.get('cmf/api/media/load-directories', body);
+};
+
+api.media.loadFiles = (id = null) => {
+
+    let body = {};
+
+    if (id) {
+        body.directory = id;
+    }
+
+    return api.get('cmf/api/media/load-files', body);
+};
+
 api.media.createDirectory = (name, parentId = null) => {
 
     let body = {

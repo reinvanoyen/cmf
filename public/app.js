@@ -31313,13 +31313,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state/path */ "./resources/js/state/path.js");
 /* harmony import */ var _core_ui_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/ui/util */ "./resources/js/core/ui/util.js");
 /* harmony import */ var _core_ui_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../core/ui/button */ "./resources/js/core/ui/button.js");
-/* harmony import */ var _core_ui_title__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../core/ui/title */ "./resources/js/core/ui/title.js");
-/* harmony import */ var _core_ui_file_browser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../core/ui/file-browser */ "./resources/js/core/ui/file-browser.js");
-/* harmony import */ var _core_ui_file_drop_zone__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../core/ui/file-drop-zone */ "./resources/js/core/ui/file-drop-zone.js");
-/* harmony import */ var _core_ui_file_preview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../core/ui/file-preview */ "./resources/js/core/ui/file-preview.js");
-/* harmony import */ var _core_ui_file_view__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../core/ui/file-view */ "./resources/js/core/ui/file-view.js");
-/* harmony import */ var _core_ui_dropdown__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../core/ui/dropdown */ "./resources/js/core/ui/dropdown.js");
-/* harmony import */ var _core_ui_multi_file_view__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../core/ui/multi-file-view */ "./resources/js/core/ui/multi-file-view.js");
+/* harmony import */ var _core_ui_file_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../core/ui/file-browser */ "./resources/js/core/ui/file-browser.js");
+/* harmony import */ var _core_ui_file_drop_zone__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../core/ui/file-drop-zone */ "./resources/js/core/ui/file-drop-zone.js");
+/* harmony import */ var _core_ui_file_view__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../core/ui/file-view */ "./resources/js/core/ui/file-view.js");
+/* harmony import */ var _core_ui_dropdown__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../core/ui/dropdown */ "./resources/js/core/ui/dropdown.js");
+/* harmony import */ var _core_ui_multi_file_view__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../core/ui/multi-file-view */ "./resources/js/core/ui/multi-file-view.js");
+/* harmony import */ var _core_ui_breadcrumbs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../core/ui/breadcrumbs */ "./resources/js/core/ui/breadcrumbs.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31343,7 +31342,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -31460,8 +31458,8 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
       } else if (selectedFiles.length === 1) {
         this.setState({
           currentFile: selectedFiles[0],
-          selectedFiles: [],
-          selectedFileIds: []
+          selectedFiles: selectedFiles,
+          selectedFileIds: selectedFileIds
         });
       } else {
         this.setState({
@@ -31571,23 +31569,18 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
     value: function renderBreadcrumbs() {
       var _this5 = this;
 
-      var items = this.state.directoryPath.map(function (directory, i) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: i,
-          onClick: function onClick(e) {
-            return _this5.openDirectory(directory.id);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_breadcrumbs__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        items: this.state.directoryPath,
+        onClick: function onClick(item) {
+          if (item) {
+            _this5.openDirectory(item.id);
+
+            return;
           }
-        }, directory.name);
-      });
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "breadcrumbs"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: 'breadcrumbs__list'
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        onClick: function onClick(e) {
-          return _this5.openDirectory();
+
+          _this5.openDirectory();
         }
-      }, "My files"), items));
+      });
     }
   }, {
     key: "renderSidebar",
@@ -31595,7 +31588,7 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
       var _this6 = this;
 
       if (this.state.currentFile) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_file_view__WEBPACK_IMPORTED_MODULE_9__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_file_view__WEBPACK_IMPORTED_MODULE_7__["default"], {
           file: this.state.currentFile,
           onDeleteFile: function onDeleteFile() {
             _core_ui_util__WEBPACK_IMPORTED_MODULE_3__["default"].confirm({
@@ -31624,7 +31617,7 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
           }
         });
       } else if (this.state.selectedFiles.length) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_multi_file_view__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_multi_file_view__WEBPACK_IMPORTED_MODULE_9__["default"], {
           files: this.state.selectedFiles,
           onDeleteFiles: function onDeleteFiles() {
             return _this6.confirmDeleteFiles(_this6.state.selectedFileIds, _this6.state.selectedFiles);
@@ -31639,13 +31632,15 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
     value: function renderContent() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "view-media-directory__main"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_file_drop_zone__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_file_drop_zone__WEBPACK_IMPORTED_MODULE_6__["default"], {
         directory: this.state.currentDirectory ? this.state.currentDirectory.id : null,
         onCreateFile: this.handleCreateFile.bind(this),
         onCreateDirectory: this.handleCreateDirectory.bind(this)
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_file_browser__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_file_browser__WEBPACK_IMPORTED_MODULE_5__["default"], {
         directories: this.state.directories,
         files: this.state.files,
+        selectedFiles: this.state.selectedFiles,
+        selectedFileIds: this.state.selectedFileIds,
         onDirectoryClick: this.openDirectory.bind(this),
         onDirectoryDelete: this.handleDeleteDirectory.bind(this),
         onDirectoryRename: this.handleRenameDirectory.bind(this),
@@ -31673,7 +31668,7 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
         style: ['secondary', 'small'],
         onClick: this.promptCreateDirectory.bind(this),
         text: 'New directory'
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_dropdown__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_dropdown__WEBPACK_IMPORTED_MODULE_8__["default"], {
         text: 'Upload',
         style: ['primary', 'small']
       }, "Soon a upload widget will be visible here."))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -31753,6 +31748,39 @@ api.media.upload = function (file) {
   }
 
   return api.post('cmf/api/media/upload', _util_http__WEBPACK_IMPORTED_MODULE_0__["default"].formData(body));
+};
+
+api.media.path = function () {
+  var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var body = {};
+
+  if (id) {
+    body.directory = id;
+  }
+
+  return api.get('cmf/api/media/path', body);
+};
+
+api.media.loadDirectories = function () {
+  var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var body = {};
+
+  if (id) {
+    body.directory = id;
+  }
+
+  return api.get('cmf/api/media/load-directories', body);
+};
+
+api.media.loadFiles = function () {
+  var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var body = {};
+
+  if (id) {
+    body.directory = id;
+  }
+
+  return api.get('cmf/api/media/load-files', body);
 };
 
 api.media.createDirectory = function (name) {
@@ -32058,6 +32086,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _thumbnail__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./thumbnail */ "./resources/js/components/thumbnail.js");
 /* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./card */ "./resources/js/components/card.js");
 /* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./dropdown */ "./resources/js/components/dropdown.js");
+/* harmony import */ var _file_select_field__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./file-select-field */ "./resources/js/components/file-select-field.js");
+
 
 
 
@@ -32116,7 +32146,8 @@ __webpack_require__.r(__webpack_exports__);
   'boolean-field': _boolean_field__WEBPACK_IMPORTED_MODULE_24__["default"],
   'thumbnail': _thumbnail__WEBPACK_IMPORTED_MODULE_26__["default"],
   'card': _card__WEBPACK_IMPORTED_MODULE_27__["default"],
-  'dropdown': _dropdown__WEBPACK_IMPORTED_MODULE_28__["default"]
+  'dropdown': _dropdown__WEBPACK_IMPORTED_MODULE_28__["default"],
+  'file-select-field': _file_select_field__WEBPACK_IMPORTED_MODULE_29__["default"]
 });
 
 /***/ }),
@@ -33441,6 +33472,158 @@ _defineProperty(EnumView, "defaultProps", {
 });
 
 /* harmony default export */ __webpack_exports__["default"] = (EnumView);
+
+/***/ }),
+
+/***/ "./resources/js/components/file-select-field.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/file-select-field.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _core_ui_file_picker_widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/ui/file-picker-widget */ "./resources/js/core/ui/file-picker-widget.js");
+/* harmony import */ var _core_ui_file_preview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/ui/file-preview */ "./resources/js/core/ui/file-preview.js");
+/* harmony import */ var _util_file__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/file */ "./resources/js/util/file.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+var FileSelectField = /*#__PURE__*/function (_React$Component) {
+  _inherits(FileSelectField, _React$Component);
+
+  var _super = _createSuper(FileSelectField);
+
+  function FileSelectField(props) {
+    var _this;
+
+    _classCallCheck(this, FileSelectField);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      isOpen: false,
+      selectedFile: null,
+      selectedFileId: null
+    };
+    return _this;
+  }
+
+  _createClass(FileSelectField, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.data[this.props.name] !== prevProps.data[this.props.name]) {
+        this.setState({
+          selectedFile: this.props.data[this.props.name],
+          selectedFileId: this.props.data[this.props.name] ? this.props.data[this.props.name].id : null
+        });
+      }
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(data) {
+      data[this.props.name] = this.state.selectedFileId || null;
+    }
+  }, {
+    key: "open",
+    value: function open() {
+      this.setState({
+        isOpen: true
+      });
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.setState({
+        isOpen: false
+      });
+    }
+  }, {
+    key: "onSelectionConfirm",
+    value: function onSelectionConfirm(ids, files) {
+      this.setState({
+        isOpen: false,
+        selectedFile: files[0],
+        selectedFileId: ids[0]
+      });
+    }
+  }, {
+    key: "renderFilePreview",
+    value: function renderFilePreview() {
+      if (this.state.selectedFile) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "file-select-field__selected-file"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_file_preview__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          file: this.state.selectedFile,
+          style: ['full']
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.selectedFile.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, _util_file__WEBPACK_IMPORTED_MODULE_3__["default"].filesize(this.state.selectedFile.size)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.selectedFile.url));
+      }
+
+      return 'Select a file';
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var widget;
+
+      if (this.state.isOpen) {
+        widget = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "overlay"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_file_picker_widget__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          defaultSelectedFiles: this.state.selectedFile ? [this.state.selectedFile] : null,
+          defaultSelectedFileIds: this.state.selectedFile ? [this.state.selectedFile.id] : null,
+          defaultDirectoryId: this.state.selectedFile && this.state.selectedFile.directory ? this.state.selectedFile.directory.id : null,
+          onCancel: this.close.bind(this),
+          onSelectionConfirm: this.onSelectionConfirm.bind(this)
+        }));
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: 'file-select-field',
+        onClick: this.open.bind(this)
+      }, this.renderFilePreview()), widget);
+    }
+  }]);
+
+  return FileSelectField;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+_defineProperty(FileSelectField, "defaultProps", {
+  path: {},
+  data: {},
+  label: '',
+  name: ''
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (FileSelectField);
 
 /***/ }),
 
@@ -35915,6 +36098,98 @@ _defineProperty(Page, "defaultProps", {
 
 /***/ }),
 
+/***/ "./resources/js/core/ui/breadcrumbs.js":
+/*!*********************************************!*\
+  !*** ./resources/js/core/ui/breadcrumbs.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Breadcrumbs; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var Breadcrumbs = /*#__PURE__*/function (_React$Component) {
+  _inherits(Breadcrumbs, _React$Component);
+
+  var _super = _createSuper(Breadcrumbs);
+
+  function Breadcrumbs() {
+    _classCallCheck(this, Breadcrumbs);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(Breadcrumbs, [{
+    key: "onClick",
+    value: function onClick(item) {
+      this.props.onClick(item);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "breadcrumbs"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: 'breadcrumbs__list'
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        onClick: function onClick(e) {
+          return _this.onClick(null);
+        }
+      }, this.props.rootText), this.props.items.map(function (item, i) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: i,
+          onClick: function onClick(e) {
+            return _this.onClick(item);
+          }
+        }, item.name);
+      })));
+    }
+  }]);
+
+  return Breadcrumbs;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+_defineProperty(Breadcrumbs, "defaultProps", {
+  rootText: 'My files',
+  onClick: function onClick(item) {}
+});
+
+
+
+/***/ }),
+
 /***/ "./resources/js/core/ui/button.js":
 /*!****************************************!*\
   !*** ./resources/js/core/ui/button.js ***!
@@ -36563,23 +36838,16 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(FileBrowser);
 
-  function FileBrowser(props) {
-    var _this;
-
+  function FileBrowser() {
     _classCallCheck(this, FileBrowser);
 
-    _this = _super.call(this, props);
-    _this.state = {
-      selectedFileIds: [],
-      selectedFiles: []
-    };
-    return _this;
+    return _super.apply(this, arguments);
   }
 
   _createClass(FileBrowser, [{
     key: "onDirectoryContextClick",
     value: function onDirectoryContextClick(action, directory) {
-      var _this2 = this;
+      var _this = this;
 
       if (action === 'delete') {
         _util__WEBPACK_IMPORTED_MODULE_3__["default"].confirm({
@@ -36588,7 +36856,7 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
           confirmButtonText: 'Yes, delete directory',
           cancelButtonText: 'No, keep directory',
           confirm: function confirm() {
-            return _this2.props.onDirectoryDelete(directory.id);
+            return _this.props.onDirectoryDelete(directory.id);
           }
         });
       } else if (action === 'rename') {
@@ -36596,7 +36864,7 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
           title: 'New name',
           defaultValue: directory.name,
           confirm: function confirm(value) {
-            return _this2.props.onDirectoryRename(value, directory.id);
+            return _this.props.onDirectoryRename(value, directory.id);
           }
         });
       }
@@ -36604,7 +36872,7 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onFileContextClick",
     value: function onFileContextClick(action, file) {
-      var _this3 = this;
+      var _this2 = this;
 
       if (action === 'delete') {
         _util__WEBPACK_IMPORTED_MODULE_3__["default"].confirm({
@@ -36613,7 +36881,7 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
           confirmButtonText: 'Yes, delete file',
           cancelButtonText: 'No, keep file',
           confirm: function confirm() {
-            return _this3.props.onFileDelete(file.id);
+            return _this2.props.onFileDelete(file.id);
           }
         });
       } else if (action === 'rename') {
@@ -36621,13 +36889,13 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
           title: 'New name',
           defaultValue: file.name,
           confirm: function confirm(value) {
-            return _this3.props.onFileRename(value, file.id);
+            return _this2.props.onFileRename(value, file.id);
           }
         });
       } else if (action === 'download') {
         this.props.onFileOpen(file);
       } else if (action === 'multi-delete') {
-        this.props.onSelectionDelete(this.state.selectedFileIds, this.state.selectedFiles);
+        this.props.onSelectionDelete(this.props.selectedFileIds, this.props.selectedFiles);
       }
     }
   }, {
@@ -36653,29 +36921,35 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "deselectFile",
     value: function deselectFile(file) {
-      var selectedFileIds = this.state.selectedFileIds.filter(function (fileId) {
+      var selectedFileIds = this.props.selectedFileIds.filter(function (fileId) {
         return fileId !== file.id;
       });
-      var selectedFiles = this.state.selectedFiles.filter(function (currFile) {
+      var selectedFiles = this.props.selectedFiles.filter(function (currFile) {
         return currFile.id !== file.id;
       });
+      /*
       this.setState({
-        selectedFileIds: selectedFileIds,
-        selectedFiles: selectedFiles
+          selectedFileIds: selectedFileIds,
+          selectedFiles: selectedFiles
       });
+      */
+
       this.props.onSelectionChange(selectedFileIds, selectedFiles);
     }
   }, {
     key: "selectFile",
     value: function selectFile(file) {
-      var selectedFileIds = this.state.selectedFileIds;
+      var selectedFileIds = this.props.selectedFileIds;
       selectedFileIds.push(file.id);
-      var selectedFiles = this.state.selectedFiles;
+      var selectedFiles = this.props.selectedFiles;
       selectedFiles.push(file);
+      /*
       this.setState({
-        selectedFileIds: selectedFileIds,
-        selectedFiles: selectedFiles
+          selectedFileIds: selectedFileIds,
+          selectedFiles: selectedFiles
       });
+      */
+
       this.props.onSelectionChange(selectedFileIds, selectedFiles);
     }
   }, {
@@ -36683,21 +36957,24 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
     value: function deselectAllExcept(file) {
       var selectedFileIds = [file.id];
       var selectedFiles = [file];
+      /*
       this.setState({
-        selectedFileIds: selectedFileIds,
-        selectedFiles: selectedFiles
+          selectedFileIds: selectedFileIds,
+          selectedFiles: selectedFiles
       });
+      */
+
       this.props.onSelectionChange(selectedFileIds, selectedFiles);
     }
   }, {
     key: "isFileSelected",
     value: function isFileSelected(file) {
-      return this.state.selectedFileIds.includes(file.id);
+      return this.props.selectedFileIds.includes(file.id);
     }
   }, {
     key: "renderFiles",
     value: function renderFiles() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (!this.props.files.length) {
         return null;
@@ -36705,8 +36982,8 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
 
       var links = [['Download', 'download'], ['Rename', 'rename'], ['Delete', 'delete']];
 
-      if (this.state.selectedFileIds.length > 1) {
-        links = [['Delete ' + this.state.selectedFileIds.length + ' files', 'multi-delete']];
+      if (this.props.selectedFileIds.length > 1) {
+        links = [['Delete ' + this.props.selectedFileIds.length + ' files', 'multi-delete']];
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -36719,13 +36996,13 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
           key: i,
           links: links,
           onClick: function onClick(path) {
-            return _this4.onFileContextClick(path, file);
+            return _this3.onFileContextClick(path, file);
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_file__WEBPACK_IMPORTED_MODULE_7__["default"], {
           file: file,
-          isSelected: _this4.isFileSelected(file),
+          isSelected: _this3.isFileSelected(file),
           onClick: function onClick(e, file) {
-            return _this4.handleFileClick(e, file);
+            return _this3.handleFileClick(e, file);
           }
         })));
       }));
@@ -36733,7 +37010,7 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderDirectories",
     value: function renderDirectories() {
-      var _this5 = this;
+      var _this4 = this;
 
       if (!this.props.directories.length) {
         return null;
@@ -36749,12 +37026,12 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
           key: i,
           links: [['Rename', 'rename'], ['Delete', 'delete']],
           onClick: function onClick(path) {
-            return _this5.onDirectoryContextClick(path, directory);
+            return _this4.onDirectoryContextClick(path, directory);
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "directory",
           onClick: function onClick(e) {
-            return _this5.props.onDirectoryClick(directory.id);
+            return _this4.props.onDirectoryClick(directory.id);
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "directory__icon"
@@ -36791,6 +37068,8 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
 _defineProperty(FileBrowser, "defaultProps", {
   files: [],
   directories: [],
+  selectedFileIds: [],
+  selectedFiles: [],
   onDirectoryClick: function onDirectoryClick(id) {},
   onFileClick: function onFileClick(id) {},
   onDirectoryDelete: function onDirectoryDelete(id) {},
@@ -36987,6 +37266,240 @@ _defineProperty(FileDropZone, "defaultProps", {
 });
 
 /* harmony default export */ __webpack_exports__["default"] = (FileDropZone);
+
+/***/ }),
+
+/***/ "./resources/js/core/ui/file-picker-widget.js":
+/*!****************************************************!*\
+  !*** ./resources/js/core/ui/file-picker-widget.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/api */ "./resources/js/api/api.js");
+/* harmony import */ var _file_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./file-browser */ "./resources/js/core/ui/file-browser.js");
+/* harmony import */ var _button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./button */ "./resources/js/core/ui/button.js");
+/* harmony import */ var _icon_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icon-button */ "./resources/js/core/ui/icon-button.js");
+/* harmony import */ var _file__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./file */ "./resources/js/core/ui/file.js");
+/* harmony import */ var _breadcrumbs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./breadcrumbs */ "./resources/js/core/ui/breadcrumbs.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+
+var FilePickerWidget = /*#__PURE__*/function (_React$Component) {
+  _inherits(FilePickerWidget, _React$Component);
+
+  var _super = _createSuper(FilePickerWidget);
+
+  function FilePickerWidget(props) {
+    var _this;
+
+    _classCallCheck(this, FilePickerWidget);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      isLoading: true,
+      directories: [],
+      files: [],
+      directoryPath: [],
+      currentDirectory: null,
+      selectedFileIds: _this.props.defaultSelectedFileIds,
+      selectedFiles: _this.props.defaultSelectedFiles
+    };
+    return _this;
+  }
+
+  _createClass(FilePickerWidget, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.props.defaultDirectoryId) {
+        this.load(this.props.defaultDirectoryId);
+        return;
+      }
+
+      this.load();
+    }
+  }, {
+    key: "load",
+    value: function load() {
+      var _this2 = this;
+
+      var directoryId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      // Get the path to the current directory
+      _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.path(directoryId).then(function (response) {
+        var path = response;
+
+        _this2.setState({
+          directoryPath: path,
+          currentDirectory: path[path.length - 1]
+        });
+      }); // Execute the get request
+
+      _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadDirectories(directoryId).then(function (response) {
+        var directories = response.data; // Execute the get request
+
+        _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadFiles(directoryId).then(function (response) {
+          var files = response.data;
+
+          _this2.setState({
+            isLoading: false,
+            directories: directories,
+            files: files
+          });
+        });
+      });
+    }
+  }, {
+    key: "onSelectionChange",
+    value: function onSelectionChange(ids, files) {
+      this.setState({
+        selectedFileIds: ids,
+        selectedFiles: files
+      });
+      this.props.onSelectionChange(ids, files);
+    }
+  }, {
+    key: "onSelectionConfirm",
+    value: function onSelectionConfirm() {
+      this.props.onSelectionConfirm(this.state.selectedFileIds, this.state.selectedFiles);
+    }
+  }, {
+    key: "onCancel",
+    value: function onCancel() {
+      this.props.onCancel();
+    }
+  }, {
+    key: "openDirectory",
+    value: function openDirectory(directoryId) {
+      this.load(directoryId);
+    }
+  }, {
+    key: "renderSidebar",
+    value: function renderSidebar() {
+      if (this.state.selectedFiles.length) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.selectedFiles.map(function (file, i) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_file__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            file: file,
+            key: i
+          });
+        }));
+      }
+
+      return null;
+    }
+  }, {
+    key: "renderContent",
+    value: function renderContent() {
+      var _this3 = this;
+
+      if (this.state.isLoading) {
+        return null;
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file-picker-widget__main"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_file_browser__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        selectedFiles: this.state.selectedFiles,
+        selectedFileIds: this.state.selectedFileIds,
+        directories: this.state.directories,
+        files: this.state.files,
+        onDirectoryClick: function onDirectoryClick(directory) {
+          return _this3.openDirectory(directory);
+        },
+        onSelectionChange: this.onSelectionChange.bind(this)
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file-picker-widget__side"
+      }, this.renderSidebar()));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file-picker-widget"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file-picker-widget__header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file-picker-widget__header-title"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_breadcrumbs__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        items: this.state.directoryPath,
+        onClick: function onClick(item) {
+          if (item) {
+            _this4.openDirectory(item.id);
+
+            return;
+          }
+
+          _this4.openDirectory();
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file-picker-widget__header-options"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icon_button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        name: 'close',
+        onClick: this.onCancel.bind(this)
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file-picker-widget__content"
+      }, this.renderContent()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file-picker-widget__footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        text: 'Cancel',
+        style: ['secondary'],
+        onClick: this.onCancel.bind(this)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        text: 'Select file',
+        style: this.state.selectedFileIds.length ? [] : ['disabled'],
+        onClick: this.state.selectedFileIds.length ? this.onSelectionConfirm.bind(this) : null
+      })));
+    }
+  }]);
+
+  return FilePickerWidget;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+_defineProperty(FilePickerWidget, "defaultProps", {
+  multiple: false,
+  onSelectionChange: function onSelectionChange(ids, files) {},
+  onSelectionConfirm: function onSelectionConfirm(ids, files) {},
+  onCancel: function onCancel() {},
+  defaultDirectoryId: null,
+  defaultSelectedFileIds: [],
+  defaultSelectedFiles: []
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (FilePickerWidget);
 
 /***/ }),
 
@@ -37316,12 +37829,12 @@ var File = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_file_preview__WEBPACK_IMPORTED_MODULE_1__["default"], {
         file: this.props.file
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "file__content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "file__name"
       }, this.props.file.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "file__size"
-      }, _util_file__WEBPACK_IMPORTED_MODULE_2__["default"].filesize(this.props.file.size)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "file__disk"
-      }, this.props.file.disk));
+      }, _util_file__WEBPACK_IMPORTED_MODULE_2__["default"].filesize(this.props.file.size), " (", this.props.file.disk, ")")));
     }
   }]);
 
@@ -37513,6 +38026,89 @@ _defineProperty(Form, "defaultProps", {
 
 /***/ }),
 
+/***/ "./resources/js/core/ui/icon-button.js":
+/*!*********************************************!*\
+  !*** ./resources/js/core/ui/icon-button.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/helpers */ "./resources/js/util/helpers.js");
+/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icon */ "./resources/js/core/ui/icon.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+var IconButton = /*#__PURE__*/function (_React$Component) {
+  _inherits(IconButton, _React$Component);
+
+  var _super = _createSuper(IconButton);
+
+  function IconButton() {
+    _classCallCheck(this, IconButton);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(IconButton, [{
+    key: "onClick",
+    value: function onClick(e) {
+      e.stopPropagation();
+      this.props.onClick();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: _util_helpers__WEBPACK_IMPORTED_MODULE_1__["default"].className('icon-button', this.props.style),
+        onClick: this.onClick.bind(this),
+        type: 'button'
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icon__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        name: this.props.name
+      }));
+    }
+  }]);
+
+  return IconButton;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+_defineProperty(IconButton, "defaultProps", {
+  name: 'fingerprint',
+  onClick: function onClick() {}
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (IconButton);
+
+/***/ }),
+
 /***/ "./resources/js/core/ui/icon.js":
 /*!**************************************!*\
   !*** ./resources/js/core/ui/icon.js ***!
@@ -37572,7 +38168,7 @@ var Icon = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: 'icon icon--' + this.props.style,
-        onClick: this.onClick.bind(this)
+        onClick: this.props.onClick ? this.onClick.bind(this) : null
       }, this.props.name);
     }
   }]);
@@ -37585,7 +38181,7 @@ _defineProperty(Icon, "defaultProps", {
   'type': 'icon',
   'style': 'default',
   'name': 'fingerprint',
-  onClick: function onClick() {}
+  onClick: null
 });
 
 /* harmony default export */ __webpack_exports__["default"] = (Icon);

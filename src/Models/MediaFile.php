@@ -25,12 +25,13 @@ class MediaFile extends Model
      */
     public function delete()
     {
-        $disk = config('cmf.media_library_disk');
+        $filename = $this->filename;
+        $disk = $this->disk;
+
+        parent::delete();
+
         $storage = Storage::disk($disk);
-
-        $storage->delete($this->filename);
-
-        return parent::delete();
+        $storage->delete($filename);
     }
 
     /**

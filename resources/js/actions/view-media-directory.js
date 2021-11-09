@@ -3,13 +3,12 @@ import api from "../api/api";
 import path from "../state/path";
 import util from "../core/ui/util";
 import Button from "../core/ui/button";
-import Title from "../core/ui/title";
 import FileBrowser from "../core/ui/file-browser";
 import FileDropZone from "../core/ui/file-drop-zone";
-import FilePreview from "../core/ui/file-preview";
 import FileView from "../core/ui/file-view";
 import Dropdown from "../core/ui/dropdown";
 import MultiFileView from "../core/ui/multi-file-view";
+import Breadcrumbs from "../core/ui/breadcrumbs";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -109,8 +108,8 @@ class ViewMediaDirectory extends React.Component {
         } else if (selectedFiles.length === 1) {
             this.setState({
                 currentFile: selectedFiles[0],
-                selectedFiles: [],
-                selectedFileIds: []
+                selectedFiles: selectedFiles,
+                selectedFileIds: selectedFileIds
             });
         } else {
             this.setState({
@@ -214,22 +213,17 @@ class ViewMediaDirectory extends React.Component {
     }
 
     renderBreadcrumbs() {
-
-        let items = this.state.directoryPath.map((directory, i) => {
-            return (
-                <li key={i} onClick={e => this.openDirectory(directory.id)}>
-                    {directory.name}
-                </li>
-            );
-        });
-
         return (
-            <div className="breadcrumbs">
-                <ul className={'breadcrumbs__list'}>
-                    <li onClick={e => this.openDirectory()}>My files</li>
-                    {items}
-                </ul>
-            </div>
+            <Breadcrumbs
+                items={this.state.directoryPath}
+                onClick={item => {
+                    if (item) {
+                        this.openDirectory(item.id);
+                        return;
+                    }
+                    this.openDirectory();
+                }}
+            />
         );
     }
 
@@ -279,6 +273,8 @@ class ViewMediaDirectory extends React.Component {
                         <FileBrowser
                             directories={this.state.directories}
                             files={this.state.files}
+                            selectedFiles={this.state.selectedFiles}
+                            selectedFileIds={this.state.selectedFileIds}
                             onDirectoryClick={this.openDirectory.bind(this)}
                             onDirectoryDelete={this.handleDeleteDirectory.bind(this)}
                             onDirectoryRename={this.handleRenameDirectory.bind(this)}

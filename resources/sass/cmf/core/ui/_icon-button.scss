@@ -1,0 +1,18 @@
+@include block(icon-button)
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $border-radius-1;
+    padding: $rule / 4 $rule / 1.5;
+    width: $rule;
+    height: $rule;
+    cursor: pointer;
+    transition: background-color .25s;
+    background-color: $color03;
+
+    &:hover
+    {
+        background-color: desaturate(darken($color03, 5%), 5%);
+    }
+}

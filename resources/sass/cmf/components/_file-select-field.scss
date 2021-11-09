@@ -1,0 +1,14 @@
+@include block(file-select-field)
+{
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    border: $border-width-1 solid $color06;
+    border-radius: $border-radius-3;
+    padding: $rule / 2;
+
+    @include element(selected-file)
+    {
+        width: 100%;
+    }
+}

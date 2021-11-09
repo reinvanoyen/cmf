@@ -27,6 +27,7 @@ import DateTimeView from "./date-time-view";
 import Thumbnail from "./thumbnail";
 import Card from "./card";
 import Dropdown from "./dropdown";
+import FileSelectField from "./file-select-field";
 
 export default {
     'date-time-field': DateTimeField,
@@ -57,5 +58,6 @@ export default {
     'boolean-field': BooleanField,
     'thumbnail': Thumbnail,
     'card': Card,
-    'dropdown': Dropdown
+    'dropdown': Dropdown,
+    'file-select-field': FileSelectField
 };

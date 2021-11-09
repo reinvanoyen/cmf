@@ -29,3 +29,21 @@ input:-webkit-autofill {
 {
     -webkit-tap-highlight-color: transparent;
 }
+
+::-webkit-scrollbar
+{
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: $border-radius-1;
+    background: $color03;
+
+    &:hover
+    {
+        background: $color12;
+    }
+}
+
+::selection { background: $color12; color: $color01; }

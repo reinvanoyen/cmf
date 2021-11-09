@@ -2,7 +2,7 @@
 {
     display: grid;
     padding: $rule;
-    grid-gap: $rule;
+    grid-gap: $rule / 3;
     grid-template-columns: repeat(4, 1fr);
 
     @include element(item)

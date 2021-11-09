@@ -7,7 +7,7 @@ class Icon extends React.Component {
         'type': 'icon',
         'style': 'default',
         'name': 'fingerprint',
-        onClick: () => {}
+        onClick: null
     };
 
     onClick(e) {
@@ -17,7 +17,7 @@ class Icon extends React.Component {
 
     render() {
         return (
-            <span className={'icon icon--'+this.props.style} onClick={this.onClick.bind(this)}>
+            <span className={'icon icon--'+this.props.style} onClick={this.props.onClick ? this.onClick.bind(this) : null}>
                 {this.props.name}
             </span>
         );

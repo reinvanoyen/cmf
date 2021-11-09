@@ -1,5 +1,6 @@
 @include block(button)
 {
+    position: relative;
     color: $color01;
     border-radius: $border-radius-1;
     background-color: $color12;
@@ -11,6 +12,23 @@
     &:hover
     {
         background-color: lighten($color12, 5%);
+    }
+
+    @include modifier(disabled)
+    {
+        overflow: hidden;
+        cursor: not-allowed;
+
+        &:after
+        {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba($color03, .75);
+        }
     }
 
     @include modifier(secondary)

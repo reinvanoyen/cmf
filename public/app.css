@@ -75,6 +75,29 @@ input:-webkit-autofill {
   -webkit-tap-highlight-color: transparent;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #e8e8f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6226db;
+}
+
+::-moz-selection {
+  background: #6226db;
+  color: #ffffff;
+}
+
+::selection {
+  background: #6226db;
+  color: #ffffff;
+}
+
 @-webkit-keyframes fadein {
   from {
     opacity: 0;
@@ -430,6 +453,7 @@ body.api-loading .page:after {
 }
 
 .button {
+  position: relative;
   color: #ffffff;
   border-radius: 8px;
   background-color: #6226db;
@@ -444,6 +468,21 @@ body.api-loading .page:after {
 
 .button:hover {
   background-color: #723cdf;
+}
+
+.button--disabled {
+  overflow: hidden;
+  cursor: not-allowed;
+}
+
+.button--disabled:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(232, 232, 241, 0.75);
 }
 
 .button--secondary {
@@ -1003,7 +1042,7 @@ body.api-loading .page:after {
 .file {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 1rem 2rem;
   transition: background-color 0.25s;
   border-radius: 8px;
@@ -1027,19 +1066,24 @@ body.api-loading .page:after {
   margin-right: 1rem;
 }
 
-.file__name {
-  display: flex;
-  align-items: center;
+.file__content {
   flex-grow: 1;
-  width: 30%;
+}
+
+.file__name {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
 }
 
 .file__size {
-  width: 30%;
-}
-
-.file__disk {
-  width: 10%;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: #878787;
 }
 
 .context-menu__menu {
@@ -1076,7 +1120,7 @@ body.api-loading .page:after {
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 9999;
+  z-index: 9998;
   top: 0;
   right: 0;
   bottom: 0;
@@ -1225,7 +1269,7 @@ body.api-loading .page:after {
 .directory-list {
   display: grid;
   padding: 2rem;
-  grid-gap: 2rem;
+  grid-gap: 0.6666666667rem;
   grid-template-columns: repeat(4, 1fr);
 }
 
@@ -1358,6 +1402,98 @@ body.api-loading .page:after {
 
 .multi-file-view__footer {
   margin-top: 2rem;
+}
+
+.file-picker-widget {
+  display: flex;
+  flex-direction: column;
+  padding: 0.6666666667rem;
+  border: 2px solid #e8e8f1;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px 0 rgba(70, 70, 70, 0.1);
+  width: 80vw;
+  height: 80vh;
+}
+
+.file-picker-widget__header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.file-picker-widget__header-title {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.file-picker-widget__header-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.file-picker-widget__header-options > * {
+  margin-left: 0.6666666667rem;
+}
+
+.file-picker-widget__header-options > *:first-child {
+  margin-left: 0;
+}
+
+.file-picker-widget__content {
+  display: flex;
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.file-picker-widget__footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.file-picker-widget__footer > * {
+  margin-left: 0.6666666667rem;
+}
+
+.file-picker-widget__footer > *:first-child {
+  margin-left: 0;
+}
+
+.file-picker-widget__main {
+  width: 75%;
+}
+
+.file-picker-widget__side {
+  position: sticky;
+  top: 0;
+  width: 25%;
+}
+
+.icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0.5rem 1.3333333333rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  background-color: #e8e8f1;
+}
+
+.icon-button:hover {
+  background-color: #dadae6;
 }
 
 .definition-list {
@@ -1616,6 +1752,19 @@ body.api-loading .page:after {
 
 .text-field:focus {
   border-color: #e8e8f1;
+}
+
+.file-select-field {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid #dfe0e2;
+  border-radius: 3px;
+  padding: 1rem;
+}
+
+.file-select-field__selected-file {
+  width: 100%;
 }
 
 .card {

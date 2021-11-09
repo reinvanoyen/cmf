@@ -27,11 +27,15 @@ Route::middleware([
         Route::get('modules/{module}/{action}/{id}/{execute}', [ComponentsController::class, 'execute'])->where('id', '[0-9]+');
         Route::post('modules/{module}/{action}/{id}/{execute}', [ComponentsController::class, 'execute'])->where('id', '[0-9]+');
 
-        // Get user data
+        // Auth
         Route::get('auth/user', [AuthController::class, 'user']);
         Route::get('auth/logout', [AuthController::class, 'logout']);
 
         // Media
+        Route::get('media/path', [MediaController::class, 'path']);
+        Route::get('media/load-directories', [MediaController::class, 'loadDirectories']);
+        Route::get('media/load-files', [MediaController::class, 'loadFiles']);
+
         Route::post('media/rename-directory', [MediaController::class, 'renameDirectory']);
         Route::post('media/delete-directory', [MediaController::class, 'deleteDirectory']);
         Route::post('media/create-directory', [MediaController::class, 'createDirectory']);

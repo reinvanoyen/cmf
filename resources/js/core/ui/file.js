@@ -18,14 +18,13 @@ export default class File extends React.Component {
                 <div className="file__preview">
                     <FilePreview file={this.props.file} />
                 </div>
-                <div className="file__name">
-                    {this.props.file.name}
-                </div>
-                <div className="file__size">
-                    {fileUtil.filesize(this.props.file.size)}
-                </div>
-                <div className="file__disk">
-                    {this.props.file.disk}
+                <div className="file__content">
+                    <div className="file__name">
+                        {this.props.file.name}
+                    </div>
+                    <div className="file__size">
+                        {fileUtil.filesize(this.props.file.size)} ({this.props.file.disk})
+                    </div>
                 </div>
             </div>
         );

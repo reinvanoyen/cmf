@@ -12,6 +12,8 @@ class FileBrowser extends React.Component {
     static defaultProps = {
         files: [],
         directories: [],
+        selectedFileIds: [],
+        selectedFiles: [],
         onDirectoryClick: id => {},
         onFileClick: id => {},
         onDirectoryDelete: id => {},
@@ -22,15 +24,6 @@ class FileBrowser extends React.Component {
         onSelectionChange: (ids, files) => {},
         onSelectionDelete: (ids, files) => {}
     };
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            selectedFileIds: [],
-            selectedFiles: []
-        };
-    }
 
     onDirectoryContextClick(action, directory) {
 
@@ -80,7 +73,7 @@ class FileBrowser extends React.Component {
 
         } else if (action === 'multi-delete') {
 
-            this.props.onSelectionDelete(this.state.selectedFileIds, this.state.selectedFiles);
+            this.props.onSelectionDelete(this.props.selectedFileIds, this.props.selectedFiles);
         }
     }
 
@@ -90,7 +83,6 @@ class FileBrowser extends React.Component {
         } else {
             this.deselectAllExcept(file);
         }
-
         this.props.onFileClick(file.id);
     }
 
@@ -104,29 +96,33 @@ class FileBrowser extends React.Component {
 
     deselectFile(file) {
 
-        let selectedFileIds = this.state.selectedFileIds.filter(fileId => fileId !== file.id);
-        let selectedFiles = this.state.selectedFiles.filter(currFile => currFile.id !== file.id);
+        let selectedFileIds = this.props.selectedFileIds.filter(fileId => fileId !== file.id);
+        let selectedFiles = this.props.selectedFiles.filter(currFile => currFile.id !== file.id);
 
+        /*
         this.setState({
             selectedFileIds: selectedFileIds,
             selectedFiles: selectedFiles
         });
+        */
 
         this.props.onSelectionChange(selectedFileIds, selectedFiles);
     }
 
     selectFile(file) {
 
-        let selectedFileIds = this.state.selectedFileIds;
+        let selectedFileIds = this.props.selectedFileIds;
         selectedFileIds.push(file.id);
 
-        let selectedFiles = this.state.selectedFiles;
+        let selectedFiles = this.props.selectedFiles;
         selectedFiles.push(file);
 
+        /*
         this.setState({
             selectedFileIds: selectedFileIds,
             selectedFiles: selectedFiles
         });
+        */
 
         this.props.onSelectionChange(selectedFileIds, selectedFiles);
     }
@@ -136,16 +132,18 @@ class FileBrowser extends React.Component {
         let selectedFileIds = [file.id];
         let selectedFiles = [file];
 
+        /*
         this.setState({
             selectedFileIds: selectedFileIds,
             selectedFiles: selectedFiles
         });
+        */
 
         this.props.onSelectionChange(selectedFileIds, selectedFiles);
     }
 
     isFileSelected(file) {
-        return this.state.selectedFileIds.includes(file.id);
+        return this.props.selectedFileIds.includes(file.id);
     }
 
     renderFiles() {
@@ -160,9 +158,9 @@ class FileBrowser extends React.Component {
             ['Delete', 'delete']
         ];
 
-        if (this.state.selectedFileIds.length > 1) {
+        if (this.props.selectedFileIds.length > 1) {
             links = [
-                ['Delete '+this.state.selectedFileIds.length+' files', 'multi-delete']
+                ['Delete '+this.props.selectedFileIds.length+' files', 'multi-delete']
             ];
         }
 

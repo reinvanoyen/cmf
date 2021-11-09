@@ -52,6 +52,8 @@
 @import 'cmf/core/ui/file-preview';
 @import 'cmf/core/ui/file-view';
 @import 'cmf/core/ui/multi-file-view';
+@import 'cmf/core/ui/file-picker-widget';
+@import 'cmf/core/ui/icon-button';
 @import 'cmf/core/ui/definition-list';
 
 // actions
@@ -68,6 +70,7 @@
 // components
 @import 'cmf/components/link';
 @import 'cmf/components/text-field';
+@import 'cmf/components/file-select-field';
 @import 'cmf/components/card';
 @import 'cmf/components/text-to-slug-field';
 @import 'cmf/components/text-view';
