@@ -25,4 +25,14 @@ return [
     |
     */
     'theme_image_src' => '/vendor/cmf/splash.jpg',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Media library disk
+    |--------------------------------------------------------------------------
+    |
+    | The disk to use for the media library.
+    |
+    */
+    'media_library_disk' => config('filesystems.default'),
 ];

@@ -4,11 +4,17 @@ import http from "../util/http";
 import ApiError from "../errors/ApiError";
 import meta from "../util/meta";
 
-let api = {};
+const token = meta.get('csrf');
+const api = {};
 
 api.modules = {};
 api.execute = {};
 api.auth = {};
+api.media = {};
+
+/*
+* Authentication API
+* */
 
 api.auth.user = () => {
     return api.get(`cmf/api/auth/user`);
@@ -25,6 +31,71 @@ api.auth.logout = () => {
     return api.get('cmf/api/auth/logout');
 };
 
+/*
+* Media API
+* */
+
+api.media.upload = (file, directoryId = null) => {
+
+    let body = {
+        file: file
+    };
+
+    if (directoryId) {
+        body.directory = directoryId;
+    }
+
+    return api.post('cmf/api/media/upload', http.formData(body));
+};
+
+api.media.createDirectory = (name, parentId = null) => {
+
+    let body = {
+        name: name
+    };
+
+    if (parentId) {
+        body.directory = parentId;
+    }
+
+    return api.post('cmf/api/media/create-directory', http.formData(body));
+};
+
+api.media.renameDirectory = (name, id) => {
+    return api.post('cmf/api/media/rename-directory', http.formData({
+        name: name,
+        directory: id
+    }));
+};
+
+api.media.deleteDirectory = (id) => {
+    return api.post('cmf/api/media/delete-directory', http.formData({
+        directory: id
+    }));
+};
+
+api.media.renameFile = (name, id) => {
+    return api.post('cmf/api/media/rename-file', http.formData({
+        name: name,
+        file: id
+    }));
+};
+
+api.media.deleteFile = (id) => {
+    return api.post('cmf/api/media/delete-file', http.formData({
+        file: id
+    }));
+};
+
+api.media.deleteFiles = (ids) => {
+    return api.post('cmf/api/media/delete-files', http.formData({
+        files: JSON.stringify(ids)
+    }));
+};
+
+/*
+* Modules API
+* */
 api.modules.index = () => {
     return api.get(`cmf/api/modules`);
 };
@@ -47,13 +118,15 @@ api.post = (path, formData) => {
 
     document.body.classList.add('api-loading');
 
+    formData.append('_token', token);
+
     return fetch(path, {
         credentials: 'include',
         method: 'post',
         body: formData,
         headers: {
             'Accept': 'application/json',
-            'X-CSRF-Token': meta.get('csrf')
+            'X-CSRF-Token': token
         }
     }).then(response => {
 
@@ -80,7 +153,7 @@ api.get = (path, params = {}) => {
         credentials: 'include',
         method: 'get',
         headers: {
-            'X-CSRF-Token': meta.get('csrf')
+            'X-CSRF-Token': token
         },
     }).then(response => {
 

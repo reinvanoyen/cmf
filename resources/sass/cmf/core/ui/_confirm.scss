@@ -1,0 +1,39 @@
+@include block(confirm)
+{
+    padding: $rule / 3;
+    border: $border-width-2 solid $color03;
+    background-color: $color01;
+    border-radius: $border-radius-1;
+    box-shadow: $box-shadow-1;
+
+    @include element(header)
+    {
+        display: block;
+        padding: $rule / 2 $rule;
+        @include type-3;
+    }
+
+    @include element(content)
+    {
+        display: block;
+        padding: 0 $rule;
+        margin-bottom: $rule / 2;
+    }
+
+    @include element(footer)
+    {
+        display: flex;
+        justify-content: flex-end;
+        padding: $rule / 2 $rule;
+
+        >*
+        {
+            margin-left: $rule / 2;
+
+            &:first-child
+            {
+                margin-left: 0;
+            }
+        }
+    }
+}

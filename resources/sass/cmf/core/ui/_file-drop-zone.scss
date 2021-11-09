@@ -1,0 +1,23 @@
+@include block(file-drop-zone)
+{
+    display: block;
+    width: 100%;
+
+    @include modifier(drag-over)
+    {
+        position: relative;
+
+        &:after
+        {
+            content: '';
+            pointer-events: none;
+            position: absolute;
+            top: $border-width-2;
+            right: $border-width-2;
+            bottom: $border-width-2;
+            left: $border-width-2;
+            display: block;
+            background-color: rgba($color10, .5);
+        }
+    }
+}

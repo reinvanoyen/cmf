@@ -1,0 +1,58 @@
+@include block(view-media-directory)
+{
+    border-radius: $border-radius-1;
+    border: $border-width-2 solid $color03;
+    background-color: $color01;
+
+    @include element(header)
+    {
+        display: flex;
+        align-items: center;
+        padding: $rule / 2 $rule;
+    }
+
+    @include element(header-title)
+    {
+        @include type-9;
+    }
+
+    @include element(header-options)
+    {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-grow: 1;
+
+        >*
+        {
+            margin-left: $rule / 3;
+
+            &:first-child
+            {
+                margin-left: 0;
+            }
+        }
+    }
+
+    @include element(content)
+    {
+        display: flex;
+    }
+
+    @include element(main)
+    {
+        width: 75%;
+    }
+
+    @include element(side)
+    {
+        position: relative;
+        width: 25%;
+
+        >*
+        {
+            position: sticky;
+            top: 0;
+        }
+    }
+}

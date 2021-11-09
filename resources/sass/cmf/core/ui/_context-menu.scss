@@ -1,0 +1,37 @@
+@include block(context-menu)
+{
+    @include element(menu)
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        margin-top: $rule / 3;
+        padding: $rule / 3;
+        border: $border-width-2 solid $color03;
+        background-color: $color01;
+        border-radius: $border-radius-1;
+        width: $rule * 10;
+        box-shadow: $box-shadow-1;
+    }
+
+    @include element(wrap)
+    {
+        position: relative;
+
+        @include block-modifier(open)
+        {
+            &:after
+            {
+                content: '';
+                position: absolute;
+                top: $border-width-2;
+                right: $border-width-2;
+                bottom: $border-width-2;
+                left: $border-width-2;
+                display: block;
+                background-color: rgba($color01, .5);
+            }
+        }
+    }
+}

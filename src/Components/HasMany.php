@@ -6,7 +6,6 @@ use ReinVanOyen\Cmf\Action\Action;
 use ReinVanOyen\Cmf\Action\Index;
 use ReinVanOyen\Cmf\Filters\Filter;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
-use ReinVanOyen\Cmf\Traits\BuildsQuery;
 
 class HasMany extends ActionComponent
 {
@@ -14,6 +13,11 @@ class HasMany extends ActionComponent
      * @var string $relationship
      */
     private $relationship;
+
+    /**
+     * @var string $meta
+     */
+    private $meta;
 
     /**
      * @var array $components
@@ -76,7 +80,7 @@ class HasMany extends ActionComponent
      */
     public function resolve(Action $action)
     {
-        $meta = RelationshipMetaGuesser::getMeta($this->relationship);
+        $meta = ($this->meta ? $this->meta : RelationshipMetaGuesser::getMeta($this->relationship));
         $components = (count($this->components) ? $this->components : $meta::index());
 
         // Make a new index with the model of the action
@@ -84,6 +88,7 @@ class HasMany extends ActionComponent
             ->relationship($this->relationship);
 
         // Copy some options from $meta
+
         $this->index
             ->singular($meta::getSingular())
             ->plural($meta::getPlural())
@@ -125,6 +130,16 @@ class HasMany extends ActionComponent
         $this->childAction($this->index);
 
         parent::resolve($action);
+    }
+
+    /**
+     * @param string $meta
+     * @return $this
+     */
+    public function meta(string $meta)
+    {
+        $this->meta = $meta;
+        return $this;
     }
 
     /**

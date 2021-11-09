@@ -1,0 +1,36 @@
+@include block(directory)
+{
+    display: flex;
+    align-items: center;
+    padding: $rule / 2 $rule;
+    transition: background-color .25s;
+    border-radius: $border-radius-1;
+    cursor: pointer;
+
+    &:hover
+    {
+        background-color: $color08;
+    }
+
+    @include element(icon)
+    {
+        flex-shrink: 0;
+        width: $rule * 2;
+        height: $rule * 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: $rule / 1.5;
+
+        svg *
+        {
+            fill: $color10;
+        }
+    }
+
+    @include element(name)
+    {
+        display: flex;
+        align-items: center;
+    }
+}

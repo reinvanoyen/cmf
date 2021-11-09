@@ -1,0 +1,12 @@
+@include block(directory-list)
+{
+    display: grid;
+    padding: $rule;
+    grid-gap: $rule;
+    grid-template-columns: repeat(4, 1fr);
+
+    @include element(item)
+    {
+        //
+    }
+}

@@ -55,6 +55,10 @@ class CmfServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/cmf'),
         ], 'cmf');
+
+        $this->publishes([
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ], 'cmf');
     }
 
     /**

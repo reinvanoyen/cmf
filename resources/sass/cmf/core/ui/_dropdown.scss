@@ -26,6 +26,17 @@
             background-color: desaturate(darken($color03, 5%), 5%);
         }
 
+        @include block-modifier(primary)
+        {
+            background-color: $color12;
+            color: $color01;
+
+            &:hover
+            {
+                background-color: lighten($color12, 5%);
+            }
+        }
+
         @include block-modifier(small)
         {
             @include type-2;
@@ -36,8 +47,7 @@
 
     @include element(label)
     {
-        color: $color02;
-        opacity: .65;
+        color: $color07;
         margin-right: $rule / 3;
     }
 

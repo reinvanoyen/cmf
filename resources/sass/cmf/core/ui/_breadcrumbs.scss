@@ -1,0 +1,36 @@
+@include block(breadcrumbs)
+{
+    @include element(list)
+    {
+        display: flex;
+
+        li
+        {
+            cursor: pointer;
+            color: $color07;
+
+            &:after
+            {
+                content: '→';
+                margin-left: $rule / 3;
+                margin-right: $rule / 3;
+            }
+
+            &:hover
+            {
+                opacity: 1;
+            }
+
+            &:last-child
+            {
+                color: $color02;
+                cursor: default;
+
+                &:after
+                {
+                    display: none;
+                }
+            }
+        }
+    }
+}

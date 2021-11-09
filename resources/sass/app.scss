@@ -38,6 +38,21 @@
 @import 'cmf/core/ui/wizard';
 @import 'cmf/core/ui/select-list';
 @import 'cmf/core/ui/link-list';
+@import 'cmf/core/ui/directory';
+@import 'cmf/core/ui/file';
+@import 'cmf/core/ui/context-menu';
+@import 'cmf/core/ui/overlay';
+@import 'cmf/core/ui/confirm';
+@import 'cmf/core/ui/prompt';
+@import 'cmf/core/ui/breadcrumbs';
+@import 'cmf/core/ui/file-drop-zone';
+@import 'cmf/core/ui/directory-list';
+@import 'cmf/core/ui/file-list';
+@import 'cmf/core/ui/thumbnail';
+@import 'cmf/core/ui/file-preview';
+@import 'cmf/core/ui/file-view';
+@import 'cmf/core/ui/multi-file-view';
+@import 'cmf/core/ui/definition-list';
 
 // actions
 @import 'cmf/actions/index';
@@ -48,6 +63,7 @@
 @import 'cmf/actions/export';
 @import 'cmf/actions/delete';
 @import 'cmf/actions/custom-controller';
+@import 'cmf/actions/view-media-directory';
 
 // components
 @import 'cmf/components/link';

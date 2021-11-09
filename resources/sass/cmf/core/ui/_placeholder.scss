@@ -35,7 +35,6 @@
     @include element(text)
     {
         margin-top: $rule / 2;
-        @include type-3;
-        color: $color07;
+        @include type-9;
     }
 }

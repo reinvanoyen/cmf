@@ -2,12 +2,7 @@
 
 use ReinVanOyen\Cmf\Http\Controllers\{
     FrontController,
-    ComponentsController
-};
-
-use \ReinVanOyen\Cmf\Http\Middleware\{
-    DispatchServingCmfEvent,
-    Authenticate
+    MediaController
 };
 
 Route::get('admin', [FrontController::class, 'index'])
@@ -20,3 +15,13 @@ Route::get('admin/{path}', [FrontController::class, 'index'])
 Route::get('admin/{path}', [FrontController::class, 'index'])
     ->where('path', '.*')
     ->middleware('web');
+
+Route::get('media/{id}/{filename}', [MediaController::class, 'streamFile'])
+    ->where('id', '[0-9]+')
+    ->middleware('web')
+    ->name('mediafile');
+
+Route::get('media/{conversion}/{id}/{filename}', [MediaController::class, 'streamFileConversion'])
+    ->where('id', '[0-9]+')
+    ->middleware('web')
+    ->name('mediafileconversion');

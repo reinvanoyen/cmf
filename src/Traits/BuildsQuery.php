@@ -48,6 +48,11 @@ trait BuildsQuery
     private $where = [];
 
     /**
+     * @var array $whereNull
+     */
+    private $whereNull = [];
+
+    /**
      * @var array $filters
      */
     private $filters = [];
@@ -71,6 +76,16 @@ trait BuildsQuery
     public function where(string $field, string $value)
     {
         $this->where[$field] = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     * @return $this
+     */
+    public function whereNull(string $column)
+    {
+        $this->whereNull[] = $column;
         return $this;
     }
 
@@ -156,6 +171,12 @@ trait BuildsQuery
         if (count($this->where)) {
             foreach ($this->where as $key => $value) {
                 $query = $query->where($key, $value);
+            }
+        }
+
+        if (count($this->whereNull)) {
+            foreach ($this->whereNull as $column) {
+                $query = $query->whereNull($column);
             }
         }
 

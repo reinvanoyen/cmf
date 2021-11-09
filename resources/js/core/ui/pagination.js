@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from "./link";
 import Button from "./button";
 
 class Pagination extends React.Component {

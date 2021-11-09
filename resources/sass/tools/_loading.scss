@@ -6,7 +6,7 @@
         {
             content: '';
             display: block;
-            position: absolute;
+            position: fixed;
             z-index: 9999;
             top: 50%;
             left: 50%;
@@ -24,7 +24,7 @@
         {
             content: '';
             display: block;
-            position: absolute;
+            position: fixed;
             z-index: 9999;
             box-sizing: border-box;
             top: 50%;

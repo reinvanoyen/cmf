@@ -8,6 +8,7 @@ import Login from "./auth/login";
 import UserPanel from "./user-panel";
 import ui from "./ui/util";
 import Logo from "./logo";
+import helpers from "../util/helpers";
 
 class Cmf extends React.Component {
 
@@ -51,9 +52,9 @@ class Cmf extends React.Component {
         if (
             path.forceRefresh ||
             this.state.path.module !== path.currentPath.module ||
-            this.state.path.action !== path.currentPath.action
+            this.state.path.action !== path.currentPath.action ||
+            ! helpers.shallowEqual(this.state.path.params, path.currentPath.params)
         ) {
-
             let module = this.state.modules.find(module => (module.id === path.currentPath.module));
 
             api.modules.action(path.currentPath, path.currentPath.params).then(result => {

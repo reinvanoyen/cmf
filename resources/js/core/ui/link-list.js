@@ -1,11 +1,10 @@
 import React from 'react';
-import path from "../../state/path";
 
 class LinkList extends React.Component {
 
     static defaultProps = {
         links: [],
-        onClick: (actionPath) => {}
+        onClick: actionPath => {}
     };
 
     onClick(e, actionPath) {

@@ -1,0 +1,16 @@
+@include block(file-list)
+{
+    user-select: none;
+    padding: $rule;
+    padding-top: 0;
+
+    @include element(item)
+    {
+        margin-bottom: $border-width-1;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+}

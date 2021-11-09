@@ -1,0 +1,17 @@
+@include block(thumb)
+{
+    width: 100%;
+
+    @include element(img)
+    {
+        display: block;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 1s;
+
+        @include block-modifier(loaded)
+        {
+            opacity: 1;
+        }
+    }
+}

@@ -1,0 +1,29 @@
+@include block(definition-list)
+{
+    @include type-2;
+
+    @include element(item)
+    {
+        display: flex;
+        margin-bottom: $rule / 1.5;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+
+    @include element(key)
+    {
+        display: block;
+        width: 40%;
+        color: $color07;
+        padding-right: $rule / 3;
+    }
+
+    @include element(value)
+    {
+        display: block;
+        width: 60%;
+    }
+}

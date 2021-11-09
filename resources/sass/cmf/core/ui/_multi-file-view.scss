@@ -1,0 +1,32 @@
+@include block(multi-file-view)
+{
+    padding: $rule / 2;
+
+    @include element(header)
+    {
+        margin-bottom: $rule;
+    }
+
+    @include element(content)
+    {
+        margin-bottom: $rule;
+    }
+
+    @include element(actions)
+    {
+        >*
+        {
+            margin-bottom: $rule / 4;
+
+            &:last-child
+            {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    @include element(footer)
+    {
+        margin-top: $rule;
+    }
+}
