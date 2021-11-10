@@ -52,6 +52,7 @@ class DateTimeView extends TextView
      */
     public function provision(ModelResource $model, array &$attributes)
     {
-        $attributes[$this->getName()] = $model->{$this->getName()}->format($this->format);
+        $date = $model->{$this->getName()};
+        $attributes[$this->getName()] = ($date ? $date->format($this->format) : '');
     }
 }
