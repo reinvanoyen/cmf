@@ -21,15 +21,16 @@ class BelongsToView extends Component
     private $titleColumn;
 
     /**
-     * BelongsToField constructor.
+     * BelongsToView constructor.
      * @param string $name
+     * @param string|null $meta
      */
-    public function __construct(string $name)
+    public function __construct(string $name, string $meta = null)
     {
         $this->name($name);
         $this->label(Str::labelify($name));
 
-        $meta = RelationshipMetaGuesser::getMeta($name);
+        $meta = $meta ?: RelationshipMetaGuesser::getMeta($name);
         $this->titleColumn($meta::getTitleColumn());
     }
 

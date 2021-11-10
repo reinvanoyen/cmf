@@ -27,8 +27,8 @@ class FilePickerWidget extends React.Component {
             files: [],
             directoryPath: [],
             currentDirectory: null,
-            selectedFileIds: this.props.defaultSelectedFileIds,
-            selectedFiles: this.props.defaultSelectedFiles
+            selectedFileIds: this.props.defaultSelectedFileIds || [],
+            selectedFiles: this.props.defaultSelectedFiles || []
         };
     }
 

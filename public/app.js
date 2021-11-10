@@ -37340,8 +37340,8 @@ var FilePickerWidget = /*#__PURE__*/function (_React$Component) {
       files: [],
       directoryPath: [],
       currentDirectory: null,
-      selectedFileIds: _this.props.defaultSelectedFileIds,
-      selectedFiles: _this.props.defaultSelectedFiles
+      selectedFileIds: _this.props.defaultSelectedFileIds || [],
+      selectedFiles: _this.props.defaultSelectedFiles || []
     };
     return _this;
   }
