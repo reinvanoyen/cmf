@@ -32573,6 +32573,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _rendering_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../rendering/components */ "./resources/js/rendering/components.js");
+/* harmony import */ var _core_ui_thumbnail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/ui/thumbnail */ "./resources/js/core/ui/thumbnail.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32596,6 +32597,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -32645,13 +32647,19 @@ var Card = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var photo;
+
+      if (this.props.data[this.props.photo] && this.props.data[this.props.photo].is_image) {
+        photo = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_thumbnail__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          src: this.props.data[this.props.photo].thumbnail
+        });
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: 'card'
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card__photo"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: this.props.data[this.props.photoCollection]
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, photo), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card__main"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card__title"
@@ -32665,7 +32673,7 @@ var Card = /*#__PURE__*/function (_React$Component) {
 _defineProperty(Card, "defaultProps", {
   data: {},
   titleField: '',
-  photoCollection: ''
+  photo: ''
 });
 
 /* harmony default export */ __webpack_exports__["default"] = (Card);

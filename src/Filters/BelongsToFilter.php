@@ -32,12 +32,12 @@ class BelongsToFilter extends Filter
      * EnumFilter constructor.
      * @param string $field
      */
-    public function __construct(string $field)
+    public function __construct(string $field, string $meta = null)
     {
         $this->field = $field;
         $this->export('field', $field);
 
-        $meta = RelationshipMetaGuesser::getMeta($this->field);
+        $meta = $meta ?: RelationshipMetaGuesser::getMeta($this->field);
 
         $this->model = $meta::getModel();
         $this->titleColumn($meta::getTitleColumn());

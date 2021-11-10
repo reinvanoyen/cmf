@@ -2,6 +2,7 @@
 
 namespace ReinVanOyen\Cmf\Components;
 
+use ReinVanOyen\Cmf\Http\Resources\MediaFileResource;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 
 class Card extends Compound
@@ -12,9 +13,9 @@ class Card extends Compound
     private $titleField;
 
     /**
-     * @var string $photoCollection
+     * @var string $photoName
      */
-    private $photoCollection;
+    private $photoName;
 
     /**
      * @return string
@@ -36,8 +37,8 @@ class Card extends Compound
             $attributes[$this->titleField] = $model->{$this->titleField};
         }
 
-        if ($this->photoCollection) {
-            $attributes[$this->photoCollection] = $model->getFirstMediaUrl($this->photoCollection);
+        if ($this->photoName) {
+            $attributes[$this->photoName] = new MediaFileResource($model->{$this->photoName});
         }
     }
 
@@ -53,13 +54,13 @@ class Card extends Compound
     }
 
     /**
-     * @param string $photoCollection
+     * @param string $photoName
      * @return $this
      */
-    public function photo(string $photoCollection)
+    public function photo(string $photoName)
     {
-        $this->photoCollection = $photoCollection;
-        $this->export('photoCollection', $this->photoCollection);
+        $this->photoName = $photoName;
+        $this->export('photo', $this->photoName);
         return $this;
     }
 }

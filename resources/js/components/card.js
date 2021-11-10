@@ -1,12 +1,13 @@
 import React from 'react';
 import components from "../rendering/components";
+import Thumbnail from "../core/ui/thumbnail";
 
 class Card extends React.Component {
 
     static defaultProps = {
         data: {},
         titleField: '',
-        photoCollection: ''
+        photo: ''
     };
 
     constructor(props) {
@@ -47,10 +48,16 @@ class Card extends React.Component {
 
     render() {
 
+        let photo;
+
+        if (this.props.data[this.props.photo] && this.props.data[this.props.photo].is_image) {
+            photo = <Thumbnail src={this.props.data[this.props.photo].thumbnail} />;
+        }
+
         return (
             <div className={'card'}>
                 <div className="card__photo">
-                    <img src={this.props.data[this.props.photoCollection]} />
+                    {photo}
                 </div>
                 <div className="card__main">
                     <div className="card__title">

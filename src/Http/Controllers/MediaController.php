@@ -52,7 +52,7 @@ class MediaController extends Controller
 
         $image = Image::make($tempFilePath);
         // Start of image manipulation
-        $image->fit(150, 150);
+        $image->fit(250, 250);
         // End of image manipulation
         $image->save();
 
