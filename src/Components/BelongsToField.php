@@ -30,13 +30,14 @@ class BelongsToField extends Component
     /**
      * BelongsToField constructor.
      * @param string $name
+     * @param string|null $meta
      */
-    public function __construct(string $name)
+    public function __construct(string $name, string $meta = null)
     {
         $this->name($name);
         $this->label(Str::labelify($name));
 
-        $meta = RelationshipMetaGuesser::getMeta($this->getName());
+        $meta = $meta ?: RelationshipMetaGuesser::getMeta($this->getName());
         $this->model = $meta::getModel();
         $this->titleColumn($meta::getTitleColumn());
     }
