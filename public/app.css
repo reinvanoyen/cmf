@@ -1874,12 +1874,14 @@ body.api-loading .page:after {
   margin-right: 2rem;
   opacity: 0.75;
   width: 25%;
+  flex-grow: 0;
 }
 
 .text-view__value {
   display: inline-flex;
   align-items: center;
   width: 75%;
+  flex-grow: 1;
 }
 
 .text-view__url {
