@@ -303,7 +303,7 @@ class ViewMediaDirectory extends React.Component {
                     <div className="view-media-directory__header-options">
                         <Button style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} text={'New directory'} />
                         <Dropdown text={'Upload'} style={['primary', 'small']}>
-                            Soon a upload widget will be visible here.
+                            Under development.
                         </Dropdown>
                     </div>
                 </div>

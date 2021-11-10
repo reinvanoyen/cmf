@@ -1,0 +1,19 @@
+@include block(file-thumb)
+{
+    @include element(preview)
+    {
+        margin-bottom: $rule / 2;
+    }
+
+    @include element(name)
+    {
+        @include type-2;
+        margin-bottom: $rule / 4
+    }
+
+    @include element(size)
+    {
+        @include type-2;
+        color: $color07;
+    }
+}

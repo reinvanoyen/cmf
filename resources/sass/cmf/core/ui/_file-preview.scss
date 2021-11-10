@@ -1,8 +1,10 @@
 @include block(file-preview)
 {
+    $default-size: $rule * 1.75;
+
     display: block;
-    width: $rule * 2;
-    height: $rule * 2;
+    width: $default-size;
+    height: $default-size;
     border-radius: $border-radius-3;
     overflow: hidden;
 
@@ -11,8 +13,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: $rule * 2;
-        height: $rule * 2;
+        width: $default-size;
+        height: $default-size;
         position: relative;
         border-radius: $border-radius-3;
         border: $border-width-1 solid var(--color);

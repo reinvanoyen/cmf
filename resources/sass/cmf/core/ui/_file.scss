@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: $rule / 2 $rule;
+    padding: $rule / 3 $rule / 2;
     transition: background-color .25s;
     border-radius: $border-radius-1;
     cursor: pointer;

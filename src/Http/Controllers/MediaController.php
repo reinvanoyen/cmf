@@ -87,7 +87,6 @@ class MediaController extends Controller
         $storage = Storage::disk($disk);
 
         $file = $request->file('file');
-
         $filename = \ReinVanOyen\Cmf\Support\Str::cleanFilename($file->getClientOriginalName());
         $path = $file->store('media/'.date('Y/m'), $disk);
 

@@ -1010,7 +1010,7 @@ body.api-loading .page:after {
 .directory {
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
   transition: background-color 0.25s;
   border-radius: 8px;
   cursor: pointer;
@@ -1027,7 +1027,7 @@ body.api-loading .page:after {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 1.3333333333rem;
+  margin-right: 1rem;
 }
 
 .directory__icon svg * {
@@ -1043,7 +1043,7 @@ body.api-loading .page:after {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 1rem 2rem;
+  padding: 0.6666666667rem 1rem;
   transition: background-color 0.25s;
   border-radius: 8px;
   cursor: pointer;
@@ -1307,8 +1307,8 @@ body.api-loading .page:after {
 
 .file-preview {
   display: block;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 3px;
   overflow: hidden;
 }
@@ -1317,8 +1317,8 @@ body.api-loading .page:after {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   position: relative;
   border-radius: 3px;
   border: 1px solid var(--color);
@@ -1494,6 +1494,26 @@ body.api-loading .page:after {
 
 .icon-button:hover {
   background-color: #dadae6;
+}
+
+.file-thumb__preview {
+  margin-bottom: 1rem;
+}
+
+.file-thumb__name {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.file-thumb__size {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: #878787;
 }
 
 .definition-list {

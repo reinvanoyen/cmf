@@ -2,7 +2,7 @@
 {
     display: flex;
     align-items: center;
-    padding: $rule / 2 $rule;
+    padding: $rule / 2 $rule / 2;
     transition: background-color .25s;
     border-radius: $border-radius-1;
     cursor: pointer;
@@ -20,7 +20,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: $rule / 1.5;
+        margin-right: $rule / 2;
 
         svg *
         {

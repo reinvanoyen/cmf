@@ -2,6 +2,8 @@ import React from 'react';
 import FilePickerWidget from "../core/ui/file-picker-widget";
 import FilePreview from "../core/ui/file-preview";
 import file from "../util/file";
+import Field from "../core/ui/field";
+import FileThumb from "../core/ui/file-thumb";
 
 class FileSelectField extends React.Component {
 
@@ -57,14 +59,7 @@ class FileSelectField extends React.Component {
 
     renderFilePreview() {
         if (this.state.selectedFile) {
-            return (
-                <div className="file-select-field__selected-file">
-                    <FilePreview file={this.state.selectedFile} style={['full']} />
-                    <div>{this.state.selectedFile.name}</div>
-                    <div>{file.filesize(this.state.selectedFile.size)}</div>
-                    <div>{this.state.selectedFile.url}</div>
-                </div>
-            );
+            return <FileThumb file={this.state.selectedFile} />;
         }
 
         return 'Select a file';
@@ -90,9 +85,11 @@ class FileSelectField extends React.Component {
 
         return (
             <React.Fragment>
-                <div className={'file-select-field'} onClick={this.open.bind(this)}>
-                    {this.renderFilePreview()}
-                </div>
+                <Field name={this.props.name} label={this.props.label} errors={this.props.errors}>
+                    <div className={'file-select-field'} onClick={this.open.bind(this)}>
+                        {this.renderFilePreview()}
+                    </div>
+                </Field>
                 {widget}
             </React.Fragment>
         );
