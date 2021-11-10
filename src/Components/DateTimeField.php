@@ -40,7 +40,8 @@ class DateTimeField extends Component
      */
     public function provision(ModelResource $model, array &$attributes)
     {
-        $attributes[$this->getName()] = $model->{$this->getName()}->format('Y-m-d\TH:i');
+        $date = $model->{$this->getName()};
+        $attributes[$this->getName()] = ($date ? $date->format('Y-m-d\TH:i') : '');
     }
 
     /**
