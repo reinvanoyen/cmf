@@ -48,17 +48,15 @@ class Card extends React.Component {
 
     render() {
 
-        let photo;
+        let photoStyle = {};
 
         if (this.props.data[this.props.photo] && this.props.data[this.props.photo].is_image) {
-            photo = <Thumbnail src={this.props.data[this.props.photo].thumbnail} />;
+            photoStyle.backgroundImage = 'url('+this.props.data[this.props.photo].conversions.preview+')';
         }
 
         return (
             <div className={'card'}>
-                <div className="card__photo">
-                    {photo}
-                </div>
+                <div className="card__photo" style={photoStyle}></div>
                 <div className="card__main">
                     <div className="card__title">
                         {this.props.data[this.props.titleField]}
