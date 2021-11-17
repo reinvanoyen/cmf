@@ -16,8 +16,8 @@ class BelongsToField extends React.Component {
         super(props);
 
         this.state = {
-            value: '',
-            data: []
+            value: (this.props.data[this.props.name] ? this.props.data[this.props.name].id : ''),
+            options: []
         };
     }
 
@@ -27,8 +27,13 @@ class BelongsToField extends React.Component {
 
     handleChange(e) {
         this.setState({
-            value: e.target.value
+            value: parseInt(e.target.value)
         });
+    }
+
+    getData(data) {
+        data[this.props.name] = (this.state.value ? this.state.options.find(opt => opt.id === this.state.value) : null);
+        return data;
     }
 
     componentDidUpdate(prevProps) {
@@ -51,7 +56,7 @@ class BelongsToField extends React.Component {
             // Set the data to the state
             this.setState({
                 value: (this.state.value ? this.state.value : (this.props.nullable ? '' : response.data[0].id)),
-                data: response.data
+                options: response.data
             });
         });
     }
@@ -68,7 +73,7 @@ class BelongsToField extends React.Component {
             );
         }
 
-        this.state.data.forEach(row => {
+        this.state.options.forEach(row => {
             options.push(
                 <option value={row.id} key={row.id}>
                     {row[this.props.titleColumn]}

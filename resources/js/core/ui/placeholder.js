@@ -1,10 +1,11 @@
 import React from 'react';
 import icons from "./icons";
+import Icon from "./icon";
 
 class Placeholder extends React.Component {
 
     static defaultProps = {
-        icon: 'imageUpload',
+        icon: 'upload_file',
         onClick: () => {}
     };
 
@@ -16,7 +17,7 @@ class Placeholder extends React.Component {
         return (
             <div className={'placeholder'} onClick={this.onClick.bind(this)}>
                 <div className="placeholder__icon">
-                    {icons[this.props.icon]}
+                    <Icon name={this.props.icon} style={'placeholder'} />
                 </div>
                 <div className="placeholder__text">
                     {this.props.children}

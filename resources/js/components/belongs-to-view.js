@@ -1,5 +1,4 @@
 import React from 'react';
-import Field from "../core/ui/field";
 
 class BelongsToView extends React.Component {
 

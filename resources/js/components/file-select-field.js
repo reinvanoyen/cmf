@@ -1,7 +1,5 @@
 import React from 'react';
 import FilePickerWidget from "../core/ui/file-picker-widget";
-import FilePreview from "../core/ui/file-preview";
-import file from "../util/file";
 import Field from "../core/ui/field";
 import FileThumb from "../core/ui/file-thumb";
 
@@ -19,8 +17,8 @@ class FileSelectField extends React.Component {
 
         this.state = {
             isOpen: false,
-            selectedFile: null,
-            selectedFileId: null
+            selectedFile: this.props.data[this.props.name] || null,
+            selectedFileId: (this.props.data[this.props.name] ? this.props.data[this.props.name].id : null)
         };
     }
 
@@ -31,6 +29,11 @@ class FileSelectField extends React.Component {
                 selectedFileId: (this.props.data[this.props.name] ? this.props.data[this.props.name].id : null),
             });
         }
+    }
+
+    getData(data) {
+        data[this.props.name] = this.state.selectedFile || null;
+        return data;
     }
 
     handleSubmit(data) {

@@ -1,13 +1,51 @@
 @include block(thumb)
 {
+    $loader-size: $rule / 1.5;
+
+    position: relative;
     width: 100%;
+    padding-top: 100%;
+    height: 0;
+    background-color: $color03;
+
+    &:before
+    {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 9999;
+        box-sizing: border-box;
+        top: 50%;
+        left: 50%;
+        width: $loader-size;
+        height: $loader-size;
+        margin-top: -$loader-size / 2;
+        margin-left: -$loader-size / 2;
+        border-radius: 50%;
+        border-top: 2px solid $color12;
+        border-right: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        border-left: 2px solid $color12;
+        animation: spin .25s linear infinite;
+    }
+
+    @include modifier(loaded)
+    {
+        padding-top: 0;
+        height: auto;
+
+        &:before
+        {
+            display: none;
+        }
+    }
 
     @include element(img)
     {
         display: block;
         width: 100%;
         opacity: 0;
-        transition: opacity 1s;
+        transition: opacity .25s;
 
         @include block-modifier(loaded)
         {

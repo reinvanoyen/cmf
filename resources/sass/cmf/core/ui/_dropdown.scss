@@ -1,6 +1,7 @@
 @include block(dropdown)
 {
     position: relative;
+    display: inline-block;
 
     @include element(trigger)
     {

@@ -13,7 +13,7 @@ export default class BooleanField extends React.Component {
         super(props);
 
         this.state = {
-            value: false
+            value: (this.props.data[this.props.name] ? (this.props.data[this.props.name] === 1) : false)
         };
     }
 
@@ -29,6 +29,11 @@ export default class BooleanField extends React.Component {
         data[this.props.name] = (this.state.value ? 1 : 0);
     }
 
+    getData(data) {
+        data[this.props.name] = (this.state.value ? 1 : 0);
+        return data;
+    }
+
     switch() {
         this.setState({
             value: ! this.state.value
@@ -38,9 +43,7 @@ export default class BooleanField extends React.Component {
     render() {
         return (
             <Field name={this.props.name} label={this.props.label}>
-                <div className={'boolean-field boolean-field--'+(this.state.value ? 'checked' : 'unchecked')} onClick={this.switch.bind(this)}>
-                    {this.state.value ? 'Yes' : 'No'}
-                </div>
+                <div className={'boolean-field boolean-field--'+(this.state.value ? 'checked' : 'unchecked')} onClick={this.switch.bind(this)}></div>
             </Field>
         );
     }

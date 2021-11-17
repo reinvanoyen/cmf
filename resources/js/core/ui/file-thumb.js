@@ -8,7 +8,7 @@ export default class FileThumb extends React.Component {
         return (
             <div className="file-thumb">
                 <div className="file-thumb__preview">
-                    <FilePreview file={this.props.file} style={['full']} />
+                    <FilePreview file={this.props.file} style={['full']} mediaConversion={'preview'} />
                 </div>
                 <div className={'file-thumb__name'}>
                     {this.props.file.name}

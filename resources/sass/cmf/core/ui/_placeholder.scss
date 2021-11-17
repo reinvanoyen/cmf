@@ -17,19 +17,6 @@
     {
         display: block;
         margin: auto;
-        width: $rule * 4;
-
-        svg
-        {
-            display: block;
-            width: 100%;
-            height: 100%;
-
-            *
-            {
-                fill: $color05;
-            }
-        }
     }
 
     @include element(text)

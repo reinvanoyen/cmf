@@ -1,17 +1,40 @@
 @include block(boolean-field)
 {
+    $padding: $rule / 6;
+    $width: $rule * 1.5;
+    $knob-size: $rule / 1.5;
+
+    position: relative;
     cursor: pointer;
     display: inline-block;
-    color: $color03;
-    border: 1px solid $color03;
     padding: $rule / 6 $rule / 6;
-    border-radius: $border-radius-3;
+    border-radius: $knob-size;
+    height: $knob-size + $padding;
+    width: $width + $padding;
+    background-color: $color03;
     transition: background-color .25s;
-    @include type-2;
+
+    &:after
+    {
+        content: '';
+        position: absolute;
+        left: $padding / 2;
+        top: $padding / 2;
+        border-radius: 50%;
+        width: $knob-size;
+        height: $knob-size;
+        background-color: $color01;
+        box-shadow: $box-shadow-1;
+        transition: transform .25s;
+    }
 
     @include modifier(checked)
     {
-        color: $color01;
-        background-color: $color03;
+        background-color: $color12;
+
+        &:after
+        {
+            transform: translateX($width - $knob-size);
+        }
     }
 }

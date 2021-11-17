@@ -28,6 +28,14 @@ class TextField extends Component
     }
 
     /**
+     * @return string
+     */
+    public function type(): string
+    {
+        return 'text-field';
+    }
+
+    /**
      * @return $this
      */
     public function multiline()
@@ -37,11 +45,13 @@ class TextField extends Component
     }
 
     /**
-     * @return string
+     * @param mixed $style
+     * @return $this
      */
-    public function type(): string
+    public function style($style)
     {
-        return 'text-field';
+        $this->export('style', $style);
+        return $this;
     }
 
     /**

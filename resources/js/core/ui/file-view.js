@@ -47,7 +47,7 @@ export default class FileView extends React.Component {
                 </div>
                 <div className="file-view__content">
                     <div className="file-view__preview">
-                        <FilePreview style="full" file={this.props.file} />
+                        <FilePreview style="full" file={this.props.file} mediaConversion={'preview'} />
                     </div>
                     <DefinitionList data={[
                         ['Uploaded', this.props.file.created_at],

@@ -7,7 +7,9 @@ class Dropdown extends React.Component {
     static defaultProps = {
         label: '',
         text: '',
-        style: null
+        style: null,
+        openIcon: 'expand_more',
+        closeIcon: 'expand_less'
     };
 
     constructor(props) {
@@ -69,11 +71,11 @@ class Dropdown extends React.Component {
         return (
             <div className={helpers.className('dropdown', this.props.style)+(this.state.isOpen ? ' dropdown--open' : '')} ref={this.dropdownRef}>
                 <div className="dropdown__trigger">
-                    <button className={'dropdown__button'} onClick={this.toggle.bind(this)}>
+                    <button className={'dropdown__button'} onClick={this.toggle.bind(this)} type={'button'}>
                         {label}
                         {this.props.text}
                         <span className={'dropdown__icon'}>
-                            <Icon name={(this.state.isOpen ? 'expand_less' : 'expand_more')} />
+                            <Icon name={(this.state.isOpen ? this.props.closeIcon : this.props.openIcon)} />
                         </span>
                     </button>
                 </div>

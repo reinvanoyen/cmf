@@ -1,0 +1,70 @@
+@include block(content-blocks)
+{
+    @include element(content)
+    {
+        //
+    }
+
+    @include element(footer)
+    {
+        margin-top: $rule / 2;
+    }
+
+    @include element(item)
+    {
+        margin-bottom: $rule / 3;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+}
+
+@include block(content-block)
+{
+    border-radius: $border-radius-1;
+    border: $border-width-2 solid $color03;
+    background-color: $color04;
+    margin-bottom: $rule;
+
+    @include element(header)
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $rule / 6 $rule / 3;
+        background-color: lighten($color03, 2%);
+    }
+
+    @include element(content)
+    {
+        padding: $rule / 3;
+    }
+
+    @include element(actions)
+    {
+        display: flex;
+        align-items: center;
+
+        >*
+        {
+            margin-left: $rule / 3;
+
+            &:first-child
+            {
+                margin-left: 0;
+            }
+        }
+    }
+
+    @include element(component)
+    {
+        margin-bottom: $rule;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+}

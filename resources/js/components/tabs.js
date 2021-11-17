@@ -27,6 +27,15 @@ class Tabs extends React.Component {
         });
     }
 
+    getData(data) {
+        this.componentLists.forEach(list => {
+            list.forEach(obj => {
+                obj.ref.current.getData(data);
+            });
+        });
+        return data;
+    }
+
     switchTab(index) {
         this.setState({
             currentTabIndex: index

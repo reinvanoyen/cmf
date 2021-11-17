@@ -30,7 +30,10 @@ class MediaFileResource extends JsonResource
             'updated_at' => $this->updated_at->format('F j Y H:i'),
             'is_image' => $this->is_image,
             'url' => route('mediafile', ['id' => $this->id, 'filename' => $this->name,], true),
-            'thumbnail' => route('mediafileconversion', ['conversion' => 'thumbnail', 'id' => $this->id, 'filename' => $this->name,], true),
+            'conversions' => [
+                'thumb' => route('mediafileconversion', ['conversion' => 'cmf-thumb', 'id' => $this->id, 'filename' => $this->name,], true),
+                'preview' => route('mediafileconversion', ['conversion' => 'cmf-preview', 'id' => $this->id, 'filename' => $this->name,], true),
+            ],
         ];
     }
 }

@@ -4,8 +4,6 @@ import Trix from 'trix';
 import { TrixEditor } from "react-trix";
 import "trix/dist/trix.css";
 
-//import { ReactTrixRTEInput } from "react-trix-rte";
-
 export default class RichtextField extends React.Component {
 
     static defaultProps = {
@@ -18,7 +16,7 @@ export default class RichtextField extends React.Component {
         super(props);
 
         this.state = {
-            value: ''
+            value: this.props.data[this.props.name] || ''
         };
     }
 
@@ -44,6 +42,11 @@ export default class RichtextField extends React.Component {
 
     handleSubmit(data) {
         data[this.props.name] = this.state.value;
+    }
+
+    getData(data) {
+        data[this.props.name] = this.state.value;
+        return data;
     }
 
     render() {

@@ -24,6 +24,13 @@ class Stack extends React.Component {
         });
     }
 
+    getData(data) {
+        this.componentList.forEach(obj => {
+            obj.ref.current.getData(data);
+        });
+        return data;
+    }
+
     getStackStyle() {
 
         if (! this.props.grid) {

@@ -3,7 +3,10 @@
 namespace ReinVanOyen\Cmf;
 
 use Illuminate\Support\ServiceProvider;
+use Intervention\Image\Image;
 use ReinVanOyen\Cmf\Console\UserCommand;
+use ReinVanOyen\Cmf\Contracts\MediaConverter;
+use ReinVanOyen\Cmf\Media\Converter;
 
 class CmfServiceProvider extends ServiceProvider
 {
@@ -17,6 +20,18 @@ class CmfServiceProvider extends ServiceProvider
         $this->app->singleton(Cmf::class, Cmf::class);
         $this->app->singleton(MakeableStorage::class, MakeableStorage::class);
         $this->app->bind(PathResolver::class, PathResolver::class);
+        $this->app->singleton(MediaConverter::class, function () {
+            $converter = new Converter();
+            $converter->registerConversion('cmf-thumb', function (Image $image) {
+                $image->fit(250, 250);
+            });
+            $converter->registerConversion('cmf-preview', function (Image $image) {
+                $image->resize(450, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            });
+            return $converter;
+        });
 
         $this->app->when(Cmf::class)
             ->needs('$title')

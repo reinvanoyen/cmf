@@ -9,7 +9,8 @@ export default class FilePreview extends React.Component {
 
     static defaultProps = {
         file: {},
-        style: []
+        style: [],
+        mediaConversion: 'thumb'
     };
 
     getFileFormat() {
@@ -39,7 +40,7 @@ export default class FilePreview extends React.Component {
         let content;
 
         if (this.props.file.is_image) {
-            content = <Thumbnail src={this.props.file.thumbnail} />;
+            content = <Thumbnail src={this.props.file.conversions[this.props.mediaConversion]} />;
         } else {
             content = (
                 <div className="file-preview__textual" style={{'--color': this.getFileColor()}}>

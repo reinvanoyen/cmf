@@ -3,7 +3,6 @@
 namespace ReinVanOyen\Cmf\Action;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use ReinVanOyen\Cmf\Filters\Filter;
 use ReinVanOyen\Cmf\Http\Resources\ModelCollection;
 use ReinVanOyen\Cmf\Traits\BuildsQuery;

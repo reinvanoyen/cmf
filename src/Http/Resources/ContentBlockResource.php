@@ -2,32 +2,23 @@
 
 namespace ReinVanOyen\Cmf\Http\Resources;
 
-class ForeignModelResource extends ModelResource
+// @TODO this class shouldn't really be extending ModelResource
+// This was done, to avoid having to change the type hint on ModelResource everywhere
+// Eventually this will have to be seperated
+
+class ContentBlockResource extends ModelResource
 {
     /**
-     * @var array $components
+     * ContentBlockResource constructor.
+     * @param $resource
+     * @param $components
      */
-    private static $components = [];
-
-    /**
-     * @var array $fields
-     */
-    private static $fields = [];
-
-    /**
-     * @param array $components
-     */
-    public static function provision(array $components)
+    public function __construct($resource, $components, $fields = [])
     {
-        self::$components = $components;
-    }
+        parent::__construct($resource);
 
-    /**
-     * @param array $fields
-     */
-    public static function fields(array $fields)
-    {
-        self::$fields = $fields;
+        $this->components = $components;
+        $this->fields = $fields;
     }
 
     /**
@@ -42,16 +33,13 @@ class ForeignModelResource extends ModelResource
             'id' => $this->id,
         ];
 
-        // Provision the API with the needed data from the components
-        foreach (self::$components as $component) {
+        foreach ($this->components as $component) {
             $component->provision($this, $attributes);
         }
 
-        foreach (self::$fields as $field) {
+        foreach ($this->fields as $field) {
             $attributes[$field] = $this->{$field};
         }
-
-        dd($attributes);
 
         return $attributes;
     }

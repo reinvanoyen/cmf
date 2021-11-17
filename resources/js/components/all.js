@@ -28,6 +28,7 @@ import Thumbnail from "./thumbnail";
 import Card from "./card";
 import Dropdown from "./dropdown";
 import FileSelectField from "./file-select-field";
+import ContentBlocks from "./content-blocks";
 
 export default {
     'date-time-field': DateTimeField,
@@ -59,5 +60,6 @@ export default {
     'thumbnail': Thumbnail,
     'card': Card,
     'dropdown': Dropdown,
-    'file-select-field': FileSelectField
+    'file-select-field': FileSelectField,
+    'content-blocks': ContentBlocks
 };

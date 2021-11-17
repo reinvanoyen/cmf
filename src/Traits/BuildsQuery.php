@@ -162,6 +162,7 @@ trait BuildsQuery
                 ->{$this->relationship}();
 
         } else {
+
             $query = $this->model::query();
         }
 

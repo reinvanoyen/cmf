@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use ReinVanOyen\Cmf\Contracts\MediaConverter;
 use ReinVanOyen\Cmf\Http\Resources\MediaDirectoryCollection;
 use ReinVanOyen\Cmf\Http\Resources\MediaDirectoryResource;
 use ReinVanOyen\Cmf\Http\Resources\MediaFileCollection;
@@ -23,6 +24,20 @@ use Spatie\TemporaryDirectory\TemporaryDirectory;
 class MediaController extends Controller
 {
     /**
+     * @var MediaConverter $mediaConverter
+     */
+    private $mediaConverter;
+
+    /**
+     * MediaController constructor.
+     * @param MediaConverter $mediaConverter
+     */
+    public function __construct(MediaConverter $mediaConverter)
+    {
+        $this->mediaConverter = $mediaConverter;
+    }
+
+    /**
      * @param Request $request
      * @param string $conversion
      * @param int $id
@@ -36,29 +51,11 @@ class MediaController extends Controller
             ->where('name', '=', $filename)
             ->firstOrFail();
 
-        $baseFilename = basename($file->filename);
-
-        $storage = Storage::disk($file->disk);
-        $conversionPath = 'conversions/'.$conversion.'/'.$baseFilename;
-
-        if ($storage->exists($conversionPath)) {
-            return $storage->response($conversionPath);
+        if (! $this->mediaConverter->isValidConversion($conversion)) {
+            abort(404);
         }
 
-        $tempDirectory = (new TemporaryDirectory())->create();
-        $tempFilePath = $tempDirectory->path().'/'.$baseFilename;
-
-        File::put($tempFilePath, $storage->get($file->filename));
-
-        $image = Image::make($tempFilePath);
-        // Start of image manipulation
-        $image->fit(250, 250);
-        // End of image manipulation
-        $image->save();
-
-        $storage->put($conversionPath, File::get($tempFilePath));
-        $tempDirectory->delete();
-        return $storage->response($conversionPath);
+        return $this->mediaConverter->streamConvertedFile($conversion, $file);
     }
 
     /**

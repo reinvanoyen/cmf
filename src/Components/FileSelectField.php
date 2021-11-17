@@ -53,7 +53,7 @@ class FileSelectField extends Component
     public function save(Model $model, $request)
     {
         if ($request->has($this->getName())) {
-            
+
             $mediaFile = MediaFile::find($request->input($this->getName()));
 
             if ($mediaFile) {

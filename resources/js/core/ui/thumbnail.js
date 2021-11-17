@@ -19,6 +19,16 @@ export default class Thumbnail extends React.Component {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.src !== prevProps.src) {
+            this.setState({
+                isLoaded: false
+            }, () => {
+                this.load();
+            });
+        }
+    }
+
     componentDidMount() {
         if (this.props.autoload) {
             this.load();
@@ -42,7 +52,6 @@ export default class Thumbnail extends React.Component {
     }
 
     render() {
-
         return (
             <div className={'thumb' + (this.state.isLoaded ? ' thumb--loaded' : '')}>
                 <img src={this.props.src} className="thumb__img" />
