@@ -88,8 +88,8 @@ class Index extends React.Component {
         api.execute.get(this.props.path, this.props.id,'load', params).then(response => {
             this.setState({
                 isLoading: false,
-                rows: response.data,
-                meta: response.meta || null
+                rows: response.data.data,
+                meta: response.data.meta || null
             });
         });
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import api from "../api/api";
 import path from "../state/path";
 import util from "../core/ui/util";
@@ -8,6 +9,7 @@ import FileDropZone from "../core/ui/file-drop-zone";
 import FileView from "../core/ui/file-view";
 import Dropdown from "../core/ui/dropdown";
 import MultiFileView from "../core/ui/multi-file-view";
+import FileUploader from "../core/ui/file-uploader";
 import Breadcrumbs from "../core/ui/breadcrumbs";
 
 class ViewMediaDirectory extends React.Component {
@@ -37,9 +39,7 @@ class ViewMediaDirectory extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.path.params.directory && this.props.path.params.directory !== prevProps.path.params.directory) {
-            this.load({
-                directory: this.props.path.params.directory
-            });
+            this.load(this.props.path.params.directory);
         } else if (this.props.path.params.directory !== prevProps.path.params.directory) {
             this.load();
         }
@@ -47,44 +47,32 @@ class ViewMediaDirectory extends React.Component {
 
     componentDidMount() {
         if (this.props.path.params.directory) {
-            this.load({
-                directory: this.props.path.params.directory
-            });
+            this.load(this.props.path.params.directory);
             return;
         }
         this.load();
     }
 
-    load(params = {}) {
+    async load(directoryId = null) {
 
-        // Get the path to the current directory
-        api.execute.get(this.props.path, this.props.id, 'path', params).then(response => {
+        await axios.all([
+            api.media.path(directoryId),
+            api.media.loadDirectories(directoryId),
+            api.media.loadFiles(directoryId)
+        ]).then(axios.spread((response1, response2, response3) => {
 
-            let path = response;
+            let path = response1.data.data;
+            let directories = response2.data.data;
+            let files = response3.data.data;
 
             this.setState({
+                isLoading: false,
                 directoryPath: path,
-                currentDirectory: path[path.length - 1]
+                currentDirectory: path[path.length - 1],
+                directories: directories,
+                files: files
             });
-        });
-
-        // Execute the get request
-        api.execute.get(this.props.path, this.props.id,'loadDirectories', params).then(response => {
-
-            let directories = response.data;
-
-            // Execute the get request
-            api.execute.get(this.props.path, this.props.id,'loadFiles', params).then(response => {
-
-                let files = response.data;
-
-                this.setState({
-                    isLoading: false,
-                    directories: directories,
-                    files: files
-                });
-            });
-        });
+        }));
     }
 
     openDirectory(id = null) {
@@ -124,6 +112,8 @@ class ViewMediaDirectory extends React.Component {
         api.media.deleteDirectory(directoryId).then(response => {
             util.notify('Directory deleted');
             path.refresh();
+        }, error => {
+            util.notify('Directory could not be deleted');
         })
     }
 
@@ -132,6 +122,8 @@ class ViewMediaDirectory extends React.Component {
             api.media.renameDirectory(name, directoryId).then(response => {
                 util.notify('Directory renamed');
                 path.refresh();
+            }, error => {
+                util.notify('Directory could not be renamed');
             });
         }
     }
@@ -141,6 +133,8 @@ class ViewMediaDirectory extends React.Component {
             api.media.renameFile(name, fileId).then(response => {
                 util.notify('File renamed');
                 path.refresh();
+            }, error => {
+                util.notify('File could not be deleted');
             });
         }
     }
@@ -149,6 +143,8 @@ class ViewMediaDirectory extends React.Component {
         api.media.deleteFile(fileId).then(response => {
             util.notify('File deleted');
             path.refresh();
+        }, error => {
+            util.notify('File could not be deleted');
         });
     }
 
@@ -156,6 +152,8 @@ class ViewMediaDirectory extends React.Component {
         api.media.deleteFiles(fileIds).then(response => {
             util.notify(fileIds.length+' files were deleted');
             path.refresh();
+        }, error => {
+            util.notify('Files could not be deleted');
         });
     }
 
@@ -163,16 +161,8 @@ class ViewMediaDirectory extends React.Component {
         window.open(file.url);
     }
 
-    handleCreateFile(file) {
-        if (
-            (! this.props.path.params.directory && ! file.directory) ||
-            (
-                (file.directory && this.props.path.params.directory) &&
-                (file.directory.id === this.props.path.params.directory)
-            )
-        ) {
-            path.refresh();
-        }
+    handleUploadDone() {
+        path.refresh();
     }
 
     handleCreateDirectory(directory) {
@@ -267,8 +257,8 @@ class ViewMediaDirectory extends React.Component {
                 <div className="view-media-directory__main">
                     <FileDropZone
                         directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
-                        onCreateFile={this.handleCreateFile.bind(this)}
                         onCreateDirectory={this.handleCreateDirectory.bind(this)}
+                        onUploadDone={this.handleUploadDone.bind(this)}
                     >
                         <FileBrowser
                             directories={this.state.directories}
@@ -303,7 +293,10 @@ class ViewMediaDirectory extends React.Component {
                     <div className="view-media-directory__header-options">
                         <Button style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} text={'New directory'} />
                         <Dropdown text={'Upload'} style={['primary', 'small']}>
-                            Under development.
+                            <FileUploader
+                                directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
+                                onUploadDone={this.handleUploadDone.bind(this)}
+                            />
                         </Dropdown>
                     </div>
                 </div>

@@ -62,4 +62,17 @@ class AuthController extends Controller
             'message' => 'Logged out',
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sessionInfo(Request $request)
+    {
+        return response()->json([
+            'data' => [
+                'csrfToken' => csrf_token(),
+            ],
+        ]);
+    }
 }

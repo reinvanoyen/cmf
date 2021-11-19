@@ -57,12 +57,15 @@ class Cmf extends React.Component {
         ) {
             let module = this.state.modules.find(module => (module.id === path.currentPath.module));
 
-            api.modules.action(path.currentPath, path.currentPath.params).then(result => {
+            api.modules.action(path.currentPath, path.currentPath.params).then(response => {
+
+                let action = response.data.data;
+
                 this.setState({
                     isLoading: false,
                     path: path.currentPath,
-                    module: module,
-                    action: result
+                    module,
+                    action
                 });
             });
         }
@@ -83,11 +86,12 @@ class Cmf extends React.Component {
         });
 
         // Load all modules from the API
-        api.modules.index().then(modules => {
+        api.modules.index().then(response => {
+
+            let modules = response.data.data;
+
             // Update the component with the modules
-            this.setState({
-                modules: modules
-            }, () => {
+            this.setState({modules}, () => {
                 this.bindPopState();
                 this.goToRequestedModule();
             });
@@ -182,7 +186,6 @@ class Cmf extends React.Component {
                         <Nav
                             modules={this.state.modules}
                             activeModule={this.state.module}
-                            onModuleSwitch={this.setLoadingState.bind(this)}
                         />
                     </div>
                     <div className="cmf__content">

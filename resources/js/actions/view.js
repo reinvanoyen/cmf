@@ -33,7 +33,7 @@ class View extends React.Component {
 
             // Set the data to the state
             this.setState({
-                data: response.data
+                data: response.data.data
             });
         });
     }

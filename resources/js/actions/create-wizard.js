@@ -41,19 +41,21 @@ class CreateWizard extends React.Component {
         }
 
         // Post the data to the backend
-        api.execute.post(this.props.path, this.props.id, 'save', http.formData(data))
+        api.execute.post(this.props.path, this.props.id, 'save', data)
             .then(response => {
 
-                this.redirect(response);
+                this.redirect(response.data);
 
                 // Notify the user
                 ui.notify(`${this.props.singular} was successfully created`);
 
             }, error => {
 
+                let response = error.response;
+
                 // @TODO standardize validation error handling
-                for (let k in error.body.errors) {
-                    ui.notify(error.body.errors[k]);
+                for (let k in response.data.errors) {
+                    ui.notify(response.data.errors[k]);
                 }
             });
     }

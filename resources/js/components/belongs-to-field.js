@@ -53,11 +53,12 @@ class BelongsToField extends React.Component {
     load() {
         // Load the data from the backend (with id as param)
         api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
+
+            let options = response.data.data;
+            let value = this.state.value ? this.state.value : (this.props.nullable ? '' : options[0].id);
+
             // Set the data to the state
-            this.setState({
-                value: (this.state.value ? this.state.value : (this.props.nullable ? '' : response.data[0].id)),
-                options: response.data
-            });
+            this.setState({value, options});
         });
     }
 

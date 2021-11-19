@@ -5,6 +5,7 @@ import Button from "./button";
 import IconButton from "./icon-button";
 import File from "./file";
 import Breadcrumbs from "./breadcrumbs";
+import axios from "axios";
 
 class FilePickerWidget extends React.Component {
 
@@ -41,36 +42,26 @@ class FilePickerWidget extends React.Component {
         this.load();
     }
 
-    load(directoryId = null) {
+    async load(directoryId = null) {
 
-        // Get the path to the current directory
-        api.media.path(directoryId).then(response => {
+        await axios.all([
+            api.media.path(directoryId),
+            api.media.loadDirectories(directoryId),
+            api.media.loadFiles(directoryId)
+        ]).then(axios.spread((response1, response2, response3) => {
 
-            let path = response;
+            let path = response1.data.data;
+            let directories = response2.data.data;
+            let files = response3.data.data;
 
             this.setState({
+                isLoading: false,
                 directoryPath: path,
-                currentDirectory: path[path.length - 1]
+                currentDirectory: path[path.length - 1],
+                directories: directories,
+                files: files
             });
-        });
-
-        // Execute the get request
-        api.media.loadDirectories(directoryId).then(response => {
-
-            let directories = response.data;
-
-            // Execute the get request
-            api.media.loadFiles(directoryId).then(response => {
-
-                let files = response.data;
-
-                this.setState({
-                    isLoading: false,
-                    directories: directories,
-                    files: files
-                });
-            });
-        });
+        }));
     }
 
     onSelectionChange(ids, files) {

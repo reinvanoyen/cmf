@@ -45,7 +45,7 @@ class Edit extends React.Component {
         api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
             // Set the data to the state
             this.setState({
-                data: response.data
+                data: response.data.data
             });
         });
     }
@@ -56,12 +56,12 @@ class Edit extends React.Component {
         data.id = this.props.path.params.id;
 
         // Post the data to the backend
-        api.execute.post(this.props.path, this.props.id,'save', http.formData(data))
+        api.execute.post(this.props.path, this.props.id,'save', data)
             .then(response => {
                 // Ready the form
                 this.formRef.current.ready();
                 // Redirect
-                this.redirect(response);
+                this.redirect(response.data);
                 // Notify the user
                 ui.notify(`${this.props.singular} was successfully updated`);
             }, response => {
@@ -69,7 +69,7 @@ class Edit extends React.Component {
                 this.formRef.current.ready();
                 // Set the error messages
                 this.setState({
-                    formErrors: response.body.errors
+                    formErrors: response.data.errors
                 });
                 ui.notify('The form contains errors');
             });

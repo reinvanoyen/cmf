@@ -74,6 +74,7 @@ export default class TextField extends React.Component {
                     disabled={this.props.disabled}
                     onChange={this.handleChange.bind(this)}
                     onKeyUp={this.handleChange.bind(this)}
+                    autoComplete={'off'}
                 />
             );
         }

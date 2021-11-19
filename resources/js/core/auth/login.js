@@ -20,7 +20,7 @@ class Login extends React.Component {
 
     loginAttempt(data) {
         api.auth.login(data.email, data.password).then(response => {
-            this.props.onSuccess(response.data);
+            this.props.onSuccess(response.data.data);
         }, error => {
             this.formRef.current.ready();
             this.props.onFail();

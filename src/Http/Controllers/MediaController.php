@@ -143,7 +143,7 @@ class MediaController extends Controller
     public function path(Request $request)
     {
         if (! $request->input('directory')) {
-            return [];
+            return ['data' => []];
         }
 
         $mediaDirectory = MediaDirectory::findOrFail($request->input('directory'));
@@ -154,7 +154,7 @@ class MediaController extends Controller
             array_unshift($path, $mediaDirectory);
         }
 
-        return $path;
+        return ['data' => $path,];
     }
 
     /**

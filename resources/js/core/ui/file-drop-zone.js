@@ -1,13 +1,16 @@
 import React from 'react';
 import util from "./util";
 import api from "../../api/api";
+import upload from "../../util/upload";
 
 class FileDropZone extends React.Component {
 
     static defaultProps = {
         directory: null,
+        onUploadStart: (file, directoryId) => {},
         onCreateFile: (file) => {},
-        onCreateDirectory: (directory) => {}
+        onCreateDirectory: (directory) => {},
+        onUploadDone: () => {}
     };
 
     constructor(props) {
@@ -72,15 +75,11 @@ class FileDropZone extends React.Component {
                 }
             } else if (files.length) {
                 for (let i = 0 ; i < files.length; i += 1) {
-                    api.media.upload(files[i], currentDirectoryId).then(response => {
-                        util.notify('File uploaded');
-                        this.props.onCreateFile(response.data);
-                    });
+                    this.upload(files[i], currentDirectoryId);
                 }
             }
         }
     }
-
 
     uploadFileTree(item, directoryId = null) {
 
@@ -88,11 +87,7 @@ class FileDropZone extends React.Component {
 
             item.file(file => {
                 if (file.name !== '.DS_Store') {
-                    // Upload file!
-                    api.media.upload(file, directoryId).then(response => {
-                        util.notify('File uploaded');
-                        this.props.onCreateFile(response.data);
-                    });
+                    this.upload(file, directoryId);
                 }
             });
 
@@ -100,7 +95,7 @@ class FileDropZone extends React.Component {
 
             api.media.createDirectory(item.name, directoryId).then(response => {
 
-                let directory = response.data;
+                let directory = response.data.data;
 
                 util.notify('Directory created');
                 this.props.onCreateDirectory(directory);
@@ -116,6 +111,32 @@ class FileDropZone extends React.Component {
                 });
             });
         }
+    }
+
+    upload(file, directoryId) {
+
+        this.props.onUploadStart(file, directoryId);
+
+        upload.queue(file, directoryId, file => {
+
+            this.props.onCreateFile(file);
+
+            if (upload.isDone()) {
+                this.props.onUploadDone();
+            }
+        });
+
+        /*
+        api.media.upload(file, directoryId, e => this.uploadProgress(e, file, directoryId)).then(response => {
+
+            util.notify('File uploaded');
+            this.props.onCreateFile(response.data.data);
+        });*/
+    }
+
+    uploadProgress(e, file, directoryId) {
+        let percent = (e.loaded / e.total) * 100;
+        console.log(percent);
     }
 
     render() {

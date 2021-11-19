@@ -33,14 +33,14 @@ class ModulesController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->pathResolver->modules();
+        return ['data' => $this->pathResolver->modules(),];
     }
 
     /**
      * @param Request $request
      * @param string $moduleId
      * @param string $actionId
-     * @return \ReinVanOyen\Cmf\Action\Action|null
+     * @return array
      */
     public function action(Request $request, string $moduleId, string $actionId)
     {
@@ -50,6 +50,6 @@ class ModulesController extends Controller
             abort(404);
         }
 
-        return $action;
+        return ['data' => $action,];
     }
 }

@@ -43,24 +43,27 @@ class Create extends React.Component {
         }
 
         // Post the data to the backend
-        api.execute.post(this.props.path, this.props.id, 'save', http.formData(data))
+        api.execute.post(this.props.path, this.props.id, 'save', data)
             .then(response => {
                 // Set the form to ready
                 this.formRef.current.ready();
                 // Redirect
-                this.redirect(response);
+                this.redirect(response.data);
                 // Notify the user
                 ui.notify(`${this.props.singular} was created`);
 
-            }, response => {
+            }, error => {
+
+                let response = error.response;
+
                 // Set the form to ready
                 this.formRef.current.ready();
                 // Set the error messages
                 this.setState({
-                    formErrors: response.body.errors
+                    formErrors: response.data.errors
                 });
                 // Notify the user
-                ui.notify('The form contains errors');
+                ui.notify(response.data.message);
             });
     }
 

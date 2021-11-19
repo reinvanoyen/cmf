@@ -1,10 +1,43 @@
 "use strict";
 
+import axios from 'axios';
 import http from "../util/http";
 import ApiError from "../errors/ApiError";
 import meta from "../util/meta";
 
-const token = meta.get('csrf');
+axios.defaults.headers.common['X-CSRF-TOKEN'] = meta.get('csrf');
+
+// Get the token from the server every x seconds
+const getSessionInfo = () => {
+    setTimeout(() => {
+        api.auth.sessionInfo().then(response => {
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = response.data.data.csrfToken;
+            getSessionInfo();
+        });
+    }, 120000);
+};
+
+getSessionInfo();
+
+axios.interceptors.request.use((config) => {
+    document.body.classList.add('api-loading');
+    return config;
+}, error => {
+    // Do something with request error
+    return Promise.reject(error);
+});
+
+// Add a response interceptor
+axios.interceptors.response.use(response => {
+    // HTTP response 2xx
+    document.body.classList.remove('api-loading');
+    return response;
+}, error => {
+    // HTTP response other than 2xx
+    document.body.classList.remove('api-loading');
+    return Promise.reject(error);
+});
+
 const api = {};
 
 api.modules = {};
@@ -16,26 +49,18 @@ api.media = {};
 * Authentication API
 * */
 
-api.auth.user = () => {
-    return api.get(`cmf/api/auth/user`);
-};
-
+api.auth.user = () => axios.get('cmf/api/auth/user');
+api.auth.logout = () => axios.get('cmf/api/auth/logout');
+api.auth.sessionInfo = () => axios.get('cmf/api/auth/session-info');
 api.auth.login = (email, password) => {
-    return api.post('cmf/api/auth/login', http.formData({
-        email: email,
-        password: password
-    }));
-};
-
-api.auth.logout = () => {
-    return api.get('cmf/api/auth/logout');
+    return axios.post('cmf/api/auth/login', {email, password});
 };
 
 /*
 * Media API
 * */
 
-api.media.upload = (file, directoryId = null) => {
+api.media.upload = (file, directoryId = null, onUploadProgress = () => {}) => {
 
     let body = {
         file: file
@@ -45,7 +70,7 @@ api.media.upload = (file, directoryId = null) => {
         body.directory = directoryId;
     }
 
-    return api.post('cmf/api/media/upload', http.formData(body));
+    return axios.post('cmf/api/media/upload', http.formData(body), {onUploadProgress});
 };
 
 api.media.path = (id = null) => {
@@ -56,7 +81,7 @@ api.media.path = (id = null) => {
         body.directory = id;
     }
 
-    return api.get('cmf/api/media/path', body);
+    return axios.get('cmf/api/media/path', {params: body});
 };
 
 api.media.loadDirectories = (id = null) => {
@@ -67,7 +92,7 @@ api.media.loadDirectories = (id = null) => {
         body.directory = id;
     }
 
-    return api.get('cmf/api/media/load-directories', body);
+    return axios.get('cmf/api/media/load-directories', {params: body});
 };
 
 api.media.loadFiles = (id = null) => {
@@ -78,129 +103,57 @@ api.media.loadFiles = (id = null) => {
         body.directory = id;
     }
 
-    return api.get('cmf/api/media/load-files', body);
+    return axios.get('cmf/api/media/load-files', {params: body});
 };
 
 api.media.createDirectory = (name, parentId = null) => {
 
-    let body = {
-        name: name
-    };
+    let body = {name};
 
     if (parentId) {
         body.directory = parentId;
     }
 
-    return api.post('cmf/api/media/create-directory', http.formData(body));
+    return axios.post('cmf/api/media/create-directory', body);
 };
 
-api.media.renameDirectory = (name, id) => {
-    return api.post('cmf/api/media/rename-directory', http.formData({
-        name: name,
-        directory: id
-    }));
+api.media.renameDirectory = (name, directory) => {
+    return axios.post('cmf/api/media/rename-directory', {name, directory});
 };
 
-api.media.deleteDirectory = (id) => {
-    return api.post('cmf/api/media/delete-directory', http.formData({
-        directory: id
-    }));
+api.media.deleteDirectory = directory => {
+    return axios.post('cmf/api/media/delete-directory', {directory});
 };
 
-api.media.renameFile = (name, id) => {
-    return api.post('cmf/api/media/rename-file', http.formData({
-        name: name,
-        file: id
-    }));
+api.media.renameFile = (name, file) => {
+    return axios.post('cmf/api/media/rename-file', {name, file});
 };
 
-api.media.deleteFile = (id) => {
-    return api.post('cmf/api/media/delete-file', http.formData({
-        file: id
-    }));
+api.media.deleteFile = (file) => {
+    return axios.post('cmf/api/media/delete-file', {file});
 };
 
-api.media.deleteFiles = (ids) => {
-    return api.post('cmf/api/media/delete-files', http.formData({
-        files: JSON.stringify(ids)
-    }));
+api.media.deleteFiles = (fileIds) => {
+    return axios.post('cmf/api/media/delete-files', {
+        files: JSON.stringify(fileIds)
+    });
 };
 
 /*
 * Modules API
 * */
-api.modules.index = () => {
-    return api.get(`cmf/api/modules`);
-};
+api.modules.index = () => axios.get(`cmf/api/modules`);
 
 api.modules.action = (path, params = {}) => {
-    return api.get(`cmf/api/modules/${path.module}/${path.action}`, params);
+    return axios.get(`cmf/api/modules/${path.module}/${path.action}`, {params});
 };
 
 api.execute.get = (path, id, execute, params = {}) => {
-    return api.get(`cmf/api/modules/${path.module}/${path.action}/${id}/${execute}`, params);
+    return axios.get(`cmf/api/modules/${path.module}/${path.action}/${id}/${execute}`, {params});
 };
 
-api.execute.post = (path, id, execute, formData) => {
-    return api.post(`cmf/api/modules/${path.module}/${path.action}/${id}/${execute}`, formData);
-};
-
-// HTTP Methods
-
-api.post = (path, formData) => {
-
-    document.body.classList.add('api-loading');
-
-    formData.append('_token', token);
-
-    return fetch(path, {
-        credentials: 'include',
-        method: 'post',
-        body: formData,
-        headers: {
-            'Accept': 'application/json',
-            'X-CSRF-Token': token
-        }
-    }).then(response => {
-
-        document.body.classList.remove('api-loading');
-
-        let json = response.json();
-
-        return json.then(json => {
-            if (response.ok) {
-                return json;
-            }
-            throw new ApiError(json, response.status, response.statusText);
-        });
-    });
-};
-
-api.get = (path, params = {}) => {
-
-    document.body.classList.add('api-loading');
-
-    let query = http.query(params);
-
-    return fetch(path + '?' + query, {
-        credentials: 'include',
-        method: 'get',
-        headers: {
-            'X-CSRF-Token': token
-        },
-    }).then(response => {
-
-        document.body.classList.remove('api-loading');
-
-        let json = response.json();
-
-        return json.then(json => {
-            if (response.ok) {
-                return json;
-            }
-            throw new ApiError(json, response.status, response.statusText);
-        });
-    });
+api.execute.post = (path, id, execute, params) => {
+    return axios.post(`cmf/api/modules/${path.module}/${path.action}/${id}/${execute}`, params);
 };
 
 export default api;

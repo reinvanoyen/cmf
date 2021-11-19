@@ -2,6 +2,7 @@ import React from 'react';
 import FilePickerWidget from "../core/ui/file-picker-widget";
 import Field from "../core/ui/field";
 import FileThumb from "../core/ui/file-thumb";
+import Placeholder from "../core/ui/placeholder";
 
 class FileSelectField extends React.Component {
 
@@ -65,7 +66,7 @@ class FileSelectField extends React.Component {
             return <FileThumb file={this.state.selectedFile} />;
         }
 
-        return 'Select a file';
+        return <Placeholder icon={'library_add'}>Select a {this.props.label}</Placeholder>;
     }
 
     render() {

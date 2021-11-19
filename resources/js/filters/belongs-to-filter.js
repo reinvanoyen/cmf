@@ -36,7 +36,7 @@ class BelongsToFilter extends React.Component {
         api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
 
             let options = {};
-            let data = response.data;
+            let data = response.data.data;
 
             data.forEach(row => {
                 options[row.id] = row[this.props.titleColumn];

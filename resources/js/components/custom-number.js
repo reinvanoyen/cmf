@@ -22,7 +22,7 @@ class CustomNumber extends React.Component {
         // Load the data from the backend (with id as param)
         api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
             this.setState({
-                number: response
+                number: response.data
             });
         });
     }

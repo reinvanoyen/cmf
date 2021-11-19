@@ -17,6 +17,22 @@ class MediaLibraryModule extends Module
     }
 
     /**
+     * @return string
+     */
+    public function id(): string
+    {
+        return 'media';
+    }
+
+    /**
+     * @return string
+     */
+    protected function icon()
+    {
+        return 'photo_library';
+    }
+
+    /**
      * @return Action
      */
     public function index(): Action

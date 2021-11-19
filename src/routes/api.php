@@ -30,6 +30,7 @@ Route::middleware([
         // Auth
         Route::get('auth/user', [AuthController::class, 'user']);
         Route::get('auth/logout', [AuthController::class, 'logout']);
+        Route::get('auth/session-info', [AuthController::class, 'sessionInfo']);
 
         // Media
         Route::get('media/path', [MediaController::class, 'path']);

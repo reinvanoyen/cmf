@@ -39,7 +39,7 @@ class FileUpload extends React.Component {
         // Load the data from the backend (with id as param)
         api.execute.post(this.props.path, this.props.id,'upload', formData).then(response => {
 
-            let file = response;
+            let file = response.data;
             this.done(file);
         });
     }
