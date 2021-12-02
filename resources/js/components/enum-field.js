@@ -16,16 +16,21 @@ export default class EnumField extends React.Component {
         super(props);
 
         this.state = {
-            value: ''
+            value: this.props.data[this.props.name] || ''
         };
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.data[this.props.name] !== prevProps.data[this.props.name]) {
             this.setState({
-                value: this.props.data[this.props.name]
+                value: this.props.data[this.props.name] || ''
             });
         }
+    }
+
+    getData(data) {
+        data[this.props.name] = this.state.value || '';
+        return data;
     }
 
     handleChange(e) {
@@ -35,7 +40,7 @@ export default class EnumField extends React.Component {
     }
 
     handleSubmit(data) {
-        data[this.props.name] = this.state.value;
+        data[this.props.name] = this.state.value || '';
     }
 
     render() {

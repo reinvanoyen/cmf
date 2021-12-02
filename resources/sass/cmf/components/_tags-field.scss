@@ -1,0 +1,70 @@
+@include block(tags-field)
+{
+    @include element(wrap)
+    {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border: $border-width-1 solid $color06;
+        border-radius: $border-radius-3;
+        padding: $rule / 3;
+        background-color: $color01;
+    }
+
+    @include element(tags)
+    {
+        //
+    }
+
+    @include element(input)
+    {
+        flex-grow: 1;
+    }
+
+    @include element(input-field)
+    {
+        width: 100%;
+        border: 0;
+        padding-left: $rule / 4;
+    }
+
+    @include element(autosuggest)
+    {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        left: 0;
+        top: 100%;
+        margin-top: $rule / 3;
+        padding: $rule / 3;
+        border: $border-width-2 solid $color03;
+        background-color: $color01;
+        border-radius: $border-radius-1;
+        box-shadow: $box-shadow-1;
+    }
+
+    @include element(autosuggestion)
+    {
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: $rule / 3;
+        padding-left: $rule / 2;
+        border-radius: $border-radius-1;
+        margin-bottom: $border-width-1;
+        transition: background-color .25s;
+        user-select: none;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+
+        &:hover
+        {
+            background-color: $color04;
+        }
+    }
+}

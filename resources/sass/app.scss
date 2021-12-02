@@ -57,6 +57,7 @@
 @import 'cmf/core/ui/file-thumb';
 @import 'cmf/core/ui/definition-list';
 @import 'cmf/core/ui/file-uploader';
+@import 'cmf/core/ui/tags';
 
 // actions
 @import 'cmf/actions/index';
@@ -70,6 +71,7 @@
 @import 'cmf/actions/view-media-directory';
 
 // components
+@import 'cmf/components/tags-field';
 @import 'cmf/components/link';
 @import 'cmf/components/text-field';
 @import 'cmf/components/file-select-field';
