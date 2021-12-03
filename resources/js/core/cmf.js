@@ -38,7 +38,7 @@ class Cmf extends React.Component {
         api.auth.user().then(response => {
 
             // Looks like we're logged in
-            let user = response.data;
+            let user = response.data.data;
             this.onAuthSuccess(user);
         }, error => {
             this.setState({
