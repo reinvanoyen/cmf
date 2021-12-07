@@ -3,6 +3,8 @@ import FilePickerWidget from "../core/ui/file-picker-widget";
 import Field from "../core/ui/field";
 import FileThumb from "../core/ui/file-thumb";
 import Placeholder from "../core/ui/placeholder";
+import helpers from "../util/helpers";
+import Icon from "../core/ui/icon";
 
 class FileSelectField extends React.Component {
 
@@ -10,7 +12,8 @@ class FileSelectField extends React.Component {
         path: {},
         data: {},
         label: '',
-        name: ''
+        name: '',
+        style: ''
     };
 
     constructor(props) {
@@ -63,7 +66,11 @@ class FileSelectField extends React.Component {
 
     renderFilePreview() {
         if (this.state.selectedFile) {
-            return <FileThumb file={this.state.selectedFile} />;
+            return (
+                <div className="file-select-field__selected-file">
+                    <FileThumb file={this.state.selectedFile} />
+                </div>
+            )
         }
 
         return <Placeholder icon={'library_add'}>Select a {this.props.label}</Placeholder>;
@@ -90,7 +97,10 @@ class FileSelectField extends React.Component {
         return (
             <React.Fragment>
                 <Field name={this.props.name} label={this.props.label} errors={this.props.errors}>
-                    <div className={'file-select-field'} onClick={this.open.bind(this)}>
+                    <div className={helpers.className('file-select-field', this.props.style)} onClick={this.open.bind(this)}>
+                        <div className="file-select-field__icon">
+                            <Icon name={'library_add'} style={'medium'} />
+                        </div>
                         {this.renderFilePreview()}
                     </div>
                 </Field>

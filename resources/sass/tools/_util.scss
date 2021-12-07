@@ -16,3 +16,23 @@
         }
     }
 }
+
+@mixin scrollbar($color, $hover_color: $color12, $space: 0)
+{
+    &::-webkit-scrollbar
+    {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb
+    {
+        border-radius: $border-radius-1;
+        border: $space solid $color01;
+        background: $color;
+
+        &:hover
+        {
+            background: $hover_color;
+        }
+    }
+}

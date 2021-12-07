@@ -38,6 +38,16 @@ class FileSelectField extends Component
     }
 
     /**
+     * @param mixed $style
+     * @return $this
+     */
+    public function style($style)
+    {
+        $this->export('style', $style);
+        return $this;
+    }
+
+    /**
      * @param ModelResource $model
      * @param array $attributes
      */

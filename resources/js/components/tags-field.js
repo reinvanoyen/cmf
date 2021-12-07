@@ -36,6 +36,10 @@ export default class TextField extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.searchTimeout);
+    }
+
     getData(data) {
         data[this.props.id+'_tags'] = this.state.tags || [];
         return data;

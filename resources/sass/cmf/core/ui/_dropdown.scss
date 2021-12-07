@@ -80,6 +80,8 @@
         width: $rule * 10;
         box-shadow: $box-shadow-1;
         display: none;
+        max-height: 50vh;
+        overflow-y: auto;
 
         @include block-modifier(open)
         {

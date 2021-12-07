@@ -25,6 +25,7 @@
 @include block(notification-stack)
 {
     position: fixed;
+    z-index: 2;
     bottom: $rule;
     right: $rule;
     display: block;

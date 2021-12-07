@@ -9,18 +9,35 @@
     padding: $rule / 2;
     background-color: $color01;
 
+    @include modifier(small)
+    {
+        max-width: 300px;
+    }
+
     &:hover
     {
-        &:after
+        //border-color: $color07;
+        box-shadow: $box-shadow-1;
+
+        @include element(icon)
         {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            background-color: rgba($color03, .25);
+            display: flex;
         }
+    }
+
+    @include element(icon)
+    {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: $color01;
+        justify-content: center;
+        align-items: center;
+        opacity: .85;
     }
 
     @include element(selected-file)

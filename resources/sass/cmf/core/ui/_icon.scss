@@ -28,6 +28,11 @@
         font-size: 14px;
     }
 
+    @include modifier(medium)
+    {
+        font-size: 30px;
+    }
+
     @include modifier(placeholder)
     {
         font-size: 60px;
