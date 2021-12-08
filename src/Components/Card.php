@@ -13,6 +13,16 @@ class Card extends Compound
     private $titleField;
 
     /**
+     * @var string $subtitleField
+     */
+    private $subtitleField;
+
+    /**
+     * @var string $labelField
+     */
+    private $labelField;
+
+    /**
      * @var string $photoName
      */
     private $photoName;
@@ -37,6 +47,14 @@ class Card extends Compound
             $attributes[$this->titleField] = $model->{$this->titleField};
         }
 
+        if ($this->subtitleField) {
+            $attributes[$this->subtitleField] = $model->{$this->subtitleField};
+        }
+
+        if ($this->labelField) {
+            $attributes[$this->labelField] = $model->{$this->labelField};
+        }
+
         if ($this->photoName) {
             $attributes[$this->photoName] = new MediaFileResource($model->{$this->photoName});
         }
@@ -50,6 +68,28 @@ class Card extends Compound
     {
         $this->titleField = $titleField;
         $this->export('titleField', $this->titleField);
+        return $this;
+    }
+
+    /**
+     * @param string $subtitleField
+     * @return $this
+     */
+    public function subtitle(string $subtitleField)
+    {
+        $this->subtitleField = $subtitleField;
+        $this->export('subtitleField', $this->subtitleField);
+        return $this;
+    }
+
+    /**
+     * @param string $labelField
+     * @return $this
+     */
+    public function label(string $labelField)
+    {
+        $this->labelField = $labelField;
+        $this->export('labelField', $this->labelField);
         return $this;
     }
 

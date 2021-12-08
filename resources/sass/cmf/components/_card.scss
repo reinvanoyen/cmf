@@ -31,14 +31,34 @@
 
     @include element(main)
     {
-        padding: $rule / 2 $rule;
+        padding: $rule / 2 $rule / 1.5;
         padding-top: $rule / 1.5;
+    }
+
+    @include element(label)
+    {
+        position: absolute;
+        top: $rule / 4;
+        right: $rule / 3;
+        background-color: rgba($color13, .35);
+        color: $color01;
+        @include type-2;
+        border-radius: $border-radius-3;
+        padding: $rule / 8 $rule / 3;
     }
 
     @include element(title)
     {
         @include type-3;
         color: $color13;
+    }
+
+    @include element(subtitle)
+    {
+        margin-top: $rule / 4;
+        @include type-5;
+        line-height: 1.25;
+        color: $color07;
     }
 
     @include element(content)

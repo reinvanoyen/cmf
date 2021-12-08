@@ -30,6 +30,7 @@ import Dropdown from "./dropdown";
 import FileSelectField from "./file-select-field";
 import ContentBlocks from "./content-blocks";
 import TagsField from "./tags-field";
+import TagsView from "./tags-view";
 
 export default {
     'date-time-field': DateTimeField,
@@ -63,5 +64,6 @@ export default {
     'dropdown': Dropdown,
     'file-select-field': FileSelectField,
     'content-blocks': ContentBlocks,
-    'tags-field': TagsField
+    'tags-field': TagsField,
+    'tags-view': TagsView
 };

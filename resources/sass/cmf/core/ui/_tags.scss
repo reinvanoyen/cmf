@@ -1,6 +1,7 @@
 @include block(tags)
 {
     display: flex;
+    flex-wrap: wrap;
 
     @include element(tag)
     {
@@ -9,6 +10,7 @@
         border-radius: $border-radius-3;
         background-color: $color12;
         padding: $rule / 8 $rule / 3;
+        margin: $rule / 12 0;
         margin-right: $rule / 6;
         @include type-2;
 

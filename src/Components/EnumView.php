@@ -2,7 +2,6 @@
 
 namespace ReinVanOyen\Cmf\Components;
 
-use Illuminate\Database\Eloquent\Model;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Traits\HasName;
 
