@@ -5,6 +5,7 @@
     background-color: $color01;
     border-radius: $border-radius-1;
     box-shadow: $box-shadow-1;
+    max-width: 450px;
 
     @include element(header)
     {

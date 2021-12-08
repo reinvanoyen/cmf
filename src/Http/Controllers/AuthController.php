@@ -75,4 +75,16 @@ class AuthController extends Controller
             ],
         ]);
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function csrfKeepAlive()
+    {
+        return response()->json([
+            'data' => [
+                'csrfToken' => csrf_token(),
+            ],
+        ]);
+    }
 }

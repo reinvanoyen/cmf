@@ -30,6 +30,7 @@ Route::middleware([
         // Auth
         Route::get('auth/user', [AuthController::class, 'user']);
         Route::get('auth/logout', [AuthController::class, 'logout']);
+        Route::post('auth/csrf-keep-alive', [AuthController::class, 'csrfKeepAlive']);
         Route::get('auth/session-info', [AuthController::class, 'sessionInfo']);
 
         // Media
@@ -50,3 +51,4 @@ Route::middleware([
 
 Route::post('cmf/api/auth/login', [AuthController::class, 'login'])
     ->middleware(['web', 'guest',]);
+
