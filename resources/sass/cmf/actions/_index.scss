@@ -30,7 +30,7 @@
 
         @include block-modifier(grid)
         {
-            display: block;
+            display: flex;
             padding: 0;
             border: 0;
             background-color: $color01;

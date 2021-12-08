@@ -55,7 +55,7 @@
 
     @include element(subtitle)
     {
-        margin-top: $rule / 4;
+        margin-top: $rule / 6;
         @include type-5;
         line-height: 1.25;
         color: $color07;
@@ -63,7 +63,7 @@
 
     @include element(content)
     {
-        padding: $rule / 2 0;
+        margin-top: $rule / 1.75;
     }
 
     @include element(component)
