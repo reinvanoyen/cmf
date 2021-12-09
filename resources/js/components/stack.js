@@ -50,7 +50,7 @@ class Stack extends React.Component {
                     {component}
                 </div>
             );
-        }, true);
+        }, true, this.props.errors);
 
         let componentListRenders = this.componentList.map(obj => obj.component);
 

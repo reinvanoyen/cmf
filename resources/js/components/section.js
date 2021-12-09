@@ -7,7 +7,8 @@ class Section extends React.Component {
         title: '',
         components: [],
         path: {},
-        data: {}
+        data: {},
+        errors: {}
     };
 
     constructor(props) {
@@ -53,7 +54,7 @@ class Section extends React.Component {
                     {component}
                 </div>
             );
-        }, true);
+        }, true, this.props.errors);
 
         let componentListRenders = this.componentList.map(obj => obj.component);
 

@@ -18,7 +18,7 @@ export default {
             );
         });
     },
-    renderComponentsWith(components, data, path, renderCallback, refs = false) {
+    renderComponentsWith(components, data, path, renderCallback, refs = false, errors = {}) {
 
         return components.map((component, i) => {
 
@@ -29,7 +29,7 @@ export default {
             }
 
             let Component = all[component.type];
-            let rendered = renderCallback(<Component {...component} data={data} path={path} ref={ref} />, i);
+            let rendered = renderCallback(<Component {...component} data={data} errors={errors} path={path} ref={ref} />, i);
 
             return {
                 component: rendered,

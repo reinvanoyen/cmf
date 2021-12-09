@@ -64,9 +64,16 @@ class Edit extends React.Component {
                 this.redirect(response.data);
                 // Notify the user
                 ui.notify(`${this.props.singular} was successfully updated`);
-            }, response => {
+            }, error => {
+
+                let response = error.response;
+
                 // Ready the form
                 this.formRef.current.ready();
+
+
+                console.log(response.data.errors);
+
                 // Set the error messages
                 this.setState({
                     formErrors: response.data.errors

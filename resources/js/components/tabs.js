@@ -6,7 +6,8 @@ class Tabs extends React.Component {
     static defaultProps = {
         tabs: {},
         path: {},
-        data: {}
+        data: {},
+        errors: {}
     };
 
     constructor(props) {
@@ -73,7 +74,7 @@ class Tabs extends React.Component {
                         {component}
                     </div>
                 );
-            }, true);
+            }, true, this.props.errors);
         });
 
         return (
