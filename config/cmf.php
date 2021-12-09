@@ -35,4 +35,6 @@ return [
     |
     */
     'media_library_disk' => config('filesystems.default'),
+
+    'guard' => 'api',
 ];

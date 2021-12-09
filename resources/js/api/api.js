@@ -6,6 +6,14 @@ import ApiError from "../errors/ApiError";
 import meta from "../util/meta";
 import util from "../core/ui/util";
 
+const setCsrfToken = token => {
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+};
+
+axios.defaults.withCredentials = true;
+setCsrfToken(meta.get('csrf'));
+
+/*
 const inactiveTime = 1000 * 60 * 5;
 const keepAliveInterval = 1000 * 60 * 5;
 
@@ -69,7 +77,7 @@ window.addEventListener('focus', e => {
             csrfKeepAlive();
         });
     }
-});
+});*/
 
 axios.interceptors.request.use((config) => {
     document.body.classList.add('api-loading');

@@ -13,7 +13,8 @@ use \ReinVanOyen\Cmf\Http\Middleware\{
 };
 
 Route::middleware([
-    'web',
+    \App\Http\Middleware\EncryptCookies::class,
+    \Illuminate\Session\Middleware\StartSession::class,
     Authenticate::class,
     DispatchServingCmfEvent::class,
 ])
