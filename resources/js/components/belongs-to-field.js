@@ -27,7 +27,7 @@ class BelongsToField extends React.Component {
 
     handleChange(e) {
         this.setState({
-            value: parseInt(e.target.value)
+            value: (e.target.value ? parseInt(e.target.value) : '')
         });
     }
 
