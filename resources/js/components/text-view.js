@@ -52,7 +52,7 @@ class TextView extends React.Component {
 
         if (this.props.data && this.props.data[this.props.name]) {
 
-            value = (this.props.truncateLength ? str.truncate(this.props.data[this.props.name], this.props.truncateLength, this.props.truncateSuffix) : this.props.data[this.props.name]);
+            value = this.props.data[this.props.name];
 
             if (this.props.url) {
 
@@ -60,7 +60,7 @@ class TextView extends React.Component {
 
                 value = (
                     <a href={href} target="_blank" title={value} className={'text-view__url'} onClick={this.goToUrl.bind(this)}>
-                        {value}
+                        {(this.props.truncateLength ? str.truncate(value, this.props.truncateLength, this.props.truncateSuffix) : value)}
                     </a>
                 );
             }
