@@ -12,6 +12,11 @@ class TextView extends Component
     use HasLabel;
 
     /**
+     * @var string $urlField
+     */
+    private $urlField;
+
+    /**
      * @return string
      */
     public function type(): string
@@ -32,9 +37,12 @@ class TextView extends Component
     /**
      * @return $this
      */
-    public function url()
+    public function url($url = true)
     {
-        $this->export('url', true);
+        if ($url !== true) {
+            $this->urlField = $url;
+        }
+        $this->export('url', $url);
         return $this;
     }
 
@@ -48,11 +56,27 @@ class TextView extends Component
     }
 
     /**
+     * @param int $maxLength
+     * @param string $suffix
+     * @return $this
+     */
+    public function truncate(int $maxLength, string $suffix = '…')
+    {
+        $this->export('truncateLength', $maxLength);
+        $this->export('truncateSuffix', $suffix);
+        return $this;
+    }
+
+    /**
      * @param ModelResource $model
      * @param array $attributes
      */
     public function provision(ModelResource $model, array &$attributes)
     {
         $attributes[$this->getName()] = $model->{$this->getName()};
+
+        if ($this->urlField) {
+            $attributes[$this->getName().'_url'] = $model->{$this->urlField};
+        }
     }
 }

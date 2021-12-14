@@ -25,5 +25,11 @@ export default {
             .replace( /[^\w.]+/g, '-' )
             .replace( /^-+/, '' )
             .replace( /-+$/, '' );
+    },
+    truncate(string, length, suffix) {
+        if (string.length <= length) {
+            return string;
+        }
+        return string.slice(0, length) + suffix;
     }
 };

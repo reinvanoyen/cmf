@@ -99,7 +99,7 @@ export default class ImageUpload extends React.Component {
             if (! this.props.isRequired) {
                 options = (
                     <div className={'image-upload__options'}>
-                        <Link text={'Remove'} style={'alt'} onClick={this.deselect.bind(this)} />
+                        <Link text={'Remove'} onClick={this.deselect.bind(this)} />
                     </div>
                 );
             }
@@ -122,7 +122,7 @@ export default class ImageUpload extends React.Component {
             <Field name={this.props.name} label={this.props.label}>
                 <div className="image-upload">
                     <div className="image-upload__placeholder">
-                        <Placeholder icon="imageUpload">
+                        <Placeholder icon="upload_file">
                             Select a {this.props.name}
                         </Placeholder>
                         {input}

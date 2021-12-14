@@ -1,6 +1,7 @@
 import React from 'react';
 import util from "../core/ui/util";
 import Icon from "../core/ui/icon";
+import str from "../util/str";
 
 class TextView extends React.Component {
 
@@ -10,6 +11,8 @@ class TextView extends React.Component {
         id: 0,
         label: '',
         url: false,
+        truncateLength: 0,
+        truncateSuffix: '',
         copyable: false,
         style: 'default'
     };
@@ -49,11 +52,11 @@ class TextView extends React.Component {
 
         if (this.props.data && this.props.data[this.props.name]) {
 
-            value = this.props.data[this.props.name];
+            value = (this.props.truncateLength ? str.truncate(this.props.data[this.props.name], this.props.truncateLength, this.props.truncateSuffix) : this.props.data[this.props.name]);
 
             if (this.props.url) {
 
-                let href = (this.props.url === true ? value : this.props.data[this.props.url]);
+                let href = (this.props.url === true ? value : this.props.data[this.props.name+'_url']);
 
                 value = (
                     <a href={href} target="_blank" title={value} className={'text-view__url'} onClick={this.goToUrl.bind(this)}>
