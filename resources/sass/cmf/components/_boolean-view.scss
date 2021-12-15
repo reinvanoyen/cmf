@@ -1,8 +1,8 @@
 @include block(boolean-view)
 {
     display: inline-block;
-    color: $color03;
-    border: 1px solid $color03;
+    color: $color10;
+    border: 1px solid $color10;
     padding: $rule / 6 $rule / 6;
     border-radius: $border-radius-3;
     transition: background-color .25s;
@@ -11,6 +11,6 @@
     @include modifier(checked)
     {
         color: $color01;
-        background-color: $color03;
+        background-color: $color10;
     }
 }
