@@ -19,9 +19,8 @@ class FileSelectField extends Component
     use HasLabel;
 
     /**
-     * EnumField constructor.
+     * FileSelectField constructor.
      * @param string $name
-     * @param array $options
      */
     public function __construct(string $name)
     {

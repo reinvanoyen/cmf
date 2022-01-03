@@ -1,5 +1,6 @@
 import React from 'react';
 import helpers from '../../util/helpers';
+import Icon from "./icon";
 
 class Button extends React.Component {
 
@@ -7,6 +8,7 @@ class Button extends React.Component {
         'text': '',
         'type': 'button',
         'style': 'default',
+        'icon': '',
         onClick: () => {}
     };
 
@@ -16,8 +18,20 @@ class Button extends React.Component {
     }
 
     render() {
+
+        let icon;
+
+        if (this.props.icon) {
+            icon = (
+                <span className="button__icon">
+                    <Icon style={'mini'} name={this.props.icon} />
+                </span>
+            );
+        }
+
         return (
-            <button className={helpers.className('button', this.props.style)} onClick={e => this.onClick(e)} type={this.props.type}>
+            <button className={helpers.className('button', this.props.style)+' button--has-icon'} onClick={e => this.onClick(e)} type={this.props.type}>
+                {icon}
                 {this.props.text}
             </button>
         );

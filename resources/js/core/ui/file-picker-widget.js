@@ -16,7 +16,8 @@ class FilePickerWidget extends React.Component {
         onCancel: () => {},
         defaultDirectoryId: null,
         defaultSelectedFileIds: [],
-        defaultSelectedFiles: []
+        defaultSelectedFiles: [],
+        selectionMode: false
     };
 
     constructor(props) {
@@ -110,6 +111,7 @@ class FilePickerWidget extends React.Component {
             <React.Fragment>
                 <div className="file-picker-widget__main">
                     <FileBrowser
+                        selectionMode={this.props.selectionMode}
                         selectedFiles={this.state.selectedFiles}
                         selectedFileIds={this.state.selectedFileIds}
                         directories={this.state.directories}

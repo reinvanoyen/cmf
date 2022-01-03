@@ -151,38 +151,6 @@ class ContentBlocks extends Component
                 $order++;
             }
         });
-        /*
-        // Update or create blocks
-        $order = 0;
-        foreach ($items as $item) {
-
-            $id = $item['id'];
-            $type = $item['type'];
-
-            if ($id) {
-                $foreignModel = $model->{$this->getName()}()->where('id', $id)->first();
-            } else {
-                $foreignModel = new $foreignModelClassname();
-            }
-
-            $components = $this->blocks[$type]['components'];
-
-            $newRequest = new Request();
-            $newRequest->merge($item);
-
-            // Save the type column with the new type
-            $foreignModel->{$this->foreignTypeColumn} = $type;
-            $foreignModel->{$this->foreignOrderColumn} = $order;
-
-            // Save the fields of this blocks to the model
-            foreach ($components as $component) {
-                $component->save($foreignModel, $newRequest);
-            }
-
-            // Save the foreign model to the relation on the current model
-            $model->{$this->getName()}()->save($foreignModel);
-            $order++;
-        }*/
     }
 
     /**

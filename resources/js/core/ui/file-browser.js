@@ -12,6 +12,7 @@ class FileBrowser extends React.Component {
     static defaultProps = {
         files: [],
         directories: [],
+        selectionMode: false,
         selectedFileIds: [],
         selectedFiles: [],
         onDirectoryClick: id => {},
@@ -78,7 +79,7 @@ class FileBrowser extends React.Component {
     }
 
     handleFileClick(e, file) {
-        if (e.shiftKey) {
+        if (e.shiftKey || this.props.selectionMode) {
             this.toggleFileSelection(file);
         } else {
             this.deselectAllExcept(file);

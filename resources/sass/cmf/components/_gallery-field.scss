@@ -1,0 +1,19 @@
+@include block(gallery-field)
+{
+    position: relative;
+
+    @include element(btn)
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    @include element(grid)
+    {
+        padding-top: $rule;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: $rule;
+    }
+}

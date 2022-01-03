@@ -31,6 +31,7 @@ import FileSelectField from "./file-select-field";
 import ContentBlocks from "./content-blocks";
 import TagsField from "./tags-field";
 import TagsView from "./tags-view";
+import GalleryField from "./gallery-field";
 
 export default {
     'date-time-field': DateTimeField,
@@ -63,6 +64,7 @@ export default {
     'card': Card,
     'dropdown': Dropdown,
     'file-select-field': FileSelectField,
+    'gallery-field': GalleryField,
     'content-blocks': ContentBlocks,
     'tags-field': TagsField,
     'tags-view': TagsView

@@ -14,6 +14,17 @@
         background-color: lighten($color12, 5%);
     }
 
+    @include element(icon)
+    {
+        margin-right: $rule / 4;
+    }
+
+    @include modifier(has-icon)
+    {
+        display: inline-flex;
+        align-items: center;
+    }
+
     @include modifier(disabled)
     {
         overflow: hidden;
