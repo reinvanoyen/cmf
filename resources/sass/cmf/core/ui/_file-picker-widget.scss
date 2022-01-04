@@ -77,4 +77,25 @@
         top: 0;
         width: 25%;
     }
+
+    @include element(selected)
+    {
+        // for ref
+    }
+
+    @include element(file)
+    {
+        position: relative;
+    }
+
+    @include element(file-actions)
+    {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0 $rule / 3;
+    }
 }

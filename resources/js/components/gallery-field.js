@@ -2,8 +2,11 @@ import React from 'react';
 import FilePickerWidget from "../core/ui/file-picker-widget";
 import Field from "../core/ui/field";
 import Button from "../core/ui/button";
-import FileThumb from "../core/ui/file-thumb";
 import IconButton from "../core/ui/icon-button";
+import FilePreview from "../core/ui/file-preview";
+import Placeholder from "../core/ui/placeholder";
+import util from "../core/ui/util";
+import array from "../util/array";
 
 class GalleryField extends React.Component {
 
@@ -14,7 +17,8 @@ class GalleryField extends React.Component {
         name: '',
         style: '',
         singular: '',
-        plural: ''
+        plural: '',
+        orderColumn: ''
     };
 
     constructor(props) {
@@ -37,7 +41,7 @@ class GalleryField extends React.Component {
     }
 
     getData(data) {
-        //data[this.props.name] = this.state.selectedFile || null;
+        data[this.props.name] = this.state.selectedFiles || [];
         return data;
     }
 
@@ -76,6 +80,76 @@ class GalleryField extends React.Component {
         });
     }
 
+    sortForward(i) {
+        if (i !== (this.state.selectedFiles.length - 1)) {
+            this.setState({
+                selectedFiles: array.move(this.state.selectedFiles, i, i+1),
+                selectedFilesIds: array.move(this.state.selectedFilesIds, i, i+1)
+            });
+        }
+    }
+
+    sortBackward(i) {
+        if (i !== 0) {
+            this.setState({
+                selectedFiles: array.move(this.state.selectedFiles, i, i-1),
+                selectedFilesIds: array.move(this.state.selectedFilesIds, i, i-1)
+            });
+        }
+    }
+
+    renderItemOverlay(i) {
+
+        let orderActions;
+        let orderLeft;
+        let orderRight;
+
+        if (this.props.orderColumn) {
+            if (i !== 0) {
+                orderLeft = <IconButton name={'arrow_back'} onClick={e => this.sortBackward(i)} />;
+            }
+            if (i !== (this.state.selectedFiles.length - 1)) {
+                orderRight = <IconButton name={'arrow_forward'} onClick={e => this.sortForward(i)} />;
+            }
+
+            orderActions = (
+                <div className="gallery-field__item-order">
+                    {orderLeft}
+                    {orderRight}
+                </div>
+            );
+        }
+
+        return (
+            <div className="gallery-field__item-overlay">
+                <div className="gallery-field__item-delete">
+                    <IconButton name={'delete'} onClick={e => this.remove(i)} />
+                </div>
+                {orderActions}
+            </div>
+        );
+    }
+
+    renderContent() {
+
+        if (this.state.selectedFiles.length) {
+            return (
+                <div className="gallery-field__grid">
+                    {this.state.selectedFiles.map((file, i) => {
+                        return (
+                            <div className="gallery-field__item" key={i}>
+                                <FilePreview file={file} style={['full']} mediaConversion={'contain'} />
+                                {this.renderItemOverlay(i)}
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        }
+
+        return <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>Select {this.props.plural}</Placeholder>;
+    }
+
     render() {
 
         let widget;
@@ -100,15 +174,8 @@ class GalleryField extends React.Component {
                     <div className="gallery-field__btn">
                         <Button style={['small', 'secondary']} icon={'add'} text={'Select '+this.props.plural} onClick={this.open.bind(this)} />
                     </div>
-                    <div className="gallery-field__grid">
-                        {this.state.selectedFiles.map((file, i) => {
-                            return (
-                                <div className="gallery-field__item" key={i}>
-                                    <FileThumb file={file} />
-                                    <IconButton name={'delete'} onClick={e => this.remove(i)} />
-                                </div>
-                            );
-                        })}
+                    <div className="gallery-field__content">
+                        {this.renderContent()}
                     </div>
                 </Field>
                 {widget}

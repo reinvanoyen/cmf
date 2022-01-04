@@ -20,6 +20,11 @@ class GalleryField extends Component
     use HasLabel;
 
     /**
+     * @var string $orderColumn
+     */
+    private $orderColumn;
+
+    /**
      * @var string $fileRelationName
      */
     private $fileRelationName;
@@ -45,6 +50,17 @@ class GalleryField extends Component
         $this->meta = $meta ?: RelationshipMetaGuesser::getMeta($this->getName());
         $this->singular($this->meta::getSingular());
         $this->plural($this->meta::getPlural());
+    }
+
+    /**
+     * @param string $orderColumn
+     * @return $this
+     */
+    public function orderColumn(string $orderColumn)
+    {
+        $this->orderColumn = $orderColumn;
+        $this->export('orderColumn', $this->orderColumn);
+        return $this;
     }
 
     /**
@@ -81,9 +97,12 @@ class GalleryField extends Component
      */
     public function provision(ModelResource $model, array &$attributes)
     {
-        //$attributes[$this->getName()] = $model->{$this->getName()};
+        if ($this->orderColumn) {
+            $foreignModels = $model->{$this->getName()}()->orderBy($this->orderColumn)->get();
+        } else {
+            $foreignModels = $model->{$this->getName()};
+        }
 
-        $foreignModels = $model->{$this->getName()};
         $collection = [];
 
         foreach ($foreignModels as $foreignModel) {
@@ -114,10 +133,18 @@ class GalleryField extends Component
                     if (isset($fileIds[$i])) {
                         // Update file
                         $mediaFile = MediaFile::find($fileIds[$i]);
+
                         $item->{$this->fileRelationName}()->associate($mediaFile);
                         $item->save();
 
+                        // Store the order
+                        if ($this->orderColumn) {
+                            $item->{$this->orderColumn} = $i;
+                        }
+
                     } else {
+
+                        // Delete file
                         $item->delete();
                     }
 
@@ -130,6 +157,11 @@ class GalleryField extends Component
 
                     $foreignModel = new $foreignModelClassname();
                     $foreignModel->{$this->fileRelationName}()->associate($mediaFile);
+
+                    // Store the order
+                    if ($this->orderColumn) {
+                        $foreignModel->{$this->orderColumn} = $i;
+                    }
 
                     // Save the foreign model to the relation on the current model
                     $model->{$this->getName()}()->save($foreignModel);

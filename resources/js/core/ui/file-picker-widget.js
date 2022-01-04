@@ -66,17 +66,28 @@ class FilePickerWidget extends React.Component {
     }
 
     onSelectionChange(ids, files) {
-
         this.setState({
             selectedFileIds: ids,
             selectedFiles: files
         });
-
         this.props.onSelectionChange(ids, files);
     }
 
     onSelectionConfirm() {
         this.props.onSelectionConfirm(this.state.selectedFileIds, this.state.selectedFiles);
+    }
+
+    deselect(id) {
+
+        let fileIds = this.state.selectedFileIds.filter(fileId => fileId !== id);
+        let files = this.state.selectedFiles.filter(currFile => currFile.id !== id);
+
+        this.setState({
+            selectedFileIds: fileIds,
+            selectedFiles: files
+        }, () => {
+            this.props.onSelectionChange(this.state.selectedFileIds, this.state.selectedFiles);
+        });
     }
 
     onCancel() {
@@ -90,10 +101,15 @@ class FilePickerWidget extends React.Component {
     renderSidebar() {
         if (this.state.selectedFiles.length) {
             return (
-                <div>
+                <div className={'file-picker-widget__selected'}>
                     {this.state.selectedFiles.map((file, i) => {
                         return (
-                            <File file={file} key={i} />
+                            <div className="file-picker-widget__file" key={i}>
+                                <File file={file} />
+                                <div className="file-picker-widget__file-actions">
+                                    <IconButton name={'delete'} onClick={e => this.deselect(file.id)} />
+                                </div>
+                            </div>
                         );
                     })}
                 </div>
@@ -157,7 +173,7 @@ class FilePickerWidget extends React.Component {
                         onClick={this.onCancel.bind(this)}
                     />
                     <Button
-                        text={'Select file'}
+                        text={(this.props.selectionMode ? 'Confirm selection' : 'Select file')}
                         style={this.state.selectedFileIds.length ? [] : ['disabled',]}
                         onClick={this.state.selectedFileIds.length ? this.onSelectionConfirm.bind(this) : null}
                     />

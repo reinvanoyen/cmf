@@ -6,7 +6,7 @@ class Placeholder extends React.Component {
 
     static defaultProps = {
         icon: 'upload_file',
-        onClick: () => {}
+        onClick: null
     };
 
     onClick(e) {
@@ -15,7 +15,7 @@ class Placeholder extends React.Component {
 
     render() {
         return (
-            <div className={'placeholder'} onClick={this.onClick.bind(this)}>
+            <div className={'placeholder'+(this.props.onClick ? ' placeholder--clickable' : '')} onClick={this.onClick.bind(this)}>
                 <div className="placeholder__icon">
                     <Icon name={this.props.icon} style={'placeholder'} />
                 </div>

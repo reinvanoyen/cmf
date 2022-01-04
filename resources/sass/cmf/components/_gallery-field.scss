@@ -9,11 +9,74 @@
         right: 0;
     }
 
-    @include element(grid)
+    @include element(content)
     {
         padding-top: $rule;
+    }
+
+    @include element(grid)
+    {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        grid-gap: $rule;
+        grid-gap: $rule / 2;
+    }
+
+    @include element(item)
+    {
+        position: relative;
+        border: $border-width-1 solid $color06;
+        border-radius: $border-radius-3;
+        padding: $rule / 4;
+
+        &:hover
+        {
+            box-shadow: $box-shadow-1;
+
+            @include element(item-overlay)
+            {
+                display: flex;
+            }
+        }
+    }
+
+    @include element(item-overlay)
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba($color01, .85);
+    }
+
+    @include element(item-delete)
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: $rule / 3;
+    }
+
+    @include element(item-order)
+    {
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: $rule / 3;
+
+        >*
+        {
+            margin-right: $rule / 6;
+
+            &:last-child
+            {
+                margin-right: 0;
+            }
+        }
     }
 }

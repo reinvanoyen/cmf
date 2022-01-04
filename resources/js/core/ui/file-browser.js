@@ -97,50 +97,18 @@ class FileBrowser extends React.Component {
 
     deselectFile(file) {
 
-        let selectedFileIds = this.props.selectedFileIds.filter(fileId => fileId !== file.id);
-        let selectedFiles = this.props.selectedFiles.filter(currFile => currFile.id !== file.id);
-
-        /*
-        this.setState({
-            selectedFileIds: selectedFileIds,
-            selectedFiles: selectedFiles
-        });
-        */
-
-        this.props.onSelectionChange(selectedFileIds, selectedFiles);
+        this.props.onSelectionChange(
+            this.props.selectedFileIds.filter(fileId => fileId !== file.id),
+            this.props.selectedFiles.filter(currFile => currFile.id !== file.id)
+        );
     }
 
     selectFile(file) {
-
-        let selectedFileIds = this.props.selectedFileIds;
-        selectedFileIds.push(file.id);
-
-        let selectedFiles = this.props.selectedFiles;
-        selectedFiles.push(file);
-
-        /*
-        this.setState({
-            selectedFileIds: selectedFileIds,
-            selectedFiles: selectedFiles
-        });
-        */
-
-        this.props.onSelectionChange(selectedFileIds, selectedFiles);
+        this.props.onSelectionChange([...this.props.selectedFileIds, file.id], [...this.props.selectedFiles, file]);
     }
 
     deselectAllExcept(file) {
-
-        let selectedFileIds = [file.id];
-        let selectedFiles = [file];
-
-        /*
-        this.setState({
-            selectedFileIds: selectedFileIds,
-            selectedFiles: selectedFiles
-        });
-        */
-
-        this.props.onSelectionChange(selectedFileIds, selectedFiles);
+        this.props.onSelectionChange([file.id], [file]);
     }
 
     isFileSelected(file) {

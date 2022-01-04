@@ -33,6 +33,7 @@ class MediaFileResource extends JsonResource
             'conversions' => [
                 'thumb' => route('mediafileconversion', ['conversion' => 'cmf-thumb', 'id' => $this->id, 'filename' => $this->name,], true),
                 'preview' => route('mediafileconversion', ['conversion' => 'cmf-preview', 'id' => $this->id, 'filename' => $this->name,], true),
+                'contain' => route('mediafileconversion', ['conversion' => 'cmf-contain', 'id' => $this->id, 'filename' => $this->name,], true),
             ],
         ];
     }

@@ -59,6 +59,8 @@ class Cmf extends React.Component {
 
             api.modules.action(path.currentPath, path.currentPath.params).then(response => {
 
+                helpers.scrollTop();
+
                 let action = response.data.data;
 
                 this.setState({

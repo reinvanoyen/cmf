@@ -5,13 +5,8 @@
     justify-content: center;
     border: 1px dashed $color06;
     border-radius: $border-radius-2;
-    padding: $rule / 2 $rule / 4;
+    padding: $rule $rule / 4;
     text-align: center;
-
-    &:hover
-    {
-        border-color: $color03;
-    }
 
     @include element(icon)
     {
@@ -21,7 +16,18 @@
 
     @include element(text)
     {
-        margin-top: $rule / 2;
         @include type-9;
+        color: $color07;
+    }
+
+
+    @include modifier(clickable)
+    {
+        cursor: pointer;
+
+        &:hover
+        {
+            border-color: darken($color09, 10%);
+        }
     }
 }

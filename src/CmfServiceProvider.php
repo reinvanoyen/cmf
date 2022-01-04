@@ -30,6 +30,12 @@ class CmfServiceProvider extends ServiceProvider
                     $constraint->aspectRatio();
                 });
             });
+            $converter->registerConversion('cmf-contain', function (Image $image) {
+                $image->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $image->resizeCanvas(400, 400, 'center', false, '#efeff5');
+            });
             return $converter;
         });
 

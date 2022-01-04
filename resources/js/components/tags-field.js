@@ -72,6 +72,20 @@ export default class TextField extends React.Component {
             }
         }
 
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            if (e.target.value !== '') {
+                if (this.state.autosuggestIsOpen && this.state.autosuggest.length) {
+                    e.target.value = '';
+                    this.addTag(this.state.autosuggest[0]);
+                } else {
+                    let tag = e.target.value.replace(',', '');
+                    e.target.value = '';
+                    this.addTag(tag);
+                }
+            }
+        }
+
         if (e.key === 'Enter') {
 
             e.preventDefault();
