@@ -134,7 +134,7 @@ class ViewMediaDirectory extends React.Component {
                 util.notify('File renamed');
                 path.refresh();
             }, error => {
-                util.notify('File could not be deleted');
+                util.notify('File could not be renamed');
             });
         }
     }

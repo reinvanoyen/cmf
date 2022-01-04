@@ -8,7 +8,8 @@ export default class FileUploader extends React.Component {
 
     static defaultProps = {
         directory: null,
-        onUploadDone: () => {}
+        onUploadDone: () => {},
+        onFileUploaded: file => {}
     };
 
     handleChange(e) {
@@ -21,6 +22,7 @@ export default class FileUploader extends React.Component {
 
     upload(file) {
         upload.queue(file, this.props.directory, file => {
+            this.props.onFileUploaded(file);
             if (upload.isDone()) {
                 this.props.onUploadDone();
             }

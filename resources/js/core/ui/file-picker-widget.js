@@ -1,11 +1,15 @@
 import React from 'react';
+import axios from "axios";
 import api from "../../api/api";
 import FileBrowser from "./file-browser";
 import Button from "./button";
 import IconButton from "./icon-button";
 import File from "./file";
 import Breadcrumbs from "./breadcrumbs";
-import axios from "axios";
+import Dropdown from "./dropdown";
+import FileUploader from "./file-uploader";
+import util from "./util";
+import path from "../../state/path";
 
 class FilePickerWidget extends React.Component {
 
@@ -44,7 +48,6 @@ class FilePickerWidget extends React.Component {
     }
 
     async load(directoryId = null) {
-
         await axios.all([
             api.media.path(directoryId),
             api.media.loadDirectories(directoryId),
@@ -90,12 +93,66 @@ class FilePickerWidget extends React.Component {
         });
     }
 
+    select(file) {
+        this.setState({
+            selectedFileIds: [...this.state.selectedFileIds, file.id],
+            selectedFiles: [...this.state.selectedFiles, file]
+        }, () => {
+            this.props.onSelectionChange(this.state.selectedFileIds, this.state.selectedFiles);
+        });
+    }
+
     onCancel() {
         this.props.onCancel();
     }
 
     openDirectory(directoryId) {
         this.load(directoryId);
+    }
+
+    handleUploadDone() {
+        this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+    }
+
+    handleFileUploaded(file) {
+        this.select(file);
+    }
+
+    handleRenameFile(name, fileId) {
+        if (name) {
+            api.media.renameFile(name, fileId).then(response => {
+                util.notify('File renamed');
+                this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+            }, error => {
+                util.notify('File could not be renamed');
+            });
+        }
+    }
+
+    handleRenameDirectory(name, directoryId) {
+        if (name) {
+            api.media.renameDirectory(name, directoryId).then(response => {
+                util.notify('Directory renamed');
+                this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+            }, error => {
+                util.notify('Directory could not be renamed');
+            });
+        }
+    }
+
+    promptCreateDirectory() {
+        util.prompt({
+            title: 'New directory',
+            confirmButtonText: 'Create',
+            cancelButtonText: 'Cancel',
+            confirm: value => {
+                console.log(value);
+                api.media.createDirectory(value, (this.state.currentDirectory ? this.state.currentDirectory.id : null)).then(() => {
+                    util.notify('Directory created');
+                    this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+                });
+            }
+        });
     }
 
     renderSidebar() {
@@ -132,6 +189,8 @@ class FilePickerWidget extends React.Component {
                         selectedFileIds={this.state.selectedFileIds}
                         directories={this.state.directories}
                         files={this.state.files}
+                        onDirectoryRename={this.handleRenameDirectory.bind(this)}
+                        onFileRename={this.handleRenameFile.bind(this)}
                         onDirectoryClick={directory => this.openDirectory(directory)}
                         onSelectionChange={this.onSelectionChange.bind(this)}
                     />
@@ -160,6 +219,14 @@ class FilePickerWidget extends React.Component {
                         />
                     </div>
                     <div className="file-picker-widget__header-options">
+                        <Button text={'New directory'} style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} />
+                        <Dropdown text={'Upload'} style={['primary', 'small']}>
+                            <FileUploader
+                                directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
+                                onFileUploaded={this.handleFileUploaded.bind(this)}
+                                onUploadDone={this.handleUploadDone.bind(this)}
+                            />
+                        </Dropdown>
                         <IconButton name={'close'} onClick={this.onCancel.bind(this)} />
                     </div>
                 </div>

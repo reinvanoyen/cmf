@@ -7,6 +7,7 @@ import FilePreview from "../core/ui/file-preview";
 import Placeholder from "../core/ui/placeholder";
 import util from "../core/ui/util";
 import array from "../util/array";
+import FileThumb from "../core/ui/file-thumb";
 
 class GalleryField extends React.Component {
 
@@ -138,7 +139,7 @@ class GalleryField extends React.Component {
                     {this.state.selectedFiles.map((file, i) => {
                         return (
                             <div className="gallery-field__item" key={i}>
-                                <FilePreview file={file} style={['full']} mediaConversion={'contain'} />
+                                <FileThumb file={file} mediaConversion={'contain'} />
                                 {this.renderItemOverlay(i)}
                             </div>
                         );
