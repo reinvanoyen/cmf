@@ -76,26 +76,24 @@
         position: sticky;
         top: 0;
         width: 25%;
+        padding-top: $rule;
     }
 
-    @include element(selected)
+    @include element(selection)
     {
         // for ref
+    }
+
+    @include element(selection-header)
+    {
+        @include type-6;
+        text-transform: uppercase;
+        padding-left: $rule / 2;
+        margin-bottom: $rule / 2;
     }
 
     @include element(file)
     {
         position: relative;
-    }
-
-    @include element(file-actions)
-    {
-        display: flex;
-        align-items: center;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        padding: 0 $rule / 3;
     }
 }

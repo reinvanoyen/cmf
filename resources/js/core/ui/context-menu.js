@@ -81,7 +81,7 @@ class ContextMenu extends React.Component {
     }
 
     handleContextMenu(e) {
-        this.open(e.pageX, e.pageY);
+        this.open(e.pageX - window.scrollX, e.pageY - window.scrollY);
         e.preventDefault();
     }
 

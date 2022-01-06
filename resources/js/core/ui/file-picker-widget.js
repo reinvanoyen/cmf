@@ -9,7 +9,8 @@ import Breadcrumbs from "./breadcrumbs";
 import Dropdown from "./dropdown";
 import FileUploader from "./file-uploader";
 import util from "./util";
-import path from "../../state/path";
+import ContextMenu from "./context-menu";
+import Placeholder from "./placeholder";
 
 class FilePickerWidget extends React.Component {
 
@@ -111,6 +112,7 @@ class FilePickerWidget extends React.Component {
     }
 
     handleUploadDone() {
+        util.notify('Your file(s) have been uploaded');
         this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
     }
 
@@ -146,7 +148,6 @@ class FilePickerWidget extends React.Component {
             confirmButtonText: 'Create',
             cancelButtonText: 'Cancel',
             confirm: value => {
-                console.log(value);
                 api.media.createDirectory(value, (this.state.currentDirectory ? this.state.currentDirectory.id : null)).then(() => {
                     util.notify('Directory created');
                     this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
@@ -155,24 +156,60 @@ class FilePickerWidget extends React.Component {
         });
     }
 
+    onSelectedFileContextClick(path, file) {
+        if (path === 'jump_to') {
+            this.load((file.directory ? file.directory.id : null));
+        } else if (path === 'deselect') {
+            this.deselect(file.id);
+        }
+    }
+
     renderSidebar() {
+
+        let links = [
+            ['Deselect', 'deselect'],
+            ['Jump to folder', 'jump_to']
+        ];
+
         if (this.state.selectedFiles.length) {
             return (
-                <div className={'file-picker-widget__selected'}>
+                <div className={'file-picker-widget__selection'}>
+                    <div className="file-picker-widget__selection-header">
+                        Your selection ({this.state.selectedFiles.length})
+                    </div>
                     {this.state.selectedFiles.map((file, i) => {
                         return (
                             <div className="file-picker-widget__file" key={i}>
-                                <File file={file} />
-                                <div className="file-picker-widget__file-actions">
-                                    <IconButton name={'delete'} onClick={e => this.deselect(file.id)} />
-                                </div>
+                                <ContextMenu
+                                    links={links}
+                                    onClick={path => this.onSelectedFileContextClick(path, file)}
+                                >
+                                    <File file={file} actions={[
+                                        <IconButton
+                                            key={'delete'}
+                                            name={'delete'}
+                                            style={'transparent'}
+                                            onClick={e => this.deselect(file.id)}
+                                        />
+                                    ]}/>
+                                </ContextMenu>
                             </div>
                         );
                     })}
                 </div>
             );
         }
-        return null;
+
+        return (
+            <div className={'file-picker-widget__selection'}>
+                <div className="file-picker-widget__selection-header">
+                    Your selection ({this.state.selectedFiles.length})
+                </div>
+                <Placeholder icon={'checklist'}>
+                    Your selection is empty
+                </Placeholder>
+            </div>
+        );
     }
 
     renderContent() {

@@ -6,6 +6,7 @@ import fileUtil from '../../util/file';
 import icons from "../../svg/icons";
 import FilePreview from "./file-preview";
 import File from "./file";
+import IconButton from "./icon-button";
 
 class FileBrowser extends React.Component {
 
@@ -143,7 +144,12 @@ class FileBrowser extends React.Component {
                                 links={links}
                                 onClick={path => this.onFileContextClick(path, file)}
                             >
-                                <File file={file} isSelected={this.isFileSelected(file)} onClick={(e, file) => this.handleFileClick(e, file)} />
+                                <File
+                                    file={file}
+                                    isSelected={this.isFileSelected(file)}
+                                    selectionMode={this.props.selectionMode}
+                                    onClick={(e, file) => this.handleFileClick(e, file)}
+                                />
                             </ContextMenu>
                         </div>
                     );

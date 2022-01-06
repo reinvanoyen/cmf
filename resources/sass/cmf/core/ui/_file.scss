@@ -31,6 +31,17 @@
         flex-grow: 1;
     }
 
+    @include element(checkbox)
+    {
+        flex-grow: 0;
+        margin-right: $rule / 2;
+    }
+
+    @include element(actions)
+    {
+        flex-grow: 0;
+    }
+
     @include element(name)
     {
         @include type-2;

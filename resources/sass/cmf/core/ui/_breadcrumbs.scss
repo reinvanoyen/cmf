@@ -6,7 +6,6 @@
 
         li
         {
-            cursor: pointer;
             color: $color07;
 
             &:after
@@ -16,19 +15,33 @@
                 margin-right: $rule / 3;
             }
 
-            &:hover
-            {
-                opacity: 1;
-            }
-
             &:last-child
             {
                 color: $color02;
-                cursor: default;
+
+                span
+                {
+                    cursor: default;
+
+                    &:hover
+                    {
+                        border-bottom: 0;
+                    }
+                }
 
                 &:after
                 {
                     display: none;
+                }
+            }
+
+            span
+            {
+                cursor: pointer;
+
+                &:hover
+                {
+                    border-bottom: 1px solid rgba($color07, .5);
                 }
             }
         }

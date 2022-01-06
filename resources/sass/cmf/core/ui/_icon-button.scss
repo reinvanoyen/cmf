@@ -15,4 +15,14 @@
     {
         background-color: desaturate(darken($color03, 5%), 5%);
     }
+
+    @include modifier(transparent)
+    {
+        background-color: transparent;
+
+        &:hover
+        {
+            background-color: transparent;
+        }
+    }
 }

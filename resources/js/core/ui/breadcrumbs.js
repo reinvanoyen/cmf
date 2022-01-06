@@ -18,12 +18,16 @@ export default class Breadcrumbs extends React.Component {
             <div className="breadcrumbs">
                 <ul className={'breadcrumbs__list'}>
                     <li onClick={e => this.onClick(null)}>
-                        {this.props.rootText}
+                        <span>
+                            {this.props.rootText}
+                        </span>
                     </li>
                     {this.props.items.map((item, i) => {
                         return (
-                            <li key={i} onClick={e => this.onClick(item)}>
-                                {item.name}
+                            <li key={i}>
+                                <span onClick={e => this.onClick(item)}>
+                                    {item.name}
+                                </span>
                             </li>
                         );
                     })}

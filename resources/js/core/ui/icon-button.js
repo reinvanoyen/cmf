@@ -6,12 +6,12 @@ class IconButton extends React.Component {
 
     static defaultProps = {
         name: 'fingerprint',
-        onClick: () => {}
+        onClick: e => {}
     };
 
     onClick(e) {
         e.stopPropagation();
-        this.props.onClick();
+        this.props.onClick(e);
     }
 
     render() {
