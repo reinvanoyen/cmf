@@ -43,7 +43,7 @@ class Search extends React.Component {
     render() {
 
         return (
-            <form onSubmit={this.handleSubmit.bind(this)} className={'search'}>
+            <div className={'search'}>
                 <div className="search__icon">
                     <Icon name={'search'} />
                 </div>
@@ -55,7 +55,7 @@ class Search extends React.Component {
                     onChange={this.handleChange.bind(this)}
                     placeholder="Search"
                 />
-            </form>
+            </div>
         );
     }
 }

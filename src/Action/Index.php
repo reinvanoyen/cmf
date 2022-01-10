@@ -22,6 +22,10 @@ class Index extends CollectionAction
         $this->paginate($meta::getPerPage());
         $this->components(count($components) ? $components : $meta::index());
         $this->model = $meta::getModel();
+
+        if (count($meta::getSearchColumns())) {
+            $this->search($meta::getSearchColumns());
+        }
     }
 
     /**

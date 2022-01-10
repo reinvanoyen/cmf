@@ -23,7 +23,8 @@ class ManyToManyField extends React.Component {
         style: '',
         singular: '',
         plural: '',
-        titleColumn: ''
+        titleColumn: '',
+        search: false
     };
 
     constructor(props) {
@@ -128,6 +129,7 @@ class ManyToManyField extends React.Component {
                         singular={this.props.plural}
                         titleColumn={this.props.titleColumn}
                         components={this.props.components}
+                        search={this.props.search}
                         onCancel={this.close.bind(this)}
                         onSelectionConfirm={this.onSelectionConfirm.bind(this)}
                         defaultSelectedItems={this.state.selectedItems}

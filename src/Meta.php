@@ -22,6 +22,11 @@ abstract class Meta
     protected static $perPage = 10;
 
     /**
+     * @var array $search
+     */
+    protected static $search = [];
+
+    /**
      * Get the model classname for the resource
      *
      * @return string
@@ -69,6 +74,16 @@ abstract class Meta
     public static function getPerPage(): int
     {
         return static::$perPage;
+    }
+
+    /**
+     * Get the searchable columns for this resource
+     *
+     * @return array
+     */
+    public static function getSearchColumns(): array
+    {
+        return static::$search;
     }
 
     /**

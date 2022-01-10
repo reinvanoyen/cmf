@@ -5,6 +5,7 @@ import IconButton from "./icon-button";
 import Placeholder from "./placeholder";
 import str from "../../util/str";
 import Item from "./item";
+import Search from "./search";
 
 class ItemPickerWidget extends React.Component {
 
@@ -15,6 +16,7 @@ class ItemPickerWidget extends React.Component {
         components: [],
         defaultSelectedItemIds: [],
         defaultSelectedItems: [],
+        search: false,
         onSelectionChange: (ids, items) => {},
         onSelectionConfirm: (ids, items) => {},
         onCancel: () => {}
@@ -25,6 +27,7 @@ class ItemPickerWidget extends React.Component {
 
         this.state = {
             isLoading: true,
+            searchKeyword: '',
             items: [],
             selectedItemIds: this.props.defaultSelectedItemIds || [],
             selectedItems: this.props.defaultSelectedItems || []
@@ -36,13 +39,30 @@ class ItemPickerWidget extends React.Component {
     }
 
     load() {
+
+        let params = {};
+
+        // Search for search keyword
+        if (this.state.searchKeyword) {
+            params.search = this.state.searchKeyword;
+        }
+
         // Load the data from the backend (with id as param)
-        api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
+        api.execute.get(this.props.path, this.props.id,'load', params).then(response => {
             let items = response.data.data;
             this.setState({
                 items: items,
                 isLoading: false
             });
+        });
+    }
+
+    search(keyword) {
+        this.setState({
+            isLoading: true,
+            searchKeyword: keyword
+        }, () => {
+            this.load();
         });
     }
 
@@ -56,6 +76,10 @@ class ItemPickerWidget extends React.Component {
 
     onSelectionConfirm() {
         this.props.onSelectionConfirm(this.state.selectedItemIds, this.state.selectedItems);
+    }
+
+    onCancel() {
+        this.props.onCancel();
     }
 
     deselect(item) {
@@ -90,10 +114,6 @@ class ItemPickerWidget extends React.Component {
 
     isItemSelected(item) {
         return this.state.selectedItemIds.includes(item.id);
-    }
-
-    onCancel() {
-        this.props.onCancel();
     }
 
     renderSidebar() {
@@ -136,28 +156,47 @@ class ItemPickerWidget extends React.Component {
         );
     }
 
-    renderContent() {
-        if (this.state.isLoading) {
-            return null;
+
+    renderPlaceholder() {
+
+        if (this.state.searchKeyword) {
+
+            return (
+                <div className="index__placeholder">
+                    No {this.props.plural} found for your search "{this.state.searchKeyword}".
+                </div>
+            );
         }
 
         return (
+            <div className="index__placeholder">
+                No {this.props.plural.toLowerCase()} found.
+            </div>
+        );
+    }
+
+    renderRows() {
+        return this.state.items.map((item, i) => {
+            return (
+                <Item
+                    key={i}
+                    path={this.props.path}
+                    item={item}
+                    titleColumn={this.props.titleColumn}
+                    components={this.props.components}
+                    isSelected={this.isItemSelected(item)}
+                    selectionMode={true}
+                    onClick={e => this.toggleItemSelection(item)}
+                />
+            );
+        });
+    }
+
+    renderContent() {
+        return (
             <React.Fragment>
                 <div className="item-picker-widget__main">
-                    {this.state.items.map((item, i) => {
-                        return (
-                            <Item
-                                key={i}
-                                path={this.props.path}
-                                item={item}
-                                titleColumn={this.props.titleColumn}
-                                components={this.props.components}
-                                isSelected={this.isItemSelected(item)}
-                                selectionMode={true}
-                                onClick={e => this.toggleItemSelection(item)}
-                            />
-                        );
-                    })}
+                    {this.state.items.length ? this.renderRows() : this.renderPlaceholder()}
                 </div>
                 <div className="item-picker-widget__side">
                     {this.renderSidebar()}
@@ -174,6 +213,7 @@ class ItemPickerWidget extends React.Component {
                         {str.toUpperCaseFirst(this.props.plural)}
                     </div>
                     <div className="item-picker-widget__header-options">
+                        {this.props.search ? <Search onSearch={keyword => this.search(keyword)} /> : null}
                         <IconButton name={'close'} onClick={this.onCancel.bind(this)} />
                     </div>
                 </div>

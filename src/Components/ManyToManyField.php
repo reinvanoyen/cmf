@@ -4,7 +4,6 @@ namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use ReinVanOyen\Cmf\Http\Resources\ModelCollection;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
@@ -59,8 +58,15 @@ class ManyToManyField extends Component
         $this->titleColumn($this->meta::getTitleColumn());
 
         $this->components(count($components) ? $components : $this->meta::index());
+
+        if (count($this->meta::getSearchColumns())) {
+            $this->search($this->meta::getSearchColumns());
+        }
     }
 
+    /**
+     * @return string
+     */
     public function type(): string
     {
         return 'many-to-many-field';
@@ -146,7 +152,7 @@ class ManyToManyField extends Component
     {
         ModelResource::provision($this->components);
         ModelResource::fields([$this->titleColumn,]);
-        
+
         return ModelResource::collection(
             $this->getResults($request)
         );
