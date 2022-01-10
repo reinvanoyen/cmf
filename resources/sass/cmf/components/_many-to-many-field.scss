@@ -1,0 +1,22 @@
+@include block(many-to-many-field)
+{
+    position: relative;
+
+    @include element(btn)
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    @include element(content)
+    {
+        margin-top: $rule;
+    }
+
+    @include element(list)
+    {
+        border: $border-width-2 solid $color03;
+        border-radius: $border-radius-2;
+    }
+}

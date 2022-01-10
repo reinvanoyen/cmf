@@ -97,7 +97,6 @@ class FileBrowser extends React.Component {
     }
 
     deselectFile(file) {
-
         this.props.onSelectionChange(
             this.props.selectedFileIds.filter(fileId => fileId !== file.id),
             this.props.selectedFiles.filter(currFile => currFile.id !== file.id)

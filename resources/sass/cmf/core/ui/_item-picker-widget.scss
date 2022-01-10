@@ -1,0 +1,94 @@
+@include block(item-picker-widget)
+{
+    display: flex;
+    flex-direction: column;
+    padding: $rule / 3;
+    border: $border-width-2 solid $color03;
+    background-color: $color01;
+    border-radius: $border-radius-1;
+    box-shadow: $box-shadow-1;
+    width: 80vw;
+    height: 80vh;
+
+    @include element(header)
+    {
+        display: flex;
+        align-items: center;
+        padding: $rule / 2 $rule;
+        @include type-9;
+    }
+
+    @include element(header-title)
+    {
+        @include type-9;
+    }
+
+    @include element(header-options)
+    {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-grow: 1;
+
+        >*
+        {
+            margin-left: $rule / 3;
+
+            &:first-child
+            {
+                margin-left: 0;
+            }
+        }
+    }
+
+    @include element(content)
+    {
+        display: flex;
+        flex-grow: 1;
+        overflow-y: scroll;
+    }
+
+    @include element(footer)
+    {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: $rule / 2 $rule;
+
+        >*
+        {
+            margin-left: $rule / 3;
+
+            &:first-child
+            {
+                margin-left: 0;
+            }
+        }
+    }
+
+    @include element(main)
+    {
+        width: 75%;
+    }
+
+    @include element(side)
+    {
+        position: sticky;
+        top: 0;
+        width: 25%;
+        padding-top: $rule;
+    }
+
+    @include element(selection)
+    {
+        // for ref
+    }
+
+    @include element(selection-header)
+    {
+        @include type-6;
+        text-transform: uppercase;
+        padding-left: $rule / 2;
+        margin-bottom: $rule / 2;
+    }
+}

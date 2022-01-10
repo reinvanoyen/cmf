@@ -40,6 +40,7 @@
 @import 'cmf/core/ui/link-list';
 @import 'cmf/core/ui/directory';
 @import 'cmf/core/ui/file';
+@import 'cmf/core/ui/item';
 @import 'cmf/core/ui/context-menu';
 @import 'cmf/core/ui/overlay';
 @import 'cmf/core/ui/confirm';
@@ -53,6 +54,7 @@
 @import 'cmf/core/ui/file-view';
 @import 'cmf/core/ui/multi-file-view';
 @import 'cmf/core/ui/file-picker-widget';
+@import 'cmf/core/ui/item-picker-widget';
 @import 'cmf/core/ui/icon-button';
 @import 'cmf/core/ui/file-thumb';
 @import 'cmf/core/ui/definition-list';
@@ -97,3 +99,4 @@
 @import 'cmf/components/richtext-field';
 @import 'cmf/components/content-blocks';
 @import 'cmf/components/gallery-field';
+@import 'cmf/components/many-to-many-field';

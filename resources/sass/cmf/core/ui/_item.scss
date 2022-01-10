@@ -1,0 +1,50 @@
+@include block(item)
+{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: $rule / 3 $rule / 2;
+    transition: background-color .25s;
+    border-radius: $border-radius-1;
+    cursor: pointer;
+
+    &:hover
+    {
+        background-color: $color08;
+    }
+
+    @include modifier(selected)
+    {
+        background-color: $color03;
+
+        &:hover { background-color: $color03; }
+    }
+
+    @include element(content)
+    {
+        flex-grow: 1;
+        padding: $rule / 2;
+    }
+
+    @include element(row)
+    {
+        display: grid;
+        grid-gap: $rule / 2;
+    }
+
+    @include element(checkbox)
+    {
+        flex-grow: 0;
+        margin-right: $rule / 2;
+    }
+
+    @include element(actions)
+    {
+        flex-grow: 0;
+    }
+
+    @include element(name)
+    {
+        @include type-2;
+    }
+}
