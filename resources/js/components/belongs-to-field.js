@@ -135,7 +135,7 @@ class BelongsToField extends React.Component {
                     <div className="belongs-to-field__create">
                         <div className="belongs-to-field__create-header">
                             <div className="belongs-to-field__create-header-title">
-                                Create {this.props.singular}
+                                New {this.props.singular}
                             </div>
                             <div className="belongs-to-field__create-header-options">
                                 <IconButton name={'close'} onClick={this.close.bind(this)} />
