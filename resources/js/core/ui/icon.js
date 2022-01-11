@@ -1,4 +1,5 @@
 import React from 'react';
+import helpers from "../../util/helpers";
 
 class Icon extends React.Component {
 
@@ -17,7 +18,7 @@ class Icon extends React.Component {
 
     render() {
         return (
-            <span className={'icon icon--'+this.props.style} onClick={this.props.onClick ? this.onClick.bind(this) : null}>
+            <span className={helpers.className('icon', this.props.style)} onClick={this.props.onClick ? this.onClick.bind(this) : null}>
                 {this.props.name}
             </span>
         );

@@ -1,6 +1,7 @@
 @include block(belongs-to-field)
 {
     display: flex;
+    flex-wrap: wrap;
 
     @include element(field)
     {

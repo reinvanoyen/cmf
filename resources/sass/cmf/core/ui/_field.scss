@@ -3,11 +3,22 @@
     display: block;
     width: 100%;
 
+    @include element(header)
+    {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: $rule / 4;
+    }
+
     @include element(label)
     {
         display: block;
-        width: 100%;
-        margin-bottom: $rule / 4;
+    }
+
+    @include element(tooltip)
+    {
+        margin-left: $rule / 4;
     }
 
     @include element(input)

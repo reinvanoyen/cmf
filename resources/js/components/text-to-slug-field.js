@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from "./text-field";
 import str from "../util/str";
+import util from "../core/ui/util";
 
 export default class TextToSlugField extends TextField {
 
@@ -54,13 +55,15 @@ export default class TextToSlugField extends TextField {
 
     changeSlugValue() {
 
-        let newSlug = prompt('New slug value', this.state.slugValue);
-
-        if (newSlug) {
-            this.setState({
-                slugValue: newSlug
-            });
-        }
+        util.prompt({
+            title: 'Update slug',
+            defaultValue: this.state.slugValue,
+            confirm: (newSlug) => {
+                this.setState({
+                    slugValue: str.slugify(newSlug)
+                });
+            }
+        });
     }
 
     render() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import dom from "../../util/dom";
+import Tooltip from "./tooltip";
 
 class Field extends React.Component {
 
@@ -7,7 +8,8 @@ class Field extends React.Component {
         name: '',
         label: '',
         required: false,
-        errors: {}
+        errors: {},
+        tooltip: ''
     };
 
     constructor(props) {
@@ -22,6 +24,7 @@ class Field extends React.Component {
         let label;
         let error;
         let requiredIndicator;
+        let tooltip;
 
         if (this.props.showRequiredIndicator) {
             requiredIndicator = <span className="field__required-indicator">*</span>;
@@ -36,6 +39,10 @@ class Field extends React.Component {
             );
         }
 
+        if (this.props.tooltip) {
+            tooltip = <div className="field__tooltip"><Tooltip text={this.props.tooltip} /></div>;
+        }
+
         if (this.props.errors[this.props.name]) {
             error = (
                 <span className="field__error">
@@ -46,7 +53,9 @@ class Field extends React.Component {
 
         return (
             <div className="field">
-                {label}
+                <div className="field__header">
+                    {label} {tooltip}
+                </div>
                 <div className="field__input">
                     {this.props.children}
                 </div>

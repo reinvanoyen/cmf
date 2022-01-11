@@ -14,7 +14,8 @@ export default class TextField extends React.Component {
         htmlType: 'text',
         multiline: false,
         errors: {},
-        style: ''
+        style: '',
+        tooltip: ''
     };
 
     constructor(props) {
@@ -80,7 +81,13 @@ export default class TextField extends React.Component {
         }
 
         return (
-            <Field name={this.props.name} required={this.props.showRequiredIndicator} label={this.props.label} errors={this.props.errors}>
+            <Field
+                name={this.props.name}
+                required={this.props.showRequiredIndicator}
+                label={this.props.label}
+                errors={this.props.errors}
+                tooltip={this.props.tooltip}
+            >
                 {input}
             </Field>
         );

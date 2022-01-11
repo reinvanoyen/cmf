@@ -28,6 +28,16 @@
         font-size: 14px;
     }
 
+    @include modifier(small)
+    {
+        font-size: 18px;
+    }
+
+    @include modifier(alt)
+    {
+        color: rgba($color10, .5);
+    }
+
     @include modifier(medium)
     {
         font-size: 30px;
