@@ -8,6 +8,7 @@ use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
 use ReinVanOyen\Cmf\Traits\BuildsQuery;
+use ReinVanOyen\Cmf\Traits\HasItemGrammar;
 use ReinVanOyen\Cmf\Traits\HasLabel;
 use ReinVanOyen\Cmf\Traits\HasName;
 
@@ -15,6 +16,7 @@ class BelongsToField extends Component
 {
     use HasName;
     use HasLabel;
+    use HasItemGrammar;
     use BuildsQuery;
 
     /**
@@ -28,6 +30,21 @@ class BelongsToField extends Component
     private $isNullable;
 
     /**
+     * @var string $meta
+     */
+    private $meta;
+
+    /**
+     * @var array $createComponents
+     */
+    private $createComponents;
+
+    /**
+     * @var string $model
+     */
+    private $model;
+
+    /**
      * BelongsToField constructor.
      * @param string $name
      * @param string|null $meta
@@ -37,9 +54,14 @@ class BelongsToField extends Component
         $this->name($name);
         $this->label(Str::labelify($name));
 
-        $meta = $meta ?: RelationshipMetaGuesser::getMeta($this->getName());
-        $this->model = $meta::getModel();
-        $this->titleColumn($meta::getTitleColumn());
+        $this->meta = $meta ?: RelationshipMetaGuesser::getMeta($this->getName());
+        $this->model = $this->meta::getModel();
+
+        $this->singular($this->meta::getSingular());
+        $this->plural($this->meta::getPlural());
+
+        $this->titleColumn($this->meta::getTitleColumn());
+        $this->create($this->meta::create());
     }
 
     /**
@@ -91,6 +113,55 @@ class BelongsToField extends Component
         return ModelResource::collection(
             $this->getResults($request)
         );
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function apiCreate(Request $request)
+    {
+        $modelClass = $this->model;
+
+        // Validate
+        $validationRules = [];
+        foreach ($this->createComponents as $component) {
+            $validationRules = array_merge($validationRules, $component->registerValidationRules($validationRules));
+        }
+
+        $request->validate($validationRules);
+
+        // Create a new item
+        $model = new $modelClass();
+
+        // Save every component to the model
+        foreach ($this->createComponents as $component) {
+            $component->save($model, $request);
+        }
+
+        $model->save();
+
+        ModelResource::provision($this->createComponents);
+
+        return new ModelResource($model);
+    }
+
+    /**
+     * @param $create
+     * @return $this
+     */
+    public function create($create)
+    {
+        if (! $create) {
+            $this->export('create', false);
+            $this->export('createComponents', []);
+        } else {
+            $this->export('create', true);
+            $this->createComponents = $create;
+            $this->export('createComponents', $create);
+        }
+
+        return $this;
     }
 
     /**

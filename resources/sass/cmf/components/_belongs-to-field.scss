@@ -1,5 +1,18 @@
 @include block(belongs-to-field)
 {
+    display: flex;
+
+    @include element(field)
+    {
+        flex-grow: 1;
+        margin-right: $rule / 3;
+    }
+
+    @include element(btn)
+    {
+        flex-grow: 0;
+    }
+
     @include element(select)
     {
         display: block;
@@ -7,5 +20,19 @@
         border: 1px solid $color06;
         border-radius: $border-radius-3;
         padding: $rule / 4;
+    }
+
+    @include element(create)
+    {
+        display: flex;
+        flex-direction: column;
+        padding: $rule / 3;
+        border: $border-width-2 solid $color03;
+        background-color: $color01;
+        border-radius: $border-radius-1;
+        box-shadow: $box-shadow-1;
+        width: 60vw;
+        height: 60vh;
+        overflow-y: scroll;
     }
 }

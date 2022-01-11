@@ -4,6 +4,7 @@ import Button from "./button";
 export default class Form extends React.Component {
 
     static defaultProps = {
+        realForm: true,
         errors: {},
         submitButtonText: 'Submit',
         onSubmit: () => {}
@@ -92,15 +93,29 @@ export default class Form extends React.Component {
     }
 
     render() {
+
+        if (this.props.realForm) {
+            return (
+                <form className={'form'+(this.state.isSubmitting ? ' form--submitting' : '')} onSubmit={e => this.onSubmit(e)}>
+                    <div className="form__inputs">
+                        {this.renderChildren()}
+                    </div>
+                    <div className="form__footer">
+                        <Button text={this.props.submitButtonText} type={'submit'} />
+                    </div>
+                </form>
+            );
+        }
+
         return (
-            <form className={'form'+(this.state.isSubmitting ? ' form--submitting' : '')} onSubmit={e => this.onSubmit(e)}>
+            <div className={'form'+(this.state.isSubmitting ? ' form--submitting' : '')}>
                 <div className="form__inputs">
                     {this.renderChildren()}
                 </div>
                 <div className="form__footer">
-                    <Button text={this.props.submitButtonText} type={'submit'} />
+                    <Button text={this.props.submitButtonText} onClick={this.submit.bind(this)} />
                 </div>
-            </form>
+            </div>
         );
     }
 }

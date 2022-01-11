@@ -3,9 +3,7 @@ import FilePickerWidget from "../core/ui/file-picker-widget";
 import Field from "../core/ui/field";
 import Button from "../core/ui/button";
 import IconButton from "../core/ui/icon-button";
-import FilePreview from "../core/ui/file-preview";
 import Placeholder from "../core/ui/placeholder";
-import util from "../core/ui/util";
 import array from "../util/array";
 import FileThumb from "../core/ui/file-thumb";
 
