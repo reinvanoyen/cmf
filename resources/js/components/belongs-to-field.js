@@ -6,6 +6,9 @@ import FilePickerWidget from "../core/ui/file-picker-widget";
 import Form from "../core/ui/form";
 import components from "../rendering/components";
 import ui from "../core/ui/util";
+import Dropdown from "../core/ui/dropdown";
+import FileUploader from "../core/ui/file-uploader";
+import IconButton from "../core/ui/icon-button";
 
 class BelongsToField extends React.Component {
 
@@ -130,16 +133,25 @@ class BelongsToField extends React.Component {
             return (
                 <div className="overlay">
                     <div className="belongs-to-field__create">
-                        <Form
-                            ref={this.createFormRef}
-                            errors={this.state.createFormErrors}
-                            realForm={false}
-                            onSubmit={this.create.bind(this)}
-                            submitButtonText={`Create ${this.props.singular}`}
-                        >
-                            {components.renderComponents(this.props.createComponents, {}, this.props.path)}
-                        </Form>
-
+                        <div className="belongs-to-field__create-header">
+                            <div className="belongs-to-field__create-header-title">
+                                Create {this.props.singular}
+                            </div>
+                            <div className="belongs-to-field__create-header-options">
+                                <IconButton name={'close'} onClick={this.close.bind(this)} />
+                            </div>
+                        </div>
+                        <div className="belongs-to-field__create-content">
+                            <Form
+                                ref={this.createFormRef}
+                                errors={this.state.createFormErrors}
+                                realForm={false}
+                                onSubmit={this.create.bind(this)}
+                                submitButtonText={`Create ${this.props.singular}`}
+                            >
+                                {components.renderComponents(this.props.createComponents, {}, this.props.path)}
+                            </Form>
+                        </div>
                     </div>
                 </div>
             );
