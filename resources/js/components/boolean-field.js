@@ -6,7 +6,8 @@ export default class BooleanField extends React.Component {
     static defaultProps = {
         data: {},
         label: '',
-        name: ''
+        name: '',
+        tooltip: ''
     };
 
     constructor(props) {
@@ -42,7 +43,11 @@ export default class BooleanField extends React.Component {
 
     render() {
         return (
-            <Field name={this.props.name} label={this.props.label}>
+            <Field
+                name={this.props.name}
+                label={this.props.label}
+                tooltip={this.props.tooltip}
+            >
                 <div className={'boolean-field boolean-field--'+(this.state.value ? 'checked' : 'unchecked')} onClick={this.switch.bind(this)}></div>
             </Field>
         );

@@ -9,7 +9,8 @@ export default class RichtextField extends React.Component {
     static defaultProps = {
         data: {},
         label: '',
-        name: ''
+        name: '',
+        tooltip: ''
     };
 
     constructor(props) {
@@ -55,7 +56,11 @@ export default class RichtextField extends React.Component {
 
     render() {
         return (
-            <Field name={this.props.name} label={this.props.label}>
+            <Field
+                name={this.props.name}
+                label={this.props.label}
+                tooltip={this.props.tooltip}
+            >
                 <div className="richtext-field">
                     <TrixEditor
                         key={this.state.redrawKey}

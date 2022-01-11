@@ -7,7 +7,8 @@ export default class DateTimeField extends React.Component {
     static defaultProps = {
         data: {},
         label: '',
-        name: ''
+        name: '',
+        tooltip: ''
     };
 
     constructor(props) {
@@ -38,22 +39,23 @@ export default class DateTimeField extends React.Component {
 
     render() {
 
-        let input = (
-            <input
-                id={dom.inputId(this.props.name)}
-                name={this.props.name}
-                className={'date-time-field'}
-                type={'datetime-local'}
-                defaultValue={this.state.value}
-                disabled={this.props.disabled}
-                onChange={this.handleChange.bind(this)}
-                onKeyUp={this.handleChange.bind(this)}
-            />
-        );
-
         return (
-            <Field name={this.props.name} required={this.props.showRequiredIndicator} label={this.props.label}>
-                {input}
+            <Field
+                name={this.props.name}
+                required={this.props.showRequiredIndicator}
+                label={this.props.label}
+                tooltip={this.props.tooltip}
+            >
+                <input
+                    id={dom.inputId(this.props.name)}
+                    name={this.props.name}
+                    className={'date-time-field'}
+                    type={'datetime-local'}
+                    defaultValue={this.state.value}
+                    disabled={this.props.disabled}
+                    onChange={this.handleChange.bind(this)}
+                    onKeyUp={this.handleChange.bind(this)}
+                />
             </Field>
         );
     }

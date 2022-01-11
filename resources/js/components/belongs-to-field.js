@@ -2,12 +2,9 @@ import React from 'react';
 import Field from '../core/ui/field';
 import Button from '../core/ui/button';
 import api from '../api/api';
-import FilePickerWidget from "../core/ui/file-picker-widget";
 import Form from "../core/ui/form";
 import components from "../rendering/components";
 import ui from "../core/ui/util";
-import Dropdown from "../core/ui/dropdown";
-import FileUploader from "../core/ui/file-uploader";
 import IconButton from "../core/ui/icon-button";
 
 class BelongsToField extends React.Component {
@@ -20,6 +17,7 @@ class BelongsToField extends React.Component {
         nullable: false,
         plural: '',
         singular: '',
+        tooltip: '',
         create: false,
         createComponents: []
     };
@@ -198,7 +196,11 @@ class BelongsToField extends React.Component {
         });
 
         return (
-            <Field name={this.props.name} label={this.props.label}>
+            <Field
+                name={this.props.name}
+                label={this.props.label}
+                tooltip={this.props.tooltip}
+            >
                 <div className={'belongs-to-field'}>
                     <div className="belongs-to-field__field">
                         <select

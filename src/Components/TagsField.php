@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Support\Str;
 use ReinVanOyen\Cmf\Traits\HasLabel;
+use ReinVanOyen\Cmf\Traits\HasTooltip;
 use Spatie\Tags\Tag;
 
 class TagsField extends Component
 {
     use HasLabel;
+    use HasTooltip;
 
     /**
      * TagsField constructor.

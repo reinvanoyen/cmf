@@ -8,6 +8,7 @@ export default class Checkbox extends React.Component {
         data: {},
         label: '',
         name: '',
+        tooltip: '',
         disabled: false,
         showRequiredIndicator: false
     };
@@ -41,7 +42,12 @@ export default class Checkbox extends React.Component {
     render() {
 
         return (
-            <Field name={this.props.name} required={this.props.showRequiredIndicator} label={this.props.label}>
+            <Field
+                name={this.props.name}
+                tooltip={this.props.tooltip}
+                required={this.props.showRequiredIndicator}
+                label={this.props.label}
+            >
                 <input id={dom.inputId(this.props.name)}
                        name={this.props.name}
                        className="checkbox"

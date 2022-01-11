@@ -11,12 +11,14 @@ use ReinVanOyen\Cmf\Traits\BuildsQuery;
 use ReinVanOyen\Cmf\Traits\HasItemGrammar;
 use ReinVanOyen\Cmf\Traits\HasLabel;
 use ReinVanOyen\Cmf\Traits\HasName;
+use ReinVanOyen\Cmf\Traits\HasTooltip;
 
 class BelongsToField extends Component
 {
     use HasName;
     use HasLabel;
     use HasItemGrammar;
+    use HasTooltip;
     use BuildsQuery;
 
     /**

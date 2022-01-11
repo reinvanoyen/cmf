@@ -15,6 +15,7 @@ export default class ContentBlocks extends React.Component {
         name: '',
         singular: '',
         plural: '',
+        tooltip: '',
         blocks: {},
         typeColumn: '',
         orderColumn: ''
@@ -248,7 +249,11 @@ export default class ContentBlocks extends React.Component {
 
     render() {
         return (
-            <Field name={this.props.name} label={this.props.label}>
+            <Field
+                name={this.props.name}
+                label={this.props.label}
+                tooltip={this.props.tooltip}
+            >
                 <div className={'content-blocks'}>
                     <div className={'content-blocks__content'}>
                         {this.renderContentBlocks()}

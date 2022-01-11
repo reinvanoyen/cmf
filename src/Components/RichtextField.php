@@ -7,6 +7,7 @@ use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Support\Str;
 use ReinVanOyen\Cmf\Traits\HasLabel;
 use ReinVanOyen\Cmf\Traits\HasName;
+use ReinVanOyen\Cmf\Traits\HasTooltip;
 use ReinVanOyen\Cmf\Traits\HasValidation;
 
 class RichtextField extends Component
@@ -14,6 +15,7 @@ class RichtextField extends Component
     use HasName;
     use HasValidation;
     use HasLabel;
+    use HasTooltip;
 
     /**
      * RichtextField constructor.

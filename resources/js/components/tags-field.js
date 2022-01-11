@@ -12,7 +12,8 @@ export default class TextField extends React.Component {
         disabled: false,
         showRequiredIndicator: false,
         errors: {},
-        style: ''
+        style: '',
+        tooltip: ''
     };
 
     constructor(props) {
@@ -187,7 +188,13 @@ export default class TextField extends React.Component {
         }
 
         return (
-            <Field name={this.props.name} required={this.props.showRequiredIndicator} label={this.props.label} errors={this.props.errors}>
+            <Field
+                name={this.props.name}
+                required={this.props.showRequiredIndicator}
+                label={this.props.label}
+                errors={this.props.errors}
+                tooltip={this.props.tooltip}
+            >
                 <div className="tags-field">
                     <div className="tags-field__wrap">
                         <div className="tags-field__tags">
