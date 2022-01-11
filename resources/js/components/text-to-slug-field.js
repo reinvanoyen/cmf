@@ -12,7 +12,8 @@ export default class TextToSlugField extends TextField {
         id: 0,
         label: '',
         slugName: '',
-        slugPrefix: ''
+        slugPrefix: '',
+        tooltip: ''
     };
 
     constructor(props) {
@@ -54,7 +55,6 @@ export default class TextToSlugField extends TextField {
     }
 
     changeSlugValue() {
-
         util.prompt({
             title: 'Update slug',
             defaultValue: this.state.slugValue,

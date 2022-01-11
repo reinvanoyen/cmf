@@ -25,12 +25,14 @@
             {
                 content: '';
                 position: absolute;
-                top: $border-width-2;
-                right: $border-width-2;
-                bottom: $border-width-2;
-                left: $border-width-2;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
                 display: block;
-                background-color: rgba($color01, .5);
+                background-color: rgba($color10, .1);
+                border-radius: $border-radius-1;
+                border: $border-width-1 dashed $color10;
             }
         }
     }

@@ -17,6 +17,7 @@ class GalleryField extends React.Component {
         style: '',
         singular: '',
         plural: '',
+        tooltip: '',
         orderColumn: ''
     };
 
@@ -142,6 +143,7 @@ class GalleryField extends React.Component {
                             </div>
                         );
                     })}
+                    <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>Add more {this.props.plural}</Placeholder>
                 </div>
             );
         }
@@ -168,17 +170,22 @@ class GalleryField extends React.Component {
         }
 
         return (
-            <div className="gallery-field">
-                <Field name={this.props.name} label={this.props.label} errors={this.props.errors}>
+            <Field
+                name={this.props.name}
+                label={this.props.label}
+                errors={this.props.errors}
+                tooltip={this.props.tooltip}
+            >
+                <div className="gallery-field">
                     <div className="gallery-field__btn">
                         <Button style={['small', 'secondary']} icon={'add'} text={'Select '+this.props.plural} onClick={this.open.bind(this)} />
                     </div>
                     <div className="gallery-field__content">
                         {this.renderContent()}
                     </div>
-                </Field>
+                </div>
                 {widget}
-            </div>
+            </Field>
         );
     }
 }

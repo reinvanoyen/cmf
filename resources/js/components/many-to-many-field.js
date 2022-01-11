@@ -1,15 +1,9 @@
 import React from 'react';
-import FilePickerWidget from "../core/ui/file-picker-widget";
 import Field from "../core/ui/field";
 import Button from "../core/ui/button";
 import IconButton from "../core/ui/icon-button";
-import FilePreview from "../core/ui/file-preview";
 import Placeholder from "../core/ui/placeholder";
-import util from "../core/ui/util";
-import array from "../util/array";
-import FileThumb from "../core/ui/file-thumb";
 import ItemPickerWidget from "../core/ui/item-picker-widget";
-import api from "../api/api";
 import Item from "../core/ui/item";
 
 class ManyToManyField extends React.Component {
@@ -87,7 +81,6 @@ class ManyToManyField extends React.Component {
     }
 
     renderContent() {
-
         if (this.state.selectedItems.length) {
             return (
                 <div className={'many-to-many-field__list'}>
@@ -140,17 +133,17 @@ class ManyToManyField extends React.Component {
         }
 
         return (
-            <div className="many-to-many-field">
-                <Field name={this.props.name} label={this.props.label} errors={this.props.errors}>
-                    <div className="many-to-many-field__btn">
-                        <Button style={['small', 'secondary']} icon={'add'} text={'Select '+this.props.plural} onClick={this.open.bind(this)} />
-                    </div>
-                    <div className="many-to-many-field__content">
-                        {this.renderContent()}
-                    </div>
-                </Field>
+            <Field name={this.props.name} label={this.props.label} errors={this.props.errors}>
+                <div className="many-to-many-field">
+                        <div className="many-to-many-field__btn">
+                            <Button style={['small', 'secondary']} icon={'add'} text={'Select '+this.props.plural} onClick={this.open.bind(this)} />
+                        </div>
+                        <div className="many-to-many-field__content">
+                            {this.renderContent()}
+                        </div>
+                </div>
                 {widget}
-            </div>
+            </Field>
         );
     }
 }

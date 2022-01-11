@@ -184,7 +184,6 @@ class Index extends React.Component {
     renderPlaceholder() {
 
         if (this.state.searchKeyword) {
-
             return (
                 <div className="index__placeholder">
                     No {this.props.plural} found for your search "{this.state.searchKeyword}".
@@ -202,22 +201,25 @@ class Index extends React.Component {
     renderRows() {
 
         if (this.state.rows.length) {
+            return (
+                <div className="index__rows">
+                    {this.state.rows.map(row => {
+                        let rowContent = this.props.components.map((component, i) => {
+                            return (
+                                <div className="index__component" key={i}>
+                                    {components.renderComponent(component, row, this.props.path)}
+                                </div>
+                            );
+                        });
 
-            return this.state.rows.map(row => {
-                let rowContent = this.props.components.map((component, i) => {
-                    return (
-                        <div className="index__component" key={i}>
-                            {components.renderComponent(component, row, this.props.path)}
-                        </div>
-                    );
-                });
-
-                return (
-                    <div className={'index__row'+(this.props.action ? ' index__row--clickable' : '')} key={row.id} style={this.getRowStyle()} onClick={this.props.action ? this.onRowClick.bind(this, row) : null}>
-                        {rowContent}
-                    </div>
-                );
-            });
+                        return (
+                            <div className={'index__row'+(this.props.action ? ' index__row--clickable' : '')} key={row.id} style={this.getRowStyle()} onClick={this.props.action ? this.onRowClick.bind(this, row) : null}>
+                                {rowContent}
+                            </div>
+                        );
+                    })}
+                </div>
+            );
         }
 
         return this.renderPlaceholder();
@@ -267,9 +269,7 @@ class Index extends React.Component {
         return (
             <div className={'index index--'+this.props.style}>
                 {this.renderHeader()}
-                <div className="index__rows">
-                    {this.renderRows()}
-                </div>
+                {this.renderRows()}
                 {this.renderFooter()}
             </div>
         );

@@ -23,7 +23,7 @@ class TextToSlugField extends TextField
         $this->slugName = $slugName;
         $this->export('slugName', $this->slugName);
 
-        $this->tooltip('A slug will be generated from the value from this field. A slug is used to generate the url for this item.');
+        $this->tooltip('A slug will be created to generate the url for this item.');
     }
 
     /**

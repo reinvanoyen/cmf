@@ -58,6 +58,7 @@ abstract class Module implements JsonSerializable
             'path' => [
                 'module' => $this->id(),
             ],
+            'url' => url('admin/'.$this->id()),
         ];
     }
 }

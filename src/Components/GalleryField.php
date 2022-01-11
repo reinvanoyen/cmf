@@ -9,8 +9,10 @@ use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Models\MediaFile;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
+use ReinVanOyen\Cmf\Traits\HasItemGrammar;
 use ReinVanOyen\Cmf\Traits\HasLabel;
 use ReinVanOyen\Cmf\Traits\HasName;
+use ReinVanOyen\Cmf\Traits\HasTooltip;
 use ReinVanOyen\Cmf\Traits\HasValidation;
 
 class GalleryField extends Component
@@ -18,6 +20,8 @@ class GalleryField extends Component
     use HasName;
     use HasValidation;
     use HasLabel;
+    use HasItemGrammar;
+    use HasTooltip;
 
     /**
      * @var string $orderColumn
@@ -69,26 +73,6 @@ class GalleryField extends Component
     public function type(): string
     {
         return 'gallery-field';
-    }
-
-    /**
-     * @param string $plural
-     * @return $this
-     */
-    public function plural(string $plural)
-    {
-        $this->export('plural', $plural);
-        return $this;
-    }
-
-    /**
-     * @param string $singular
-     * @return $this
-     */
-    public function singular(string $singular)
-    {
-        $this->export('singular', $singular);
-        return $this;
     }
 
     /**

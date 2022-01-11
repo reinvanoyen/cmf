@@ -158,9 +158,7 @@ class ItemPickerWidget extends React.Component {
 
 
     renderPlaceholder() {
-
         if (this.state.searchKeyword) {
-
             return (
                 <div className="index__placeholder">
                     No {this.props.plural} found for your search "{this.state.searchKeyword}".
@@ -176,20 +174,22 @@ class ItemPickerWidget extends React.Component {
     }
 
     renderRows() {
-        return this.state.items.map((item, i) => {
-            return (
-                <Item
-                    key={i}
-                    path={this.props.path}
-                    item={item}
-                    titleColumn={this.props.titleColumn}
-                    components={this.props.components}
-                    isSelected={this.isItemSelected(item)}
-                    selectionMode={true}
-                    onClick={e => this.toggleItemSelection(item)}
-                />
-            );
-        });
+        if (! this.state.isLoading) {
+            return this.state.items.map((item, i) => {
+                return (
+                    <Item
+                        key={i}
+                        path={this.props.path}
+                        item={item}
+                        titleColumn={this.props.titleColumn}
+                        components={this.props.components}
+                        isSelected={this.isItemSelected(item)}
+                        selectionMode={true}
+                        onClick={e => this.toggleItemSelection(item)}
+                    />
+                );
+            });
+        }
     }
 
     renderContent() {

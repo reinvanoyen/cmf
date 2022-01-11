@@ -4,14 +4,12 @@
 
     @include element(btn)
     {
-        position: absolute;
-        top: 0;
-        right: 0;
+        //
     }
 
     @include element(content)
     {
-        padding-top: $rule;
+        margin-top: $rule / 2;
     }
 
     @include element(grid)
