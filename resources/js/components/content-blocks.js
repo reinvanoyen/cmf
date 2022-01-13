@@ -143,7 +143,6 @@ export default class ContentBlocks extends React.Component {
     }
 
     removeBlock(index, id = null) {
-
         util.confirm({
             title: 'Delete '+this.props.singular+'?',
             text: 'Are you sure you wish to delete this '+this.props.singular+'?',

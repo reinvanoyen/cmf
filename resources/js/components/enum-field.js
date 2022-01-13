@@ -28,19 +28,31 @@ export default class EnumField extends React.Component {
         }
     }
 
+    getValue() {
+        if (this.state.value) {
+            return this.state.value;
+        }
+
+        if (this.props.data[this.props.name]) {
+            return this.props.data[this.props.name];
+        }
+
+        return Object.keys(this.props.options)[0] || '';
+    }
+
     getData(data) {
-        data[this.props.name] = this.state.value || '';
+        data[this.props.name] = this.getValue();
         return data;
+    }
+
+    handleSubmit(data) {
+        data[this.props.name] = this.getValue();
     }
 
     handleChange(e) {
         this.setState({
             value: e.target.value
         });
-    }
-
-    handleSubmit(data) {
-        data[this.props.name] = this.state.value || '';
     }
 
     render() {
