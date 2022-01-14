@@ -1,0 +1,64 @@
+@include block(select)
+{
+    position: relative;
+
+    @include element(field)
+    {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border: $border-width-1 solid $color06;
+        border-radius: $border-radius-3;
+        padding: $rule / 3;
+        background-color: $color01;
+    }
+
+    @include element(value)
+    {
+        //
+    }
+
+    @include element(icon)
+    {
+        pointer-events: none;
+        opacity: .65;
+        position: absolute;
+        top: 50%;
+        right: $rule / 4;
+        margin-top: -$rule / 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: $rule;
+        height: $rule;
+    }
+
+    @include element(dropdown)
+    {
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        top: 100%;
+        margin-top: $rule / 4;
+        padding: $rule / 3;
+        border: $border-width-2 solid $color03;
+        background-color: $color01;
+        border-radius: $border-radius-1;
+        box-shadow: $box-shadow-1;
+        user-select: none;
+    }
+
+    @include element(search)
+    {
+        margin-bottom: $rule / 3;
+    }
+
+    @include element(list)
+    {
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+}

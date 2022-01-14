@@ -7,6 +7,7 @@ class Search extends React.Component {
         modifiers: ['negative'],
         placeholder: 'Type to search...',
         onSearch: keyword => {},
+        debounce: 1000
     };
 
     constructor(props) {
@@ -28,7 +29,7 @@ class Search extends React.Component {
             value: event.target.value
         });
 
-        this.searchTimeout = setTimeout(this.search.bind(this), 1000);
+        this.searchTimeout = setTimeout(this.search.bind(this), this.props.debounce);
     }
 
     handleSubmit(e) {

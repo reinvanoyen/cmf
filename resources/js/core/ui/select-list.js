@@ -6,14 +6,15 @@ class SelectList extends React.Component {
     static defaultProps = {
         onChange: values => {},
         multiple: true,
-        options: {}
+        options: {},
+        defaultValues: []
     };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            values: []
+            values: this.props.defaultValues
         };
     }
 
@@ -25,11 +26,18 @@ class SelectList extends React.Component {
             if (this.props.options.hasOwnProperty(value)) {
 
                 let isSelected = this.state.values.includes(value);
+                let icon;
+
+                if (this.props.multiple) {
+                    icon = <Icon name={isSelected ? 'check_box' : 'check_box_outline_blank'} />
+                } else {
+                    icon = <Icon name={isSelected ? 'radio_button_checked' : 'radio_button_unchecked'} />;
+                }
 
                 options.push(
-                    <div className={'select-list__option'+(isSelected ? ' select-list__option--selected' : '')} onClick={e => this.onToggleSelect(value)} key={value}>
+                    <div className={'select-list__option'+(isSelected ? ' select-list__option--selected' : '')} onClick={e => this.handleOptionClick(value)} key={value}>
                         <div className="select-list__option-icon">
-                            <Icon name={isSelected ? 'check_box' : 'check_box_outline_blank'} />
+                            {icon}
                         </div>
                         <div className="select-list__option-value">
                             {this.props.options[value]}
@@ -50,7 +58,23 @@ class SelectList extends React.Component {
         });
     }
 
-    onToggleSelect(value) {
+    handleOptionClick(value) {
+        if (this.props.multiple) {
+            this.toggleSelection(value);
+        } else {
+            this.selectOnly(value);
+        }
+    }
+
+    selectOnly(value) {
+        this.setState({
+            values: [value]
+        }, () => {
+            this.props.onChange(this.state.values);
+        });
+    }
+
+    toggleSelection(value) {
 
         if (this.state.values.includes(value)) {
             this.state.values = this.state.values.filter(v => v !== value);

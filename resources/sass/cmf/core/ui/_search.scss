@@ -25,6 +25,7 @@
         position: relative;
         padding: $rule / 4 $rule / 1.5;
         padding-left: $rule * 1.5;
+        width: 100%;
         transition: background-color .25s;
         border-radius: $border-radius-1;
         color: $color02;

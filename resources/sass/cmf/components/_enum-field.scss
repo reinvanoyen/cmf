@@ -6,3 +6,13 @@
     border-radius: $border-radius-3;
     padding: $rule / 4;
 }
+
+@include block(enum-field2)
+{
+    display: block;
+    width: 100%;
+    border: $border-width-1 solid $color06;
+    border-radius: $border-radius-3;
+    padding: $rule / 3;
+    background-color: $color01;
+}
