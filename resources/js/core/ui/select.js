@@ -9,6 +9,7 @@ class Select extends React.Component {
     static defaultProps = {
         options: {},
         value: '',
+        search: true,
         onChange: value => {}
     };
 
@@ -17,10 +18,13 @@ class Select extends React.Component {
 
         this.state = {
             isOpen: false,
-            options: this.props.options,
-            values: Object.keys(this.props.options),
+            isSearching: false,
+            searchResults: this.props.options,
             value: this.props.value || Object.keys(this.props.options)[0]
         };
+
+        this.selectRef = React.createRef();
+        this.handleDocumentClick = this.onDocumentClick.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -28,6 +32,24 @@ class Select extends React.Component {
             this.setState({
                 value: this.props.value
             });
+        }
+    }
+
+    componentWillUnmount() {
+        this.unbindDocumentClick();
+    }
+
+    bindDocumentClick() {
+        document.addEventListener('click', this.handleDocumentClick);
+    }
+
+    unbindDocumentClick() {
+        document.removeEventListener('click', this.handleDocumentClick);
+    }
+
+    onDocumentClick(e) {
+        if (! this.selectRef.current.contains(e.target)) {
+            this.close();
         }
     }
 
@@ -39,28 +61,32 @@ class Select extends React.Component {
         }
     }
 
-    close() {
-        this.setState({
-            isOpen: false,
-            options: this.props.options
-        });
-    }
-
     open() {
         this.setState({
             isOpen: true
         });
+        this.bindDocumentClick();
+    }
+
+    close() {
+        this.setState({
+            isOpen: false,
+            searchResults: this.props.options
+        });
+        this.unbindDocumentClick();
     }
 
     search(keyword) {
         if (! keyword) {
             this.setState({
-                options: this.props.options
+                isSearching: false,
+                searchResults: this.props.options
             });
             return;
         }
         this.setState({
-            options: object.filter(this.props.options, value => {
+            isSearching: true,
+            searchResults: object.filter(this.props.options, value => {
                 return value.toLowerCase().startsWith(keyword.toLowerCase());
             })
         });
@@ -81,7 +107,7 @@ class Select extends React.Component {
         if (this.state.isOpen) {
 
             let search;
-            if (this.state.values.length > 5) {
+            if (this.props.search && Object.keys(this.props.options).length > 5) {
                 search = (
                     <div className="select__search">
                         <Search debounce={100} onSearch={keyword => this.search(keyword)}/>
@@ -96,7 +122,7 @@ class Select extends React.Component {
                         <SelectList
                             multiple={false}
                             defaultValues={[this.state.value]}
-                            options={this.state.options}
+                            options={this.state.isSearching ? this.state.searchResults : this.props.options}
                             onChange={values => this.handleSelectionChange(values)}
                         />
                     </div>
@@ -108,7 +134,7 @@ class Select extends React.Component {
 
     render() {
         return (
-            <div className="select">
+            <div className="select" ref={this.selectRef}>
                 <div className="select__field" onClick={this.toggle.bind(this)}>
                     <div className="select__value">
                         {this.props.options[this.state.value]}

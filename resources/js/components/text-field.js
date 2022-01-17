@@ -59,7 +59,7 @@ export default class TextField extends React.Component {
                 <textarea
                     id={dom.inputId(this.props.name)}
                     className={helpers.className('text-field', this.props.style)}
-                    value={this.state.value}
+                    value={this.state.value || ''}
                     onChange={this.handleChange.bind(this)}
                     onKeyUp={this.handleChange.bind(this)}
                 />
@@ -71,7 +71,7 @@ export default class TextField extends React.Component {
                     name={this.props.name}
                     className={helpers.className('text-field', this.props.style)}
                     type={this.props.htmlType}
-                    value={this.state.value}
+                    value={this.state.value || ''}
                     disabled={this.props.disabled}
                     onChange={this.handleChange.bind(this)}
                     onKeyUp={this.handleChange.bind(this)}

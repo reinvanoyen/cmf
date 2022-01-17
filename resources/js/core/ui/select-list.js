@@ -14,7 +14,7 @@ class SelectList extends React.Component {
         super(props);
 
         this.state = {
-            values: this.props.defaultValues
+            values: this.props.defaultValues.map(v => `${v}`)
         };
     }
 

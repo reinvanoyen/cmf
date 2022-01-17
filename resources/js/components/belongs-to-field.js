@@ -6,6 +6,7 @@ import Form from "../core/ui/form";
 import components from "../rendering/components";
 import ui from "../core/ui/util";
 import IconButton from "../core/ui/icon-button";
+import Select from "../core/ui/select";
 
 class BelongsToField extends React.Component {
 
@@ -28,7 +29,7 @@ class BelongsToField extends React.Component {
         this.state = {
             createFormErrors: {},
             value: (this.props.data[this.props.name] ? this.props.data[this.props.name].id : ''),
-            options: [],
+            options: {},
             isOpen: false
         };
 
@@ -37,12 +38,6 @@ class BelongsToField extends React.Component {
 
     handleSubmit(data) {
         data[this.props.name] = this.state.value;
-    }
-
-    handleChange(e) {
-        this.setState({
-            value: (e.target.value ? parseInt(e.target.value) : '')
-        });
     }
 
     getData(data) {
@@ -68,8 +63,11 @@ class BelongsToField extends React.Component {
         // Load the data from the backend (with id as param)
         api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
 
-            let options = response.data.data;
-            let value = this.state.value ? this.state.value : (this.props.nullable ? '' : options[0].id);
+            let data = response.data.data;
+            let options = {};
+            data.forEach(item => options[item.id] = item[this.props.titleColumn]);
+
+            let value = this.state.value ? this.state.value : (this.props.nullable ? '' : data[0].id);
 
             // Set the data to the state
             this.setState({value, options}, () => {
@@ -78,6 +76,10 @@ class BelongsToField extends React.Component {
                 }
             });
         });
+    }
+
+    handleChange(value) {
+        this.setState({value});
     }
 
     open() {
@@ -171,29 +173,10 @@ class BelongsToField extends React.Component {
                 </div>
             );
         }
-
         return null;
     }
 
     render() {
-
-        let options = [];
-
-        if (this.props.nullable) {
-            options.push(
-                <option value={''} key={'null'}>
-                    -
-                </option>
-            );
-        }
-
-        this.state.options.forEach(row => {
-            options.push(
-                <option value={row.id} key={row.id}>
-                    {row[this.props.titleColumn]}
-                </option>
-            );
-        });
 
         return (
             <Field
@@ -203,14 +186,11 @@ class BelongsToField extends React.Component {
             >
                 <div className={'belongs-to-field'}>
                     <div className="belongs-to-field__field">
-                        <select
-                            name={this.props.name}
-                            className={'belongs-to-field__select'}
+                        <Select
+                            options={this.state.options}
                             value={this.state.value}
-                            onChange={this.handleChange.bind(this)}
-                        >
-                            {options}
-                        </select>
+                            onChange={value => this.handleChange(value)}
+                        />
                     </div>
                     {this.renderCreate()}
                 </div>
