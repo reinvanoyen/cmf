@@ -177,7 +177,6 @@ class BelongsToField extends React.Component {
     }
 
     render() {
-
         return (
             <Field
                 name={this.props.name}
@@ -187,6 +186,8 @@ class BelongsToField extends React.Component {
                 <div className={'belongs-to-field'}>
                     <div className="belongs-to-field__field">
                         <Select
+                            nullable={this.props.nullable}
+                            nullText={'– No '+this.props.singular+' selected –'}
                             options={this.state.options}
                             value={this.state.value}
                             onChange={value => this.handleChange(value)}

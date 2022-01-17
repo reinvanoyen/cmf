@@ -27,6 +27,11 @@ abstract class Meta
     protected static $search = [];
 
     /**
+     * @var array $sort
+     */
+    protected static $sort = [];
+
+    /**
      * Get the model classname for the resource
      *
      * @return string
@@ -84,6 +89,16 @@ abstract class Meta
     public static function getSearchColumns(): array
     {
         return static::$search;
+    }
+
+    /**
+     * Get the default sorting columns and methods
+     *
+     * @return array
+     */
+    public static function getSorting(): array
+    {
+        return static::$sort;
     }
 
     /**

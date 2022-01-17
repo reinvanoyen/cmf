@@ -64,6 +64,10 @@ class ManyToManyField extends Component
         if (count($this->meta::getSearchColumns())) {
             $this->search($this->meta::getSearchColumns());
         }
+
+        foreach ($this->meta::getSorting() as $column => $method) {
+            $this->orderBy($column, $method);
+        }
     }
 
     /**

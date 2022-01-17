@@ -26,6 +26,10 @@ class Index extends CollectionAction
         if (count($meta::getSearchColumns())) {
             $this->search($meta::getSearchColumns());
         }
+
+        foreach ($this->meta::getSorting() as $column => $method) {
+            $this->orderBy($column, $method);
+        }
     }
 
     /**

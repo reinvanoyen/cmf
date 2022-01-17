@@ -64,6 +64,10 @@ class BelongsToField extends Component
 
         $this->titleColumn($this->meta::getTitleColumn());
         $this->create($this->meta::create());
+
+        foreach ($this->meta::getSorting() as $column => $method) {
+            $this->orderBy($column, $method);
+        }
     }
 
     /**

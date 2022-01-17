@@ -10,6 +10,8 @@ class Select extends React.Component {
         options: {},
         value: '',
         search: true,
+        nullable: false,
+        nullText: '',
         onChange: value => {}
     };
 
@@ -20,7 +22,7 @@ class Select extends React.Component {
             isOpen: false,
             isSearching: false,
             searchResults: this.props.options,
-            value: this.props.value || Object.keys(this.props.options)[0]
+            value: this.props.value || (this.props.nullable ? '' : Object.keys(this.props.options)[0] || '')
         };
 
         this.selectRef = React.createRef();
@@ -105,7 +107,6 @@ class Select extends React.Component {
     renderDropdown() {
 
         if (this.state.isOpen) {
-
             let search;
             if (this.props.search && Object.keys(this.props.options).length > 5) {
                 search = (
@@ -120,6 +121,7 @@ class Select extends React.Component {
                     {search}
                     <div className="select__list">
                         <SelectList
+                            nullable={this.props.nullable}
                             multiple={false}
                             defaultValues={[this.state.value]}
                             options={this.state.isSearching ? this.state.searchResults : this.props.options}
@@ -137,7 +139,7 @@ class Select extends React.Component {
             <div className="select" ref={this.selectRef}>
                 <div className="select__field" onClick={this.toggle.bind(this)}>
                     <div className="select__value">
-                        {this.props.options[this.state.value]}
+                        {this.props.options[this.state.value] ? this.props.options[this.state.value] : this.props.nullText}
                     </div>
                     <div className="select__icon">
                         <Icon name={(this.state.isOpen ? 'expand_less' : 'expand_more')} />
