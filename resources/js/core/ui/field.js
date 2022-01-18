@@ -53,9 +53,7 @@ class Field extends React.Component {
 
         return (
             <div className="field">
-                <div className="field__header">
-                    {label} {tooltip}
-                </div>
+                {label || tooltip ? <div className="field__header">{label} {tooltip}</div> : null}
                 <div className="field__input">
                     {this.props.children}
                 </div>

@@ -17,7 +17,10 @@ class ColorView extends React.Component {
         }
 
         return (
-            <Field name={this.props.name} label={this.props.label}>
+            <Field
+                name={this.props.name}
+                label={this.props.label}
+            >
                 <div className={'color-view'} style={style}></div>
             </Field>
         );
