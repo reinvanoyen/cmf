@@ -8,7 +8,8 @@ export default class DateTimeField extends React.Component {
         data: {},
         label: '',
         name: '',
-        tooltip: ''
+        tooltip: '',
+        errors: {},
     };
 
     constructor(props) {
@@ -44,6 +45,7 @@ export default class DateTimeField extends React.Component {
                 name={this.props.name}
                 required={this.props.showRequiredIndicator}
                 label={this.props.label}
+                errors={this.props.errors}
                 tooltip={this.props.tooltip}
             >
                 <input
