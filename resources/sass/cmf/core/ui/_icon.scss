@@ -35,12 +35,22 @@
 
     @include modifier(alt)
     {
-        color: rgba($color10, .5);
+        color: $color10;
+    }
+
+    @include modifier(soft)
+    {
+        opacity: .5;
     }
 
     @include modifier(medium)
     {
         font-size: 30px;
+    }
+
+    @include modifier(large)
+    {
+        font-size: 40px;
     }
 
     @include modifier(placeholder)

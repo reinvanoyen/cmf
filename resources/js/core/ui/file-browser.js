@@ -2,11 +2,9 @@ import React from 'react';
 import ContextMenu from "./context-menu";
 import Placeholder from "./placeholder";
 import util from "./util";
-import fileUtil from '../../util/file';
 import icons from "../../svg/icons";
-import FilePreview from "./file-preview";
 import File from "./file";
-import IconButton from "./icon-button";
+import Icon from "./icon";
 
 class FileBrowser extends React.Component {
 
@@ -178,7 +176,7 @@ class FileBrowser extends React.Component {
                             >
                                 <div className="directory" onClick={e => this.props.onDirectoryClick(directory.id)}>
                                     <div className="directory__icon">
-                                        {icons.folder}
+                                        <Icon name={'folder'} style={['large', 'alt']} />
                                     </div>
                                     <div className="directory__name">
                                         {directory.name}

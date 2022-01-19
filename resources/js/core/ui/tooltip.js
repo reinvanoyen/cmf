@@ -49,7 +49,7 @@ class Tooltip extends React.Component {
         return (
             <React.Fragment>
                 <div className="tooltip" onMouseEnter={this.show.bind(this)} onMouseOut={this.hide.bind(this)} onMouseMove={this.move.bind(this)}>
-                    <Icon style={['small', 'alt']} name={this.props.icon} />
+                    <Icon style={['small', 'alt', 'soft']} name={this.props.icon} />
                 </div>
                 {this.state.isVisible ? <div className="tooltip__text" style={{top: this.state.y, left: this.state.x}}>{this.props.text}</div> : null}
             </React.Fragment>
