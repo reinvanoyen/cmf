@@ -38,6 +38,7 @@ class PathResolver
     /**
      * Get an action by module id and action id. Also pass the request.
      *
+     * @param Request $request
      * @param string $moduleId
      * @param string $actionId
      * @return Action|null
