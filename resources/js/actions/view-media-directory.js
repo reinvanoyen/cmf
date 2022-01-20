@@ -18,7 +18,8 @@ class ViewMediaDirectory extends React.Component {
         type: '',
         path: {},
         id: 0,
-        data: {}
+        data: {},
+        fileLabels: {}
     };
 
     constructor(props) {
@@ -54,7 +55,6 @@ class ViewMediaDirectory extends React.Component {
     }
 
     async load(directoryId = null) {
-
         await axios.all([
             api.media.path(directoryId),
             api.media.loadDirectories(directoryId),
@@ -73,6 +73,14 @@ class ViewMediaDirectory extends React.Component {
                 files: files
             });
         }));
+    }
+
+    refresh() {
+        if (this.props.path.params.directory) {
+            this.load(this.props.path.params.directory);
+            return;
+        }
+        this.load();
     }
 
     openDirectory(id = null) {
@@ -110,8 +118,14 @@ class ViewMediaDirectory extends React.Component {
 
     handleDeleteDirectory(directoryId) {
         api.media.deleteDirectory(directoryId).then(response => {
-            util.notify('Directory deleted');
-            path.refresh();
+            this.setState({
+                currentFile: null,
+                selectedFiles: [],
+                selectedFileIds: [],
+            }, () => {
+                util.notify('Directory deleted');
+                this.refresh();
+            });
         }, error => {
             util.notify('Directory could not be deleted');
         })
@@ -121,7 +135,7 @@ class ViewMediaDirectory extends React.Component {
         if (name) {
             api.media.renameDirectory(name, directoryId).then(response => {
                 util.notify('Directory renamed');
-                path.refresh();
+                this.refresh();
             }, error => {
                 util.notify('Directory could not be renamed');
             });
@@ -132,7 +146,7 @@ class ViewMediaDirectory extends React.Component {
         if (name) {
             api.media.renameFile(name, fileId).then(response => {
                 util.notify('File renamed');
-                path.refresh();
+                this.refresh();
             }, error => {
                 util.notify('File could not be renamed');
             });
@@ -141,8 +155,14 @@ class ViewMediaDirectory extends React.Component {
 
     handleDeleteFile(fileId) {
         api.media.deleteFile(fileId).then(response => {
-            util.notify('File deleted');
-            path.refresh();
+            this.setState({
+                currentFile: null,
+                selectedFiles: [],
+                selectedFileIds: [],
+            }, () => {
+                util.notify('File deleted');
+                this.refresh();
+            });
         }, error => {
             util.notify('File could not be deleted');
         });
@@ -150,10 +170,29 @@ class ViewMediaDirectory extends React.Component {
 
     handleDeleteFiles(fileIds) {
         api.media.deleteFiles(fileIds).then(response => {
-            util.notify(fileIds.length+' files were deleted');
-            path.refresh();
+            this.setState({
+                currentFile: null,
+                selectedFiles: [],
+                selectedFileIds: [],
+            }, () => {
+                util.notify(fileIds.length+' files were deleted');
+                this.refresh();
+            });
         }, error => {
             util.notify('Files could not be deleted');
+        });
+    }
+
+    handleLabelFile(label, fileId) {
+        api.media.labelFile(label, fileId).then(response => {
+            this.setState({
+                currentFile: response.data.data
+            }, () => {
+                util.notify((label ? label+' label added to file' : 'File label removed'));
+                this.refresh();
+            });
+        }, error => {
+            util.notify('File could not be labeled');
         });
     }
 
@@ -162,7 +201,7 @@ class ViewMediaDirectory extends React.Component {
     }
 
     handleUploadDone() {
-        path.refresh();
+        this.refresh();
     }
 
     handleCreateDirectory(directory) {
@@ -173,12 +212,11 @@ class ViewMediaDirectory extends React.Component {
                 (directory.directory.id === this.props.path.params.directory)
             )
         ) {
-            path.refresh();
+            this.refresh();
         }
     }
 
     promptCreateDirectory() {
-
         util.prompt({
             title: 'New directory',
             confirmButtonText: 'Create',
@@ -186,7 +224,7 @@ class ViewMediaDirectory extends React.Component {
             confirm: value => {
                 api.media.createDirectory(value, this.props.path.params.directory).then(() => {
                     util.notify('Directory created');
-                    path.refresh();
+                    this.refresh();
                 });
             }
         });
@@ -220,32 +258,45 @@ class ViewMediaDirectory extends React.Component {
     renderSidebar() {
         if (this.state.currentFile) {
             return (
-                <FileView file={this.state.currentFile} onDeleteFile={() => {
-                    util.confirm({
-                        title: 'Delete file?',
-                        text: 'Deleting this file will permanently delete it from your library.',
-                        confirmButtonText: 'Yes, delete file',
-                        cancelButtonText: 'No, keep file',
-                        confirm: () => this.handleDeleteFile(this.state.currentFile.id)
-                    });
-                }} onRenameFile={() => {
-                    util.prompt({
-                        title: 'Rename file',
-                        defaultValue: this.state.currentFile.name,
-                        confirmButtonText: 'Rename',
-                        cancelButtonText: 'Cancel',
-                        confirm: value => {
-                            api.media.renameFile(value, this.state.currentFile.id).then(() => {
-                                util.notify('File renamed');
-                                path.refresh();
-                            });
-                        }
-                    });
-                }} />
+                <FileView
+                    file={this.state.currentFile}
+                    fileLabels={this.props.fileLabels}
+                    onLabelFile={label => this.handleLabelFile(label, this.state.currentFile.id)}
+                    onDeleteFile={() => {
+                        util.confirm({
+                            title: 'Delete file?',
+                            text: 'Deleting this file will permanently delete it from your library.',
+                            confirmButtonText: 'Yes, delete file',
+                            cancelButtonText: 'No, keep file',
+                            confirm: () => this.handleDeleteFile(this.state.currentFile.id)
+                        });
+                    }}
+                    onRenameFile={() => {
+                        util.prompt({
+                            title: 'Rename file',
+                            defaultValue: this.state.currentFile.name,
+                            confirmButtonText: 'Rename',
+                            cancelButtonText: 'Cancel',
+                            confirm: value => {
+                                api.media.renameFile(value, this.state.currentFile.id).then(response => {
+                                    this.setState({
+                                        currentFile: response.data.data
+                                    }, () => {
+                                        util.notify('File renamed');
+                                        this.refresh();
+                                    });
+                                });
+                            }
+                        });
+                    }}
+                />
             );
         } else if (this.state.selectedFiles.length) {
             return (
-                <MultiFileView files={this.state.selectedFiles} onDeleteFiles={() => this.confirmDeleteFiles(this.state.selectedFileIds, this.state.selectedFiles)} />
+                <MultiFileView
+                    files={this.state.selectedFiles}
+                    onDeleteFiles={() => this.confirmDeleteFiles(this.state.selectedFileIds, this.state.selectedFiles)}
+                />
             );
         }
         return null;
@@ -263,6 +314,7 @@ class ViewMediaDirectory extends React.Component {
                         <FileBrowser
                             directories={this.state.directories}
                             files={this.state.files}
+                            fileLabels={this.props.fileLabels}
                             selectedFiles={this.state.selectedFiles}
                             selectedFileIds={this.state.selectedFileIds}
                             onDirectoryClick={this.openDirectory.bind(this)}
@@ -291,7 +343,11 @@ class ViewMediaDirectory extends React.Component {
                         {this.renderBreadcrumbs()}
                     </div>
                     <div className="view-media-directory__header-options">
-                        <Button style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} text={'New directory'} />
+                        <Button
+                            style={['secondary', 'small']}
+                            onClick={this.promptCreateDirectory.bind(this)}
+                            text={'New directory'}
+                        />
                         <Dropdown text={'Upload'} style={['primary', 'small']}>
                             <FileUploader
                                 directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
