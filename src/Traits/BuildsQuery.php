@@ -3,7 +3,6 @@
 namespace ReinVanOyen\Cmf\Traits;
 
 use Illuminate\Http\Request;
-use ReinVanOyen\Cmf\Filters\Filter;
 
 trait BuildsQuery
 {
@@ -18,14 +17,9 @@ trait BuildsQuery
     private $restrictByFk;
 
     /**
-     * @var string $orderByColumn
+     * @var array $orderBy
      */
-    private $orderByColumn;
-
-    /**
-     * @var string $orderByMethod
-     */
-    private $orderByMethod;
+    private $orderBy = [];
 
     /**
      * @var int $limit
@@ -96,8 +90,7 @@ trait BuildsQuery
      */
     public function orderBy(string $column, string $method = 'asc')
     {
-        $this->orderByColumn = $column;
-        $this->orderByMethod = $method;
+        $this->orderBy[$column] = $method;
         return $this;
     }
 
@@ -184,8 +177,8 @@ trait BuildsQuery
         /*
          * If there is an order specified, use it on the query
          * */
-        if ($this->orderByColumn && $this->orderByMethod) {
-            $query = $query->orderBy($this->orderByColumn, $this->orderByMethod);
+        foreach ($this->orderBy as $column => $method) {
+            $query = $query->orderBy($column, $method);
         }
 
         /*
