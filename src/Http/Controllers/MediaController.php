@@ -258,4 +258,17 @@ class MediaController extends Controller
 
         return true;
     }
+
+    /**
+     * @param Request $request
+     * @return MediaFileResource
+     */
+    public function labelFile(Request $request)
+    {
+        $mediaFile = MediaFile::findOrFail($request->input('file'));
+        $mediaFile->label = $request->input('label');
+        $mediaFile->save();
+
+        return new MediaFileResource($mediaFile);
+    }
 }

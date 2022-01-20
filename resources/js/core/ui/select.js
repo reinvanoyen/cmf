@@ -12,7 +12,9 @@ class Select extends React.Component {
         search: true,
         nullable: false,
         nullText: '',
-        onChange: value => {}
+        onChange: value => {},
+        openIcon: 'expand_more',
+        closeIcon: 'expand_less'
     };
 
     constructor(props) {
@@ -142,7 +144,7 @@ class Select extends React.Component {
                         {this.props.options[this.state.value] ? this.props.options[this.state.value] : this.props.nullText}
                     </div>
                     <div className="select__icon">
-                        <Icon name={(this.state.isOpen ? 'expand_less' : 'expand_more')} />
+                        <Icon name={(this.state.isOpen ? this.props.openIcon : this.props.closeIcon)} />
                     </div>
                 </div>
                 {this.renderDropdown()}

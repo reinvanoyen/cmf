@@ -5,6 +5,7 @@ import helpers from "../../util/helpers";
 import Title from "./title";
 import FilePreview from "./file-preview";
 import Button from "./button";
+import Select from "./select";
 import file from "../../util/file";
 import DefinitionList from "./definition-list";
 import mimetypes from "../../data/mimetypes";
@@ -12,10 +13,12 @@ import mimetypes from "../../data/mimetypes";
 export default class FileView extends React.Component {
 
     static defaultProps = {
-        file: null,
+        file: {},
+        fileLabels: {},
         style: [],
         onDeleteFile: () => {},
-        onRenameFile: () => {}
+        onRenameFile: () => {},
+        onLabelFile: (label) => {}
     };
 
     deleteFile() {
@@ -38,16 +41,50 @@ export default class FileView extends React.Component {
         return 'Unknown filetype';
     }
 
+    handleLabelFile(value) {
+        this.props.onLabelFile(value);
+    }
+
+    renderLabelSelect() {
+        if (Object.keys(this.props.fileLabels).length) {
+
+            let options = {};
+            Object.keys(this.props.fileLabels).forEach(prop => {
+                options[prop] = this.props.fileLabels[prop].name;
+            });
+
+            return (
+                <div className="file-view__label-select">
+                    <Select
+                        value={this.props.file.label}
+                        nullable={true}
+                        nullText={'No label selected'}
+                        options={options}
+                        onChange={value => this.handleLabelFile(value)}
+                        openIcon={'edit'}
+                        closeIcon={'edit'}
+                    />
+                </div>
+            );
+        }
+        return null;
+    }
+
     render() {
         return (
             <div className={helpers.className('file-view', this.props.style)}>
                 <div className="file-view__header">
                     <Title style={['small']}>{this.props.file.name}</Title>
                     {this.getFileDescription()}
+                    {this.renderLabelSelect()}
                 </div>
                 <div className="file-view__content">
                     <div className="file-view__preview">
-                        <FilePreview style="full" file={this.props.file} mediaConversion={'preview'} />
+                        <FilePreview
+                            style="full"
+                            file={this.props.file}
+                            mediaConversion={'preview'}
+                        />
                     </div>
                     <DefinitionList data={[
                         ['Uploaded', this.props.file.created_at],

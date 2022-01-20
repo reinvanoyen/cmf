@@ -1,6 +1,7 @@
 import React from 'react';
+import color from "../../util/color";
 
-class Label extends React.Component {
+class TagLabel extends React.Component {
 
     static defaultProps = {
         text: '',
@@ -8,12 +9,15 @@ class Label extends React.Component {
     };
 
     render() {
+
+        let rgb = color.hexToRgb(this.props.color);
+
         return (
-            <span className="label">
-                what
+            <span className="tag-label" style={{backgroundColor: this.props.color, color: color.getContrastColor(rgb[0], rgb[1], rgb[2])}}>
+                {this.props.text}
             </span>
         );
     }
 }
 
-export default Label;
+export default TagLabel;

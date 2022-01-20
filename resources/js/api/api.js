@@ -134,6 +134,10 @@ api.media.deleteFiles = (fileIds) => {
     });
 };
 
+api.media.labelFile = (label, file) => {
+    return axios.post('cmf/api/media/label-file', {label, file});
+};
+
 /*
 * Modules API
 * */

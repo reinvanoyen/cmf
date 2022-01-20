@@ -2,7 +2,6 @@ import React from 'react';
 import ContextMenu from "./context-menu";
 import Placeholder from "./placeholder";
 import util from "./util";
-import icons from "../../svg/icons";
 import File from "./file";
 import Icon from "./icon";
 
@@ -11,6 +10,7 @@ class FileBrowser extends React.Component {
     static defaultProps = {
         files: [],
         directories: [],
+        fileLabels: {},
         selectionMode: false,
         selectedFileIds: [],
         selectedFiles: [],
@@ -143,6 +143,7 @@ class FileBrowser extends React.Component {
                             >
                                 <File
                                     file={file}
+                                    fileLabels={this.props.fileLabels}
                                     isSelected={this.isFileSelected(file)}
                                     selectionMode={this.props.selectionMode}
                                     onClick={(e, file) => this.handleFileClick(e, file)}

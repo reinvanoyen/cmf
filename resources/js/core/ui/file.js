@@ -4,11 +4,13 @@ import React from 'react';
 import FilePreview from "./file-preview";
 import fileUtil from "../../util/file";
 import IconButton from "./icon-button";
+import TagLabel from "./tag-label";
 
 export default class File extends React.Component {
 
     static defaultProps = {
         file: {},
+        fileLabels: {},
         isSelected: false,
         selectionMode: false,
         actions: [],
@@ -43,6 +45,20 @@ export default class File extends React.Component {
         );
     }
 
+    renderLabel() {
+        if (Object.keys(this.props.fileLabels).length) {
+            let label = (this.props.fileLabels[this.props.file.label] || null);
+            if (label) {
+                return (
+                    <div className="file__label">
+                        <TagLabel text={label.name} color={label.color} />
+                    </div>
+                );
+            }
+        }
+        return null;
+    }
+
     render() {
         return (
             <div className={'file'+(this.props.isSelected ? ' file--selected' : '')} onClick={e => this.props.onClick(e, this.props.file)}>
@@ -58,6 +74,7 @@ export default class File extends React.Component {
                         {fileUtil.filesize(this.props.file.size)} ({this.props.file.disk})
                     </div>
                 </div>
+                {this.renderLabel()}
                 {this.renderActions()}
             </div>
         );

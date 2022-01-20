@@ -78,7 +78,7 @@ abstract class Action implements Exportable, Makeable, \JsonSerializable
     }
 
     /**
-     * @param Module $module
+     * @param string $moduleId
      */
     final public function module(string $moduleId)
     {

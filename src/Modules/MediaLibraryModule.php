@@ -39,4 +39,13 @@ class MediaLibraryModule extends Module
     {
         return ViewMediaDirectory::make();
     }
+
+    /**
+     * @return array
+     */
+    public function exportAll(): array
+    {
+        $this->export('fileLabels', config('cmf.media_library_file_labels', []));
+        return parent::exportAll();
+    }
 }

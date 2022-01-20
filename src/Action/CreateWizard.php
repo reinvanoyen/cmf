@@ -7,6 +7,10 @@ use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Traits\CanRedirect;
 use ReinVanOyen\Cmf\Traits\HasSingularPlural;
 
+/**
+ * Class CreateWizard
+ * @package ReinVanOyen\Cmf\Action
+ */
 class CreateWizard extends Action
 {
     use CanRedirect;

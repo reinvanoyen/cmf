@@ -1,0 +1,8 @@
+@include block(tag-label)
+{
+    background-color: rgba($color13, .35);
+    color: $color01;
+    @include type-2;
+    border-radius: $border-radius-3;
+    padding: $rule / 8 $rule / 3;
+}
