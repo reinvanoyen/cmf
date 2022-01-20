@@ -2,14 +2,14 @@
 
 namespace ReinVanOyen\Cmf;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use JsonSerializable;
-use phpDocumentor\Reflection\Types\Boolean;
 use ReinVanOyen\Cmf\Action\Action;
+use ReinVanOyen\Cmf\Traits\CanExport;
 
-abstract class Module implements JsonSerializable
+abstract class Module implements \JsonSerializable
 {
+    use CanExport;
+
     /**
      * @return string
      */
@@ -45,20 +45,19 @@ abstract class Module implements JsonSerializable
     abstract public function index(): Action;
 
     /**
-     *
-     * @return mixed|void
+     * @return array
      */
-    public function jsonSerialize()
+    public function exportAll(): array
     {
-        return [
-            'title' => $this->title(),
-            'id' => $this->id(),
-            'icon' => $this->icon(),
-            'inNavigation' => $this->inNavigation(),
-            'path' => [
-                'module' => $this->id(),
-            ],
-            'url' => url('admin/'.$this->id()),
+        $this->exports['id'] = $this->id();
+        $this->exports['title'] = $this->title();
+        $this->exports['icon'] = $this->icon();
+        $this->exports['inNavigation'] = $this->icon();
+        $this->exports['path'] = [
+            'module' => $this->id(),
         ];
+        $this->exports['url'] = url('admin/'.$this->id());
+
+        return $this->exports;
     }
 }
