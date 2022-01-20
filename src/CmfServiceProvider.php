@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf;
 
 use Illuminate\Support\ServiceProvider;
 use Intervention\Image\Image;
+use ReinVanOyen\Cmf\Console\InstallCommand;
 use ReinVanOyen\Cmf\Console\UserCommand;
 use ReinVanOyen\Cmf\Contracts\MediaConverter;
 use ReinVanOyen\Cmf\Media\Converter;
@@ -20,6 +21,7 @@ class CmfServiceProvider extends ServiceProvider
         $this->app->singleton(Cmf::class, Cmf::class);
         $this->app->singleton(MakeableStorage::class, MakeableStorage::class);
         $this->app->bind(PathResolver::class, PathResolver::class);
+
         $this->app->singleton(MediaConverter::class, function () {
             $converter = new Converter();
             $converter->registerConversion('cmf-thumb', function (Image $image) {
@@ -44,6 +46,7 @@ class CmfServiceProvider extends ServiceProvider
             ->giveConfig('cmf.title');
 
         $this->commands([
+            InstallCommand::class,
             UserCommand::class,
         ]);
     }
@@ -67,19 +70,19 @@ class CmfServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/Console/stubs/CmfServiceProvider.stub' => app_path('Providers/CmfServiceProvider.php'),
-        ], 'cmf');
+        ], 'cmf-provider');
 
         $this->publishes([
             __DIR__.'/../config/cmf.php' => config_path('cmf.php'),
-        ], 'cmf');
+        ], 'cmf-config');
 
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/cmf'),
-        ], 'cmf');
+        ], 'cmf-assets');
 
         $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], 'cmf');
+        ], 'cmf-migrations');
     }
 
     /**

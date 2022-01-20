@@ -26,7 +26,6 @@ return [
     */
     'theme_image_src' => '/vendor/cmf/splash.jpg',
 
-
     /*
     |--------------------------------------------------------------------------
     | Media library disk
@@ -36,7 +35,6 @@ return [
     |
     */
     'media_library_disk' => env('CMF_DEFAULT_MEDIA_DISK', 'public'),
-
 
     /*
     |--------------------------------------------------------------------------
