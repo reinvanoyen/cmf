@@ -1,0 +1,49 @@
+<?php
+
+namespace {{ namespace }};
+
+use ReinVanOyen\Cmf\Components\TextView;
+use ReinVanOyen\Cmf\Meta;
+use App\Models\{{ model }};
+
+class {{ model }}Meta extends Meta
+{
+    /**
+     * @var string $model
+     */
+    protected static $model = {{ model }}::class;
+
+    /**
+     * @var string $title
+     */
+    protected static $title = 'id';
+
+    /**
+     * @var int $perPage
+     */
+    protected static $perPage = 10;
+
+    /**
+     * @var array $searchColumns
+     */
+    protected static $search = [
+        'id',
+    ];
+
+    /**
+     * @var array $sort
+     */
+    protected static $sort = [
+        'id' => 'desc',
+    ];
+
+    /**
+     * @return array
+     */
+    public static function index(): array
+    {
+        return [
+            TextView::make('id'),
+        ];
+    }
+}

@@ -16,12 +16,20 @@ class RelationshipMetaGuesser
     public static function getMeta($name): ?string
     {
         $name = Str::studly(Str::singular($name));
-        $model = Application::getInstance()->getNamespace().'Cmf\\Meta\\'.$name.'Meta';
+        $model = self::getMetaNamespace().'\\'.$name.'Meta';
 
         if (class_exists($model)) {
             return $model;
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getMetaNamespace()
+    {
+        return Application::getInstance()->getNamespace().config('cmf.meta_namespace');
     }
 }
