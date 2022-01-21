@@ -1,11 +1,24 @@
 @include block(definition-list)
 {
     @include type-2;
+    line-height: 1.2;
 
     @include element(item)
     {
+        position: relative;
         display: flex;
-        margin-bottom: $rule / 1.5;
+        margin-bottom: $rule / 3.5;
+        transition: opacity .1s;
+
+        @include modifier(editable)
+        {
+            cursor: pointer;
+
+            &:hover
+            {
+                opacity: .75;
+            }
+        }
 
         &:last-child
         {
@@ -25,5 +38,12 @@
     {
         display: block;
         width: 60%;
+    }
+
+    @include element(edit)
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 }

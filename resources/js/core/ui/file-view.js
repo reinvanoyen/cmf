@@ -18,7 +18,8 @@ export default class FileView extends React.Component {
         style: [],
         onDeleteFile: () => {},
         onRenameFile: () => {},
-        onLabelFile: (label) => {}
+        onLabelFile: (label) => {},
+        onChangeFileProperty: (property, value) => {}
     };
 
     deleteFile() {
@@ -43,6 +44,10 @@ export default class FileView extends React.Component {
 
     handleLabelFile(value) {
         this.props.onLabelFile(value);
+    }
+
+    handlePropertyChange(property, value) {
+        this.props.onChangeFileProperty(property, value);
     }
 
     renderLabelSelect() {
@@ -83,16 +88,21 @@ export default class FileView extends React.Component {
                         <FilePreview
                             style="full"
                             file={this.props.file}
-                            mediaConversion={'preview'}
+                            mediaConversion={'contain'}
                         />
                     </div>
-                    <DefinitionList data={[
-                        ['Uploaded', this.props.file.created_at],
-                        ['Modified', this.props.file.updated_at],
-                        ['Size', file.filesize(this.props.file.size)],
-                        ['Disk', this.props.file.disk],
-                        ['Mimetype', this.props.file.mime_type]
-                    ]} />
+                    <DefinitionList
+                        data={[
+                            ['Uploaded', this.props.file.created_at],
+                            ['Modified', this.props.file.updated_at],
+                            ['Description', this.props.file.description, true],
+                            ['Copyright', this.props.file.copyright, true],
+                            ['Disk', this.props.file.disk],
+                            ['Size', file.filesize(this.props.file.size)],
+                            ['Mimetype', this.props.file.mime_type],
+                        ]}
+                        onPropertyChange={(property, value) => this.handlePropertyChange(property, value)}
+                    />
                 </div>
                 <div className="file-view__actions">
                     <Button text={'Rename'} onClick={this.renameFile.bind(this)} style={['secondary', 'full']} />

@@ -138,6 +138,14 @@ api.media.labelFile = (label, file) => {
     return axios.post('cmf/api/media/label-file', {label, file});
 };
 
+api.media.updateFileDescription = (description, file) => {
+    return axios.post('cmf/api/media/update-file-description', {description, file});
+};
+
+api.media.updateFileCopyright = (copyright, file) => {
+    return axios.post('cmf/api/media/update-file-copyright', {copyright, file});
+};
+
 /*
 * Modules API
 * */

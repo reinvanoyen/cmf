@@ -196,6 +196,24 @@ class ViewMediaDirectory extends React.Component {
         });
     }
 
+    handleChangeFileProperty(property, value, fileId) {
+        let propertiesMap = ['Description', 'Copyright'];
+        if (propertiesMap.includes(property)) {
+            let apiCall = api.media['updateFile'+property];
+
+            apiCall(value, fileId).then(response => {
+                this.setState({
+                    currentFile: response.data.data
+                }, () => {
+                    util.notify(property+' updated');
+                    this.refresh();
+                });
+            }, error => {
+                util.notify(property+' of file could not be updated');
+            });
+        }
+    }
+
     handleOpenFile(file) {
         window.open(file.url);
     }
@@ -262,6 +280,7 @@ class ViewMediaDirectory extends React.Component {
                     file={this.state.currentFile}
                     fileLabels={this.props.fileLabels}
                     onLabelFile={label => this.handleLabelFile(label, this.state.currentFile.id)}
+                    onChangeFileProperty={(property, value) => this.handleChangeFileProperty(property, value, this.state.currentFile.id)}
                     onDeleteFile={() => {
                         util.confirm({
                             title: 'Delete file?',

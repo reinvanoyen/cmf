@@ -25,13 +25,10 @@ export default class FilePreview extends React.Component {
     }
 
     getFileColor() {
-
         let map = mimetypes;
-
         if (! map[this.props.file.mime_type] || ! map[this.props.file.mime_type].color) {
             return '#ccc';
         }
-
         return map[this.props.file.mime_type].color;
     }
 

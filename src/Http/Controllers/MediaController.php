@@ -271,4 +271,30 @@ class MediaController extends Controller
 
         return new MediaFileResource($mediaFile);
     }
+
+    /**
+     * @param Request $request
+     * @return MediaFileResource
+     */
+    public function updateFileDescription(Request $request)
+    {
+        $mediaFile = MediaFile::findOrFail($request->input('file'));
+        $mediaFile->description = $request->input('description');
+        $mediaFile->save();
+
+        return new MediaFileResource($mediaFile);
+    }
+
+    /**
+     * @param Request $request
+     * @return MediaFileResource
+     */
+    public function updateFileCopyright(Request $request)
+    {
+        $mediaFile = MediaFile::findOrFail($request->input('file'));
+        $mediaFile->copyright = $request->input('copyright');
+        $mediaFile->save();
+
+        return new MediaFileResource($mediaFile);
+    }
 }

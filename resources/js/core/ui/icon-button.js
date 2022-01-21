@@ -6,6 +6,8 @@ class IconButton extends React.Component {
 
     static defaultProps = {
         name: 'fingerprint',
+        style: '',
+        iconStyle: 'default',
         onClick: e => {}
     };
 
@@ -17,7 +19,10 @@ class IconButton extends React.Component {
     render() {
         return (
             <button className={helpers.className('icon-button', this.props.style)} onClick={this.onClick.bind(this)} type={'button'}>
-                <Icon name={this.props.name} />
+                <Icon
+                    name={this.props.name}
+                    style={this.props.iconStyle}
+                />
             </button>
         );
     }
