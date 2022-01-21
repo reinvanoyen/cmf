@@ -23,7 +23,12 @@
 
         &:hover
         {
-            color: $color03;
+            color: $color02;
         }
+    }
+
+    @include element(slug-placeholder)
+    {
+        color: $color03;
     }
 }

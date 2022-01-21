@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from "./icon";
+import IconButton from "./icon-button";
 
 class Search extends React.Component {
 
@@ -41,10 +42,17 @@ class Search extends React.Component {
         this.props.onSearch(this.state.value);
     }
 
-    render() {
+    clear() {
+        this.setState({
+            value: ''
+        }, () => {
+            this.search();
+        });
+    }
 
+    render() {
         return (
-            <div className={'search'}>
+            <div className={'search'+(this.state.value ? ' search--searching' : '')}>
                 <div className="search__icon">
                     <Icon name={'search'} />
                 </div>
@@ -56,6 +64,14 @@ class Search extends React.Component {
                     onChange={this.handleChange.bind(this)}
                     placeholder="Search"
                 />
+                <div className="search__clear">
+                    <IconButton
+                        style={'transparent'}
+                        iconStyle={'mini'}
+                        name={'clear'}
+                        onClick={this.clear.bind(this)}
+                    />
+                </div>
             </div>
         );
     }

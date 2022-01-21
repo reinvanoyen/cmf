@@ -18,7 +18,7 @@ class IconButton extends React.Component {
 
     render() {
         return (
-            <button className={helpers.className('icon-button', this.props.style)} onClick={this.onClick.bind(this)} type={'button'}>
+            <button className={helpers.className('icon-button', this.props.style)} onClick={e => this.onClick(e)} type={'button'}>
                 <Icon
                     name={this.props.name}
                     style={this.props.iconStyle}

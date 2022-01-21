@@ -67,16 +67,31 @@ export default class TextToSlugField extends TextField {
     }
 
     render() {
+
+        let slug = (
+            <span className={'text-to-slug-field__slug-placeholder'}>
+                –
+            </span>
+        );
+
+        if (this.state.slugValue) {
+            slug = (
+                <React.Fragment>
+                    {this.renderSlugPrefix()}
+                    <span className="text-to-slug-field__slug-slug" onClick={this.changeSlugValue.bind(this)}>
+                        {this.state.slugValue}
+                    </span>
+                </React.Fragment>
+            );
+        }
+
         return (
             <div className="text-to-slug-field">
                 <div className="text-to-slug-field__field">
                     {super.render()}
                 </div>
                 <div className="text-to-slug-field__slug">
-                    {this.renderSlugPrefix()}
-                    <span className="text-to-slug-field__slug-slug" onClick={this.changeSlugValue.bind(this)}>
-                        {this.state.slugValue}
-                    </span>
+                    {slug}
                 </div>
             </div>
         );

@@ -105,7 +105,7 @@ class Select extends React.Component {
 
     handleSelectionChange(values) {
         this.setState({
-            isOpen: false,
+            isOpen: this.props.multiple,
             options: this.props.options,
             value: (this.props.multiple ? values : values[0])
         }, () => {
@@ -114,13 +114,15 @@ class Select extends React.Component {
     }
 
     renderDropdown() {
-
         if (this.state.isOpen) {
             let search;
             if (this.props.search && Object.keys(this.props.options).length > 5) {
                 search = (
                     <div className="select__search">
-                        <Search debounce={100} onSearch={keyword => this.search(keyword)}/>
+                        <Search
+                            debounce={100}
+                            onSearch={keyword => this.search(keyword)}
+                        />
                     </div>
                 );
             }
