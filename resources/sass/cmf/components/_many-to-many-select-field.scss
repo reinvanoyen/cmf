@@ -1,0 +1,75 @@
+@include block(many-to-many-select-field)
+{
+    display: flex;
+    flex-wrap: wrap;
+
+    @include element(field)
+    {
+        flex-grow: 1;
+        margin-right: $rule / 3;
+    }
+
+    @include element(btn)
+    {
+        flex-grow: 0;
+    }
+
+    @include element(select)
+    {
+        display: block;
+        width: 100%;
+        border: 1px solid $color06;
+        border-radius: $border-radius-3;
+        padding: $rule / 4;
+    }
+
+    @include element(create)
+    {
+        display: flex;
+        flex-direction: column;
+        padding: $rule / 3;
+        border: $border-width-2 solid $color03;
+        background-color: $color01;
+        border-radius: $border-radius-1;
+        box-shadow: $box-shadow-1;
+        width: 60vw;
+        max-height: 80vh;
+    }
+
+    @include element(create-header)
+    {
+        display: flex;
+        align-items: center;
+        padding: $rule / 2 $rule;
+    }
+
+    @include element(create-header-title)
+    {
+        @include type-9;
+    }
+
+    @include element(create-header-options)
+    {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-grow: 1;
+
+        >*
+        {
+            margin-left: $rule / 3;
+
+            &:first-child
+            {
+                margin-left: 0;
+            }
+        }
+    }
+
+    @include element(create-content)
+    {
+        flex-grow: 1;
+        overflow-y: scroll;
+        padding: $rule / 2 $rule;
+    }
+}

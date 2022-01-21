@@ -33,6 +33,7 @@ import TagsField from "./tags-field";
 import TagsView from "./tags-view";
 import GalleryField from "./gallery-field";
 import ManyToManyField from "./many-to-many-field";
+import ManyToManySelectField from "./many-to-many-select-field";
 import JsonField from "./json-field";
 
 export default {
@@ -71,5 +72,6 @@ export default {
     'tags-field': TagsField,
     'tags-view': TagsView,
     'many-to-many-field': ManyToManyField,
+    'many-to-many-select-field': ManyToManySelectField,
     'json-field': JsonField
 };

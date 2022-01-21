@@ -8,6 +8,7 @@ class Select extends React.Component {
 
     static defaultProps = {
         options: {},
+        multiple: false,
         value: '',
         search: true,
         nullable: false,
@@ -24,11 +25,17 @@ class Select extends React.Component {
             isOpen: false,
             isSearching: false,
             searchResults: this.props.options,
-            value: this.props.value || (this.props.nullable ? '' : Object.keys(this.props.options)[0] || '')
+            value: this.getDefaultValue()
         };
 
         this.selectRef = React.createRef();
         this.handleDocumentClick = this.onDocumentClick.bind(this);
+    }
+
+    getDefaultValue() {
+        let empty = (this.props.multiple ? [] : '');
+        let first = (this.props.multiple ? [Object.keys(this.props.options)[0]] : Object.keys(this.props.options)[0]);
+        return this.props.value || (this.props.nullable ? empty : first || empty);
     }
 
     componentDidUpdate(prevProps) {
@@ -100,7 +107,7 @@ class Select extends React.Component {
         this.setState({
             isOpen: false,
             options: this.props.options,
-            value: values[0]
+            value: (this.props.multiple ? values : values[0])
         }, () => {
             this.props.onChange(this.state.value);
         });
@@ -124,8 +131,8 @@ class Select extends React.Component {
                     <div className="select__list">
                         <SelectList
                             nullable={this.props.nullable}
-                            multiple={false}
-                            defaultValues={[this.state.value]}
+                            multiple={this.props.multiple}
+                            defaultValues={(this.props.multiple ? this.state.value : [this.state.value])}
                             options={this.state.isSearching ? this.state.searchResults : this.props.options}
                             onChange={values => this.handleSelectionChange(values)}
                         />
@@ -137,14 +144,23 @@ class Select extends React.Component {
     }
 
     render() {
+
+        let value;
+
+        if (this.props.multiple) {
+            value = (this.state.value.length ? this.state.value.map(id => this.props.options[id]).join(', ') : this.props.nullText);
+        } else {
+            value = this.props.options[this.state.value] ? this.props.options[this.state.value] : this.props.nullText;
+        }
+
         return (
             <div className="select" ref={this.selectRef}>
                 <div className="select__field" onClick={this.toggle.bind(this)}>
                     <div className="select__value">
-                        {this.props.options[this.state.value] ? this.props.options[this.state.value] : this.props.nullText}
+                        {value}
                     </div>
                     <div className="select__icon">
-                        <Icon name={(this.state.isOpen ? this.props.openIcon : this.props.closeIcon)} />
+                        <Icon name={(this.state.isOpen ? this.props.closeIcon : this.props.openIcon)} />
                     </div>
                 </div>
                 {this.renderDropdown()}
