@@ -4,15 +4,15 @@
   </a>
 </p>
 
-## Laravel CMF
+# Laravel CMF
 
-### Introduction
+## Introduction
 
 Laravel CMF aims to be a flexible and extendable solution for your content management needs. This 
 software allows for rapid creation of your Content Management System while still allowing flexibility 
 to make it truly custom.
 
-### Installation
+## Installation
 
 First, require the package using composer:
 ```ssh
@@ -34,7 +34,7 @@ migrations and other needed files.
 php artisan cmf:install
 ```
 
-The install command has also published a application-specific service provider. Register it 
+The install command has also published an application-specific service provider. Register it 
 in your `config/app.php` file, like so:
 
 ```php
@@ -57,7 +57,7 @@ This command will ask for a name for your user, an email address and a password.
 
 Once the user is created, you're ready to start building!
 
-### Build a basic CRUD module
+## Build a basic CRUD module
 
 This section assumes you have already created the 
 needed migration and model for your database entries.
