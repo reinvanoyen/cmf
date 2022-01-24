@@ -4,11 +4,7 @@ namespace App\Cmf\Modules;
 
 use {{ metaNamespace }}\{{ meta }};
 use ReinVanOyen\Cmf\Action\Action;
-use ReinVanOyen\Cmf\Action\Create;
-use ReinVanOyen\Cmf\Action\Delete;
-use ReinVanOyen\Cmf\Action\Edit;
 use ReinVanOyen\Cmf\Action\Index;
-use ReinVanOyen\Cmf\Components\Link;
 use ReinVanOyen\Cmf\Module;
 
 class {{ model }}Module extends Module
@@ -23,35 +19,6 @@ class {{ model }}Module extends Module
      */
     public function index(): Action
     {
-        return Index::make({{ meta }}::class)
-            ->header([
-                Link::make('New {{ modelSingular }}', 'create')
-                    ->style('primary'),
-            ])
-            ->action('edit');
-    }
-
-    /**
-     * @return Action
-     */
-    public function create(): Action
-    {
-        return Create::make({{ meta }}::class);
-    }
-
-    /**
-     * @return Action
-     */
-    public function edit(): Action
-    {
-        return Edit::make({{ meta }}::class);
-    }
-
-    /**
-     * @return Action
-     */
-    public function delete(): Action
-    {
-        return Delete::make({{ meta }}::class);
+        return Index::make({{ meta }}::class);
     }
 }
