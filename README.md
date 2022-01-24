@@ -1,9 +1,8 @@
 <p align="center">
   <a href="https://github.com/reinvanoyen/cmf">
-    <img width="200" src="https://raw.githubusercontent.com/reinvanoyen/cmf/master/intro.png" />
+    <img width="800" src="https://raw.githubusercontent.com/reinvanoyen/cmf/master/intro.png" />
   </a>
 </p>
-
 
 ## Laravel CMF
 
