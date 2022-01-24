@@ -46,7 +46,7 @@ in your `config/app.php` file, like so:
 
 Migrate your application.
 ```ssh
-php artisan migration
+php artisan migrate
 ```
 
 Create a user.
