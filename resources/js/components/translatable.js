@@ -30,6 +30,15 @@ class Translatable extends React.Component {
         });
     }
 
+    getData(data) {
+        this.props.languages.forEach(language => {
+            this.componentList[language].forEach(obj => {
+                obj.ref.current.getData(data);
+            });
+        });
+        return data;
+    }
+
     translateComponentsForAllLanguages() {
 
         let components = {};
