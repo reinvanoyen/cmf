@@ -1,6 +1,5 @@
 import React from 'react';
 import components from "../rendering/components";
-import Button from "../core/ui/button";
 
 class Translatable extends React.Component {
 
@@ -8,7 +7,8 @@ class Translatable extends React.Component {
         components: [],
         path: {},
         data: {},
-        languages: []
+        languages: [],
+        errors: {}
     };
 
     constructor(props) {
@@ -23,7 +23,6 @@ class Translatable extends React.Component {
     }
 
     handleSubmit(data) {
-
         this.props.languages.forEach(language => {
             this.componentList[language].forEach(obj => {
                 obj.ref.current.handleSubmit(data);
@@ -75,7 +74,7 @@ class Translatable extends React.Component {
                             {component}
                         </div>
                     );
-                }, true);
+                }, true, this.props.errors);
 
                 let componentListRenders = this.componentList[language].map(obj => obj.component);
 
