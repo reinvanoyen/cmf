@@ -18,5 +18,10 @@
         {
             margin-right: 0;
         }
+
+        @include modifier(clickable)
+        {
+            cursor: pointer;
+        }
     }
 }

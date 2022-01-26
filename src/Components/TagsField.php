@@ -69,4 +69,17 @@ class TagsField extends Component
             return $tag->name;
         });
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function apiLoad(Request $request)
+    {
+        $tags = Tag::all();
+
+        return $tags->map(function ($tag) {
+            return $tag->name;
+        });
+    }
 }

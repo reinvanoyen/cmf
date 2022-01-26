@@ -22,6 +22,12 @@
         flex-grow: 1;
     }
 
+    @include element(browse)
+    {
+        position: absolute;
+        right: 0;
+    }
+
     @include element(input-field)
     {
         width: 100%;

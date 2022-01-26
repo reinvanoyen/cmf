@@ -2,6 +2,8 @@ import React from 'react';
 import Field from "../core/ui/field";
 import api from "../api/api";
 import Tags from "../core/ui/tags";
+import IconButton from "../core/ui/icon-button";
+import TagsBrowser from "../core/ui/tags-browser";
 
 export default class TextField extends React.Component {
 
@@ -23,6 +25,7 @@ export default class TextField extends React.Component {
         this.autosuggestTimeout = null;
 
         this.state = {
+            browserIsOpen: false,
             autosuggestIsOpen: false,
             autosuggest: [],
             tags: this.props.data[this.props.id+'_tags'] || []
@@ -140,9 +143,7 @@ export default class TextField extends React.Component {
     }
 
     addTag(tag, cb = () => {}) {
-
         clearTimeout(this.searchTimeout);
-
         if (tag) {
             this.setState({
                 autosuggestIsOpen: false,
@@ -169,8 +170,27 @@ export default class TextField extends React.Component {
         }
     }
 
-    render() {
+    openBrowser() {
+        this.setState({
+            browserIsOpen: true
+        });
+    }
 
+    closeBrowser() {
+        this.setState({
+            browserIsOpen: false
+        });
+    }
+
+    confirmBrowser(tags) {
+        this.setState({
+            tags: tags,
+            browserIsOpen: false
+        });
+    }
+
+    render() {
+        let browser;
         let autosuggest;
 
         if (this.state.autosuggestIsOpen && this.state.autosuggest.length) {
@@ -187,6 +207,20 @@ export default class TextField extends React.Component {
             );
         }
 
+        if (this.state.browserIsOpen) {
+            browser = (
+                <div className="overlay">
+                    <TagsBrowser
+                        id={this.props.id}
+                        path={this.props.path}
+                        selectedTags={this.state.tags}
+                        onCancel={this.closeBrowser.bind(this)}
+                        onConfirm={tags => this.confirmBrowser(tags)}
+                    />
+                </div>
+            );
+        }
+
         return (
             <Field
                 name={this.props.name}
@@ -197,6 +231,13 @@ export default class TextField extends React.Component {
             >
                 <div className="tags-field">
                     <div className="tags-field__wrap">
+                        <div className="tags-field__browse">
+                            <IconButton
+                                style={'transparent'}
+                                name={'fact_check'}
+                                onClick={this.openBrowser.bind(this)}
+                            />
+                        </div>
                         <div className="tags-field__tags">
                             <Tags tags={this.state.tags} />
                         </div>
@@ -210,6 +251,7 @@ export default class TextField extends React.Component {
                             />
                         </div>
                         {autosuggest}
+                        {browser}
                     </div>
                 </div>
             </Field>
