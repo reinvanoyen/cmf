@@ -15,14 +15,21 @@ interface MediaConverter
 
     /**
      * @param string $name
-     * @param MediaFile $file
-     * @return mixed
-     */
-    public function streamConvertedFile(string $name, MediaFile $file);
-
-    /**
-     * @param string $name
      * @return mixed
      */
     public function isValidConversion(string $name);
+
+    /**
+     * @param string $name
+     * @param string $tempFilePath
+     * @return string
+     */
+    public function convertFile(string $name, string $tempFilePath): string;
+
+    /**
+     * @param string $conversion
+     * @param MediaFile $file
+     * @return mixed
+     */
+    public function streamConvertedFile(string $conversion, MediaFile $file);
 }

@@ -4,17 +4,16 @@ namespace ReinVanOyen\Cmf\Media;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
-use ReinVanOyen\Cmf\Contracts\MediaConverter;
 use ReinVanOyen\Cmf\Models\MediaFile;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
+use ReinVanOyen\Cmf\Contracts\MediaConverter;
 
-class Converter implements MediaConverter
+abstract class Converter implements MediaConverter
 {
     /**
      * @var array $conversions
      */
-    private $conversions = [];
+    protected $conversions = [];
 
     /**
      * @param string $name
@@ -35,39 +34,49 @@ class Converter implements MediaConverter
     }
 
     /**
-     * @param string $name
+     * @param string $conversion
      * @param MediaFile $file
      * @return mixed
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function streamConvertedFile(string $name, MediaFile $file)
+    public function streamConvertedFile(string $conversion, MediaFile $file)
     {
         $baseFilename = basename($file->filename);
 
-        $storage = Storage::disk($file->disk);
-        $conversionPath = 'conversions/'.$name.'/'.$baseFilename;
+        // If the file has a specific conversion disk set, use that one.
+        // Otherwise, use the one set in the config or fall back to the disk of the original file
+        $conversionsDisk = $file->conversions_disk ?: config('cmf.media_conversions_disk', $file->disk);
 
+        $storage = Storage::disk($conversionsDisk);
+        $conversionPath = 'conversions/'.$conversion.'/'.$baseFilename;
+
+        // Stream the file if it exists
         if ($storage->exists($conversionPath)) {
             return $storage->response($conversionPath);
         }
 
+        // Create a temporary directory for converting the file
         $tempDirectory = (new TemporaryDirectory())->create();
         $tempFilePath = $tempDirectory->path().'/'.$baseFilename;
 
-        File::put($tempFilePath, $storage->get($file->filename));
+        // Store the file in the temporary directory
+        $fileStorage = Storage::disk($file->disk);
+        File::put($tempFilePath, $fileStorage->get($file->filename));
 
-        // Create the image
-        $image = Image::make($tempFilePath);
+        // Convert the file, receive a new path
+        $path = $this->convertFile($conversion, $tempFilePath);
 
-        // Get the user conversion call and execute it
-        $conversionCall = $this->conversions[$name];
-        $conversionCall($image);
+        // Put the converted file on the disk
+        $storage->put($conversionPath, File::get($path));
 
-        // End of image manipulation, save the image to disk
-        $image->save();
+        // Update the file with the used conversion disk
+        $file->conversions_disk = $conversionsDisk;
+        $file->save();
 
-        $storage->put($conversionPath, File::get($tempFilePath));
+        // Delete the temporary directory
         $tempDirectory->delete();
+
+        // Stream the file
         return $storage->response($conversionPath);
     }
 }

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 use ReinVanOyen\Cmf\Contracts\MediaConverter;
 use ReinVanOyen\Cmf\Http\Resources\MediaDirectoryCollection;
 use ReinVanOyen\Cmf\Http\Resources\MediaDirectoryResource;
@@ -15,7 +14,6 @@ use ReinVanOyen\Cmf\Http\Resources\MediaFileCollection;
 use ReinVanOyen\Cmf\Http\Resources\MediaFileResource;
 use ReinVanOyen\Cmf\Models\MediaDirectory;
 use ReinVanOyen\Cmf\Models\MediaFile;
-use Spatie\TemporaryDirectory\TemporaryDirectory;
 
 /**
  * Class MediaController
@@ -43,7 +41,6 @@ class MediaController extends Controller
      * @param int $id
      * @param string $filename
      * @return mixed
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function streamFileConversion(Request $request, string $conversion, int $id, string $filename)
     {
@@ -83,10 +80,16 @@ class MediaController extends Controller
         $disk = config('cmf.media_library_disk');
         $storage = Storage::disk($disk);
 
+        // The file being uploaded
         $file = $request->file('file');
-        $filename = \ReinVanOyen\Cmf\Support\Str::cleanFilename($file->getClientOriginalName());
-        $path = $file->store('media/'.date('Y/m'), $disk);
 
+        // Clean up the original file name
+        $filename = \ReinVanOyen\Cmf\Support\Str::cleanFilename($file->getClientOriginalName());
+
+        // Put the file on the disk and get the path (this uses automatic upload streaming)
+        $path = $storage->putFile('media/'.date('Y/m'), $file);
+
+        // Make a new database entry for the uploaded file
         $mediaFile = new MediaFile();
         $mediaFile->name = $filename;
         $mediaFile->filename = $path;
@@ -94,11 +97,13 @@ class MediaController extends Controller
         $mediaFile->mime_type = $storage->mimeType($path);
         $mediaFile->size = $storage->size($path);
 
+        // If the request input contains a specified directory, add the file to the directory
         if ($request->input('directory')) {
             $parentDirectory = MediaDirectory::findOrFail($request->input('directory'));
             $mediaFile->directory()->associate($parentDirectory);
         }
 
+        // Save the file and give back a MediaFileResource of the newly created file
         $mediaFile->save();
 
         return new MediaFileResource($mediaFile);

@@ -9,7 +9,7 @@ use ReinVanOyen\Cmf\Console\MetaCommand;
 use ReinVanOyen\Cmf\Console\ModuleCommand;
 use ReinVanOyen\Cmf\Console\UserCommand;
 use ReinVanOyen\Cmf\Contracts\MediaConverter;
-use ReinVanOyen\Cmf\Media\Converter;
+use ReinVanOyen\Cmf\Media\ImageConverter;
 
 class CmfServiceProvider extends ServiceProvider
 {
@@ -25,7 +25,7 @@ class CmfServiceProvider extends ServiceProvider
         $this->app->bind(PathResolver::class, PathResolver::class);
 
         $this->app->singleton(MediaConverter::class, function () {
-            $converter = new Converter();
+            $converter = new ImageConverter();
             $converter->registerConversion('cmf-thumb', function (Image $image) {
                 $image->fit(250, 250);
             });

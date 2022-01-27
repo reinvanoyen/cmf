@@ -97,9 +97,10 @@ export default class FileView extends React.Component {
                             ['Modified', this.props.file.updated_at],
                             ['Description', this.props.file.description, true],
                             ['Copyright', this.props.file.copyright, true],
-                            ['Disk', this.props.file.disk],
                             ['Size', file.filesize(this.props.file.size)],
                             ['Mimetype', this.props.file.mime_type],
+                            ['Disk', this.props.file.disk],
+                            ['Conversions disk', this.props.file.conversions_disk],
                         ]}
                         onPropertyChange={(property, value) => this.handlePropertyChange(property, value)}
                     />
