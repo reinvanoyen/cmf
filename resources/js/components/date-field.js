@@ -2,7 +2,7 @@ import React from 'react';
 import dom from "../util/dom";
 import Field from "../core/ui/field";
 
-export default class DateTimeField extends React.Component {
+export default class DateField extends React.Component {
 
     static defaultProps = {
         data: {},
@@ -14,7 +14,6 @@ export default class DateTimeField extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             value: ''
         };
@@ -23,7 +22,7 @@ export default class DateTimeField extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.data[this.props.name] !== prevProps.data[this.props.name]) {
             this.setState({
-                value: this.props.data[this.props.name]
+                value: this.props.data[this.props.name] || ''
             });
         }
     }
@@ -39,7 +38,6 @@ export default class DateTimeField extends React.Component {
     }
 
     render() {
-
         return (
             <Field
                 name={this.props.name}
@@ -51,12 +49,11 @@ export default class DateTimeField extends React.Component {
                 <input
                     id={dom.inputId(this.props.name)}
                     name={this.props.name}
-                    className={'date-time-field'}
-                    type={'datetime-local'}
+                    className={'date-field'}
+                    type={'date'}
                     value={this.state.value}
                     disabled={this.props.disabled}
                     onChange={this.handleChange.bind(this)}
-                    onKeyUp={this.handleChange.bind(this)}
                 />
             </Field>
         );

@@ -35,8 +35,10 @@ import GalleryField from "./gallery-field";
 import ManyToManyField from "./many-to-many-field";
 import ManyToManySelectField from "./many-to-many-select-field";
 import JsonField from "./json-field";
+import DateField from "./date-field";
 
 export default {
+    'date-field': DateField,
     'date-time-field': DateTimeField,
     'date-time-view': DateTimeView,
     'enum-field': EnumField,
