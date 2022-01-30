@@ -1,0 +1,27 @@
+@include block(upload-status)
+{
+    $default-size: $rule * 1.75;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $default-size;
+    height: $default-size;
+    border-radius: $border-radius-3;
+    overflow: hidden;
+    background-color: $color01;
+    border: $border-width-1 solid $color01;
+
+    @include element(icon)
+    {
+        @include block-modifier(queued)
+        {
+            opacity: .25;
+        }
+
+        @include block-modifier(uploading)
+        {
+            animation: pulseup 1s ease-in infinite;
+        }
+    }
+}

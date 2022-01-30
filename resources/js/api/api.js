@@ -68,6 +68,21 @@ api.media.upload = (file, directoryId = null, onUploadProgress = () => {}) => {
     return axios.post('cmf/api/media/upload', http.formData(body), {onUploadProgress});
 };
 
+api.media.uploadChunk = (status, filename, path, chunk, directoryId = null) => {
+
+    let body = {status, filename, chunk};
+
+    if (path) {
+        body.path = path;
+    }
+
+    if (directoryId) {
+        body.directory = directoryId;
+    }
+
+    return axios.post('cmf/api/media/upload-chunk', http.formData(body));
+};
+
 api.media.path = (id = null) => {
 
     let body = {};

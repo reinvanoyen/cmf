@@ -44,6 +44,7 @@ Route::middleware([
         Route::post('media/create-directory', [MediaController::class, 'createDirectory']);
 
         Route::post('media/upload', [MediaController::class, 'upload']);
+        Route::post('media/upload-chunk', [MediaController::class, 'uploadChunk']);
         Route::post('media/rename-file', [MediaController::class, 'renameFile']);
         Route::post('media/label-file', [MediaController::class, 'labelFile']);
         Route::post('media/update-file-description', [MediaController::class, 'updateFileDescription']);

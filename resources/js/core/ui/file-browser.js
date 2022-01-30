@@ -4,6 +4,8 @@ import Placeholder from "./placeholder";
 import util from "./util";
 import File from "./file";
 import Icon from "./icon";
+import Manager from "../messaging/manager";
+import FilePlaceholder from "./file-placeholder";
 
 class FileBrowser extends React.Component {
 
@@ -24,6 +26,97 @@ class FileBrowser extends React.Component {
         onSelectionChange: (ids, files) => {},
         onSelectionDelete: (ids, files) => {}
     };
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            uploads: []
+        };
+
+        this.handleOnUploadQueued = this.onUploadQueued.bind(this);
+        this.handleOnUploadQueuedMultiple = this.onUploadQueuedMultiple.bind(this);
+        this.handleOnUploadStart = this.onUploadStart.bind(this);
+        this.handleOnUploadProgress = this.onUploadProgress.bind(this);
+        this.handleOnUploadSuccess = this.onUploadSuccess.bind(this);
+        this.handleOnUploadFail = this.onUploadFail.bind(this);
+    }
+
+    componentDidMount() {
+        Manager.on('media.upload.queued', this.handleOnUploadQueued);
+        Manager.on('media.upload.queuedMultiple', this.handleOnUploadQueuedMultiple);
+        Manager.on('media.upload.start', this.handleOnUploadStart);
+        Manager.on('media.upload.progress', this.handleOnUploadProgress);
+        Manager.on('media.upload.success', this.handleOnUploadSuccess);
+        Manager.on('media.upload.fail', this.handleOnUploadFail);
+    }
+
+    componentWillUnmount() {
+        Manager.off('media.upload.queued', this.handleOnUploadQueued);
+        Manager.off('media.upload.queuedMultiple', this.handleOnUploadQueuedMultiple);
+        Manager.off('media.upload.start', this.handleOnUploadStart);
+        Manager.off('media.upload.progress', this.handleOnUploadProgress);
+        Manager.off('media.upload.success', this.handleOnUploadSuccess);
+        Manager.off('media.upload.fail', this.handleOnUploadFail);
+    }
+
+    onUploadQueued(uploadData) {
+        this.setState({
+            uploads: [...this.state.uploads, {
+                id: uploadData.id,
+                size: uploadData.size,
+                name: uploadData.filename,
+                progress: 0,
+                status: 'queued'
+            }]
+        });
+    }
+
+    onUploadQueuedMultiple(uploadData) {
+
+        let uploads = uploadData.files.map(upload => {
+            return {
+                id: upload.id,
+                size: upload.size,
+                name: upload.filename,
+                progress: 0,
+                status: 'queued'
+            };
+        });
+        let newUploads = this.state.uploads.concat(uploads);
+
+        this.setState({
+            uploads: newUploads
+        });
+    }
+
+    onUploadStart(uploadData) {
+        // for reference
+    }
+
+    onUploadProgress(uploadData) {
+        this.state.uploads.forEach(upload => {
+            if (upload.id === uploadData.id) {
+                upload.status = 'uploading';
+                upload.progress = uploadData.progress;
+            }
+        });
+        this.setState({
+            uploads: this.state.uploads
+        });
+    }
+
+    onUploadSuccess(uploadData) {
+        this.setState({
+            uploads: this.state.uploads.filter(v => v.id !== uploadData.id),
+        });
+    }
+
+    onUploadFail(uploadData) {
+        this.setState({
+            uploads: this.state.uploads.filter(v => v.id !== uploadData.id),
+        });
+    }
 
     onDirectoryContextClick(action, directory) {
 
@@ -113,6 +206,25 @@ class FileBrowser extends React.Component {
         return this.props.selectedFileIds.includes(file.id);
     }
 
+    renderUploads() {
+
+        if (! this.state.uploads.length) {
+            return null;
+        }
+
+        return (
+            <div className={'file-list'}>
+                {this.state.uploads.map((file, i) => {
+                    return (
+                        <div className="file-list__item" key={i}>
+                            <FilePlaceholder data={file} />
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
+
     renderFiles() {
 
         if (! this.props.files.length) {
@@ -192,9 +304,10 @@ class FileBrowser extends React.Component {
     }
 
     renderContent() {
-        if (this.props.directories.length || this.props.files.length) {
+        if (this.state.uploads.length || this.props.directories.length || this.props.files.length) {
             return (
                 <div className="file-browser__content">
+                    {this.renderUploads()}
                     {this.renderDirectories()}
                     {this.renderFiles()}
                 </div>
@@ -203,9 +316,11 @@ class FileBrowser extends React.Component {
 
         return (
             <div className="file-browser__content">
-                <Placeholder>
-                    This directory is empty
-                </Placeholder>
+                <div className="file-browser__placeholder">
+                    <Placeholder>
+                        This directory is empty
+                    </Placeholder>
+                </div>
             </div>
         );
     }

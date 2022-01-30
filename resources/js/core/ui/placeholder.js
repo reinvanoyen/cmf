@@ -10,7 +10,9 @@ class Placeholder extends React.Component {
     };
 
     onClick(e) {
-        this.props.onClick(e);
+        if (this.props.onClick) {
+            this.props.onClick(e);
+        }
     }
 
     render() {

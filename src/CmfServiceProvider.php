@@ -9,6 +9,7 @@ use ReinVanOyen\Cmf\Console\MetaCommand;
 use ReinVanOyen\Cmf\Console\ModuleCommand;
 use ReinVanOyen\Cmf\Console\UserCommand;
 use ReinVanOyen\Cmf\Contracts\MediaConverter;
+use ReinVanOyen\Cmf\Media\FileAdder;
 use ReinVanOyen\Cmf\Media\ImageConverter;
 
 class CmfServiceProvider extends ServiceProvider
@@ -23,6 +24,7 @@ class CmfServiceProvider extends ServiceProvider
         $this->app->singleton(Cmf::class, Cmf::class);
         $this->app->singleton(MakeableStorage::class, MakeableStorage::class);
         $this->app->bind(PathResolver::class, PathResolver::class);
+        $this->app->bind(FileAdder::class, FileAdder::class);
 
         $this->app->singleton(MediaConverter::class, function () {
             $converter = new ImageConverter();

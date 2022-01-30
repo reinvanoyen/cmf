@@ -1,0 +1,60 @@
+@include block(file-placeholder)
+{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding: $rule / 3 $rule / 2;
+    transition: background-color .25s;
+    border-radius: $border-radius-1;
+    background-color: $color08;
+
+    @include element(status)
+    {
+        flex-grow: 0;
+        margin-right: $rule / 2;
+    }
+
+    @include element(content)
+    {
+        flex-grow: 1;
+    }
+
+    @include element(name)
+    {
+        @include type-2;
+        margin-bottom: $rule / 4;
+    }
+
+    @include element(size)
+    {
+        @include type-2;
+        color: $color07;
+    }
+
+    @include element(progress)
+    {
+        margin-top: $rule / 4;
+        width: 100%;
+    }
+
+    @include element(progress-bar)
+    {
+        display: block;
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 3px;
+
+        &::-webkit-progress-bar
+        {
+            background-color: $color03;
+        }
+
+        &::-webkit-progress-value
+        {
+            background-color: $color10;
+        }
+    }
+}

@@ -62,10 +62,8 @@ class FileDropZone extends React.Component {
         });
 
         if( e.dataTransfer ) {
-
             let items = e.dataTransfer.items;
             let files = e.dataTransfer.files;
-
             if (items) { // This goes false when reading items instead of files is unsupported
                 for (let i = 0 ; i < items.length ; i += 1) {
                     let item = items[i].webkitGetAsEntry();
@@ -74,9 +72,7 @@ class FileDropZone extends React.Component {
                     }
                 }
             } else if (files.length) {
-                for (let i = 0 ; i < files.length; i += 1) {
-                    this.upload(files[i], currentDirectoryId);
-                }
+                this.uploadMultiple(files, currentDirectoryId);
             }
         }
     }
@@ -84,7 +80,6 @@ class FileDropZone extends React.Component {
     uploadFileTree(item, directoryId = null) {
 
         if (item.isFile) {
-
             item.file(file => {
                 if (file.name !== '.DS_Store') {
                     this.upload(file, directoryId);
@@ -118,25 +113,27 @@ class FileDropZone extends React.Component {
         this.props.onUploadStart(file, directoryId);
 
         upload.queue(file, directoryId, file => {
-
             this.props.onCreateFile(file);
-
             if (upload.isDone()) {
                 this.props.onUploadDone();
             }
         });
+    }
 
-        /*
-        api.media.upload(file, directoryId, e => this.uploadProgress(e, file, directoryId)).then(response => {
+    uploadMultiple(files, directoryId) {
 
-            util.notify('File uploaded');
-            this.props.onCreateFile(response.data.data);
-        });*/
+        //this.props.onUploadStart(file, directoryId);
+
+        upload.queueMultiple(files, directoryId, file => {
+            this.props.onCreateFile(file);
+            if (upload.isDone()) {
+                this.props.onUploadDone();
+            }
+        });
     }
 
     uploadProgress(e, file, directoryId) {
         let percent = (e.loaded / e.total) * 100;
-        console.log(percent);
     }
 
     render() {

@@ -1,6 +1,7 @@
 @include block(placeholder)
 {
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     border: 1px dashed $color06;
@@ -11,7 +12,6 @@
     @include element(icon)
     {
         display: block;
-        margin: auto;
     }
 
     @include element(text)

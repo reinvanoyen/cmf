@@ -27,3 +27,23 @@
         transform: rotate(360deg);
     }
 }
+
+@keyframes pulseup
+{
+    0%
+    {
+        opacity: 0;
+        transform: translateY($rule / 3);
+    }
+
+    50%
+    {
+        opacity: 1;
+    }
+
+    100%
+    {
+        opacity: 0;
+        transform: translateY(-$rule / 3);
+    }
+}

@@ -13,15 +13,11 @@ export default class FileUploader extends React.Component {
     };
 
     handleChange(e) {
-        let files = e.target.files;
-
-        for (let i = 0; i < files.length; i++) {
-            this.upload(files[i]);
-        }
+        this.upload(e.target.files);
     }
 
-    upload(file) {
-        upload.queue(file, this.props.directory, file => {
+    upload(files) {
+        upload.queueMultiple(files, this.props.directory, file => {
             this.props.onFileUploaded(file);
             if (upload.isDone()) {
                 this.props.onUploadDone();

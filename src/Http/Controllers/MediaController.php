@@ -12,8 +12,10 @@ use ReinVanOyen\Cmf\Http\Resources\MediaDirectoryCollection;
 use ReinVanOyen\Cmf\Http\Resources\MediaDirectoryResource;
 use ReinVanOyen\Cmf\Http\Resources\MediaFileCollection;
 use ReinVanOyen\Cmf\Http\Resources\MediaFileResource;
+use ReinVanOyen\Cmf\Media\FileAdder;
 use ReinVanOyen\Cmf\Models\MediaDirectory;
 use ReinVanOyen\Cmf\Models\MediaFile;
+use Spatie\TemporaryDirectory\TemporaryDirectory;
 
 /**
  * Class MediaController
@@ -72,14 +74,70 @@ class MediaController extends Controller
     }
 
     /**
+     * @param FileAdder $fileAdder
+     * @param Request $request
+     * @return array|MediaFileResource
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function uploadChunk(FileAdder $fileAdder, Request $request)
+    {
+        $status = $request->input('status');
+        $chunk = $request->file('chunk');
+        $filename = $request->input('filename');
+
+        if ($status === 'start') {
+
+            $tempDirectory = (new TemporaryDirectory())->create();
+            $tempPath = $tempDirectory->path().'/'.$filename.'.part';
+            File::put($tempPath, $chunk->get());
+
+            return [
+                'status' => 'created',
+                'path' => $tempPath,
+            ];
+
+        } else if ($request->exists('path')) {
+
+            $path = $request->input('path');
+
+            // Append the chunk to the temp file
+            // We're not using Laravel's append methods here, because those also read the file contents,
+            // for large files that often results in a memory allocation exhausted error
+            file_put_contents($path, $chunk->get(), FILE_APPEND);
+
+            if ($status === 'progress') {
+                return [
+                    'status' => 'progress',
+                    'path' => $path,
+                ];
+            }
+
+            if ($status === 'end') {
+
+                $filename = basename($filename, '.part');
+
+                // Add the file to the media library
+                $mediaFile = $fileAdder->addFile(new \Illuminate\Http\File($path), $filename, $request->input('directory'));
+
+                // Remove the temp directory
+                File::deleteDirectory(dirname($path));
+
+                return new MediaFileResource($mediaFile);
+            }
+        }
+
+        return [
+            'status' => 'failed',
+        ];
+    }
+
+    /**
+     * @param FileAdder $fileAdder
      * @param Request $request
      * @return MediaFileResource
      */
-    public function upload(Request $request)
+    public function upload(FileAdder $fileAdder, Request $request)
     {
-        $disk = config('cmf.media_library_disk');
-        $storage = Storage::disk($disk);
-
         // The file being uploaded
         $file = $request->file('file');
 
@@ -87,24 +145,7 @@ class MediaController extends Controller
         $filename = \ReinVanOyen\Cmf\Support\Str::cleanFilename($file->getClientOriginalName());
 
         // Put the file on the disk and get the path (this uses automatic upload streaming)
-        $path = $storage->putFile('media/'.date('Y/m'), $file);
-
-        // Make a new database entry for the uploaded file
-        $mediaFile = new MediaFile();
-        $mediaFile->name = $filename;
-        $mediaFile->filename = $path;
-        $mediaFile->disk = $disk;
-        $mediaFile->mime_type = $storage->mimeType($path);
-        $mediaFile->size = $storage->size($path);
-
-        // If the request input contains a specified directory, add the file to the directory
-        if ($request->input('directory')) {
-            $parentDirectory = MediaDirectory::findOrFail($request->input('directory'));
-            $mediaFile->directory()->associate($parentDirectory);
-        }
-
-        // Save the file and give back a MediaFileResource of the newly created file
-        $mediaFile->save();
+        $mediaFile = $fileAdder->addFile($file, $filename, $request->input('directory'));
 
         return new MediaFileResource($mediaFile);
     }
