@@ -9,7 +9,6 @@ let id = 0;
 
 export default {
     queueMultiple(files, directoryId, cb = () => {}) {
-
         let fileEntries = [];
         for (let i = 0 ; i < files.length; i++) {
             let file = files[i];
@@ -19,7 +18,6 @@ export default {
                 id: id,
                 size: file.size,
                 filename: file.name
-
             });
         }
         Manager.trigger('media.upload.queuedMultiple', {
@@ -30,10 +28,8 @@ export default {
         }
     },
     queue(file, directoryId, cb = () => {}) {
-
         id++;
         queue.push([id, file, directoryId, cb]);
-
         Manager.trigger('media.upload.queued', {
             id: id,
             size: file.size,
@@ -52,7 +48,7 @@ export default {
         isProcessing = true;
         let item = queue[0];
 
-        this.processChunkUpload(item[1], (filename) => {
+        this.processChunkUpload(item[1], item[2], filename => {
 
             Manager.trigger('media.upload.start', {
                 id: item[0],
@@ -74,7 +70,8 @@ export default {
             this.process();
 
             Manager.trigger('media.upload.success', {
-                id: item[0]
+                id: item[0],
+                file: file
             });
 
             item[3](file);
@@ -93,7 +90,7 @@ export default {
     isDone() {
         return (queue.length === 0);
     },
-    processChunkUpload(file, startCb, progressCb, successCb, errorCb) {
+    processChunkUpload(file, directoryId, startCb, progressCb, successCb, errorCb) {
 
         let filePath;
         let chunkSize = 524288;
@@ -116,7 +113,13 @@ export default {
                 startCb(filename);
             }
 
-            api.media.uploadChunk(status, filename, (filePath ? filePath : null), file.slice(start, end)).then(response => {
+            api.media.uploadChunk(
+                status,
+                filename,
+                (filePath ? filePath : null),
+                file.slice(start, end),
+                directoryId
+            ).then(response => {
 
                 let data = response.data;
 

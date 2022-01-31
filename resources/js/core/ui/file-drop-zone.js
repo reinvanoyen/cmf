@@ -122,8 +122,6 @@ class FileDropZone extends React.Component {
 
     uploadMultiple(files, directoryId) {
 
-        //this.props.onUploadStart(file, directoryId);
-
         upload.queueMultiple(files, directoryId, file => {
             this.props.onCreateFile(file);
             if (upload.isDone()) {

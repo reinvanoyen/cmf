@@ -221,6 +221,7 @@ class FilePickerWidget extends React.Component {
             <React.Fragment>
                 <div className="file-picker-widget__main">
                     <FileBrowser
+                        currentDirectory={this.state.currentDirectory}
                         selectionMode={this.props.selectionMode}
                         selectedFiles={this.state.selectedFiles}
                         selectedFileIds={this.state.selectedFileIds}

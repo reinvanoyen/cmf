@@ -12,6 +12,7 @@ class FileBrowser extends React.Component {
     static defaultProps = {
         files: [],
         directories: [],
+        currentDirectory: null,
         fileLabels: {},
         selectionMode: false,
         selectedFileIds: [],
@@ -31,7 +32,8 @@ class FileBrowser extends React.Component {
         super(props);
 
         this.state = {
-            uploads: []
+            uploads: [],
+            files: this.props.files
         };
 
         this.handleOnUploadQueued = this.onUploadQueued.bind(this);
@@ -40,6 +42,14 @@ class FileBrowser extends React.Component {
         this.handleOnUploadProgress = this.onUploadProgress.bind(this);
         this.handleOnUploadSuccess = this.onUploadSuccess.bind(this);
         this.handleOnUploadFail = this.onUploadFail.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.files !== this.props.files) {
+            this.setState({
+                files: this.props.files
+            });
+        }
     }
 
     componentDidMount() {
@@ -107,7 +117,13 @@ class FileBrowser extends React.Component {
     }
 
     onUploadSuccess(uploadData) {
+
+        let file = uploadData.file;
+        let directoryId = (file.directory ? file.directory.id : null);
+        let currentDirectoryId = (this.props.currentDirectory ? this.props.currentDirectory.id : null);
+
         this.setState({
+            files: (directoryId === currentDirectoryId ? [file, ...this.state.files] : this.state.files),
             uploads: this.state.uploads.filter(v => v.id !== uploadData.id),
         });
     }
@@ -227,7 +243,7 @@ class FileBrowser extends React.Component {
 
     renderFiles() {
 
-        if (! this.props.files.length) {
+        if (! this.state.files.length) {
             return null;
         }
 
@@ -245,7 +261,7 @@ class FileBrowser extends React.Component {
 
         return (
             <div className={'file-list'}>
-                {this.props.files.map((file, i) => {
+                {this.state.files.map((file, i) => {
                     return (
                         <div className="file-list__item" key={i}>
                             <ContextMenu
@@ -304,7 +320,7 @@ class FileBrowser extends React.Component {
     }
 
     renderContent() {
-        if (this.state.uploads.length || this.props.directories.length || this.props.files.length) {
+        if (this.state.uploads.length || this.props.directories.length || this.state.files.length) {
             return (
                 <div className="file-browser__content">
                     {this.renderUploads()}

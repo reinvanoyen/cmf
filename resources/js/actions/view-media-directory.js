@@ -331,6 +331,7 @@ class ViewMediaDirectory extends React.Component {
                         onUploadDone={this.handleUploadDone.bind(this)}
                     >
                         <FileBrowser
+                            currentDirectory={this.state.currentDirectory}
                             directories={this.state.directories}
                             files={this.state.files}
                             fileLabels={this.props.fileLabels}
