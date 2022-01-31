@@ -57,6 +57,20 @@ This command will ask for a name for your user, an email address and a password.
 
 Once the user is created, you're ready to start building!
 
+## Updating
+
+```ssh
+composer update reinvanoyen/cmf
+```
+
+```ssh
+php artisan cmf:install
+```
+
+```ssh
+php artisan migrate
+```
+
 ## Build a basic CRUD module
 
 This section assumes you have already created the 

@@ -10,10 +10,4 @@
         @include type-2;
         margin-bottom: $rule / 4
     }
-
-    @include element(size)
-    {
-        @include type-2;
-        color: $color07;
-    }
 }

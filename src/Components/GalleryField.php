@@ -54,6 +54,7 @@ class GalleryField extends Component
         $this->meta = $meta ?: RelationshipMetaGuesser::getMeta($this->getName());
         $this->singular($this->meta::getSingular());
         $this->plural($this->meta::getPlural());
+        $this->export('fileLabels', config('cmf.media_library_file_labels', []));
     }
 
     /**

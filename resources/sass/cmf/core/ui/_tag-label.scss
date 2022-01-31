@@ -5,4 +5,10 @@
     @include type-2;
     border-radius: $border-radius-3;
     padding: $rule / 8 $rule / 3;
+
+    @include modifier(small)
+    {
+        font-size: .75rem;
+        padding: $rule / 20 $rule / 6;
+    }
 }

@@ -18,7 +18,8 @@ class GalleryField extends React.Component {
         singular: '',
         plural: '',
         tooltip: '',
-        orderColumn: ''
+        orderColumn: '',
+        fileLabels: {}
     };
 
     constructor(props) {
@@ -138,7 +139,11 @@ class GalleryField extends React.Component {
                     {this.state.selectedFiles.map((file, i) => {
                         return (
                             <div className="gallery-field__item" key={i}>
-                                <FileThumb file={file} mediaConversion={'contain'} />
+                                <FileThumb
+                                    file={file}
+                                    fileLabels={this.props.fileLabels}
+                                    mediaConversion={'contain'}
+                                />
                                 {this.renderItemOverlay(i)}
                             </div>
                         );
@@ -159,6 +164,7 @@ class GalleryField extends React.Component {
             widget = (
                 <div className="overlay">
                     <FilePickerWidget
+                        fileLabels={this.props.fileLabels}
                         selectionMode={true}
                         defaultSelectedFiles={this.state.selectedFiles}
                         defaultSelectedFileIds={this.state.selectedFilesIds}

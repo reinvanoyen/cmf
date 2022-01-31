@@ -13,7 +13,8 @@ class FileSelectField extends React.Component {
         data: {},
         label: '',
         name: '',
-        style: ''
+        style: '',
+        fileLabels: {}
     };
 
     constructor(props) {
@@ -68,7 +69,10 @@ class FileSelectField extends React.Component {
         if (this.state.selectedFile) {
             return (
                 <div className="file-select-field__selected-file">
-                    <FileThumb file={this.state.selectedFile} />
+                    <FileThumb
+                        file={this.state.selectedFile}
+                        fileLabels={this.props.fileLabels}
+                    />
                 </div>
             )
         }
@@ -84,6 +88,7 @@ class FileSelectField extends React.Component {
             widget = (
                 <div className="overlay">
                     <FilePickerWidget
+                        fileLabels={this.props.fileLabels}
                         defaultSelectedFiles={this.state.selectedFile ? [this.state.selectedFile] : null}
                         defaultSelectedFileIds={this.state.selectedFile ? [this.state.selectedFile.id] : null}
                         defaultDirectoryId={this.state.selectedFile && this.state.selectedFile.directory ? this.state.selectedFile.directory.id : null}

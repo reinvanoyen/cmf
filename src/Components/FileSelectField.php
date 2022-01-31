@@ -12,6 +12,10 @@ use ReinVanOyen\Cmf\Traits\HasLabel;
 use ReinVanOyen\Cmf\Traits\HasName;
 use ReinVanOyen\Cmf\Traits\HasValidation;
 
+/**
+ * Class FileSelectField
+ * @package ReinVanOyen\Cmf\Components
+ */
 class FileSelectField extends Component
 {
     use HasName;
@@ -26,6 +30,7 @@ class FileSelectField extends Component
     {
         $this->name($name);
         $this->label(Str::labelify($name));
+        $this->export('fileLabels', config('cmf.media_library_file_labels', []));
     }
 
     /**

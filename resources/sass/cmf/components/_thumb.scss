@@ -1,0 +1,10 @@
+@include block(thumb-component)
+{
+    $default-size: $rule * 1.75;
+
+    display: block;
+    width: $default-size;
+    height: $default-size;
+    border-radius: $border-radius-3;
+    overflow: hidden;
+}

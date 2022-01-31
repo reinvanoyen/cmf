@@ -36,6 +36,7 @@ import ManyToManyField from "./many-to-many-field";
 import ManyToManySelectField from "./many-to-many-select-field";
 import JsonField from "./json-field";
 import DateField from "./date-field";
+import Thumb from "./thumb";
 
 export default {
     'date-field': DateField,
@@ -75,5 +76,6 @@ export default {
     'tags-view': TagsView,
     'many-to-many-field': ManyToManyField,
     'many-to-many-select-field': ManyToManySelectField,
-    'json-field': JsonField
+    'json-field': JsonField,
+    'thumb': Thumb
 };
