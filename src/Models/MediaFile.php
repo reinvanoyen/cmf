@@ -46,4 +46,20 @@ class MediaFile extends Model
             'image/webp',
         ]);
     }
+
+    /**
+     * @return bool
+     */
+    public function getIsLandscapeAttribute(): bool
+    {
+        return ($this->width > $this->height);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsPortraitAttribute(): bool
+    {
+        return ($this->height > $this->width);
+    }
 }

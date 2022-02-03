@@ -3,6 +3,7 @@
 namespace ReinVanOyen\Cmf\Media;
 
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use ReinVanOyen\Cmf\Models\MediaDirectory;
 use ReinVanOyen\Cmf\Models\MediaFile;
 use \ReinVanOyen\Cmf\Support\Str;
@@ -27,13 +28,35 @@ class FileAdder
         // Put the file on the media disk using a stream
         $filePath = $storage->putFile($location, $file);
 
+        // Check if it's an image
+        $mime = $storage->mimeType($filePath);
+
+        $imageMimetypes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+        ];
+
+        $width = null;
+        $height = null;
+
+        // If it's an image, get its dimensions
+        if (in_array($mime, $imageMimetypes)) {
+            $image = Image::make($storage->get($filePath));
+            $width = $image->width();
+            $height = $image->height();
+        }
+
         // Make a new database entry for the uploaded file
         $mediaFile = new MediaFile();
         $mediaFile->name = $filename;
         $mediaFile->filename = $filePath;
         $mediaFile->disk = $disk;
-        $mediaFile->mime_type = $storage->mimeType($filePath);
+        $mediaFile->mime_type = $mime;
         $mediaFile->size = $storage->size($filePath);
+        $mediaFile->width = $width;
+        $mediaFile->height = $height;
 
         // If the request input contains a specified directory, add the file to the directory
         if ($directory) {
