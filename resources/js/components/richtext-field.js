@@ -3,6 +3,7 @@ import Field from "../core/ui/field";
 import Trix from 'trix';
 import { TrixEditor } from "react-trix";
 import "trix/dist/trix.css";
+import file from "../util/file";
 
 export default class RichtextField extends React.Component {
 
@@ -23,6 +24,27 @@ export default class RichtextField extends React.Component {
     }
 
     handleEditorReady(editor) {
+
+        Trix.config.textAttributes.sup = {tagName: 'sup', inheritable: false};
+
+        let toolbarEl = editor.element.editorController.toolbarController.element;
+        let buttonHTML = '<button type="button" data-trix-attribute="sup" class="trix-button">A<sup>2</sup></button>';
+
+        let buttonGroupEl = toolbarEl.querySelector('.trix-button-group');
+        if (buttonGroupEl) {
+            buttonGroupEl.insertAdjacentHTML('beforeend', buttonHTML);
+        }
+        let blockToolsEl = toolbarEl.querySelector('.trix-button-group--block-tools');
+        if (blockToolsEl) {
+            blockToolsEl.remove();
+        }
+        let fileToolsEl = toolbarEl.querySelector('.trix-button-group--file-tools');
+        if (fileToolsEl) {
+            fileToolsEl.remove();
+        }
+    }
+
+    componentDidMount() {
         //
     }
 
