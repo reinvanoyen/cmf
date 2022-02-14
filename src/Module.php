@@ -52,7 +52,7 @@ abstract class Module implements \JsonSerializable
         $this->exports['id'] = $this->id();
         $this->exports['title'] = $this->title();
         $this->exports['icon'] = $this->icon();
-        $this->exports['inNavigation'] = $this->icon();
+        $this->exports['inNavigation'] = $this->inNavigation();
         $this->exports['path'] = [
             'module' => $this->id(),
         ];
