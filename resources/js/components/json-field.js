@@ -4,7 +4,6 @@ import Button from "../core/ui/button";
 import IconButton from "../core/ui/icon-button";
 import Placeholder from "../core/ui/placeholder";
 import components from "../rendering/components";
-import util from "../core/ui/util";
 
 class JsonField extends React.Component {
 
@@ -57,7 +56,7 @@ class JsonField extends React.Component {
         if (this.props.data[this.props.name] !== prevProps.data[this.props.name]) {
             if (this.props.data[this.props.name]) {
                 this.setState({
-                    addedItems: JSON.parse(this.props.data[this.props.name])
+                    addedItems: this.props.data[this.props.name]
                 });
             }
         }

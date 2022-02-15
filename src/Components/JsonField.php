@@ -70,7 +70,7 @@ class JsonField extends Component
     public function save(Model $model, $request)
     {
         if ($request->has($this->getName())) {
-            $model->{$this->getName()} = $request->get($this->getName());
+            $model->{$this->getName()} = json_decode($request->get($this->getName()), true);
         }
     }
 }
