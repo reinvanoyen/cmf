@@ -29,7 +29,13 @@ export default {
 
         let promptContentEl = document.createElement('div');
         promptContentEl.classList.add('prompt__content');
-        promptContentEl.textContent = text;
+
+        if (text) {
+            let promptTextEl = document.createElement('div');
+            promptTextEl.classList.add('prompt__text');
+            promptTextEl.textContent = text;
+            promptContentEl.appendChild(promptTextEl);
+        }
 
         let promptInputEl = document.createElement('input');
         promptInputEl.classList.add('prompt__input');

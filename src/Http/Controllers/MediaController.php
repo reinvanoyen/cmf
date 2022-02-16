@@ -343,4 +343,38 @@ class MediaController extends Controller
 
         return new MediaFileResource($mediaFile);
     }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function updateFilesDescription(Request $request)
+    {
+        $ids = json_decode($request->input('files'));
+        $mediaFiles = MediaFile::whereIn('id', $ids)->get();
+
+        foreach ($mediaFiles as $file) {
+            $file->description = $request->input('description');
+            $file->save();
+        }
+
+        return true;
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function updateFilesCopyright(Request $request)
+    {
+        $ids = json_decode($request->input('files'));
+        $mediaFiles = MediaFile::whereIn('id', $ids)->get();
+
+        foreach ($mediaFiles as $file) {
+            $file->copyright = $request->input('copyright');
+            $file->save();
+        }
+
+        return true;
+    }
 }

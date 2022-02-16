@@ -6,6 +6,7 @@
     border-radius: $border-radius-1;
     box-shadow: $box-shadow-1;
     min-width: 400px;
+    max-width: 450px;
 
     @include element(header)
     {
@@ -18,6 +19,11 @@
     {
         display: block;
         padding: 0 $rule;
+        margin-bottom: $rule / 2;
+    }
+
+    @include element(text)
+    {
         margin-bottom: $rule / 2;
     }
 

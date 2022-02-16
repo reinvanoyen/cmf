@@ -197,7 +197,9 @@ class ViewMediaDirectory extends React.Component {
     }
 
     handleChangeFileProperty(property, value, fileId) {
+
         let propertiesMap = ['Description', 'Copyright'];
+
         if (propertiesMap.includes(property)) {
             let apiCall = api.media['updateFile'+property];
 
@@ -210,6 +212,23 @@ class ViewMediaDirectory extends React.Component {
                 });
             }, error => {
                 util.notify(property+' of file could not be updated');
+            });
+        }
+    }
+
+    handleChangeFilesProperty(property, value, fileIds) {
+
+        let propertiesMap = ['Description', 'Copyright'];
+
+        if (propertiesMap.includes(property)) {
+
+            let apiCall = api.media['updateFiles'+property];
+
+            apiCall(value, fileIds).then(response => {
+                util.notify(property+' updated for all files');
+                this.refresh();
+            }, error => {
+                util.notify(property+' of file(s) could not be updated');
             });
         }
     }
@@ -315,6 +334,7 @@ class ViewMediaDirectory extends React.Component {
                 <MultiFileView
                     files={this.state.selectedFiles}
                     onDeleteFiles={() => this.confirmDeleteFiles(this.state.selectedFileIds, this.state.selectedFiles)}
+                    onChangeFilesProperty={(property, value) => this.handleChangeFilesProperty(property, value, this.state.selectedFileIds)}
                 />
             );
         }

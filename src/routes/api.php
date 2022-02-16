@@ -49,6 +49,8 @@ Route::middleware([
         Route::post('media/label-file', [MediaController::class, 'labelFile']);
         Route::post('media/update-file-description', [MediaController::class, 'updateFileDescription']);
         Route::post('media/update-file-copyright', [MediaController::class, 'updateFileCopyright']);
+        Route::post('media/update-files-description', [MediaController::class, 'updateFilesDescription']);
+        Route::post('media/update-files-copyright', [MediaController::class, 'updateFilesCopyright']);
         Route::post('media/delete-file', [MediaController::class, 'deleteFile']);
         Route::post('media/delete-files', [MediaController::class, 'deleteFiles']);
 
