@@ -37,6 +37,7 @@ import ManyToManySelectField from "./many-to-many-select-field";
 import JsonField from "./json-field";
 import DateField from "./date-field";
 import Thumb from "./thumb";
+import ColorField from "./color-field";
 
 export default {
     'date-field': DateField,
@@ -59,6 +60,7 @@ export default {
     'tabs': Tabs,
     'custom-number': CustomNumber,
     'color-view': ColorView,
+    'color-field': ColorField,
     'file-upload': FileUpload,
     'image-upload': ImageUpload,
     'image-view': ImageView,
