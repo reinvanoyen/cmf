@@ -2,6 +2,7 @@
 
 namespace ReinVanOyen\Cmf\Media;
 
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use ReinVanOyen\Cmf\Models\MediaFile;
@@ -52,7 +53,9 @@ abstract class Converter implements MediaConverter
 
         // Stream the file if it exists
         if ($storage->exists($conversionPath)) {
-            return $storage->response($conversionPath);
+            return $storage->response($conversionPath, $file->name, [
+                'Cache-Control' => 'max-age=86400, public',
+            ]);
         }
 
         // Create a temporary directory for converting the file
@@ -77,6 +80,8 @@ abstract class Converter implements MediaConverter
         $tempDirectory->delete();
 
         // Stream the file
-        return $storage->response($conversionPath);
+        return $storage->response($conversionPath, $file->name, [
+            'Cache-Control' => 'max-age=86400, public',
+        ]);
     }
 }

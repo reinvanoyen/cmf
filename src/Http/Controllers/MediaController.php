@@ -70,7 +70,9 @@ class MediaController extends Controller
             ->firstOrFail();
 
         return Storage::disk($file->disk)
-            ->response($file->filename);
+            ->response($file->filename, $file->name, [
+                'Cache-Control' => 'max-age=86400, public',
+        ]);
     }
 
     /**
