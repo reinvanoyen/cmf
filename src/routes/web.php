@@ -21,6 +21,11 @@ Route::get('media/{id}/{filename}', [MediaController::class, 'streamFile'])
     ->middleware('web')
     ->name('mediafile');
 
+Route::get('media/url/{id}/{filename}', [MediaController::class, 'redirectToFile'])
+    ->where('id', '[0-9]+')
+    ->middleware('web')
+    ->name('mediafileurl');
+
 Route::get('media/{conversion}/{id}/{filename}', [MediaController::class, 'streamFileConversion'])
     ->where('id', '[0-9]+')
     ->middleware('web')

@@ -76,6 +76,24 @@ class MediaController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param int $id
+     * @param string $filename
+     * @return mixed
+     */
+    public function redirectToFile(Request $request, int $id, string $filename)
+    {
+        $file = MediaFile::where('id', '=', $id)
+            ->where('name', '=', $filename)
+            ->firstOrFail();
+
+        return redirect(
+            Storage::disk($file->disk)
+                ->url($file->filename)
+        );
+    }
+
+    /**
      * @param FileAdder $fileAdder
      * @param Request $request
      * @return array|MediaFileResource
