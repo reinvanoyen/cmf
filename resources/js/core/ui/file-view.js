@@ -99,6 +99,7 @@ export default class FileView extends React.Component {
                             ['Copyright', this.props.file.copyright, true],
                             ['Size', file.filesize(this.props.file.size)],
                             ['Mimetype', this.props.file.mime_type],
+                            ['Visibility', this.props.file.visibility, true],
                             ['Disk', this.props.file.disk],
                             ['Conversions disk', this.props.file.conversions_disk],
                         ]}

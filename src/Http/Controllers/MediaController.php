@@ -366,6 +366,24 @@ class MediaController extends Controller
 
     /**
      * @param Request $request
+     * @return MediaFileResource
+     */
+    public function updateFileVisibility(Request $request)
+    {
+        $mediaFile = MediaFile::findOrFail($request->input('file'));
+        $visibility = $request->input('visibility');
+
+        $disk = Storage::disk($mediaFile->disk);
+        $disk->setVisibility($mediaFile->filename, $visibility);
+
+        $mediaFile->visibility = $visibility;
+        $mediaFile->save();
+
+        return new MediaFileResource($mediaFile);
+    }
+
+    /**
+     * @param Request $request
      * @return bool
      */
     public function updateFilesDescription(Request $request)

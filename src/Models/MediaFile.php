@@ -35,6 +35,22 @@ class MediaFile extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getVisAttribute(): string
+    {
+        if ($this->visibility) {
+            return $this->visibility;
+        }
+
+        $storage = Storage::disk($this->disk);
+        $this->visibility = $storage->getVisibility($this->filename);
+        $this->save();
+
+        return $this->visibility;
+    }
+
+    /**
      * @return bool
      */
     public function getIsImageAttribute(): bool

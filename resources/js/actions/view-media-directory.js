@@ -198,7 +198,7 @@ class ViewMediaDirectory extends React.Component {
 
     handleChangeFileProperty(property, value, fileId) {
 
-        let propertiesMap = ['Description', 'Copyright'];
+        let propertiesMap = ['Visibility', 'Description', 'Copyright'];
 
         if (propertiesMap.includes(property)) {
             let apiCall = api.media['updateFile'+property];

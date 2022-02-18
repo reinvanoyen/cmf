@@ -161,6 +161,10 @@ api.media.updateFileCopyright = (copyright, file) => {
     return axios.post('cmf/api/media/update-file-copyright', {copyright, file});
 };
 
+api.media.updateFileVisibility = (visibility, file) => {
+    return axios.post('cmf/api/media/update-file-visibility', {visibility, file});
+};
+
 api.media.updateFilesDescription = (description, fileIds) => {
     return axios.post('cmf/api/media/update-files-description', {description, files: JSON.stringify(fileIds)});
 };
