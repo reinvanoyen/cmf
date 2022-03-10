@@ -25,7 +25,7 @@ class JsonField extends React.Component {
         this.componentLists = [];
 
         this.state = {
-            addedItems: []
+            addedItems: this.props.data[this.props.name] || []
         };
     }
 
@@ -34,13 +34,10 @@ class JsonField extends React.Component {
         let payload = [];
 
         this.componentLists.forEach(componentList => {
-
             let itemData = {};
-
             componentList.forEach(item => {
                 item.ref.current.handleSubmit(itemData);
             });
-
             payload.push(itemData);
         });
 
@@ -48,7 +45,7 @@ class JsonField extends React.Component {
     }
 
     getData(data) {
-        data[this.props.name] = '';
+        data[this.props.name] = this.state.addedItems || [];
         return data;
     }
 
