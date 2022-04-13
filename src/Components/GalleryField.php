@@ -106,7 +106,7 @@ class GalleryField extends Component
         if ($request->has($this->getName())) {
 
             $files = $request->get($this->getName());
-            $fileIds = ($files ? explode(',', $files) : []);
+            $fileIds = ($files ? (is_array($files) ? $files : explode(',', $files)) : []);
 
             $model::saved(function ($model) use ($fileIds) {
 
