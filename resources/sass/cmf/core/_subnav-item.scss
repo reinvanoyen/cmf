@@ -1,0 +1,29 @@
+@include block(subnav-item)
+{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: $rule / 6 $rule / 2;
+    cursor: pointer;
+    @include type-2;
+    transition: color .25s;
+    border-radius: $border-radius-1;
+    color: $color13;
+
+    @include modifier(active)
+    {
+        color: $color10;
+    }
+
+    @include element(icon)
+    {
+        margin-right: $rule / 2;
+        transition: opacity .25s;
+        opacity: 0;
+    }
+
+    @include element(text)
+    {
+        //
+    }
+}

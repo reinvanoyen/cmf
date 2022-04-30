@@ -1,0 +1,28 @@
+@include block(nav-item)
+{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: $rule / 4 $rule / 2;
+    cursor: pointer;
+    @include type-1;
+    transition: color .25s;
+    border-radius: $border-radius-1;
+    color: $color13;
+
+    @include modifier(active)
+    {
+        background-color: $color03;
+    }
+
+    @include element(icon)
+    {
+        margin-right: $rule / 2;
+        transition: opacity .25s;
+    }
+
+    @include element(text)
+    {
+        //
+    }
+}

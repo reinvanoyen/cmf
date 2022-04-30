@@ -55,7 +55,21 @@ class Cmf extends React.Component {
             this.state.path.action !== path.currentPath.action ||
             ! helpers.shallowEqual(this.state.path.params, path.currentPath.params)
         ) {
-            let module = this.state.modules.find(module => (module.id === path.currentPath.module));
+
+            let module = null;
+
+            for (let i = 0; i < this.state.modules.length; i++) {
+                if (this.state.modules[i].id === path.currentPath.module) {
+                    module = this.state.modules[i];
+                    break;
+                }
+                for (let j = 0; j < this.state.modules[i].submodules.length; j++) {
+                    if (this.state.modules[i].submodules[j].id === path.currentPath.module) {
+                        module = this.state.modules[i].submodules[j];
+                        break;
+                    }
+                }
+            }
 
             api.modules.action(path.currentPath, path.currentPath.params).then(response => {
 

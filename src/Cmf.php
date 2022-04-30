@@ -63,6 +63,9 @@ class Cmf
         // Store all modules by id in the modules map
         foreach ($modules as $module) {
             $this->modulesMap[$module->id()] = $module;
+            foreach ($module->submodules() as $submodule) {
+                $this->modulesMap[$submodule->id()] = $submodule;
+            }
         }
     }
 
