@@ -16,6 +16,7 @@
     @include modifier(grid)
     {
         flex-direction: column;
+        align-items: flex-start
     }
 
     &:hover
@@ -37,6 +38,7 @@
 
         @include block-modifier(grid)
         {
+            order: 2;
             flex-grow: 1;
             width: 100%;
             margin-right: 0;
@@ -47,6 +49,11 @@
     @include element(content)
     {
         flex-grow: 1;
+
+        @include block-modifier(grid)
+        {
+            order: 3;
+        }
     }
 
     @include element(checkbox)
@@ -70,5 +77,15 @@
     {
         @include type-2;
         color: $color07;
+    }
+
+    @include element(label)
+    {
+        @include block-modifier(grid)
+        {
+            position: absolute;
+            top: $rule / 2;
+            right: $rule / 1.5;
+        }
     }
 }

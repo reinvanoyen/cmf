@@ -52,7 +52,7 @@ export default class File extends React.Component {
             if (label) {
                 return (
                     <div className="file__label">
-                        <TagLabel text={label.name} color={label.color} />
+                        <TagLabel text={label.name} color={label.color} style={this.props.viewMode === 'grid' ? ['small'] : []}/>
                     </div>
                 );
             }
