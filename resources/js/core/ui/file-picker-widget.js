@@ -36,7 +36,8 @@ class FilePickerWidget extends React.Component {
             directoryPath: [],
             currentDirectory: null,
             selectedFileIds: this.props.defaultSelectedFileIds || [],
-            selectedFiles: this.props.defaultSelectedFiles || []
+            selectedFiles: this.props.defaultSelectedFiles || [],
+            fileBrowserViewMode: 'list'
         };
     }
 
@@ -165,6 +166,12 @@ class FilePickerWidget extends React.Component {
         }
     }
 
+    changeFileBrowserViewMode(mode) {
+        this.setState({
+            fileBrowserViewMode: mode
+        });
+    }
+
     renderSidebar() {
 
         let links = [
@@ -222,6 +229,7 @@ class FilePickerWidget extends React.Component {
             <React.Fragment>
                 <div className="file-picker-widget__main">
                     <FileBrowser
+                        viewMode={this.state.fileBrowserViewMode}
                         fileLabels={this.props.fileLabels}
                         currentDirectory={this.state.currentDirectory}
                         selectionMode={this.props.selectionMode}
@@ -259,6 +267,8 @@ class FilePickerWidget extends React.Component {
                         />
                     </div>
                     <div className="file-picker-widget__header-options">
+                        <IconButton name={'view_list'} onClick={e => this.changeFileBrowserViewMode('list')} />
+                        <IconButton name={'grid_view'} onClick={e => this.changeFileBrowserViewMode('grid')} />
                         <Button text={'New directory'} style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} />
                         <Dropdown text={'Upload'} style={['primary', 'small']}>
                             <FileUploader

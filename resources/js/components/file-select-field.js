@@ -70,6 +70,7 @@ class FileSelectField extends React.Component {
             return (
                 <div className="file-select-field__selected-file">
                     <FileThumb
+                        mediaConversion={'contain'}
                         file={this.state.selectedFile}
                         fileLabels={this.props.fileLabels}
                     />

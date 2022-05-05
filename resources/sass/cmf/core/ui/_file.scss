@@ -8,6 +8,16 @@
     border-radius: $border-radius-1;
     cursor: pointer;
 
+    @include modifier(list)
+    {
+        // for ref
+    }
+
+    @include modifier(grid)
+    {
+        flex-direction: column;
+    }
+
     &:hover
     {
         background-color: $color08;
@@ -24,6 +34,14 @@
     {
         flex-grow: 0;
         margin-right: $rule / 2;
+
+        @include block-modifier(grid)
+        {
+            flex-grow: 1;
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: $rule / 2;
+        }
     }
 
     @include element(content)

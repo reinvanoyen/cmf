@@ -8,6 +8,16 @@
     border-radius: $border-radius-3;
     overflow: hidden;
 
+    @include modifier(list)
+    {
+        // for ref
+    }
+
+    @include modifier(grid)
+    {
+        // for ref
+    }
+
     @include element(textual)
     {
         display: flex;
@@ -22,6 +32,27 @@
         color: var(--color);
         background-color: $color01;
         @include type-6;
+
+        @include block-modifier(grid)
+        {
+            padding-top: 100%;
+        }
+
+        span
+        {
+            @include block-modifier(grid)
+            {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+        }
 
         &:after
         {

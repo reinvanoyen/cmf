@@ -25,7 +25,8 @@ class FileBrowser extends React.Component {
         onFileRename: id => {},
         onFileOpen: file => {},
         onSelectionChange: (ids, files) => {},
-        onSelectionDelete: (ids, files) => {}
+        onSelectionDelete: (ids, files) => {},
+        viewMode: 'list'
     };
 
     constructor(props) {
@@ -260,7 +261,7 @@ class FileBrowser extends React.Component {
         }
 
         return (
-            <div className={'file-list'}>
+            <div className={'file-list file-list--'+this.props.viewMode}>
                 {this.state.files.map((file, i) => {
                     return (
                         <div className="file-list__item" key={i}>
@@ -270,6 +271,7 @@ class FileBrowser extends React.Component {
                                 onClick={path => this.onFileContextClick(path, file)}
                             >
                                 <File
+                                    viewMode={this.props.viewMode}
                                     file={file}
                                     fileLabels={this.props.fileLabels}
                                     isSelected={this.isFileSelected(file)}

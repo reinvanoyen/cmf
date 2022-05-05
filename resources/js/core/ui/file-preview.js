@@ -41,7 +41,7 @@ export default class FilePreview extends React.Component {
         } else {
             content = (
                 <div className="file-preview__textual" style={{'--color': this.getFileColor()}}>
-                    {this.getFileFormat()}
+                    <span>{this.getFileFormat()}</span>
                 </div>
             );
         }

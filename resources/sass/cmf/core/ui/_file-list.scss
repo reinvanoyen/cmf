@@ -4,6 +4,18 @@
     padding: $rule;
     padding-top: 0;
 
+    @include modifier(list)
+    {
+        // for ref
+    }
+
+    @include modifier(grid)
+    {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: $rule / 3;
+    }
+
     @include element(item)
     {
         margin-bottom: $border-width-1;

@@ -11,6 +11,7 @@ import Dropdown from "../core/ui/dropdown";
 import MultiFileView from "../core/ui/multi-file-view";
 import FileUploader from "../core/ui/file-uploader";
 import Breadcrumbs from "../core/ui/breadcrumbs";
+import IconButton from "../core/ui/icon-button";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -34,7 +35,8 @@ class ViewMediaDirectory extends React.Component {
             currentFile: null,
             selectedFiles: [],
             selectedFileIds: [],
-            directoryPath: []
+            directoryPath: [],
+            fileBrowserViewMode: 'list'
         };
     }
 
@@ -277,6 +279,12 @@ class ViewMediaDirectory extends React.Component {
         });
     }
 
+    changeFileBrowserViewMode(mode) {
+        this.setState({
+            fileBrowserViewMode: mode
+        });
+    }
+
     renderBreadcrumbs() {
         return (
             <Breadcrumbs
@@ -351,6 +359,7 @@ class ViewMediaDirectory extends React.Component {
                         onUploadDone={this.handleUploadDone.bind(this)}
                     >
                         <FileBrowser
+                            viewMode={this.state.fileBrowserViewMode}
                             currentDirectory={this.state.currentDirectory}
                             directories={this.state.directories}
                             files={this.state.files}
@@ -383,6 +392,8 @@ class ViewMediaDirectory extends React.Component {
                         {this.renderBreadcrumbs()}
                     </div>
                     <div className="view-media-directory__header-options">
+                        <IconButton name={'view_list'} onClick={e => this.changeFileBrowserViewMode('list')} />
+                        <IconButton name={'grid_view'} onClick={e => this.changeFileBrowserViewMode('grid')} />
                         <Button
                             style={['secondary', 'small']}
                             onClick={this.promptCreateDirectory.bind(this)}

@@ -60,6 +60,11 @@ export default class ContentBlocks extends React.Component {
         });
 
         data[this.props.name] = JSON.stringify(payload);
+
+        this.setState({
+            addedBlocks: [],
+            blockIdsToRemove: []
+        });
     }
 
     getBlockDefinition(type) {

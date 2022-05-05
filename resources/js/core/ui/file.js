@@ -13,6 +13,7 @@ export default class File extends React.Component {
         fileLabels: {},
         isSelected: false,
         selectionMode: false,
+        viewMode: 'list',
         actions: [],
         onClick: (e, file) => {}
     };
@@ -61,10 +62,14 @@ export default class File extends React.Component {
 
     render() {
         return (
-            <div className={'file'+(this.props.isSelected ? ' file--selected' : '')} onClick={e => this.props.onClick(e, this.props.file)}>
+            <div className={'file file--'+this.props.viewMode+(this.props.isSelected ? ' file--selected' : '')} onClick={e => this.props.onClick(e, this.props.file)}>
                 {this.renderSelectionMode()}
                 <div className="file__preview">
-                    <FilePreview file={this.props.file} />
+                    <FilePreview
+                        file={this.props.file}
+                        mediaConversion={this.props.viewMode === 'grid' ? 'contain' : 'thumb'}
+                        style={this.props.viewMode === 'grid' ? ['grid', 'full'] : ['list']}
+                    />
                 </div>
                 <div className="file__content">
                     <div className="file__name">
