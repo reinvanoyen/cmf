@@ -235,6 +235,24 @@ class ViewMediaDirectory extends React.Component {
         }
     }
 
+    handleMoveFile(directoryId, fileId) {
+        api.media.moveFile(directoryId, fileId).then(response => {
+            util.notify('File moved');
+            this.refresh();
+        }, error => {
+            util.notify('File could not be moved');
+        });
+    }
+
+    handleMoveFiles(directoryId, fileIds) {
+        api.media.moveFiles(directoryId, fileIds).then(response => {
+            util.notify('Files moved');
+            this.refresh();
+        }, error => {
+            util.notify('Files could not be moved');
+        });
+    }
+
     handleOpenFile(file) {
         window.open(file.url);
     }
@@ -335,6 +353,7 @@ class ViewMediaDirectory extends React.Component {
                             }
                         });
                     }}
+                    onMoveFile={this.handleMoveFile.bind(this)}
                 />
             );
         } else if (this.state.selectedFiles.length) {
@@ -343,6 +362,7 @@ class ViewMediaDirectory extends React.Component {
                     files={this.state.selectedFiles}
                     onDeleteFiles={() => this.confirmDeleteFiles(this.state.selectedFileIds, this.state.selectedFiles)}
                     onChangeFilesProperty={(property, value) => this.handleChangeFilesProperty(property, value, this.state.selectedFileIds)}
+                    onMoveFiles={this.handleMoveFiles.bind(this)}
                 />
             );
         }
@@ -366,12 +386,16 @@ class ViewMediaDirectory extends React.Component {
                             fileLabels={this.props.fileLabels}
                             selectedFiles={this.state.selectedFiles}
                             selectedFileIds={this.state.selectedFileIds}
+
                             onDirectoryClick={this.openDirectory.bind(this)}
                             onDirectoryDelete={this.handleDeleteDirectory.bind(this)}
                             onDirectoryRename={this.handleRenameDirectory.bind(this)}
                             onFileDelete={this.handleDeleteFile.bind(this)}
                             onFileRename={this.handleRenameFile.bind(this)}
                             onFileOpen={this.handleOpenFile.bind(this)}
+                            onFileMove={this.handleMoveFile.bind(this)}
+                            onSelectionMove={this.handleMoveFiles.bind(this)}
+
                             onSelectionChange={this.handleSelectionChange.bind(this)}
                             onSelectionDelete={this.confirmDeleteFiles.bind(this)}
                         />

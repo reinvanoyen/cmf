@@ -6,4 +6,10 @@
         display: flex;
         height: 30vh;
     }
+
+    @include element(content)
+    {
+        padding: $rule / 2;
+        padding-top: 0;
+    }
 }

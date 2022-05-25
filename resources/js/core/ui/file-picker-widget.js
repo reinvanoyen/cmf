@@ -144,6 +144,24 @@ class FilePickerWidget extends React.Component {
         }
     }
 
+    handleMoveSelection(directoryId, fileIds) {
+        api.media.moveFiles(directoryId, fileIds).then(response => {
+            util.notify('Files moved');
+            this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+        }, error => {
+            util.notify('Files could not be moved');
+        });
+    }
+
+    handleMoveFile(directoryId, fileId) {
+        api.media.moveFile(directoryId, fileId).then(response => {
+            util.notify('File moved');
+            this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+        }, error => {
+            util.notify('File could not be moved');
+        });
+    }
+
     promptCreateDirectory() {
         util.prompt({
             title: 'New directory',
@@ -239,8 +257,10 @@ class FilePickerWidget extends React.Component {
                         files={this.state.files}
                         onDirectoryRename={this.handleRenameDirectory.bind(this)}
                         onFileRename={this.handleRenameFile.bind(this)}
+                        onFileMove={this.handleMoveFile.bind(this)}
                         onDirectoryClick={directory => this.openDirectory(directory)}
                         onSelectionChange={this.onSelectionChange.bind(this)}
+                        onSelectionMove={this.handleMoveSelection.bind(this)}
                     />
                 </div>
                 <div className="file-picker-widget__side">

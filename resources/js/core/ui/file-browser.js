@@ -6,6 +6,7 @@ import File from "./file";
 import Icon from "./icon";
 import Manager from "../messaging/manager";
 import FilePlaceholder from "./file-placeholder";
+import MediaMoveWidget from "./media-move-widget";
 
 class FileBrowser extends React.Component {
 
@@ -17,16 +18,25 @@ class FileBrowser extends React.Component {
         selectionMode: false,
         selectedFileIds: [],
         selectedFiles: [],
+        viewMode: 'list',
+
+        // Events
         onDirectoryClick: id => {},
         onFileClick: id => {},
         onDirectoryDelete: id => {},
         onDirectoryRename: (name, id) => {},
         onFileDelete: id => {},
         onFileRename: id => {},
+        onFileMove: (directory, id) => {},
         onFileOpen: file => {},
         onSelectionChange: (ids, files) => {},
         onSelectionDelete: (ids, files) => {},
-        viewMode: 'list'
+        onSelectionMove: (directory, ids) => {},
+
+        // Move action state
+        moveAction: false,
+        moveFileId: null,
+        moveFileIds: []
     };
 
     constructor(props) {
@@ -181,9 +191,25 @@ class FileBrowser extends React.Component {
 
             this.props.onFileOpen(file);
 
+        } else if (action === 'move') {
+
+            this.setState({
+                moveAction: true,
+                moveFileId: file.id,
+                moveFileIds: []
+            });
+
         } else if (action === 'multi-delete') {
 
             this.props.onSelectionDelete(this.props.selectedFileIds, this.props.selectedFiles);
+
+        } else if (action === 'multi-move') {
+
+            this.setState({
+                moveAction: true,
+                moveFileId: null,
+                moveFileIds: this.props.selectedFileIds
+            });
         }
     }
 
@@ -223,6 +249,39 @@ class FileBrowser extends React.Component {
         return this.props.selectedFileIds.includes(file.id);
     }
 
+    renderMoveWidget() {
+
+        if (! this.state.moveAction) {
+            return null;
+        }
+
+        return (
+            <div className="overlay">
+                <MediaMoveWidget
+                    directory={this.props.currentDirectory}
+                    onCancel={directory => {
+                        this.setState({
+                            moveAction: false,
+                            moveFileId: null,
+                            moveFileIds: []
+                        });
+                    }}
+                    onConfirm={directory => {
+                        this.setState({
+                            moveAction: false
+                        }, () => {
+                            if (this.state.moveFileIds.length) {
+                                this.props.onSelectionMove(directory, this.state.moveFileIds);
+                            } else {
+                                this.props.onFileMove(directory, this.state.moveFileId);
+                            }
+                        });
+                    }}
+                />
+            </div>
+        );
+    }
+
     renderUploads() {
 
         if (! this.state.uploads.length) {
@@ -249,13 +308,15 @@ class FileBrowser extends React.Component {
         }
 
         let links = [
-            ['Download', 'download'],
             ['Rename', 'rename'],
+            ['Move', 'move'],
+            ['Download', 'download'],
             ['Delete', 'delete']
         ];
 
         if (this.props.selectedFileIds.length > 1) {
             links = [
+                ['Move '+this.props.selectedFileIds.length+' files', 'multi-move'],
                 ['Delete '+this.props.selectedFileIds.length+' files', 'multi-delete']
             ];
         }
@@ -293,7 +354,7 @@ class FileBrowser extends React.Component {
         }
 
         return (
-            <div className={'directory-list'}>
+            <div className={'directory-list directory-list--'+this.props.viewMode}>
                 {this.props.directories.map((directory, i) => {
                     return (
                         <div className="directory-list__item" key={i}>
@@ -347,6 +408,7 @@ class FileBrowser extends React.Component {
         return (
             <div className="file-browser">
                 {this.renderContent()}
+                {this.renderMoveWidget()}
             </div>
         );
     }

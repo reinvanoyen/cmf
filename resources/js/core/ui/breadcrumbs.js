@@ -6,7 +6,8 @@ export default class Breadcrumbs extends React.Component {
 
     static defaultProps = {
         rootText: 'My files',
-        onClick: (item) => {}
+        items: [],
+        onClick: item => {}
     };
 
     onClick(item) {

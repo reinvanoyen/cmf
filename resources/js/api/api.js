@@ -173,6 +173,17 @@ api.media.updateFilesCopyright = (copyright, fileIds) => {
     return axios.post('cmf/api/media/update-files-copyright', {copyright, files: JSON.stringify(fileIds)});
 };
 
+api.media.moveFile = (directory, file) => {
+    return axios.post('cmf/api/media/move-file', {directory, file});
+};
+
+api.media.moveFiles = (directory, fileIds) => {
+    return axios.post('cmf/api/media/move-files', {
+        directory: directory,
+        files: JSON.stringify(fileIds)
+    });
+};
+
 /*
 * Modules API
 * */

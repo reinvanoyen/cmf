@@ -1,8 +1,6 @@
 @include block(file-list)
 {
     user-select: none;
-    padding: $rule;
-    padding-top: 0;
 
     @include modifier(list)
     {

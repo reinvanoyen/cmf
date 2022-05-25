@@ -1,12 +1,26 @@
 @include block(directory-list)
 {
-    display: grid;
-    padding: $rule;
-    grid-gap: $rule / 3;
-    grid-template-columns: repeat(4, 1fr);
+    user-select: none;
+
+    @include modifier(list)
+    {
+        // for ref
+    }
+
+    @include modifier(grid)
+    {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: $rule / 3;
+    }
 
     @include element(item)
     {
-        //
+        margin-bottom: $border-width-1;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
     }
 }

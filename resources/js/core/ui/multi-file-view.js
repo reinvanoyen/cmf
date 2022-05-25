@@ -6,6 +6,7 @@ import Title from "./title";
 import Button from "./button";
 import File from "./file";
 import util from "./util";
+import MediaMoveWidget from "./media-move-widget";
 
 export default class MultiFileView extends React.Component {
 
@@ -13,11 +14,26 @@ export default class MultiFileView extends React.Component {
         files: [],
         style: [],
         onDeleteFiles: () => {},
+        onMoveFiles: (directory, fileIds) => {},
         onChangeFilesProperty: (property, value) => {}
     };
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            moveAction: false
+        };
+    }
+
     deleteFiles() {
         this.props.onDeleteFiles();
+    }
+
+    moveFiles() {
+        this.setState({
+            moveAction: true
+        });
     }
 
     openPropertyEditPrompt(property, value) {
@@ -31,6 +47,36 @@ export default class MultiFileView extends React.Component {
             confirm: newValue => this.props.onChangeFilesProperty(property, newValue),
             confirmButtonText: 'Save'
         });
+    }
+
+    renderMoveWidget() {
+
+        if (! this.state.moveAction) {
+            return null;
+        }
+
+        return (
+            <div className="overlay">
+                <MediaMoveWidget
+                    directory={this.props.files[0].directory ? this.props.files[0].directory.id : null}
+                    onCancel={directory => {
+                        this.setState({
+                            moveAction: false
+                        });
+                    }}
+                    onConfirm={directory => {
+                        this.setState({
+                            moveAction: false
+                        }, () => {
+
+                            let fileIds = this.props.files.map(file => file.id);
+
+                            this.props.onMoveFiles(directory, fileIds);
+                        });
+                    }}
+                />
+            </div>
+        );
     }
 
     render() {
@@ -58,9 +104,13 @@ export default class MultiFileView extends React.Component {
                         );
                     })}
                 </div>
-                <div className="multi-file-view__footer">
-                    <Button text={'Delete '+this.props.files.length+' files'} style={['full']} onClick={this.deleteFiles.bind(this)} />
+                <div className="multi-file-view__actions">
+                    <Button text={`Move ${this.props.files.length} files`} onClick={this.moveFiles.bind(this)} style={['secondary', 'full']} />
                 </div>
+                <div className="multi-file-view__footer">
+                    <Button text={`Delete ${this.props.files.length} files`} style={['full']} onClick={this.deleteFiles.bind(this)} />
+                </div>
+                {this.renderMoveWidget()}
             </div>
         );
     }

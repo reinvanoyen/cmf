@@ -1,21 +1,50 @@
 import React from 'react';
-import Title from "./title";
+import helpers from "../../util/helpers";
 
 class Window extends React.Component {
 
     static defaultProps = {
-        title: ''
+        title: '',
+        style: 'default',
+        toolbar: null,
+        footer: null
     };
+
+    renderToolbar() {
+        if (this.props.toolbar) {
+            return (
+                <div className="window__toolbar">
+                    {this.props.toolbar}
+                </div>
+            );
+        }
+
+        return null;
+    }
+
+    renderFooter() {
+        if (this.props.footer) {
+            return (
+                <div className="window__footer">
+                    {this.props.footer}
+                </div>
+            );
+        }
+
+        return null;
+    }
 
     render() {
         return (
-            <div className="window">
+            <div className={helpers.className('window', this.props.style)}>
                 <div className="window__header">
-                    <Title>{this.props.title}</Title>
+                    {this.props.title}
                 </div>
+                {this.renderToolbar()}
                 <div className="window__content">
                     {this.props.children}
                 </div>
+                {this.renderFooter()}
             </div>
         );
     }

@@ -415,4 +415,50 @@ class MediaController extends Controller
 
         return true;
     }
+
+    /**
+     * @param Request $request
+     * @return MediaFileResource
+     */
+    public function moveFile(Request $request)
+    {
+        $mediaFile = MediaFile::findOrFail($request->input('file'));
+
+        if ($request->input('directory')) {
+            $mediaDirectory = MediaDirectory::findOrFail($request->input('directory'));
+            $mediaFile->directory()->associate($mediaDirectory);
+        } else {
+            $mediaFile->directory()->dissociate();
+        }
+
+        $mediaFile->save();
+
+        return new MediaFileResource($mediaFile);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function moveFiles(Request $request)
+    {
+        $ids = json_decode($request->input('files'));
+        $mediaFiles = MediaFile::whereIn('id', $ids)->get();
+
+        if ($request->input('directory')) {
+            $mediaDirectory = MediaDirectory::findOrFail($request->input('directory'));
+            foreach ($mediaFiles as $mediaFile) {
+                $mediaFile->directory()->associate($mediaDirectory);
+                $mediaFile->save();
+            }
+        } else {
+            foreach ($mediaFiles as $mediaFile) {
+                $mediaFile->directory()->dissociate();
+                $mediaFile->save();
+            }
+        }
+
+        return true;
+    }
 }

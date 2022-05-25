@@ -20,6 +20,10 @@
         color: $color07;
     }
 
+    @include element(button)
+    {
+        margin-top: $rule / 2;
+    }
 
     @include modifier(clickable)
     {

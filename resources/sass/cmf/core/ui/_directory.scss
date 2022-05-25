@@ -7,6 +7,21 @@
     border-radius: $border-radius-1;
     cursor: pointer;
 
+    @include modifier(compact-list)
+    {
+        padding: $rule / 3 $rule / 4;
+    }
+
+    @include modifier(list)
+    {
+        // for ref
+    }
+
+    @include modifier(grid)
+    {
+        // for ref
+    }
+
     &:hover
     {
         background-color: $color08;
@@ -15,8 +30,8 @@
     @include element(icon)
     {
         flex-shrink: 0;
-        width: $rule * 2;
-        height: $rule * 2;
+        //width: $rule * 2;
+        //height: $rule * 2;
         display: flex;
         justify-content: center;
         align-items: center;
