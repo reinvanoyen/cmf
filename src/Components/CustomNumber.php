@@ -42,6 +42,26 @@ class CustomNumber extends Component
     }
 
     /**
+     * @param string $icon
+     * @return $this
+     */
+    public function icon(string $icon)
+    {
+        $this->export('icon', $icon);
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     * @return $this
+     */
+    public function title(string $title)
+    {
+        $this->export('title', $title);
+        return $this;
+    }
+
+    /**
      * @param Request $request
      * @return mixed
      */

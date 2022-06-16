@@ -1,5 +1,23 @@
 @include block(custom-number)
 {
+    @include element(icon)
+    {
+        display: flex;
+        margin-bottom: $rule;
+    }
+
+    @include element(title)
+    {
+        @include type-5;
+        color: $color07;
+    }
+
+    @include modifier(medium)
+    {
+        @include type-7;
+        color: $color13;
+    }
+
     @include modifier(large)
     {
         @include type-4;

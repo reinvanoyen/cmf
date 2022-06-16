@@ -1,5 +1,6 @@
 import React from 'react';
 import api from "../api/api";
+import Icon from "../core/ui/icon";
 
 class CustomNumber extends React.Component {
 
@@ -7,7 +8,9 @@ class CustomNumber extends React.Component {
         path: {},
         type: '',
         id: 0,
-        style: 'default'
+        style: 'default',
+        icon: null,
+        title: ''
     };
 
     constructor(props) {
@@ -28,9 +31,15 @@ class CustomNumber extends React.Component {
     }
 
     render() {
+
+        let icon = (this.props.icon ? <div className="custom-number__icon"><Icon name={this.props.icon} style={['medium', 'soft']} /></div> : null);
+        let title = (this.props.title ? <div className="custom-number__title">{this.props.title}</div> : null);
+
         return (
             <div className={'custom-number custom-number--'+this.props.style}>
+                {icon}
                 {this.state.number}
+                {title}
             </div>
         );
     }
