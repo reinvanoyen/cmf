@@ -7,6 +7,7 @@ import Export from "./export";
 import CustomController from "./custom-controller";
 import CreateWizard from "./create-wizard";
 import ViewMediaDirectory from "./view-media-directory";
+import Dashboard from "./dashboard";
 
 export default {
     'index': Index,
@@ -15,6 +16,7 @@ export default {
     'create-wizard': CreateWizard,
     'delete': Delete,
     'view': View,
+    'dashboard': Dashboard,
     'export': Export,
     'custom-controller': CustomController,
     'view-media-directory': ViewMediaDirectory
