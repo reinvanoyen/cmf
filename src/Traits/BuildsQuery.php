@@ -86,10 +86,13 @@ trait BuildsQuery
     /**
      * @param string $column
      * @param string $method
+     * @param bool $reset
      * @return $this
      */
-    public function orderBy(string $column, string $method = 'asc')
+    public function orderBy(string $column, string $method = 'asc', $reset = false)
     {
+        if ($reset) $this->orderBy = [];
+
         $this->orderBy[$column] = $method;
         return $this;
     }
@@ -100,6 +103,8 @@ trait BuildsQuery
      */
     public function limit(int $limit)
     {
+        $this->perPage = false;
+
         $this->limit = $limit;
         return $this;
     }
