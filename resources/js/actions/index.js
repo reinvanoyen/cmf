@@ -150,7 +150,7 @@ class Index extends React.Component {
         return (
             <div className="index__header">
                 <div className="index__header-title">
-                    {str.toUpperCaseFirst(this.props.plural)} ({this.state.meta.total})
+                    {str.toUpperCaseFirst(this.props.plural)} {this.state.meta ? '('+this.state.meta.total+')' : null}
                 </div>
                 <div className="index__header-options">
                     {indexSearch}
