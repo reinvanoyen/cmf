@@ -46,6 +46,8 @@ class Mimetype implements Rule
      */
     public function message()
     {
-        return trans('cmf::validation.mimetype');
+        return trans('cmf::validation.mimetype', [
+            'mimetypes' => join(', ', $this->mimetypes),
+        ]);
     }
 }
