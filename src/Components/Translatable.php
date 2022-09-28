@@ -41,15 +41,27 @@ class Translatable extends Compound
     {
         $childAttrs = [];
 
+        // Get the provisioned attributes from the components we need to translate
         foreach ($this->components as $component) {
             $component->provision($model, $childAttrs);
         }
 
-        $fields = array_keys($childAttrs);
+        // Loop the data from the components
+        foreach ($childAttrs as $field => $value) {
 
-        foreach ($fields as $field) {
+            // Do it for each language too
             foreach ($this->languages as $language) {
-                $attributes[$field.'_'.$language] = $model->getTranslation($field, $language);
+
+                // Get the translation from the model as a string
+                $translation = $model->getTranslation($field, $language);
+
+                // If the original value the component provided is of type array, json decode the translation
+                if (is_array($value)) {
+                    $translation = json_decode($translation, true);
+                }
+
+                // Store the translation to the attributes
+                $attributes[$field.'_'.$language] = $translation;
             }
         }
     }

@@ -60,7 +60,13 @@ class JsonField extends Component
      */
     public function provision(ModelResource $model, array &$attributes)
     {
-        $attributes[$this->getName()] = $model->{$this->getName()};
+        $items = $model->{$this->getName()};
+
+        if (! is_array($items)) {
+            $items = json_decode($items, true);
+        }
+
+        $attributes[$this->getName()] = $items;
     }
 
     /**
