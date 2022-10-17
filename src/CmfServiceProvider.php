@@ -2,6 +2,7 @@
 
 namespace ReinVanOyen\Cmf;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Intervention\Image\Image;
 use ReinVanOyen\Cmf\Console\InstallCommand;
@@ -11,6 +12,7 @@ use ReinVanOyen\Cmf\Console\UserCommand;
 use ReinVanOyen\Cmf\Contracts\MediaConverter;
 use ReinVanOyen\Cmf\Media\FileAdder;
 use ReinVanOyen\Cmf\Media\ImageConverter;
+use ReinVanOyen\Cmf\Rules\Uppercase;
 
 class CmfServiceProvider extends ServiceProvider
 {
@@ -64,9 +66,11 @@ class CmfServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerValidationRules();
         $this->registerPublishes();
         $this->loadRoutes();
         $this->loadViews();
+        $this->loadTranslations();
     }
 
     /**
@@ -91,6 +95,11 @@ class CmfServiceProvider extends ServiceProvider
         ], 'cmf-migrations');
     }
 
+    private function registerValidationRules()
+    {
+        //
+    }
+
     /**
      *
      */
@@ -106,5 +115,13 @@ class CmfServiceProvider extends ServiceProvider
     private function loadViews()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'cmf');
+    }
+
+    /**
+     *
+     */
+    private function loadTranslations()
+    {
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'cmf');
     }
 }
