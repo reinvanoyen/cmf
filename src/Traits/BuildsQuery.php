@@ -3,6 +3,7 @@
 namespace ReinVanOyen\Cmf\Traits;
 
 use Illuminate\Http\Request;
+use ReinVanOyen\Cmf\Sorters\Sorter;
 
 trait BuildsQuery
 {
@@ -15,11 +16,6 @@ trait BuildsQuery
      * @var string $restrictByFk
      */
     private $restrictByFk;
-
-    /**
-     * @var array $orderBy
-     */
-    private $orderBy = [];
 
     /**
      * @var int $limit
@@ -50,6 +46,11 @@ trait BuildsQuery
      * @var array $filters
      */
     private $filters = [];
+
+    /**
+     * @var Sorter $sorter
+     */
+    private $sorter;
 
     /**
      * @param string $column
@@ -155,12 +156,9 @@ trait BuildsQuery
             $query = $this->model::where($this->restrictByFk, $request->input('foreign'));
 
         } else if ($this->relationship) {
-
             $query = $this->model::find($request->input('relation'))
                 ->{$this->relationship}();
-
         } else {
-
             $query = $this->model::query();
         }
 
@@ -180,10 +178,10 @@ trait BuildsQuery
         }
 
         /*
-         * If there is an order specified, use it on the query
+         * If there's a sorter, apply it
          * */
-        foreach ($this->orderBy as $column => $method) {
-            $query = $query->orderBy($column, $method);
+        if ($this->sorter) {
+            $query = $this->sorter->apply($request, $query);
         }
 
         /*

@@ -3,8 +3,10 @@
 namespace ReinVanOyen\Cmf\Action;
 
 use Illuminate\Http\Request;
+use ReinVanOyen\Cmf\Components\Component;
 use ReinVanOyen\Cmf\Filters\Filter;
 use ReinVanOyen\Cmf\Http\Resources\ModelCollection;
+use ReinVanOyen\Cmf\Sorters\Sorter;
 use ReinVanOyen\Cmf\Traits\BuildsQuery;
 use ReinVanOyen\Cmf\Traits\HasSingularPlural;
 
@@ -32,6 +34,26 @@ abstract class CollectionAction extends Action
         $this->filters[] = $filter;
         $this->export('filters', $this->filters);
         return $this;
+    }
+
+    /**
+     * @param Sorter $sorter
+     * @return $this
+     */
+    public function sorter(Sorter $sorter)
+    {
+        $sorter->resolve($this);
+        $this->sorter = $sorter;
+        $this->export('sorter', $this->sorter);
+        return $this;
+    }
+
+    /**
+     * @return Sorter
+     */
+    public function getSorter(): Sorter
+    {
+        return $this->sorter;
     }
 
     /**

@@ -23,7 +23,7 @@ abstract class Component implements Exportable, Makeable, \JsonSerializable
     /**
      * @var Action $action
      */
-    private $action;
+    protected $action;
 
     /**
      * @param int $id

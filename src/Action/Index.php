@@ -2,6 +2,9 @@
 
 namespace ReinVanOyen\Cmf\Action;
 
+use ReinVanOyen\Cmf\Components\Component;
+use ReinVanOyen\Cmf\Sorters\StaticSorter;
+
 class Index extends CollectionAction
 {
     /**
@@ -27,8 +30,8 @@ class Index extends CollectionAction
             $this->search($meta::getSearchColumns());
         }
 
-        foreach ($this->meta::getSorting() as $column => $method) {
-            $this->orderBy($column, $method);
+        if ($this->meta::getSorting()) {
+            $this->sorter(StaticSorter::make($this->meta::getSorting()));
         }
     }
 
@@ -38,6 +41,32 @@ class Index extends CollectionAction
     public function type(): string
     {
         return 'index';
+    }
+
+    /**
+     * @param Component $component
+     * @return $this
+     */
+    public function prepend(Component $component)
+    {
+        $component->resolve($this);
+
+        array_unshift($this->components, $component);
+        $this->export('components', $this->components);
+        return $this;
+    }
+
+    /**
+     * @param Component $component
+     * @return $this
+     */
+    public function append(Component $component)
+    {
+        $component->resolve($this);
+
+        $this->components[] = $component;
+        $this->export('components', $this->components);
+        return $this;
     }
 
     /**

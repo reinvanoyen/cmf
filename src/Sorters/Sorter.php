@@ -1,14 +1,15 @@
 <?php
 
-namespace ReinVanOyen\Cmf\Filters;
+namespace ReinVanOyen\Cmf\Sorters;
 
 use ReinVanOyen\Cmf\Contracts\{Exportable, Makeable};
 use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Action\Action;
+use ReinVanOyen\Cmf\Action\CollectionAction;
 use ReinVanOyen\Cmf\Traits\CanExport;
 use ReinVanOyen\Cmf\Traits\CanBeMade;
 
-abstract class Filter implements Exportable, Makeable, \JsonSerializable
+abstract class Sorter implements Exportable, Makeable, \JsonSerializable
 {
     use CanExport;
     use CanBeMade;
@@ -16,21 +17,22 @@ abstract class Filter implements Exportable, Makeable, \JsonSerializable
     /**
      * @var Action $action
      */
-    private $action;
+    protected $action;
 
     /**
      * @param Request $request
      * @param $query
+     * @return mixed
      */
     public function apply(Request $request, $query)
     {
-        //
+        return $query;
     }
 
     /**
-     * @param Action $action
+     * @param CollectionAction $action
      */
-    public function resolve(Action $action)
+    public function resolve(CollectionAction $action)
     {
         $this->action = $action;
     }

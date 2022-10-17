@@ -38,6 +38,7 @@ import JsonField from "./json-field";
 import DateField from "./date-field";
 import Thumb from "./thumb";
 import ColorField from "./color-field";
+import ManualOrderControls from "./manual-order-controls";
 
 export default {
     'date-field': DateField,
@@ -79,5 +80,6 @@ export default {
     'many-to-many-field': ManyToManyField,
     'many-to-many-select-field': ManyToManySelectField,
     'json-field': JsonField,
-    'thumb': Thumb
+    'thumb': Thumb,
+    'manual-order-controls': ManualOrderControls
 };

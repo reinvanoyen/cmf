@@ -1,0 +1,14 @@
+@include block(manual-order-controls)
+{
+    display: flex;
+
+    @include element(item)
+    {
+        margin-right: $rule / 4;
+
+        &:last-child
+        {
+            margin-right: 0;
+        }
+    }
+}

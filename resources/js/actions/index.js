@@ -21,6 +21,7 @@ class Index extends React.Component {
         search: false,
         relationship: false,
         filters: [],
+        sorter: null,
         restrictByFk: null,
         action: '',
         style: 'default',
