@@ -39,6 +39,7 @@ import DateField from "./date-field";
 import Thumb from "./thumb";
 import ColorField from "./color-field";
 import ManualOrderControls from "./manual-order-controls";
+import EnumSwitchField from "./enum-switch-field";
 
 export default {
     'date-field': DateField,
@@ -46,6 +47,7 @@ export default {
     'date-time-view': DateTimeView,
     'enum-field': EnumField,
     'enum-view': EnumView,
+    'enum-switch-field': EnumSwitchField,
     'text-field': TextField,
     'text-to-slug-field': TextToSlugField,
     'text-view': TextView,

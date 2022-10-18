@@ -1,0 +1,17 @@
+@include block(enum-switch-field)
+{
+    @include element(content)
+    {
+        margin-top: $rule;
+    }
+
+    @include element(component)
+    {
+        margin-bottom: $rule;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+}
