@@ -50,9 +50,9 @@ class HasMany extends ActionComponent
     private $grid = [];
 
     /**
-     * @var string $action
+     * @var string $onRowClickAction
      */
-    private $action;
+    private $onRowClickAction;
 
     /**
      * @var string $orderByColumn
@@ -112,8 +112,8 @@ class HasMany extends ActionComponent
         }
 
         // Action
-        if ($this->action) {
-            $this->index->action($this->action);
+        if ($this->onRowClickAction) {
+            $this->index->action($this->onRowClickAction);
         }
 
         // Order by
@@ -153,12 +153,12 @@ class HasMany extends ActionComponent
     }
 
     /**
-     * @param string $action
+     * @param string $onRowClickAction
      * @return $this
      */
-    public function action(string $action)
+    public function action(string $onRowClickAction)
     {
-        $this->action = $action;
+        $this->onRowClickAction = $onRowClickAction;
         return $this;
     }
 
