@@ -27,15 +27,22 @@ export default class ContentBlocks extends React.Component {
         this.componentLists = [];
 
         this.state = {
-            addedBlocks: [],
+            addedBlocks: this.getAddedBlocks(),
             blockIdsToRemove: []
         };
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.data[this.props.name] !== prevProps.data[this.props.name]) {
-            this.fillContentBlocks();
+            this.setState({
+                addedBlocks: this.getAddedBlocks()
+            });
         }
+    }
+
+    getData(data) {
+        // @TODO
+        return data;
     }
 
     handleSubmit(data) {
@@ -71,14 +78,18 @@ export default class ContentBlocks extends React.Component {
         return this.props.blocks[type];
     }
 
-    fillContentBlocks() {
+    getAddedBlocks() {
 
-        let items = this.props.data[this.props.name];
+        let items = this.props.data[this.props.name] || [];
 
-        let blockData = items.map((item, i) => {
+        return items.map((item, i) => {
 
             let type = item[this.props.typeColumn];
             let blockDefinition = this.getBlockDefinition(type);
+
+            if (! blockDefinition) {
+                return null;
+            }
 
             let block = {};
 
@@ -90,16 +101,6 @@ export default class ContentBlocks extends React.Component {
 
             return block;
         });
-
-        this.setState({
-            addedBlocks: blockData
-        });
-    }
-
-    handleOptionClick(link, index, id = null) {
-        if (link === 'delete') {
-            this.removeBlock(index, id);
-        }
     }
 
     syncBlocksData() {
@@ -217,6 +218,10 @@ export default class ContentBlocks extends React.Component {
 
         return this.state.addedBlocks.map((blockData, i) => {
 
+            if (! blockData) {
+                return null;
+            }
+
             let componentList = components.renderComponentsWith(blockData.components, blockData.data, this.props.path, (component, i) => {
                 return (
                     <div className="content-block__component" key={i}>
@@ -235,11 +240,7 @@ export default class ContentBlocks extends React.Component {
                             <div className="content-block__actions">
                                 <IconButton name={'arrow_upward'} onClick={e => this.sortUp(i)} />
                                 <IconButton name={'arrow_downward'} onClick={e => this.sortDown(i)}/>
-                                <Dropdown text={'More'} style={'small'}>
-                                    <LinkList links={[
-                                        ['Delete', 'delete']
-                                    ]} onClick={link => this.handleOptionClick(link, i, blockData.id)} />
-                                </Dropdown>
+                                <IconButton name={'delete'} onClick={e => this.removeBlock(i, blockData.id)} />
                             </div>
                         </div>
                         <div className="content-block__content">

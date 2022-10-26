@@ -149,9 +149,10 @@ class ContentBlocks extends Component
         foreach ($foreignModels as $foreignModel) {
 
             $type = $foreignModel->{$this->foreignTypeColumn};
-            $components = $this->blocks[$type]['components'];
 
-            $collection[] = new ContentBlockResource($foreignModel, $components, [$this->foreignTypeColumn, $this->foreignOrderColumn,]);
+            if (isset($this->blocks[$type])) {
+                $collection[] = new ContentBlockResource($foreignModel, $this->blocks[$type]['components'], [$this->foreignTypeColumn, $this->foreignOrderColumn,]);
+            }
         }
 
         $attributes[$this->getName()] = $collection;
