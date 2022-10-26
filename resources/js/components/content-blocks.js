@@ -6,6 +6,7 @@ import components from "../rendering/components";
 import Placeholder from "../core/ui/placeholder";
 import util from "../core/ui/util";
 import IconButton from "../core/ui/icon-button";
+import Button from '../core/ui/button';
 
 export default class ContentBlocks extends React.Component {
 
@@ -193,13 +194,30 @@ export default class ContentBlocks extends React.Component {
 
     renderAddBlockDropdown() {
 
+        let types = Object.getOwnPropertyNames(this.props.blocks);
+
+        if (!types.length) {
+            return null;
+        }
+
+        if (types.length === 1) {
+            return (
+                <Button
+                    onClick={e => this.addBlock(types[0])}
+                    icon={'add'}
+                    style={['small', 'secondary']}
+                    text={'Add '+this.props.singular}
+                />
+            );
+        }
+
         let links = [];
 
-        for (let type in this.props.blocks) {
+        types.forEach(type => {
             if (this.props.blocks.hasOwnProperty(type)) {
                 links.push([this.props.blocks[type].name, type]);
             }
-        }
+        });
 
         return (
             <Dropdown text={'Add '+this.props.singular} openIcon={'post_add'} closeIcon={'post_add'}>
