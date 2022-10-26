@@ -14,9 +14,6 @@
 
     @include modifier(primary)
     {
-        border: 0;
-        padding: 0;
-        background-color: transparent;
         @include type-3;
         color: $color13;
     }
