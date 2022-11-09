@@ -24,14 +24,6 @@ abstract class Module implements \JsonSerializable
     }
 
     /**
-     * @return array
-     */
-    public function submodules(): array
-    {
-        return [];
-    }
-
-    /**
      * @return bool
      */
     protected function inNavigation(): bool
@@ -55,6 +47,31 @@ abstract class Module implements \JsonSerializable
     /**
      * @return array
      */
+    public function submodules(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param array $modules
+     * @return array
+     */
+    final public static function makeModules(array $modules): array
+    {
+        return array_map(function ($module) {
+            if (is_string($module)) {
+                return app($module);
+            }
+            if ($module instanceof  Module) {
+                return $module;
+            }
+            return null;
+        }, $modules);
+    }
+
+    /**
+     * @return array
+     */
     public function exportAll(): array
     {
         $this->exports['id'] = $this->id();
@@ -65,7 +82,7 @@ abstract class Module implements \JsonSerializable
             'module' => $this->id(),
         ];
         $this->exports['url'] = url('admin/'.$this->id());
-        $this->exports['submodules'] = $this->submodules();
+        $this->exports['submodules'] = self::makeModules($this->submodules());
 
         return $this->exports;
     }

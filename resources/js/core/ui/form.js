@@ -20,13 +20,18 @@ export default class Form extends React.Component {
 
         this.childRefs = [];
 
-        if (this.hasMultipleChildren()) {
+        if (! this.props.children.length) {
+            return;
+        }
+
+        if (this.props.children.length) {
             this.props.children.forEach(() => {
                 this.childRefs.push(React.createRef());
             });
-        } else {
-            this.childRefs.push(React.createRef());
+            return;
         }
+
+        this.childRefs.push(React.createRef());
     }
 
     submit() {
@@ -56,7 +61,11 @@ export default class Form extends React.Component {
 
         let data = {};
 
-        if (this.hasMultipleChildren()) {
+        if (! this.props.children.length) {
+            return data;
+        }
+
+        if (this.props.children.length) {
             this.props.children.forEach((child, i) => {
                 this.childRefs[i].current.handleSubmit(data);
             });
@@ -73,7 +82,11 @@ export default class Form extends React.Component {
 
     renderChildren() {
 
-        if (this.hasMultipleChildren()) {
+        if (! this.props.children.length) {
+            return null;
+        }
+
+        if (this.props.children.length > 1) {
             return this.props.children.map((child, i) => {
                 const TagName = child.type;
                 return (

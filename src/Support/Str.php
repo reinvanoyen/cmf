@@ -7,12 +7,20 @@ use Illuminate\Support\Str as Stri;
 
 class Str
 {
+    /**
+     * @param string $string
+     * @return string
+     */
     public static function labelify(string $string): string
     {
         $string = str_replace('_', ' ', $string);
         return $string;
     }
 
+    /**
+     * @param string $filename
+     * @return string
+     */
     public static function cleanFilename(string $filename): string
     {
         $ext = File::extension($filename);
@@ -20,6 +28,10 @@ class Str
         return Stri::slug($filename).'.'.$ext;
     }
 
+    /**
+     * @param string $filename
+     * @return string
+     */
     public static function removeFilenameExtension(string $filename): string
     {
         $ext = File::extension($filename);

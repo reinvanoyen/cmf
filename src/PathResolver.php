@@ -8,6 +8,11 @@ use ReinVanOyen\Cmf\Action\Action;
 class PathResolver
 {
     /**
+     * @var Cmf $cmf
+     */
+    private $cmf;
+
+    /**
      * PathResolver constructor.
      * @param Cmf $cmf
      */

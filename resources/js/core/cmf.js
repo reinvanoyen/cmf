@@ -9,6 +9,8 @@ import UserPanel from "./user-panel";
 import ui from "./ui/util";
 import Logo from "./logo";
 import helpers from "../util/helpers";
+import ErrorPage from "./error-page";
+import ErrorModule from "./module/error-module";
 
 class Cmf extends React.Component {
 
@@ -23,6 +25,7 @@ class Cmf extends React.Component {
             isAuthenticating: true,
             isLoading: true,
             isLoggedIn: false,
+            isError: false,
             user: {},
             modules: [],
             path: {},
@@ -75,13 +78,19 @@ class Cmf extends React.Component {
 
                 helpers.scrollTop();
 
-                let action = response.data.data;
-
                 this.setState({
                     isLoading: false,
+                    isError: false,
                     path: path.currentPath,
                     module,
-                    action
+                    action: response.data.data
+                });
+
+            }).catch((error) => {
+                this.setState({
+                    isLoading: false,
+                    isError: true,
+                    path: path.currentPath
                 });
             });
         }
@@ -152,16 +161,6 @@ class Cmf extends React.Component {
         ui.notify('User logged out');
     }
 
-    getLogin() {
-        return (
-            <Login
-                title={this.props.title}
-                onSuccess={this.onLoginSuccess.bind(this)}
-                onFail={this.onLoginFail.bind(this)}
-            />
-        );
-    }
-
     getUserPanel() {
         return (
             <UserPanel
@@ -178,13 +177,15 @@ class Cmf extends React.Component {
         }
 
         if (! this.state.isLoggedIn) {
-            return this.getLogin();
+            return <Login title={this.props.title} onSuccess={this.onLoginSuccess.bind(this)} onFail={this.onLoginFail.bind(this)} />;
         }
 
         let module;
 
-        if (! this.state.isLoading) {
-            module = <Module {...this.state.module} action={this.state.action} path={this.state.path} key={this.state.module.id} />;
+        if (this.state.isError) {
+            module = <ErrorModule />;
+        } else if (! this.state.isLoading) {
+            module = <Module {...this.state.module} action={this.state.action} path={this.state.path} key={this.state.module.id} />
         }
 
         return (

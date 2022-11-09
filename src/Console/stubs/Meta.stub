@@ -46,4 +46,12 @@ class {{ model }}Meta extends Meta
             TextView::make('id'),
         ];
     }
+
+    /**
+     * @return array
+     */
+    public static function create(): array
+    {
+        return [];
+    }
 }

@@ -52,18 +52,22 @@ class Cmf
     }
 
     /**
-     * Register modules to the CMF
-     *
      * @param array $modules
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function registerModules(array $modules)
     {
-        $this->modules = $modules;
+        $this->modules = Module::makeModules($modules);
 
         // Store all modules by id in the modules map
-        foreach ($modules as $module) {
+        foreach ($this->modules as $module) {
+
             $this->modulesMap[$module->id()] = $module;
-            foreach ($module->submodules() as $submodule) {
+            
+            $submodules = Module::makeModules($module->submodules());
+
+            foreach ($submodules as $submodule) {
                 $this->modulesMap[$submodule->id()] = $submodule;
             }
         }
@@ -75,7 +79,7 @@ class Cmf
      * @param string $id
      * @return Module
      */
-    public function getModule(string $id): Module
+    public function getModule(string $id): ?Module
     {
         return ($this->modulesMap[$id] ?? null);
     }

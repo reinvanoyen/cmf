@@ -12,10 +12,6 @@ Route::get('admin/{path}', [FrontController::class, 'index'])
     ->where('path', '.*')
     ->middleware('web');
 
-Route::get('admin/{path}', [FrontController::class, 'index'])
-    ->where('path', '.*')
-    ->middleware('web');
-
 Route::get('media/{id}/{filename}', [MediaController::class, 'streamFile'])
     ->where('id', '[0-9]+')
     ->middleware('web')
