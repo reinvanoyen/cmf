@@ -28,10 +28,7 @@ export default class Form extends React.Component {
             this.props.children.forEach(() => {
                 this.childRefs.push(React.createRef());
             });
-            return;
         }
-
-        this.childRefs.push(React.createRef());
     }
 
     submit() {
@@ -65,14 +62,10 @@ export default class Form extends React.Component {
             return data;
         }
 
-        if (this.props.children.length) {
-            this.props.children.forEach((child, i) => {
-                this.childRefs[i].current.handleSubmit(data);
-            });
-            return data;
-        }
+        this.props.children.forEach((child, i) => {
+            this.childRefs[i].current.handleSubmit(data);
+        });
 
-        this.childRefs[0].current.handleSubmit(data);
         return data;
     }
 
@@ -86,23 +79,21 @@ export default class Form extends React.Component {
             return null;
         }
 
-        if (this.props.children.length > 1) {
-            return this.props.children.map((child, i) => {
-                const TagName = child.type;
-                return (
-                    <div key={i} className="form__input">
-                        <TagName ref={this.childRefs[i]} {...child.props} errors={this.props.errors} />
-                    </div>
-                );
-            });
-        }
-
+        return this.props.children.map((child, i) => {
+            const TagName = child.type;
+            return (
+                <div key={i} className="form__input">
+                    <TagName ref={this.childRefs[i]} {...child.props} errors={this.props.errors} />
+                </div>
+            );
+        });
+        /*
         const TagName = this.props.children.type;
         return (
             <div className="form__input">
                 <TagName ref={this.childRefs[0]} {...this.props.children.props} />
             </div>
-        );
+        );*/
     }
 
     render() {
