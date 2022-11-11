@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf;
 
 use Illuminate\Support\Facades\Event;
 use ReinVanOyen\Cmf\Events\ServingCmf;
+use ReinVanOyen\Cmf\Factories\ModuleFactory;
 
 /**
  * Class Cmf
@@ -19,24 +20,27 @@ class Cmf
     private $title;
 
     /**
-     * The modules of the CMF application
-     *
-     * @var array $modules
+     * @var ModuleRegistry $modules
      */
     private $modules;
 
     /**
-     * An associative array holding the modules, for easier access
-     *
-     * @var array $modulesMap
-     */
-    private $modulesMap = [];
-
-    /**
      * Cmf constructor.
+     * @param ModuleRegistry $modules
      * @param string $title
      */
-    public function __construct(string $title)
+    public function __construct(ModuleRegistry $modules, string $title)
+    {
+        $this->title = $title;
+        $this->modules = $modules;
+    }
+
+    /**
+     * Set the title of the CMF application
+     *
+     * @param string $title
+     */
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
@@ -53,23 +57,23 @@ class Cmf
 
     /**
      * @param array $modules
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function registerModules(array $modules)
     {
-        $this->modules = Module::makeModules($modules);
+        foreach ($modules as $module) {
+            $this->registerModule($module);
+        }
+    }
 
-        // Store all modules by id in the modules map
-        foreach ($this->modules as $module) {
+    /**
+     * @param $module
+     */
+    public function registerModule($module)
+    {
+        $module = $this->modules->add($module);
 
-            $this->modulesMap[$module->id()] = $module;
-            
-            $submodules = Module::makeModules($module->submodules());
-
-            foreach ($submodules as $submodule) {
-                $this->modulesMap[$submodule->id()] = $submodule;
-            }
+        foreach ($module->submodules() as $submodule) {
+            $this->modules->add($submodule, false);
         }
     }
 
@@ -81,17 +85,17 @@ class Cmf
      */
     public function getModule(string $id): ?Module
     {
-        return ($this->modulesMap[$id] ?? null);
+        return $this->modules->get($id);
     }
 
     /**
-     * Get all modules
+     * Get all root modules
      *
      * @return array
      */
     public function getModules(): array
     {
-        return $this->modules;
+        return $this->modules->root();
     }
 
     /**

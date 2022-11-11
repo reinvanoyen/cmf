@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf;
 
 use Illuminate\Support\Str;
 use ReinVanOyen\Cmf\Action\Action;
+use ReinVanOyen\Cmf\Factories\ModuleFactory;
 use ReinVanOyen\Cmf\Traits\CanExport;
 
 abstract class Module implements \JsonSerializable
@@ -53,23 +54,6 @@ abstract class Module implements \JsonSerializable
     }
 
     /**
-     * @param array $modules
-     * @return array
-     */
-    final public static function makeModules(array $modules): array
-    {
-        return array_map(function ($module) {
-            if (is_string($module)) {
-                return app($module);
-            }
-            if ($module instanceof  Module) {
-                return $module;
-            }
-            return null;
-        }, $modules);
-    }
-
-    /**
      * @return array
      */
     public function exportAll(): array
@@ -82,7 +66,9 @@ abstract class Module implements \JsonSerializable
             'module' => $this->id(),
         ];
         $this->exports['url'] = url('admin/'.$this->id());
-        $this->exports['submodules'] = self::makeModules($this->submodules());
+        $this->exports['submodules'] = array_map(function($module) {
+            return ModuleFactory::make($module);
+        }, $this->submodules());
 
         return $this->exports;
     }

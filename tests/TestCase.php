@@ -3,6 +3,7 @@
 namespace ReinVanOyen\Cmf\Tests;
 
 use ReinVanOyen\Cmf\Cmf;
+use ReinVanOyen\Cmf\CmfServiceProvider;
 use ReinVanOyen\Cmf\Tests\Fixtures\Modules\UserModule;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -28,7 +29,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            'ReinVanOyen\Cmf\CmfServiceProvider',
+            CmfServiceProvider::class,
         ];
     }
 
