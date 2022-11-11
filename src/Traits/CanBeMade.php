@@ -22,9 +22,8 @@ trait CanBeMade
      */
     public static function make(...$arguments)
     {
-        $storage = app(MakeableStorage::class);
         $makeable = new static(...$arguments);
-        $storage->store($makeable);
+        app(MakeableStorage::class)->store($makeable);
         return $makeable;
     }
 

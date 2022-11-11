@@ -13,7 +13,7 @@ trait CanExport
      * @param $key
      * @param $value
      */
-    public function export($key, $value)
+    protected function export($key, $value)
     {
         $this->exports[$key] = $value;
     }
@@ -21,7 +21,7 @@ trait CanExport
     /**
      * @return array|mixed
      */
-    public function exportAll(): array
+    protected function exportAll(): array
     {
         $this->exports['type'] = $this->type();
 
