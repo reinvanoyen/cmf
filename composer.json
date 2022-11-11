@@ -26,5 +26,12 @@
         "psr-4": {
             "ReinVanOyen\\Cmf\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ReinVanOyen\\Cmf\\CmfServiceProvider"
+            ]
+        }
     }
 }

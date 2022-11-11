@@ -19,7 +19,7 @@ First, require the package using composer:
 composer require reinvanoyen/cmf
 ```
 
-Add the service provider to the `providers` key in your `config/app.php`:
+This will automatically register the service provider in your `config/app.php`.
 
 ```php
 'providers' => [
