@@ -1,6 +1,7 @@
 {
     "name": "reinvanoyen/cmf",
-    "description": "CMF",
+    "description": "A flexible and extendable solution for all your content management needs",
+    "license": "MIT",
     "keywords": [
         "cmf",
         "cms",
