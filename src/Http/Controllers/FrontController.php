@@ -2,7 +2,7 @@
 
 namespace ReinVanOyen\Cmf\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use ReinVanOyen\Cmf\Cmf;
 
 /**
