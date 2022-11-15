@@ -1,9 +1,9 @@
 @extends('cmf::base')
 
-@section('title', $cmf->getTitle())
+@section('title', $title)
 
 @section('body')
 
-    <div class="cmf-mount" data-title="{{ $cmf->getTitle() }}"></div>
+    <div class="cmf-mount" data-title="{{ $title }}"></div>
 
 @endsection

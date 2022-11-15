@@ -31,6 +31,7 @@ class FrontController extends Controller
     public function index()
     {
         return view('cmf::index', [
+            'title' => config('cmf.title'),
             'cmf' => $this->cmf,
         ]);
     }

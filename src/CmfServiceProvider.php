@@ -5,6 +5,7 @@ namespace ReinVanOyen\Cmf;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Intervention\Image\Image;
+use ReinVanOyen\Cmf\Console\ClearMediaConversionsCommand;
 use ReinVanOyen\Cmf\Console\InstallCommand;
 use ReinVanOyen\Cmf\Console\MetaCommand;
 use ReinVanOyen\Cmf\Console\ModuleCommand;
@@ -56,6 +57,7 @@ class CmfServiceProvider extends ServiceProvider
             UserCommand::class,
             MetaCommand::class,
             ModuleCommand::class,
+            ClearMediaConversionsCommand::class,
         ]);
     }
 

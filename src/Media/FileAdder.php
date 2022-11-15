@@ -11,10 +11,11 @@ use \ReinVanOyen\Cmf\Support\Str;
 class FileAdder
 {
     /**
-     * @param  \Illuminate\Http\File|\Illuminate\Http\UploadedFile $file
+     * @param $file
      * @param string $filename
      * @param int|null $directory
      * @return MediaFile
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function addFile($file, string $filename, int $directory = null): MediaFile
     {

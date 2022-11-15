@@ -2,7 +2,7 @@
 
 namespace ReinVanOyen\Cmf\Tests;
 
-use ReinVanOyen\Cmf\Cmf;
+use ReinVanOyen\Cmf\Facades\Cmf;
 use ReinVanOyen\Cmf\CmfServiceProvider;
 use ReinVanOyen\Cmf\Tests\Fixtures\Modules\UserModule;
 
@@ -14,7 +14,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         $this->loadMigrations();
 
-        app(Cmf::class)->registerModules([
+        Cmf::registerModules([
             UserModule::class,
         ]);
     }
@@ -41,8 +41,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('cmf.title', 'Test cmf');
-
         $app['config']->set('database.connections.sqlite', [
             'driver'   => 'sqlite',
             'database' => ':memory:',

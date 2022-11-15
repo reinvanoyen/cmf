@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use ReinVanOyen\Cmf\Contracts\MediaConverter;
 
 class MediaFile extends Model
 {
@@ -28,10 +29,37 @@ class MediaFile extends Model
         $filename = $this->filename;
         $disk = $this->disk;
 
+        $this->clearConversions();
+
         parent::delete();
 
         $storage = Storage::disk($disk);
         $storage->delete($filename);
+
+        return true;
+    }
+
+    /**
+     * Removes all conversions
+     */
+    public function clearConversions()
+    {
+        $converter = app(MediaConverter::class);
+
+        // If the file has a specific conversion disk set, use that one.
+        // Otherwise, use the one set in the config or fall back to the disk of the original file
+        $storage = Storage::disk($this->conversions_disk ?: config('cmf.media_conversions_disk', $this->disk));
+
+        $baseFilename = basename($this->filename);
+
+        foreach ($converter->getConversions() as $conversion => $call) {
+
+            $conversionPath = 'conversions/'.$conversion.'/'.$baseFilename;
+
+            if ($storage->exists($conversionPath)) {
+                $storage->delete($conversionPath);
+            }
+        }
     }
 
     /**

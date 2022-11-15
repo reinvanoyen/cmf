@@ -26,6 +26,14 @@ abstract class Converter implements MediaConverter
     }
 
     /**
+     * @return array
+     */
+    public function getConversions(): array
+    {
+        return $this->conversions;
+    }
+
+    /**
      * @param string $name
      * @return bool|mixed
      */

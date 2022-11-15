@@ -14,6 +14,11 @@ interface MediaConverter
     public function registerConversion(string $name, callable $conversion);
 
     /**
+     * @return array
+     */
+    public function getConversions(): array;
+
+    /**
      * @param string $name
      * @return mixed
      */

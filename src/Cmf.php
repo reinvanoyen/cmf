@@ -4,7 +4,6 @@ namespace ReinVanOyen\Cmf;
 
 use Illuminate\Support\Facades\Event;
 use ReinVanOyen\Cmf\Events\ServingCmf;
-use ReinVanOyen\Cmf\Factories\ModuleFactory;
 
 /**
  * Class Cmf
@@ -13,13 +12,6 @@ use ReinVanOyen\Cmf\Factories\ModuleFactory;
 class Cmf
 {
     /**
-     * Title of the CMF application
-     *
-     * @var string $title
-     */
-    private $title;
-
-    /**
      * @var ModuleRegistry $modules
      */
     private $modules;
@@ -27,32 +19,10 @@ class Cmf
     /**
      * Cmf constructor.
      * @param ModuleRegistry $modules
-     * @param string $title
      */
-    public function __construct(ModuleRegistry $modules, string $title)
+    public function __construct(ModuleRegistry $modules)
     {
-        $this->title = $title;
         $this->modules = $modules;
-    }
-
-    /**
-     * Set the title of the CMF application
-     *
-     * @param string $title
-     */
-    public function setTitle(string $title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * Get the title of the CMF application
-     *
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
     }
 
     /**

@@ -40,7 +40,10 @@
         "laravel": {
             "providers": [
                 "ReinVanOyen\\Cmf\\CmfServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Cmf": "ReinVanOyen\\Cmf\\Facades\\Cmf"
+            }
         }
     },
     "scripts": {
