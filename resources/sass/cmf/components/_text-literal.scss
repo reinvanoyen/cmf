@@ -1,0 +1,13 @@
+@include block(text-literal)
+{
+    @include element(link)
+    {
+        text-decoration: underline;
+    }
+    
+    @include modifier(primary)
+    {
+        @include type-3;
+        color: $color13;
+    }
+}

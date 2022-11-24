@@ -3,11 +3,14 @@
 namespace App\Providers;
 
 use ReinVanOyen\Cmf\CmfApplicationServiceProvider;
+use ReinVanOyen\Cmf\Modules\WelcomeModule;
 
 class CmfServiceProvider extends CmfApplicationServiceProvider
 {
     public function modules(): array
     {
-        return [];
+        return [
+            WelcomeModule::class,
+        ];
     }
 }

@@ -40,8 +40,10 @@ import Thumb from "./thumb";
 import ColorField from "./color-field";
 import ManualOrderControls from "./manual-order-controls";
 import EnumSwitchField from "./enum-switch-field";
+import TextLiteral from "./text-literal";
 
 export default {
+    'text-literal': TextLiteral,
     'date-field': DateField,
     'date-time-field': DateTimeField,
     'date-time-view': DateTimeView,
