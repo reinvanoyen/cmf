@@ -4,6 +4,10 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/reinvanoyen/cmf/actions"><img src="https://github.com/reinvanoyen/cmf/workflows/tests/badge.svg" alt="Tests" /></a>
+</p>
+
 # Laravel CMF
 
 ## Introduction
