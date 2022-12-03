@@ -15,9 +15,6 @@ class MediaFileResource extends JsonResource
      */
     public function toArray($request)
     {
-        $disk = config('cmf.media_library_disk');
-        $storage = Storage::disk($disk);
-
         return [
             'id' => $this->id,
             'name' => $this->name,

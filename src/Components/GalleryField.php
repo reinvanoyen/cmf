@@ -3,11 +3,8 @@
 namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
-use ReinVanOyen\Cmf\Http\Resources\ContentBlockResource;
 use ReinVanOyen\Cmf\Http\Resources\MediaFileResource;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
-use ReinVanOyen\Cmf\Models\MediaFile;
-use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
 use ReinVanOyen\Cmf\Traits\HasItemGrammar;
 use ReinVanOyen\Cmf\Traits\HasLabel;
@@ -29,31 +26,13 @@ class GalleryField extends Component
     private $orderColumn;
 
     /**
-     * @var string $fileRelationName
-     */
-    private $fileRelationName;
-
-    /**
-     * @var string $meta
-     */
-    private $meta;
-
-    /**
-     * GalleryField constructor.
      * @param string $name
-     * @param string $fileRelationName
-     * @param string|null $meta
      */
-    public function __construct(string $name, string $fileRelationName, string $meta = null)
+    public function __construct(string $name)
     {
         $this->name($name);
+        $this->plural($name);
         $this->label(Str::labelify($name));
-
-        $this->fileRelationName = $fileRelationName;
-
-        $this->meta = $meta ?: RelationshipMetaGuesser::getMeta($this->getName());
-        $this->singular($this->meta::getSingular());
-        $this->plural($this->meta::getPlural());
         $this->export('fileLabels', config('cmf.media_library_file_labels', []));
     }
 
@@ -82,16 +61,15 @@ class GalleryField extends Component
      */
     public function provision(ModelResource $model, array &$attributes)
     {
-        if ($this->orderColumn) {
-            $foreignModels = $model->{$this->getName()}()->orderBy($this->orderColumn)->get();
-        } else {
-            $foreignModels = $model->{$this->getName()};
-        }
+        $mediaFiles = ($this->orderColumn ?
+            $model->{$this->getName()}()->orderBy($this->orderColumn)->get() :
+            $model->{$this->getName()}
+        );
 
         $collection = [];
 
-        foreach ($foreignModels as $foreignModel) {
-            $collection[] = new MediaFileResource($foreignModel->{$this->fileRelationName});
+        foreach ($mediaFiles as $mediaFile) {
+            $collection[] = new MediaFileResource($mediaFile);
         }
 
         $attributes[$this->getName()] = $collection;
@@ -99,7 +77,8 @@ class GalleryField extends Component
 
     /**
      * @param Model $model
-     * @param \Illuminate\Http\Request $request
+     * @param $request
+     * @return void
      */
     public function save(Model $model, $request)
     {
@@ -108,50 +87,15 @@ class GalleryField extends Component
             $files = $request->get($this->getName());
             $fileIds = ($files ? (is_array($files) ? $files : explode(',', $files)) : []);
 
+            if ($this->orderColumn) {
+                $pivot = array_map(function ($order) {
+                    return [$this->orderColumn => $order,];
+                }, range(1, count($fileIds)));
+                $fileIds = array_combine($fileIds, $pivot);
+            }
+
             $model::saved(function ($model) use ($fileIds) {
-
-                $foreignModelClassname = $this->meta::getModel();
-                $i = 0;
-
-                foreach ($model->{$this->name} as $item) {
-
-                    if (isset($fileIds[$i])) {
-                        // Update file
-                        $mediaFile = MediaFile::find($fileIds[$i]);
-
-                        $item->{$this->fileRelationName}()->associate($mediaFile);
-                        $item->save();
-
-                        // Store the order
-                        if ($this->orderColumn) {
-                            $item->{$this->orderColumn} = $i;
-                        }
-
-                    } else {
-
-                        // Delete file
-                        $item->delete();
-                    }
-
-                    $i++;
-                }
-
-                while(isset($fileIds[$i])) {
-
-                    $mediaFile = MediaFile::find($fileIds[$i]);
-
-                    $foreignModel = new $foreignModelClassname();
-                    $foreignModel->{$this->fileRelationName}()->associate($mediaFile);
-
-                    // Store the order
-                    if ($this->orderColumn) {
-                        $foreignModel->{$this->orderColumn} = $i;
-                    }
-
-                    // Save the foreign model to the relation on the current model
-                    $model->{$this->getName()}()->save($foreignModel);
-                    $i++;
-                }
+                $model->{$this->name}()->sync($fileIds);
             });
         }
     }
@@ -163,7 +107,6 @@ class GalleryField extends Component
     public function registerValidationRules(array $validationRules): array
     {
         $validationRules[$this->getName()] = $this->validationRules;
-
         return $validationRules;
     }
 }
