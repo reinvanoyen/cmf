@@ -86,11 +86,12 @@ class GalleryField extends Component
 
             $files = $request->get($this->getName());
             $fileIds = ($files ? (is_array($files) ? $files : explode(',', $files)) : []);
+            $fileCount = count($fileIds);
 
-            if ($this->orderColumn) {
+            if ($this->orderColumn && $fileCount) {
                 $pivot = array_map(function ($order) {
                     return [$this->orderColumn => $order,];
-                }, range(1, count($fileIds)));
+                }, range(1, $fileCount));
                 $fileIds = array_combine($fileIds, $pivot);
             }
 
