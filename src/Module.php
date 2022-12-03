@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use ReinVanOyen\Cmf\Action\Action;
 use ReinVanOyen\Cmf\Factories\ModuleFactory;
 use ReinVanOyen\Cmf\Traits\CanExport;
+use ReinVanOyen\Cmf\Facades\Cmf;
 
 abstract class Module implements \JsonSerializable
 {
@@ -65,7 +66,7 @@ abstract class Module implements \JsonSerializable
         $this->exports['path'] = [
             'module' => $this->id(),
         ];
-        $this->exports['url'] = url('admin/'.$this->id());
+        $this->exports['url'] = url(Cmf::getPath().'/'.$this->id());
         $this->exports['submodules'] = array_map(function($module) {
             return ModuleFactory::make($module);
         }, $this->submodules());

@@ -77,4 +77,12 @@ class Cmf
     {
         Event::listen(ServingCmf::class, $call);
     }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return config('cmf.path', 'admin');
+    }
 }

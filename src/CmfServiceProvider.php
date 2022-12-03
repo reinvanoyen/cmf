@@ -2,7 +2,6 @@
 
 namespace ReinVanOyen\Cmf;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Intervention\Image\Image;
 use ReinVanOyen\Cmf\Console\ClearMediaConversionsCommand;
@@ -13,7 +12,6 @@ use ReinVanOyen\Cmf\Console\UserCommand;
 use ReinVanOyen\Cmf\Contracts\MediaConverter;
 use ReinVanOyen\Cmf\Media\FileAdder;
 use ReinVanOyen\Cmf\Media\ImageConverter;
-use ReinVanOyen\Cmf\Rules\Uppercase;
 
 class CmfServiceProvider extends ServiceProvider
 {
@@ -48,10 +46,6 @@ class CmfServiceProvider extends ServiceProvider
             return $converter;
         });
 
-        $this->app->when(Cmf::class)
-            ->needs('$title')
-            ->giveConfig('cmf.title');
-
         $this->commands([
             InstallCommand::class,
             UserCommand::class,
@@ -68,11 +62,13 @@ class CmfServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerValidationRules();
+        $this->mergeConfigFrom(__DIR__.'/../config/cmf.php', 'cmf');
+
         $this->registerPublishes();
         $this->loadRoutes();
         $this->loadViews();
         $this->loadTranslations();
+        $this->registerValidationRules();
     }
 
     /**
@@ -107,8 +103,8 @@ class CmfServiceProvider extends ServiceProvider
      */
     private function loadRoutes()
     {
-        $this->loadRoutesFrom(__DIR__.'/routes/api.php');
-        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
     }
 
     /**

@@ -1,10 +1,12 @@
 "use strict";
 
 import http from "../util/http";
+import meta from "../util/meta";
 
 export default {
     cmf: null,
     forceRefresh: false,
+    path: meta.get('cmf:path'),
     currentPath: {},
     history: [],
     setCmf(cmf) {
@@ -12,7 +14,7 @@ export default {
     },
     parseLocation(location) {
 
-        const prefix = '/admin/';
+        const prefix = '/'+this.path+'/';
         const search = location.search;
         const query = new URLSearchParams(search);
         const params = Object.fromEntries(query);
@@ -41,7 +43,7 @@ export default {
 
         let query = http.query(params);
 
-        window.history.pushState({}, '', 'admin/'+module+'/'+action+(query ? '?'+query : ''));
+        window.history.pushState({}, '', this.path+'/'+module+'/'+action+(query ? '?'+query : ''));
 
         this.history.push({
             module: module,
