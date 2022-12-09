@@ -24,8 +24,8 @@
 @include block(content-block)
 {
     border-radius: $border-radius-1;
-    border: $border-width-2 solid $color03;
-    background-color: $color04;
+    border: $border-width-1 solid $color06;
+    background-color: $color01;
     margin-bottom: $rule;
 
     @include element(header)

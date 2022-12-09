@@ -57,10 +57,10 @@ class ManualOrderControls extends React.Component {
         return (
             <div className={'manual-order-controls'}>
                 <div className={'manual-order-controls__item'}>
-                    <IconButton name={'arrow_upward'} onClick={this.sortUp.bind(this)}/>
+                    <IconButton style={'transparent'} iconStyle={'small'} name={'arrow_upward'} onClick={this.sortUp.bind(this)}/>
                 </div>
                 <div className={'manual-order-controls__item'}>
-                    <IconButton name={'arrow_downward'} onClick={this.sortDown.bind(this)} />
+                    <IconButton style={'transparent'} iconStyle={'small'} name={'arrow_downward'} onClick={this.sortDown.bind(this)} />
                 </div>
             </div>
         );
