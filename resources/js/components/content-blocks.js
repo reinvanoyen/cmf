@@ -29,12 +29,17 @@ export default class ContentBlocks extends React.Component {
 
         this.state = {
             addedBlocks: this.getAddedBlocks(),
-            blockIdsToRemove: []
+            blocksToRemoveById: [],
+            blocksToRemoveByOrder: []
         };
+
+        this.addBlockDropdownRef = React.createRef();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.data[this.props.name] !== prevProps.data[this.props.name]) {
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            this.props.data[this.props.name] !== prevProps.data[this.props.name]
+        ) {
             this.setState({
                 addedBlocks: this.getAddedBlocks()
             });
@@ -49,29 +54,29 @@ export default class ContentBlocks extends React.Component {
     handleSubmit(data) {
 
         let payload = {
-            blocks: [],
-            remove: this.state.blockIdsToRemove
+            update: [],
+            removeById: this.state.blocksToRemoveById,
+            removeByOrder: this.state.blocksToRemoveByOrder
         };
 
-        this.componentLists.forEach(componentListData => {
+        this.componentLists.forEach((componentListData, index) => {
 
             let [componentList, id, type] = componentListData;
 
-            let blockData = {};
-
-            blockData.id = id;
+            let blockData = { id };
             blockData[this.props.typeColumn] = type;
+            blockData[this.props.orderColumn] = index;
 
             componentList.forEach(obj => obj.ref.current.handleSubmit(blockData));
 
-            payload.blocks.push(blockData);
+            payload.update.push(blockData);
         });
 
         data[this.props.name] = JSON.stringify(payload);
 
         this.setState({
-            addedBlocks: [],
-            blockIdsToRemove: []
+            blocksToRemoveById: [],
+            blocksToRemoveByOrder: []
         });
     }
 
@@ -92,15 +97,13 @@ export default class ContentBlocks extends React.Component {
                 return null;
             }
 
-            let block = {};
-
-            block.id = item.id;
-            block.name = blockDefinition.name;
-            block.type = blockDefinition.type;
-            block.components = blockDefinition.components;
-            block.data = item;
-
-            return block;
+            return {
+                id: item.id,
+                data: item,
+                name: blockDefinition.name,
+                type: blockDefinition.type,
+                components: blockDefinition.components
+            };
         });
     }
 
@@ -133,6 +136,8 @@ export default class ContentBlocks extends React.Component {
         this.setState({
             addedBlocks: addedBlocks
         });
+
+        util.notify('Order successfully changed');
     }
 
     sortDown(index) {
@@ -147,27 +152,35 @@ export default class ContentBlocks extends React.Component {
         this.setState({
             addedBlocks: addedBlocks
         });
+
+        util.notify('Order successfully changed');
     }
 
-    removeBlock(index, id = null) {
+    removeBlock(index, id) {
+
         util.confirm({
             title: 'Delete '+this.props.singular+'?',
             text: 'Are you sure you wish to delete this '+this.props.singular+'?',
             confirm: () => {
 
-                let blockIdsToRemove = this.state.blockIdsToRemove;
-
+                let blocksToRemoveById = this.state.blocksToRemoveById;
+                let blocksToRemoveByOrder = this.state.blocksToRemoveByOrder;
                 let addedBlocks = this.syncBlocksData();
                 addedBlocks.splice(index, 1);
 
                 if (id) {
-                    blockIdsToRemove.push(id);
+                    blocksToRemoveById.push(id);
+                } else {
+                    blocksToRemoveByOrder.push(index);
                 }
 
                 this.setState({
-                    addedBlocks: addedBlocks,
-                    blockIdsToRemove: blockIdsToRemove
+                    addedBlocks,
+                    blocksToRemoveById,
+                    blocksToRemoveByOrder
                 });
+
+                util.notify(this.props.singular+' successfully removed');
             }
         });
     }
@@ -175,21 +188,21 @@ export default class ContentBlocks extends React.Component {
     addBlock(type) {
 
         let blockDefinition = this.getBlockDefinition(type);
-
-        let block = {};
-
-        block.id = null;
-        block.name = blockDefinition.name;
-        block.type = blockDefinition.type;
-        block.components = blockDefinition.components;
-        block.data = {};
-
         let addedBlocks = this.state.addedBlocks;
-        addedBlocks.push(block);
 
-        this.setState({
-            addedBlocks: addedBlocks
+        addedBlocks.push({
+            id: null,
+            name: blockDefinition.name,
+            type: blockDefinition.type,
+            components: blockDefinition.components,
+            data: {}
         });
+
+        this.setState({ addedBlocks });
+
+        this.addBlockDropdownRef.current.close();
+
+        util.notify(this.props.singular+' added');
     }
 
     renderAddBlockDropdown() {
@@ -220,7 +233,7 @@ export default class ContentBlocks extends React.Component {
         });
 
         return (
-            <Dropdown text={'Add '+this.props.singular} openIcon={'post_add'} closeIcon={'post_add'}>
+            <Dropdown text={'Add '+this.props.singular} openIcon={'post_add'} closeIcon={'post_add'} ref={this.addBlockDropdownRef}>
                 <LinkList links={links} onClick={this.addBlock.bind(this)} />
             </Dropdown>
         );

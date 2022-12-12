@@ -4,7 +4,6 @@ namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use ReinVanOyen\Cmf\Http\Resources\ForeignModelCollection;
 use ReinVanOyen\Cmf\Http\Resources\ContentBlockResource;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
@@ -99,42 +98,66 @@ class ContentBlocks extends Component
         $payload = json_decode($request->input($this->getName()), true);
 
         $model::saved(function ($model) use ($payload) {
-
-            $foreignModelClassname = $this->meta::getModel();
-
-            $items = $payload['blocks'];
-            $blocksToRemove = $payload['remove'];
-
-            // Delete the removed blocks first
-            $foreignModelClassname::destroy($blocksToRemove);
-
-            // Update or create blocks
-            $order = 0;
-            foreach ($items as $item) {
-
-                $id = $item['id'];
-                $type = $item['type'];
-                $components = $this->blocks[$type]['components'];
-
-                $foreignModel = ($id ? $model->{$this->getName()}()->where('id', $id)->first() : new $foreignModelClassname());
-
-                $newRequest = new Request();
-                $newRequest->merge($item);
-
-                // Save the type column with the new type
-                $foreignModel->{$this->foreignTypeColumn} = $type;
-                $foreignModel->{$this->foreignOrderColumn} = $order;
-
-                // Save the fields of this blocks to the model
-                foreach ($components as $component) {
-                    $component->save($foreignModel, $newRequest);
-                }
-
-                // Save the foreign model to the relation on the current model
-                $model->{$this->getName()}()->save($foreignModel);
-                $order++;
-            }
+            $this->removeBlocks($model, $payload['removeById'], $payload['removeByOrder']);
+            $this->fixOrderOfBlocks($model);
+            $this->updateOrCreateBlocks($model, $payload['update']);
         });
+    }
+
+    private function removeBlocks(Model $model, $byId, $byOrder)
+    {
+        $foreignModelClassname = $this->meta::getModel();
+        $foreignModelClassname::destroy($byId);
+
+        // Delete by order
+        foreach ($byOrder as $order) {
+            $block = $model->{$this->getName()}()->first();
+            if ($block) {
+                $block->delete();
+            }
+        }
+    }
+
+    private function fixOrderOfBlocks(Model $model)
+    {
+        // Fix the orders of the remaining items
+        $currentItems = $model->{$this->getName()}()->orderBy($this->foreignOrderColumn)->get();
+        foreach ($currentItems as $index => $currentItem) {
+            $currentItem->{$this->foreignOrderColumn} = $index;
+            $currentItem->save();
+        }
+    }
+
+    private function updateOrCreateBlocks(Model $model, $items)
+    {
+        $foreignModelClassname = $this->meta::getModel();
+
+        // Update or create blocks
+        foreach ($items as $item) {
+
+            $id = $item['id'];
+            $type = $item['type'];
+            $order = $item[$this->foreignOrderColumn];
+            $components = $this->blocks[$type]['components'];
+
+            // Find the model by order or create a new one
+            $foreignModel = $model->{$this->getName()}()->where($this->foreignOrderColumn, $order)->first() ?: new $foreignModelClassname();
+
+            $newRequest = new Request();
+            $newRequest->merge($item);
+
+            // Save the type column with the new type
+            $foreignModel->{$this->foreignTypeColumn} = $type;
+            $foreignModel->{$this->foreignOrderColumn} = $order;
+
+            // Save the fields of this blocks to the model
+            foreach ($components as $component) {
+                $component->save($foreignModel, $newRequest);
+            }
+
+            // Save the foreign model to the relation on the current model
+            $model->{$this->getName()}()->save($foreignModel);
+        }
     }
 
     /**

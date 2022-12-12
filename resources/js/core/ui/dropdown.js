@@ -16,7 +16,8 @@ class Dropdown extends React.Component {
         super(props);
 
         this.state = {
-            isOpen: false
+            isOpen: false,
+            dropDirection: 'down'
         };
 
         this.dropdownRef = React.createRef();
@@ -42,17 +43,28 @@ class Dropdown extends React.Component {
     }
 
     toggle(e) {
+
+        let direction;
+
+        let centerY = window.innerHeight / 2;
+        if (e.clientY > centerY) {
+            direction = 'up';
+        } else {
+            direction = 'down';
+        }
+
         e.stopPropagation();
         if (this.state.isOpen) {
             this.close();
         } else {
-            this.open();
+            this.open(direction);
         }
     }
 
-    open() {
+    open(direction = 'down') {
         this.setState({
-            isOpen: true
+            isOpen: true,
+            dropDirection: direction
         });
         this.bindDocumentClick();
     }
@@ -69,7 +81,7 @@ class Dropdown extends React.Component {
         let label = (this.props.label ? <span className={'dropdown__label'}>{this.props.label}</span> : null);
 
         return (
-            <div className={helpers.className('dropdown', this.props.style)+(this.state.isOpen ? ' dropdown--open' : '')} ref={this.dropdownRef}>
+            <div className={helpers.className('dropdown', this.props.style)+(this.state.isOpen ? ' dropdown--open' : '')+(' dropdown--'+this.state.dropDirection)} ref={this.dropdownRef}>
                 <div className="dropdown__trigger">
                     <button className={'dropdown__button'} onClick={this.toggle.bind(this)} type={'button'}>
                         {label}

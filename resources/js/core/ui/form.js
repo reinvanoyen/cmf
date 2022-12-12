@@ -87,13 +87,6 @@ export default class Form extends React.Component {
                 </div>
             );
         });
-        /*
-        const TagName = this.props.children.type;
-        return (
-            <div className="form__input">
-                <TagName ref={this.childRefs[0]} {...this.props.children.props} />
-            </div>
-        );*/
     }
 
     render() {

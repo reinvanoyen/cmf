@@ -83,6 +83,18 @@
         max-height: 50vh;
         overflow-y: auto;
 
+        @include block-modifier(down)
+        {
+            // for ref
+        }
+
+        @include block-modifier(up)
+        {
+            top: -$rule / 3;
+            margin-top: 0;
+            transform: translateY(-100%);
+        }
+
         @include block-modifier(open)
         {
             display: block;
