@@ -35,6 +35,12 @@
         margin-right: $rule / 4;
     }
 
+    @include element(label)
+    {
+        color: $color07;
+        margin-right: $rule / 3;
+    }
+
     @include modifier(has-icon)
     {
         display: inline-flex;

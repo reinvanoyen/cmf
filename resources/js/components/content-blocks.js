@@ -7,6 +7,7 @@ import Placeholder from "../core/ui/placeholder";
 import util from "../core/ui/util";
 import IconButton from "../core/ui/icon-button";
 import Button from '../core/ui/button';
+import Collapsible from "../core/ui/collapsible";
 
 export default class ContentBlocks extends React.Component {
 
@@ -32,8 +33,6 @@ export default class ContentBlocks extends React.Component {
             blocksToRemoveById: [],
             blocksToRemoveByOrder: []
         };
-
-        this.addBlockDropdownRef = React.createRef();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -199,13 +198,10 @@ export default class ContentBlocks extends React.Component {
         });
 
         this.setState({ addedBlocks });
-
-        this.addBlockDropdownRef.current.close();
-
         util.notify(this.props.singular+' added');
     }
 
-    renderAddBlockDropdown() {
+    renderAddBlockDropdown(text) {
 
         let types = Object.getOwnPropertyNames(this.props.blocks);
 
@@ -233,7 +229,7 @@ export default class ContentBlocks extends React.Component {
         });
 
         return (
-            <Dropdown text={'Add '+this.props.singular} openIcon={'post_add'} closeIcon={'post_add'} ref={this.addBlockDropdownRef}>
+            <Dropdown text={text} openIcon={'post_add'} closeIcon={'post_add'}>
                 <LinkList links={links} onClick={this.addBlock.bind(this)} />
             </Dropdown>
         );
@@ -255,7 +251,7 @@ export default class ContentBlocks extends React.Component {
 
             let componentList = components.renderComponentsWith(blockData.components, blockData.data, this.props.path, (component, i) => {
                 return (
-                    <div className="content-block__component" key={i}>
+                    <div className="content-blocks__component" key={i}>
                         {component}
                     </div>
                 );
@@ -263,21 +259,28 @@ export default class ContentBlocks extends React.Component {
 
             this.componentLists.push([componentList, blockData.id, blockData.type]);
 
-            return (
-                <div key={i} className="content-blocks__item">
-                    <div className={'content-block'}>
-                        <div className="content-block__header">
-                            {blockData.name}
-                            <div className="content-block__actions">
-                                <IconButton style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'small'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />
-                                <IconButton style={'transparent'} iconStyle={'small'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/>
-                                <IconButton style={'transparent'} iconStyle={'small'} name={'delete'} onClick={e => this.removeBlock(i, blockData.id)} />
-                            </div>
-                        </div>
-                        <div className="content-block__content">
-                            {componentList.map(obj => obj.component)}
+            let inlineAddBlock = null;
+
+            if (i !== 0 && this.state.addedBlocks.length > 1) {
+                inlineAddBlock = (
+                    <div className="content-blocks__inline-add">
+                        <div className="content-blocks__inline-add-knob">
+                            {this.renderAddBlockDropdown()}
                         </div>
                     </div>
+                );
+            }
+
+            return (
+                <div className="content-blocks__item" key={i}>
+                    {inlineAddBlock}
+                    <Collapsible title={blockData.name} actions={[
+                        <IconButton key={0} style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />,
+                        <IconButton key={1} style={['transparent', (i < this.state.addedBlocks.length - 1 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/>,
+                        <IconButton key={2} style={'transparent'} iconStyle={'mini'} name={'delete'} onClick={e => this.removeBlock(i, blockData.id)} />
+                    ]}>
+                        {componentList.map(obj => obj.component)}
+                    </Collapsible>
                 </div>
             );
         });
@@ -295,7 +298,7 @@ export default class ContentBlocks extends React.Component {
                         {this.renderContentBlocks()}
                     </div>
                     <div className={'content-blocks__footer'}>
-                        {this.renderAddBlockDropdown()}
+                        {this.renderAddBlockDropdown('Add '+this.props.singular)}
                     </div>
                 </div>
             </Field>

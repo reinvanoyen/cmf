@@ -1,0 +1,58 @@
+@include block(collapsible)
+{
+    border-radius: $border-radius-1;
+    border: $border-width-1 solid $color06;
+    background-color: $color01;
+    margin-bottom: $rule / 2;
+
+    @include element(header)
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $rule / 6 $rule / 3;
+        background-color: lighten($color03, 2%);
+    }
+
+    @include element(title)
+    {
+        width: 100%;
+        text-align: left;
+    }
+
+    @include element(content)
+    {
+        padding: $rule / 3;
+
+        @include block-modifier(closed)
+        {
+            display: none;
+        }
+    }
+
+    @include element(actions)
+    {
+        display: flex;
+        align-items: center;
+
+        >*
+        {
+            margin-left: $rule / 3;
+
+            &:first-child
+            {
+                margin-left: 0;
+            }
+        }
+    }
+
+    @include element(component)
+    {
+        margin-bottom: $rule;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+        }
+    }
+}

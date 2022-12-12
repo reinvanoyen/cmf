@@ -12,50 +12,28 @@
 
     @include element(item)
     {
-        margin-bottom: $rule / 3;
+        margin-bottom: $rule;
 
         &:last-child
         {
             margin-bottom: 0;
         }
     }
-}
 
-@include block(content-block)
-{
-    border-radius: $border-radius-1;
-    border: $border-width-1 solid $color06;
-    background-color: $color01;
-    margin-bottom: $rule;
-
-    @include element(header)
+    @include element(inline-add)
     {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: $rule / 6 $rule / 3;
-        background-color: lighten($color03, 2%);
+        justify-content: center;
+        align-content: center;
+        margin-bottom: $rule;
     }
 
-    @include element(content)
+    @include element(inline-add-knob)
     {
-        padding: $rule / 3;
-    }
-
-    @include element(actions)
-    {
-        display: flex;
-        align-items: center;
-
-        >*
-        {
-            margin-left: $rule / 3;
-
-            &:first-child
-            {
-                margin-left: 0;
-            }
-        }
+        /*
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);*/
     }
 
     @include element(component)

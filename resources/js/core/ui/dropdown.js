@@ -1,6 +1,8 @@
 import React from 'react';
 import Icon from "./icon";
 import helpers from "../../util/helpers";
+import IconButton from "./icon-button";
+import Button from "./button";
 
 class Dropdown extends React.Component {
 
@@ -78,18 +80,29 @@ class Dropdown extends React.Component {
 
     render() {
 
-        let label = (this.props.label ? <span className={'dropdown__label'}>{this.props.label}</span> : null);
+        let button = (
+            <Button text={this.props.text}
+                    label={this.props.label}
+                    style={['secondary', 'small']}
+                    onClick={this.toggle.bind(this)}
+                    icon={(this.state.isOpen ? this.props.closeIcon : this.props.openIcon)}
+            />
+        );
+
+        if (! this.props.text) {
+            button = (
+                <IconButton
+                    name={(this.state.isOpen ? this.props.closeIcon : this.props.openIcon)}
+                    iconStyle={'small'}
+                    onClick={this.toggle.bind(this)}
+                />
+            );
+        }
 
         return (
             <div className={helpers.className('dropdown', this.props.style)+(this.state.isOpen ? ' dropdown--open' : '')+(' dropdown--'+this.state.dropDirection)} ref={this.dropdownRef}>
                 <div className="dropdown__trigger">
-                    <button className={'dropdown__button'} onClick={this.toggle.bind(this)} type={'button'}>
-                        {label}
-                        {this.props.text}
-                        <span className={'dropdown__icon'}>
-                            <Icon name={(this.state.isOpen ? this.props.closeIcon : this.props.openIcon)} />
-                        </span>
-                    </button>
+                    {button}
                 </div>
                 <div className="dropdown__content">
                     {this.props.children}

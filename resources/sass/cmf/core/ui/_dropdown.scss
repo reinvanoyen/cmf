@@ -70,7 +70,7 @@
     @include element(content)
     {
         position: absolute;
-        z-index: 2;
+        z-index: 9999;
         right: 0;
         margin-top: $rule / 3;
         padding: $rule / 3;

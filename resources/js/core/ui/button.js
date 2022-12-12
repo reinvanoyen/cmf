@@ -5,6 +5,7 @@ import Icon from "./icon";
 class Button extends React.Component {
 
     static defaultProps = {
+        'label': '',
         'text': '',
         'type': 'button',
         'style': 'default',
@@ -14,7 +15,7 @@ class Button extends React.Component {
 
     onClick(e) {
         e.stopPropagation();
-        this.props.onClick();
+        this.props.onClick(e);
     }
 
     render() {
@@ -29,9 +30,12 @@ class Button extends React.Component {
             );
         }
 
+        let label = (this.props.label ? <span className={'button__label'}>{this.props.label}</span> : null);
+
         return (
             <button className={helpers.className('button', this.props.style)+' button--has-icon'} onClick={e => this.onClick(e)} type={this.props.type}>
                 {icon}
+                {label}
                 {this.props.text}
             </button>
         );
