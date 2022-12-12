@@ -269,8 +269,8 @@ export default class ContentBlocks extends React.Component {
                         <div className="content-block__header">
                             {blockData.name}
                             <div className="content-block__actions">
-                                {( i > 0 ? <IconButton style={'transparent'} iconStyle={'small'} name={'arrow_upward'} onClick={e => this.sortUp(i)} /> : null)}
-                                {( i < this.state.addedBlocks.length - 1 ? <IconButton style={'transparent'} iconStyle={'small'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/> : null)}
+                                <IconButton style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'small'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />
+                                <IconButton style={'transparent'} iconStyle={'small'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/>
                                 <IconButton style={'transparent'} iconStyle={'small'} name={'delete'} onClick={e => this.removeBlock(i, blockData.id)} />
                             </div>
                         </div>

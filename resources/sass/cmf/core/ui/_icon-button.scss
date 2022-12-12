@@ -25,4 +25,10 @@
             background-color: transparent;
         }
     }
+
+    @include modifier(disabled)
+    {
+        opacity: .2;
+        cursor: default;
+    }
 }

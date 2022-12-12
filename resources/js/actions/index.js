@@ -263,12 +263,8 @@ class Index extends React.Component {
 
     render() {
 
-        if (this.state.isLoading) {
-            return <Loader />;
-        }
-
         return (
-            <div className={'index index--'+this.props.style}>
+            <div className={'index index--'+this.props.style+(this.state.isLoading ? ' index--loading' : '')}>
                 {this.renderHeader()}
                 {this.renderRows()}
                 {this.renderFooter()}

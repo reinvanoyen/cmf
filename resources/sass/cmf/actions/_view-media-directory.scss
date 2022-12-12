@@ -3,6 +3,12 @@
     border-radius: $border-radius-1;
     border: $border-width-2 solid $color03;
     background-color: $color01;
+    transition: opacity .5s;
+
+    @include modifier(loading)
+    {
+        opacity: 0;
+    }
 
     @include element(header)
     {

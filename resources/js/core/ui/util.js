@@ -20,8 +20,9 @@ export default {
         let cancelCb = opts.cancel;
 
         // Build Confirm HTMLElement
-        let promptEl = document.createElement('div');
+        let promptEl = document.createElement('form');
         promptEl.classList.add('prompt');
+        promptEl.setAttribute('action', '');
 
         let promptHeaderEl = document.createElement('div');
         promptHeaderEl.classList.add('prompt__header');
@@ -46,6 +47,14 @@ export default {
         let promptFooterEl = document.createElement('div');
         promptFooterEl.classList.add('prompt__footer');
 
+        let confirm = e => {
+            close();
+            if (confirmCb) {
+                confirmCb(promptInputEl.value);
+            }
+            e.preventDefault();
+        }
+
         let promptCancelBtnEl = this.button(cancelButtonText, e => {
             close();
             if (cancelCb) {
@@ -53,12 +62,9 @@ export default {
             }
         });
 
-        let promptConfirmBtnEl = this.button(confirmButtonText, e => {
-            close();
-            if (confirmCb) {
-                confirmCb(promptInputEl.value);
-            }
-        });
+        let promptConfirmBtnEl = this.button(confirmButtonText, confirm);
+
+        promptEl.addEventListener('submit', confirm);
 
         promptCancelBtnEl.classList.add('button--secondary');
 
@@ -130,11 +136,14 @@ export default {
         let overlayEl = this.overlay();
         overlayEl.appendChild(confirmEl);
 
+        confirmConfirmBtnEl.focus();
+
         let close = () => document.body.removeChild(overlayEl);
     },
     button(text, onClick = null) {
 
         let buttonEl = document.createElement('button');
+        buttonEl.setAttribute('type', 'button');
         buttonEl.classList.add('button');
         buttonEl.textContent = text;
 

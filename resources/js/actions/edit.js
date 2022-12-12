@@ -29,6 +29,7 @@ class Edit extends React.Component {
         }
 
         this.state = {
+            isLoading: true,
             data: {},
             formErrors: {}
         };
@@ -45,7 +46,8 @@ class Edit extends React.Component {
         api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
             // Set the data to the state
             this.setState({
-                data: response.data.data
+                data: response.data.data,
+                isLoading: false
             });
         });
     }
@@ -71,9 +73,6 @@ class Edit extends React.Component {
                 // Ready the form
                 this.formRef.current.ready();
 
-
-                console.log(response.data.errors);
-
                 // Set the error messages
                 this.setState({
                     formErrors: response.data.errors
@@ -88,7 +87,7 @@ class Edit extends React.Component {
 
     render() {
         return (
-            <div className="edit">
+            <div className={'edit'+(this.state.isLoading ? ' edit--loading' : '')}>
                 <Form
                     ref={this.formRef}
                     errors={this.state.formErrors}

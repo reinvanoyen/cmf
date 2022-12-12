@@ -410,7 +410,7 @@ class ViewMediaDirectory extends React.Component {
 
     render() {
         return (
-            <div className={'view-media-directory'+(this.state.isDragOver ? ' view-media-directory--drag-over' : '')}>
+            <div className={'view-media-directory'+(this.state.isLoading ? ' view-media-directory--loading' : '')+(this.state.isDragOver ? ' view-media-directory--drag-over' : '')}>
                 <div className="view-media-directory__header">
                     <div className="view-media-directory__header-title">
                         {this.renderBreadcrumbs()}

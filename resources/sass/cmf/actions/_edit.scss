@@ -1,4 +1,9 @@
 @include block(edit)
 {
-    //
+    transition: opacity .5s;
+
+    @include modifier(loading)
+    {
+        opacity: 0;
+    }
 }
