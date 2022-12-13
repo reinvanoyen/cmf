@@ -803,6 +803,15 @@ body.api-loading .page:after {
   overflow-y: auto;
 }
 
+.dropdown--left .dropdown__content {
+  right: 0;
+}
+
+.dropdown--right .dropdown__content {
+  left: 0;
+  right: initial;
+}
+
 .dropdown--up .dropdown__content {
   top: -0.6666666667rem;
   margin-top: 0;
@@ -3535,7 +3544,7 @@ body.api-loading .page:after {
 }
 
 .content-blocks__item {
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .content-blocks__item:last-child {
@@ -3546,14 +3555,7 @@ body.api-loading .page:after {
   display: flex;
   justify-content: center;
   align-content: center;
-  margin-bottom: 2rem;
-}
-
-.content-blocks__inline-add-knob {
-  /*
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);*/
+  margin-bottom: 0.5rem;
 }
 
 .content-blocks__component {

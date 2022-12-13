@@ -83,6 +83,17 @@
         max-height: 50vh;
         overflow-y: auto;
 
+        @include block-modifier(left)
+        {
+            right: 0;
+        }
+
+        @include block-modifier(right)
+        {
+            left: 0;
+            right: initial;
+        }
+
         @include block-modifier(down)
         {
             // for ref

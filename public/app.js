@@ -34547,7 +34547,8 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
         text: 'New directory'
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_core_ui_dropdown__WEBPACK_IMPORTED_MODULE_10__["default"], {
         text: 'Upload',
-        style: ['primary', 'small']
+        style: ['primary', 'small'],
+        autoClose: true
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_core_ui_file_uploader__WEBPACK_IMPORTED_MODULE_12__["default"], {
         directory: this.state.currentDirectory ? this.state.currentDirectory.id : null,
         onUploadDone: this.handleUploadDone.bind(this)
@@ -36402,25 +36403,36 @@ var ContentBlocks = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "addBlock",
     value: function addBlock(type) {
+      var atIndex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var blockDefinition = this.getBlockDefinition(type);
       var addedBlocks = this.state.addedBlocks;
-      addedBlocks.push({
+      var block = {
         id: null,
         name: blockDefinition.name,
         type: blockDefinition.type,
         components: blockDefinition.components,
         data: {}
-      });
+      };
+
+      if (atIndex !== null) {
+        console.log(atIndex);
+        addedBlocks.splice(atIndex, 0, block);
+        _core_ui_util__WEBPACK_IMPORTED_MODULE_6__["default"].notify(this.props.singular + ' inserted');
+      } else {
+        addedBlocks.push(block);
+        _core_ui_util__WEBPACK_IMPORTED_MODULE_6__["default"].notify(this.props.singular + ' added');
+      }
+
       this.setState({
         addedBlocks: addedBlocks
       });
-      _core_ui_util__WEBPACK_IMPORTED_MODULE_6__["default"].notify(this.props.singular + ' added');
     }
   }, {
     key: "renderAddBlockDropdown",
     value: function renderAddBlockDropdown(text) {
       var _this5 = this;
 
+      var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var types = Object.getOwnPropertyNames(this.props.blocks);
 
       if (!types.length) {
@@ -36428,13 +36440,23 @@ var ContentBlocks = /*#__PURE__*/function (_React$Component) {
       }
 
       if (types.length === 1) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_button__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        if (text) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_button__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            onClick: function onClick(e) {
+              return _this5.addBlock(types[0], index);
+            },
+            icon: 'add',
+            style: ['small', 'secondary'],
+            text: text
+          });
+        }
+
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_icon_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          name: 'post_add',
+          iconStyle: 'small',
           onClick: function onClick(e) {
-            return _this5.addBlock(types[0]);
-          },
-          icon: 'add',
-          style: ['small', 'secondary'],
-          text: 'Add ' + this.props.singular
+            return _this5.addBlock(types[0], index);
+          }
         });
       }
 
@@ -36445,12 +36467,16 @@ var ContentBlocks = /*#__PURE__*/function (_React$Component) {
         }
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_dropdown__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        autoClose: true,
         text: text,
         openIcon: 'post_add',
-        closeIcon: 'post_add'
+        closeIcon: 'post_add',
+        key: index
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_link_list__WEBPACK_IMPORTED_MODULE_3__["default"], {
         links: links,
-        onClick: this.addBlock.bind(this)
+        onClick: function onClick(type) {
+          return _this5.addBlock(type, index);
+        }
       }));
     }
   }, {
@@ -36482,18 +36508,18 @@ var ContentBlocks = /*#__PURE__*/function (_React$Component) {
 
         var inlineAddBlock = null;
 
-        if (i !== 0 && _this6.state.addedBlocks.length > 1) {
+        if (_this6.state.addedBlocks.length > 1 && i < _this6.state.addedBlocks.length - 1) {
           inlineAddBlock = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "content-blocks__inline-add"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "content-blocks__inline-add-knob"
-          }, _this6.renderAddBlockDropdown()));
+          }, _this6.renderAddBlockDropdown(null, i + 1)));
         }
 
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "content-blocks__item",
           key: i
-        }, inlineAddBlock, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_collapsible__WEBPACK_IMPORTED_MODULE_9__["default"], {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_collapsible__WEBPACK_IMPORTED_MODULE_9__["default"], {
           title: blockData.name,
           actions: [/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_core_ui_icon_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
             key: 0,
@@ -36522,7 +36548,7 @@ var ContentBlocks = /*#__PURE__*/function (_React$Component) {
           })]
         }, componentList.map(function (obj) {
           return obj.component;
-        })));
+        })), inlineAddBlock);
       });
     }
   }, {
@@ -43241,7 +43267,8 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       isOpen: false,
-      dropDirection: 'down'
+      dropDirectionX: 'right',
+      dropDirectionY: 'down'
     };
     _this.dropdownRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.handleDocumentClick = _this.onDocumentClick.bind(_assertThisInitialized(_this));
@@ -43266,37 +43293,34 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "onDocumentClick",
     value: function onDocumentClick(e) {
-      if (!this.dropdownRef.current.contains(e.target)) {
+      if (this.props.autoClose) {
+        this.close();
+      } else if (!this.dropdownRef.current.contains(e.target)) {
         this.close();
       }
     }
   }, {
     key: "toggle",
     value: function toggle(e) {
-      var direction;
-      var centerY = window.innerHeight / 2;
-
-      if (e.clientY > centerY) {
-        direction = 'up';
-      } else {
-        direction = 'down';
-      }
-
       e.stopPropagation();
+      var centerY = window.innerHeight / 2;
+      var centerX = window.innerWidth / 2;
 
       if (this.state.isOpen) {
         this.close();
       } else {
-        this.open(direction);
+        this.open(e.clientX > centerX ? 'left' : 'right', e.clientY > centerY ? 'up' : 'down');
       }
     }
   }, {
     key: "open",
     value: function open() {
-      var direction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'down';
+      var directionX = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'right';
+      var directionY = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'down';
       this.setState({
         isOpen: true,
-        dropDirection: direction
+        dropDirectionX: directionX,
+        dropDirectionY: directionY
       });
       this.bindDocumentClick();
     }
@@ -43328,7 +43352,7 @@ var Dropdown = /*#__PURE__*/function (_React$Component) {
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: _util_helpers__WEBPACK_IMPORTED_MODULE_2__["default"].className('dropdown', this.props.style) + (this.state.isOpen ? ' dropdown--open' : '') + (' dropdown--' + this.state.dropDirection),
+        className: _util_helpers__WEBPACK_IMPORTED_MODULE_2__["default"].className('dropdown', this.props.style) + (this.state.isOpen ? ' dropdown--open' : '') + (' dropdown--' + this.state.dropDirectionX) + (' dropdown--' + this.state.dropDirectionY),
         ref: this.dropdownRef
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown__trigger"
@@ -43345,6 +43369,7 @@ _defineProperty(Dropdown, "defaultProps", {
   label: '',
   text: '',
   style: null,
+  autoClose: false,
   openIcon: 'expand_more',
   closeIcon: 'expand_less'
 });

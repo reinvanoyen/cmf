@@ -184,24 +184,32 @@ export default class ContentBlocks extends React.Component {
         });
     }
 
-    addBlock(type) {
+    addBlock(type, atIndex = null) {
 
         let blockDefinition = this.getBlockDefinition(type);
         let addedBlocks = this.state.addedBlocks;
 
-        addedBlocks.push({
+        let block = {
             id: null,
             name: blockDefinition.name,
             type: blockDefinition.type,
             components: blockDefinition.components,
             data: {}
-        });
+        };
+
+        if (atIndex !== null) {
+            console.log(atIndex);
+            addedBlocks.splice(atIndex, 0, block);
+            util.notify(this.props.singular+' inserted');
+        } else {
+            addedBlocks.push(block);
+            util.notify(this.props.singular+' added');
+        }
 
         this.setState({ addedBlocks });
-        util.notify(this.props.singular+' added');
     }
 
-    renderAddBlockDropdown(text) {
+    renderAddBlockDropdown(text, index = null) {
 
         let types = Object.getOwnPropertyNames(this.props.blocks);
 
@@ -210,12 +218,21 @@ export default class ContentBlocks extends React.Component {
         }
 
         if (types.length === 1) {
+            if (text) {
+                return (
+                    <Button
+                        onClick={e => this.addBlock(types[0], index)}
+                        icon={'add'}
+                        style={['small', 'secondary']}
+                        text={text}
+                    />
+                );
+            }
             return (
-                <Button
-                    onClick={e => this.addBlock(types[0])}
-                    icon={'add'}
-                    style={['small', 'secondary']}
-                    text={'Add '+this.props.singular}
+                <IconButton
+                    name={'post_add'}
+                    iconStyle={'small'}
+                    onClick={e => this.addBlock(types[0], index)}
                 />
             );
         }
@@ -229,8 +246,8 @@ export default class ContentBlocks extends React.Component {
         });
 
         return (
-            <Dropdown text={text} openIcon={'post_add'} closeIcon={'post_add'}>
-                <LinkList links={links} onClick={this.addBlock.bind(this)} />
+            <Dropdown autoClose={true} text={text} openIcon={'post_add'} closeIcon={'post_add'} key={index}>
+                <LinkList links={links} onClick={type => this.addBlock(type, index)} />
             </Dropdown>
         );
     }
@@ -261,11 +278,11 @@ export default class ContentBlocks extends React.Component {
 
             let inlineAddBlock = null;
 
-            if (i !== 0 && this.state.addedBlocks.length > 1) {
+            if (this.state.addedBlocks.length > 1 && i < this.state.addedBlocks.length - 1) {
                 inlineAddBlock = (
                     <div className="content-blocks__inline-add">
                         <div className="content-blocks__inline-add-knob">
-                            {this.renderAddBlockDropdown()}
+                            {this.renderAddBlockDropdown(null, (i + 1))}
                         </div>
                     </div>
                 );
@@ -273,7 +290,6 @@ export default class ContentBlocks extends React.Component {
 
             return (
                 <div className="content-blocks__item" key={i}>
-                    {inlineAddBlock}
                     <Collapsible title={blockData.name} actions={[
                         <IconButton key={0} style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />,
                         <IconButton key={1} style={['transparent', (i < this.state.addedBlocks.length - 1 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/>,
@@ -281,6 +297,7 @@ export default class ContentBlocks extends React.Component {
                     ]}>
                         {componentList.map(obj => obj.component)}
                     </Collapsible>
+                    {inlineAddBlock}
                 </div>
             );
         });

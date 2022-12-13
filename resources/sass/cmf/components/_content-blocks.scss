@@ -12,7 +12,7 @@
 
     @include element(item)
     {
-        margin-bottom: $rule;
+        margin-bottom: $rule / 4;
 
         &:last-child
         {
@@ -25,15 +25,12 @@
         display: flex;
         justify-content: center;
         align-content: center;
-        margin-bottom: $rule;
+        margin-bottom: $rule / 4;
     }
 
     @include element(inline-add-knob)
     {
-        /*
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);*/
+        //
     }
 
     @include element(component)

@@ -423,7 +423,7 @@ class ViewMediaDirectory extends React.Component {
                             onClick={this.promptCreateDirectory.bind(this)}
                             text={'New directory'}
                         />
-                        <Dropdown text={'Upload'} style={['primary', 'small']}>
+                        <Dropdown text={'Upload'} style={['primary', 'small']} autoClose={true}>
                             <FileUploader
                                 directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
                                 onUploadDone={this.handleUploadDone.bind(this)}

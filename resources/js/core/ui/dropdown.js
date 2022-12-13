@@ -10,6 +10,7 @@ class Dropdown extends React.Component {
         label: '',
         text: '',
         style: null,
+        autoClose: false,
         openIcon: 'expand_more',
         closeIcon: 'expand_less'
     };
@@ -19,7 +20,8 @@ class Dropdown extends React.Component {
 
         this.state = {
             isOpen: false,
-            dropDirection: 'down'
+            dropDirectionX: 'right',
+            dropDirectionY: 'down'
         };
 
         this.dropdownRef = React.createRef();
@@ -39,34 +41,32 @@ class Dropdown extends React.Component {
     }
 
     onDocumentClick(e) {
-        if (! this.dropdownRef.current.contains(e.target)) {
+        if (this.props.autoClose) {
+            this.close();
+        } else if (! this.dropdownRef.current.contains(e.target)) {
             this.close();
         }
     }
 
     toggle(e) {
 
-        let direction;
+        e.stopPropagation();
 
         let centerY = window.innerHeight / 2;
-        if (e.clientY > centerY) {
-            direction = 'up';
-        } else {
-            direction = 'down';
-        }
+        let centerX = window.innerWidth / 2;
 
-        e.stopPropagation();
         if (this.state.isOpen) {
             this.close();
         } else {
-            this.open(direction);
+            this.open((e.clientX > centerX ? 'left' : 'right'), (e.clientY > centerY ? 'up' : 'down'));
         }
     }
 
-    open(direction = 'down') {
+    open(directionX = 'right', directionY = 'down') {
         this.setState({
             isOpen: true,
-            dropDirection: direction
+            dropDirectionX: directionX,
+            dropDirectionY: directionY
         });
         this.bindDocumentClick();
     }
@@ -100,7 +100,7 @@ class Dropdown extends React.Component {
         }
 
         return (
-            <div className={helpers.className('dropdown', this.props.style)+(this.state.isOpen ? ' dropdown--open' : '')+(' dropdown--'+this.state.dropDirection)} ref={this.dropdownRef}>
+            <div className={helpers.className('dropdown', this.props.style)+(this.state.isOpen ? ' dropdown--open' : '')+(' dropdown--'+this.state.dropDirectionX)+(' dropdown--'+this.state.dropDirectionY)} ref={this.dropdownRef}>
                 <div className="dropdown__trigger">
                     {button}
                 </div>
