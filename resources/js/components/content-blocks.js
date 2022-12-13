@@ -8,6 +8,7 @@ import util from "../core/ui/util";
 import IconButton from "../core/ui/icon-button";
 import Button from '../core/ui/button';
 import Collapsible from "../core/ui/collapsible";
+import Divider from "../core/ui/divider";
 
 export default class ContentBlocks extends React.Component {
 
@@ -198,7 +199,6 @@ export default class ContentBlocks extends React.Component {
         };
 
         if (atIndex !== null) {
-            console.log(atIndex);
             addedBlocks.splice(atIndex, 0, block);
             util.notify(this.props.singular+' inserted');
         } else {
@@ -237,19 +237,21 @@ export default class ContentBlocks extends React.Component {
             );
         }
 
-        let links = [];
-
-        types.forEach(type => {
-            if (this.props.blocks.hasOwnProperty(type)) {
-                links.push([this.props.blocks[type].name, type]);
-            }
-        });
-
         return (
             <Dropdown autoClose={true} text={text} openIcon={'post_add'} closeIcon={'post_add'} key={index}>
-                <LinkList links={links} onClick={type => this.addBlock(type, index)} />
+                <LinkList links={this.getTypeLinks()} onClick={type => this.addBlock(type, index)} />
             </Dropdown>
         );
+    }
+
+    optionDropdownClick(action, index, blockId) {
+        if (action === 'delete') {
+            this.removeBlock(index, blockId);
+        }
+    }
+
+    getTypeLinks(prefix = '', suffix = '') {
+        return Object.getOwnPropertyNames(this.props.blocks).map(type => [prefix+this.props.blocks[type].name+suffix, type]);
     }
 
     renderContentBlocks() {
@@ -276,28 +278,19 @@ export default class ContentBlocks extends React.Component {
 
             this.componentLists.push([componentList, blockData.id, blockData.type]);
 
-            let inlineAddBlock = null;
-
-            if (this.state.addedBlocks.length > 1 && i < this.state.addedBlocks.length - 1) {
-                inlineAddBlock = (
-                    <div className="content-blocks__inline-add">
-                        <div className="content-blocks__inline-add-knob">
-                            {this.renderAddBlockDropdown(null, (i + 1))}
-                        </div>
-                    </div>
-                );
-            }
-
             return (
                 <div className="content-blocks__item" key={i}>
                     <Collapsible title={blockData.name} actions={[
                         <IconButton key={0} style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />,
                         <IconButton key={1} style={['transparent', (i < this.state.addedBlocks.length - 1 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/>,
-                        <IconButton key={2} style={'transparent'} iconStyle={'mini'} name={'delete'} onClick={e => this.removeBlock(i, blockData.id)} />
+                        <Dropdown key={3} autoClose={true} openIcon={'more_horiz'} closeIcon={'more_horiz'}>
+                            <LinkList links={this.getTypeLinks('Insert ', ' below')} onClick={type => this.addBlock(type, (i+1))} />
+                            <Divider />
+                            <LinkList style={'warning'} links={[['Delete '+this.props.singular, 'delete']]} onClick={action => this.optionDropdownClick(action, i, blockData.id)} />
+                        </Dropdown>
                     ]}>
                         {componentList.map(obj => obj.component)}
                     </Collapsible>
-                    {inlineAddBlock}
                 </div>
             );
         });

@@ -13,6 +13,11 @@
         transition: background-color .25s;
         user-select: none;
 
+        @include block-modifier(warning)
+        {
+            color: $color14;
+        }
+
         &:last-child
         {
             margin-bottom: 0;

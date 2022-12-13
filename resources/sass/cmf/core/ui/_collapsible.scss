@@ -16,6 +16,7 @@
 
     @include element(title)
     {
+        padding-left: $rule / 2;
         width: 100%;
         text-align: left;
     }

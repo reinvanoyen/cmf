@@ -20,19 +20,6 @@
         }
     }
 
-    @include element(inline-add)
-    {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        margin-bottom: $rule / 4;
-    }
-
-    @include element(inline-add-knob)
-    {
-        //
-    }
-
     @include element(component)
     {
         margin-bottom: $rule;

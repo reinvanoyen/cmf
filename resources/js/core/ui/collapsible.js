@@ -28,7 +28,7 @@ export default class Collapsible extends React.Component {
         return (
             <div className={'collapsible'+(this.state.isOpen ? ' collapsible--open' : ' collapsible--closed')}>
                 <div className="collapsible__header">
-                    <IconButton name={(this.state.isOpen ? 'remove' : 'add')} style={'transparent'} iconStyle={'mini'} onClick={this.toggle.bind(this)} />
+                    <IconButton name={(this.state.isOpen ? 'remove' : 'add')} iconStyle={'mini'} onClick={this.toggle.bind(this)} />
                     <div className="collapsible__title">
                         {this.props.title}
                     </div>

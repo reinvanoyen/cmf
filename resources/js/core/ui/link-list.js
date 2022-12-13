@@ -1,9 +1,11 @@
 import React from 'react';
+import helpers from "../../util/helpers";
 
 class LinkList extends React.Component {
 
     static defaultProps = {
         links: [],
+        style: 'default',
         onClick: actionPath => {}
     };
 
@@ -24,7 +26,7 @@ class LinkList extends React.Component {
 
     render() {
         return (
-            <div className={'link-list'}>
+            <div className={helpers.className('link-list', this.props.style)}>
                 {this.renderLinks()}
             </div>
         );

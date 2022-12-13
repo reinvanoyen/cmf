@@ -122,9 +122,9 @@ class JsonField extends React.Component {
                         {componentList.map(obj => obj.component)}
                     </div>
                     <div className="json-field__item-actions">
-                        {(i > 0 ? <IconButton style={'transparent'} iconStyle={'small'} name={'arrow_upward'} onClick={e => this.sortUp(i)}/> : null)}
-                        {(i < this.state.addedItems.length - 1 ? <IconButton style={'transparent'} iconStyle={'small'} name={'arrow_downward'} onClick={e => this.sortDown(i)} /> : null)}
-                        <IconButton style={'transparent'} iconStyle={'small'} name={'delete'} onClick={e => this.removeItem(i)} />
+                        <IconButton style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />
+                        <IconButton style={['transparent', (i < this.state.addedItems.length - 1 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_downward'} onClick={e => this.sortDown(i)} />
+                        <IconButton style={'transparent'} iconStyle={'mini'} name={'delete'} onClick={e => this.removeItem(i)} />
                     </div>
                 </div>
             );
