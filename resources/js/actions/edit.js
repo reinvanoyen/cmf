@@ -3,7 +3,6 @@ import components from "../rendering/components";
 import Form from "../core/ui/form";
 import api from "../api/api";
 import path from "../state/path";
-import http from "../util/http";
 import ui from "../core/ui/util";
 
 class Edit extends React.Component {
@@ -11,6 +10,7 @@ class Edit extends React.Component {
     static defaultProps = {
         type: '',
         components: [],
+        sidebar: [],
         path: {},
         id: 0,
         data: {},
@@ -85,6 +85,14 @@ class Edit extends React.Component {
         path.handleRedirect(this.props, {id: response.data.id});
     }
 
+    renderContent() {
+        return components.renderComponents(this.props.components, this.state.data, this.props.path);
+    }
+
+    renderSidebar() {
+        return components.renderComponents(this.props.sidebar, this.state.data, this.props.path);
+    }
+
     render() {
         return (
             <div className={'edit'+(this.state.isLoading ? ' edit--loading' : '')}>
@@ -93,8 +101,9 @@ class Edit extends React.Component {
                     errors={this.state.formErrors}
                     onSubmit={this.save.bind(this)}
                     submitButtonText={`Save ${this.props.singular}`}
+                    sidebar={this.renderSidebar()}
                 >
-                    {components.renderComponents(this.props.components, this.state.data, this.props.path)}
+                    {this.renderContent()}
                 </Form>
             </div>
         );

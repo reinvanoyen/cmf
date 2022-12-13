@@ -13,6 +13,11 @@ class Edit extends Action
     use HasSingularPlural;
 
     /**
+     * @var array $sidebar
+     */
+    private $sidebar = [];
+
+    /**
      * Edit constructor.
      * @param string $meta
      * @param array $components
@@ -34,13 +39,24 @@ class Edit extends Action
     }
 
     /**
+     * @param array $components
+     * @return $this
+     */
+    public function sidebar(array $components)
+    {
+        $this->sidebar = $components;
+        $this->export('sidebar', $this->sidebar);
+        return $this;
+    }
+
+    /**
      * @return array|mixed
      */
     public function apiLoad(Request $request)
     {
         $modelClass = $this->getMeta()::getModel();
-
-        ModelResource::provision($this->components);
+        $components = (empty($this->sidebar) ? $this->components : array_merge($this->components, $this->sidebar));
+        ModelResource::provision($components);
 
         return new ModelResource($modelClass::findOrFail($request->get('id')));
     }
@@ -59,6 +75,10 @@ class Edit extends Action
             $validationRules = array_merge($validationRules, $component->registerValidationRules($validationRules));
         }
 
+        foreach ($this->sidebar as $component) {
+            $validationRules = array_merge($validationRules, $component->registerValidationRules($validationRules));
+        }
+
         $validationRules['id'] = 'required|integer';
 
         $request->validate($validationRules);
@@ -70,9 +90,14 @@ class Edit extends Action
             $component->save($model, $request);
         }
 
+        foreach ($this->sidebar as $component) {
+            $component->save($model, $request);
+        }
+
         $model->save();
 
-        ModelResource::provision($this->components);
+        $components = (empty($this->sidebar) ? $this->components : array_merge($this->components, $this->sidebar));
+        ModelResource::provision($components);
 
         return new ModelResource($model);
     }

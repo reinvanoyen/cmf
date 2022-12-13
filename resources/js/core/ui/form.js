@@ -7,6 +7,7 @@ export default class Form extends React.Component {
         realForm: true,
         errors: {},
         submitButtonText: 'Submit',
+        sidebar: [],
         onSubmit: () => {}
     };
 
@@ -19,15 +20,18 @@ export default class Form extends React.Component {
         };
 
         this.childRefs = [];
+        this.sidebarRefs = [];
 
-        if (! this.props.children.length) {
+        if (! this.props.children.length && ! this.props.sidebar.length) {
             return;
         }
 
         if (this.props.children.length) {
-            this.props.children.forEach(() => {
-                this.childRefs.push(React.createRef());
-            });
+            this.props.children.forEach(() => this.childRefs.push(React.createRef()));
+        }
+
+        if (this.props.sidebar.length) {
+            this.props.sidebar.forEach(() => this.sidebarRefs.push(React.createRef()));
         }
     }
 
@@ -58,12 +62,16 @@ export default class Form extends React.Component {
 
         let data = {};
 
-        if (! this.props.children.length) {
+        if (! this.props.children.length && ! this.props.sidebar.length) {
             return data;
         }
 
         this.props.children.forEach((child, i) => {
             this.childRefs[i].current.handleSubmit(data);
+        });
+
+        this.props.sidebar.forEach((child, i) => {
+            this.sidebarRefs[i].current.handleSubmit(data);
         });
 
         return data;
@@ -89,17 +97,54 @@ export default class Form extends React.Component {
         });
     }
 
+    renderSidebar() {
+
+        if (! this.props.sidebar.length) {
+            return null;
+        }
+
+        return this.props.sidebar.map((child, i) => {
+            const TagName = child.type;
+            return (
+                <div key={i} className="form__sidebar-input">
+                    <TagName ref={this.sidebarRefs[i]} {...child.props} errors={this.props.errors} />
+                </div>
+            );
+        });
+    }
+
     render() {
+
+        let sidebar;
+        let footer;
+
+        if (this.props.sidebar.length) {
+            sidebar = (
+                <div className="form__sidebar">
+                    <div className="form__sidebar-save">
+                        <Button text={this.props.submitButtonText} type={'submit'} style={'full'} />
+                    </div>
+                    {this.renderSidebar()}
+                </div>
+            );
+        } else {
+            footer = (
+                <div className="form__footer">
+                    <Button text={this.props.submitButtonText} type={'submit'} />
+                </div>
+            );
+        }
 
         if (this.props.realForm) {
             return (
                 <form className={'form'+(this.state.isSubmitting ? ' form--submitting' : '')} onSubmit={e => this.onSubmit(e)}>
-                    <div className="form__inputs">
-                        {this.renderChildren()}
+                    <div className="form__content">
+                        <div className="form__inputs">
+                            {this.renderChildren()}
+                        </div>
+                        {sidebar}
                     </div>
-                    <div className="form__footer">
-                        <Button text={this.props.submitButtonText} type={'submit'} />
-                    </div>
+                    {footer}
                 </form>
             );
         }

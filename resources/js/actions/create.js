@@ -2,7 +2,6 @@ import React from 'react';
 import components from "../rendering/components";
 import Form from "../core/ui/form";
 import api from "../api/api";
-import http from "../util/http";
 import path from "../state/path";
 import ui from "../core/ui/util";
 
@@ -11,6 +10,7 @@ class Create extends React.Component {
     static defaultProps = {
         type: '',
         components: [],
+        sidebar: [],
         path: {},
         id: 0,
         data: {},
@@ -71,6 +71,14 @@ class Create extends React.Component {
         path.handleRedirect(this.props, {id: response.data.id});
     }
 
+    renderContent() {
+        return components.renderComponents(this.props.components, this.state.data, this.props.path);
+    }
+
+    renderSidebar() {
+        return components.renderComponents(this.props.sidebar, this.state.data, this.props.path);
+    }
+
     render() {
         return (
             <div className="create">
@@ -79,8 +87,9 @@ class Create extends React.Component {
                     errors={this.state.formErrors}
                     onSubmit={this.save.bind(this)}
                     submitButtonText={`Create ${this.props.singular}`}
+                    sidebar={this.renderSidebar()}
                 >
-                    {components.renderComponents(this.props.components, this.state.data, this.props.path)}
+                    {this.renderContent()}
                 </Form>
             </div>
         );

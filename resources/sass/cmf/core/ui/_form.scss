@@ -2,9 +2,46 @@
 {
     position: relative;
 
+    @include element(content)
+    {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        position: relative;
+    }
+
     @include element(inputs)
     {
-        // for ref
+        flex: 1;
+    }
+
+    @include element(sidebar)
+    {
+        position: sticky;
+        top: $rule / 2;
+        width: $nav-width * 1.5;
+        background-color: $color04;
+        padding: $rule $rule / 2;
+        margin-left: $rule;
+    }
+
+    @include element(sidebar-save)
+    {
+        margin-bottom: $rule;
+    }
+
+    @include element(sidebar-input)
+    {
+        padding-bottom: $rule / 3;
+        margin-bottom: $rule / 3;
+        border-bottom: 1px solid $color03;
+
+        &:last-child
+        {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
     }
 
     @include element(input)

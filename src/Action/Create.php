@@ -13,6 +13,11 @@ class Create extends Action
     use HasSingularPlural;
 
     /**
+     * @var array $sidebar
+     */
+    private $sidebar = [];
+
+    /**
      * @var int $restrictByFk
      */
     private $restrictByFk;
@@ -41,6 +46,17 @@ class Create extends Action
     public function type(): string
     {
         return 'create';
+    }
+
+    /**
+     * @param array $components
+     * @return $this
+     */
+    public function sidebar(array $components)
+    {
+        $this->sidebar = $components;
+        $this->export('sidebar', $this->sidebar);
+        return $this;
     }
 
     /**
@@ -78,6 +94,9 @@ class Create extends Action
         foreach ($this->components as $component) {
             $validationRules = array_merge($validationRules, $component->registerValidationRules($validationRules));
         }
+        foreach ($this->sidebar as $component) {
+            $validationRules = array_merge($validationRules, $component->registerValidationRules($validationRules));
+        }
 
         $request->validate($validationRules);
 
@@ -86,6 +105,9 @@ class Create extends Action
 
         // Save every component to the model
         foreach ($this->components as $component) {
+            $component->save($model, $request);
+        }
+        foreach ($this->sidebar as $component) {
             $component->save($model, $request);
         }
 
@@ -99,7 +121,8 @@ class Create extends Action
 
         $model->save();
 
-        ModelResource::provision($this->components);
+        $components = (empty($this->sidebar) ? $this->components : array_merge($this->components, $this->sidebar));
+        ModelResource::provision($components);
 
         return new ModelResource($model);
     }
