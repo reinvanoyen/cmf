@@ -113,6 +113,19 @@ class Select extends React.Component {
         });
     }
 
+    renderDropdownChildren() {
+
+        if (! this.props.children) {
+            return null;
+        }
+
+        return (
+            <div className="select__footer">
+                {this.props.children}
+            </div>
+        )
+    }
+
     renderDropdown() {
         if (this.state.isOpen) {
             let search;
@@ -139,6 +152,7 @@ class Select extends React.Component {
                             onChange={values => this.handleSelectionChange(values)}
                         />
                     </div>
+                    {this.renderDropdownChildren()}
                 </div>
             );
         }

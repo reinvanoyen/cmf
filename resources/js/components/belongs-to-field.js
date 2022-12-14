@@ -20,7 +20,8 @@ class BelongsToField extends React.Component {
         singular: '',
         tooltip: '',
         create: false,
-        createComponents: []
+        createComponents: [],
+        sidebarComponents: []
     };
 
     constructor(props) {
@@ -79,6 +80,7 @@ class BelongsToField extends React.Component {
     }
 
     handleChange(value) {
+        console.log(value);
         this.setState({value});
     }
 
@@ -128,6 +130,14 @@ class BelongsToField extends React.Component {
             });
     }
 
+    renderSidebarComponents() {
+        return components.renderComponents(this.props.sidebarComponents, {}, this.props.path)
+    }
+
+    renderCreateComponents() {
+        return components.renderComponents(this.props.createComponents, {}, this.props.path)
+    }
+
     renderCreateWidget() {
         if (this.state.isOpen) {
             return (
@@ -148,8 +158,9 @@ class BelongsToField extends React.Component {
                                 realForm={false}
                                 onSubmit={this.create.bind(this)}
                                 submitButtonText={`Create ${this.props.singular}`}
+                                sidebar={this.renderSidebarComponents()}
                             >
-                                {components.renderComponents(this.props.createComponents, {}, this.props.path)}
+                                {this.renderCreateComponents()}
                             </Form>
                         </div>
                     </div>
@@ -166,7 +177,7 @@ class BelongsToField extends React.Component {
                 <div className="belongs-to-field__btn">
                     <Button
                         icon={'add'}
-                        style={['small', 'secondary']}
+                        style={['full', 'small', 'secondary']}
                         text={'New '+this.props.singular}
                         onClick={this.open.bind(this)}
                     />
@@ -191,9 +202,10 @@ class BelongsToField extends React.Component {
                             options={this.state.options}
                             value={this.state.value}
                             onChange={value => this.handleChange(value)}
-                        />
+                        >
+                            {this.renderCreate()}
+                        </Select>
                     </div>
-                    {this.renderCreate()}
                 </div>
                 {this.renderCreateWidget()}
             </Field>

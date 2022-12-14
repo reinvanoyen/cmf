@@ -15,7 +15,7 @@ class Edit extends Action
     /**
      * @var array $sidebar
      */
-    private $sidebar = [];
+    private array $sidebar = [];
 
     /**
      * Edit constructor.
@@ -27,6 +27,7 @@ class Edit extends Action
         $this->meta($meta);
         $this->singular($meta::getSingular());
         $this->plural($meta::getPlural());
+        $this->sidebar($meta::sidebar());
         $this->components(count($components) ? $components : $meta::edit());
     }
 

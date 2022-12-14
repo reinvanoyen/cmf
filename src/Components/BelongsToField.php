@@ -42,6 +42,11 @@ class BelongsToField extends Component
     private $createComponents;
 
     /**
+     * @var array $sidebarComponents
+     */
+    private $sidebarComponents;
+
+    /**
      * @var string $model
      */
     private $model;
@@ -63,7 +68,7 @@ class BelongsToField extends Component
         $this->plural($this->meta::getPlural());
 
         $this->titleColumn($this->meta::getTitleColumn());
-        $this->create($this->meta::create());
+        $this->create($this->meta::create(), $this->meta::sidebar());
 
         foreach ($this->meta::getSorting() as $column => $method) {
             $this->orderBy($column, $method);
@@ -123,7 +128,7 @@ class BelongsToField extends Component
 
     /**
      * @param Request $request
-     * @return string
+     * @return ModelResource
      */
     public function apiCreate(Request $request)
     {
@@ -132,6 +137,9 @@ class BelongsToField extends Component
         // Validate
         $validationRules = [];
         foreach ($this->createComponents as $component) {
+            $validationRules = array_merge($validationRules, $component->registerValidationRules($validationRules));
+        }
+        foreach ($this->sidebarComponents as $component) {
             $validationRules = array_merge($validationRules, $component->registerValidationRules($validationRules));
         }
 
@@ -144,27 +152,35 @@ class BelongsToField extends Component
         foreach ($this->createComponents as $component) {
             $component->save($model, $request);
         }
+        foreach ($this->sidebarComponents as $component) {
+            $component->save($model, $request);
+        }
 
         $model->save();
 
-        ModelResource::provision($this->createComponents);
+        $components = (empty($this->sidebarComponents) ? $this->createComponents : array_merge($this->createComponents, $this->sidebarComponents));
+        ModelResource::provision($components);
 
         return new ModelResource($model);
     }
 
     /**
      * @param $create
+     * @param $sidebar
      * @return $this
      */
-    public function create($create)
+    public function create($create, $sidebar = [])
     {
         if (! $create) {
             $this->export('create', false);
             $this->export('createComponents', []);
+            $this->export('sidebarComponents', []);
         } else {
             $this->export('create', true);
             $this->createComponents = $create;
+            $this->sidebarComponents = $sidebar;
             $this->export('createComponents', $create);
+            $this->export('sidebarComponents', $sidebar);
         }
 
         return $this;
