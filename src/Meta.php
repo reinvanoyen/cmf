@@ -104,6 +104,14 @@ abstract class Meta
     /**
      * @return array
      */
+    public static function sidebar(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
     public static function index(): array
     {
         return [];

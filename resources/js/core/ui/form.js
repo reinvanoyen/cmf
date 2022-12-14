@@ -113,7 +113,7 @@ export default class Form extends React.Component {
         });
     }
 
-    render() {
+    renderContent() {
 
         let sidebar;
         let footer;
@@ -122,7 +122,7 @@ export default class Form extends React.Component {
             sidebar = (
                 <div className="form__sidebar">
                     <div className="form__sidebar-save">
-                        <Button text={this.props.submitButtonText} type={'submit'} style={'full'} />
+                        <Button text={this.props.submitButtonText} type={(this.props.realForm ? 'submit' : 'button')} onClick={this.props.realForm ? null : this.submit.bind(this)} style={'full'} />
                     </div>
                     {this.renderSidebar()}
                 </div>
@@ -130,33 +130,36 @@ export default class Form extends React.Component {
         } else {
             footer = (
                 <div className="form__footer">
-                    <Button text={this.props.submitButtonText} type={'submit'} />
+                    <Button text={this.props.submitButtonText} type={(this.props.realForm ? 'submit' : 'button')} onClick={this.props.realForm ? null : this.submit.bind(this)} />
                 </div>
             );
         }
 
+        return (
+            <React.Fragment>
+                <div className="form__content">
+                    <div className="form__inputs">
+                        {this.renderChildren()}
+                    </div>
+                    {sidebar}
+                </div>
+                {footer}
+            </React.Fragment>
+        )
+    }
+
+    render() {
         if (this.props.realForm) {
             return (
                 <form className={'form'+(this.state.isSubmitting ? ' form--submitting' : '')} onSubmit={e => this.onSubmit(e)}>
-                    <div className="form__content">
-                        <div className="form__inputs">
-                            {this.renderChildren()}
-                        </div>
-                        {sidebar}
-                    </div>
-                    {footer}
+                    {this.renderContent()}
                 </form>
             );
         }
 
         return (
             <div className={'form'+(this.state.isSubmitting ? ' form--submitting' : '')}>
-                <div className="form__inputs">
-                    {this.renderChildren()}
-                </div>
-                <div className="form__footer">
-                    <Button text={this.props.submitButtonText} onClick={this.submit.bind(this)} />
-                </div>
+                {this.renderContent()}
             </div>
         );
     }

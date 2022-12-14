@@ -15,7 +15,7 @@ class Create extends Action
     /**
      * @var array $sidebar
      */
-    private $sidebar = [];
+    private array $sidebar = [];
 
     /**
      * @var int $restrictByFk
@@ -37,6 +37,7 @@ class Create extends Action
         $this->meta($meta);
         $this->singular($meta::getSingular());
         $this->plural($meta::getPlural());
+        $this->sidebar($meta::sidebar());
         $this->components(count($components) ? $components : $meta::create());
     }
 

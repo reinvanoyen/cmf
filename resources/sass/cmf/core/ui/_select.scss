@@ -58,7 +58,12 @@
 
     @include element(list)
     {
-        max-height: 50vh;
+        max-height: 30vh;
         overflow-y: auto;
+    }
+
+    @include element(footer)
+    {
+        margin-top: $rule / 3;
     }
 }
