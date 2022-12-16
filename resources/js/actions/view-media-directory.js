@@ -12,6 +12,8 @@ import MultiFileView from "../core/ui/multi-file-view";
 import FileUploader from "../core/ui/file-uploader";
 import Breadcrumbs from "../core/ui/breadcrumbs";
 import IconButton from "../core/ui/icon-button";
+import TreeItem from "../core/ui/tree-item";
+import DirectoryTree from "../core/ui/directory-tree";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -413,6 +415,10 @@ class ViewMediaDirectory extends React.Component {
             <div className={'view-media-directory'+(this.state.isLoading ? ' view-media-directory--loading' : '')+(this.state.isDragOver ? ' view-media-directory--drag-over' : '')}>
                 <div className="view-media-directory__header">
                     <div className="view-media-directory__header-title">
+                        <Dropdown style={['primary', 'small']} openIcon={'folder'} closeIcon={'folder'}>
+                            <TreeItem icon={'home'} text={'My files'} collapsible={false} onClick={() => this.openDirectory()}/>
+                            <DirectoryTree onDirectoryClick={directory => this.openDirectory(directory)} />
+                        </Dropdown>
                         {this.renderBreadcrumbs()}
                     </div>
                     <div className="view-media-directory__header-options">

@@ -11,6 +11,10 @@ import FileUploader from "./file-uploader";
 import util from "./util";
 import ContextMenu from "./context-menu";
 import Placeholder from "./placeholder";
+import DirectoryTree from "./directory-tree";
+import Window from "./window";
+import StickySidebar from "./sticky-sidebar";
+import TreeItem from "./tree-item";
 
 class FilePickerWidget extends React.Component {
 
@@ -244,78 +248,63 @@ class FilePickerWidget extends React.Component {
         }
 
         return (
-            <React.Fragment>
-                <div className="file-picker-widget__main">
-                    <FileBrowser
-                        viewMode={this.state.fileBrowserViewMode}
-                        fileLabels={this.props.fileLabels}
-                        currentDirectory={this.state.currentDirectory}
-                        selectionMode={this.props.selectionMode}
-                        selectedFiles={this.state.selectedFiles}
-                        selectedFileIds={this.state.selectedFileIds}
-                        directories={this.state.directories}
-                        files={this.state.files}
-                        onDirectoryRename={this.handleRenameDirectory.bind(this)}
-                        onFileRename={this.handleRenameFile.bind(this)}
-                        onFileMove={this.handleMoveFile.bind(this)}
-                        onDirectoryClick={directory => this.openDirectory(directory)}
-                        onSelectionChange={this.onSelectionChange.bind(this)}
-                        onSelectionMove={this.handleMoveSelection.bind(this)}
-                    />
-                </div>
-                <div className="file-picker-widget__side">
-                    {this.renderSidebar()}
-                </div>
-            </React.Fragment>
+            <StickySidebar sidebar={this.renderSidebar()}>
+                <FileBrowser
+                    viewMode={this.state.fileBrowserViewMode}
+                    fileLabels={this.props.fileLabels}
+                    currentDirectory={this.state.currentDirectory}
+                    selectionMode={this.props.selectionMode}
+                    selectedFiles={this.state.selectedFiles}
+                    selectedFileIds={this.state.selectedFileIds}
+                    directories={this.state.directories}
+                    files={this.state.files}
+                    onDirectoryRename={this.handleRenameDirectory.bind(this)}
+                    onFileRename={this.handleRenameFile.bind(this)}
+                    onFileMove={this.handleMoveFile.bind(this)}
+                    onDirectoryClick={directory => this.openDirectory(directory)}
+                    onSelectionChange={this.onSelectionChange.bind(this)}
+                    onSelectionMove={this.handleMoveSelection.bind(this)}
+                />
+            </StickySidebar>
         );
     }
 
     render() {
         return (
-            <div className="file-picker-widget">
-                <div className="file-picker-widget__header">
-                    <div className="file-picker-widget__header-title">
-                        <Breadcrumbs
-                            items={this.state.directoryPath}
-                            onClick={item => {
-                                if (item) {
-                                    this.openDirectory(item.id);
-                                    return;
-                                }
-                                this.openDirectory();
-                            }}
-                        />
-                    </div>
-                    <div className="file-picker-widget__header-options">
-                        <IconButton name={'view_list'} onClick={e => this.changeFileBrowserViewMode('list')} />
-                        <IconButton name={'grid_view'} onClick={e => this.changeFileBrowserViewMode('grid')} />
-                        <Button text={'New directory'} style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} />
-                        <Dropdown text={'Upload'} style={['primary', 'small']}>
-                            <FileUploader
-                                directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
-                                onFileUploaded={this.handleFileUploaded.bind(this)}
-                                onUploadDone={this.handleUploadDone.bind(this)}
-                            />
-                        </Dropdown>
-                        <IconButton name={'close'} onClick={this.onCancel.bind(this)} />
-                    </div>
-                </div>
-                <div className="file-picker-widget__content">
-                    {this.renderContent()}
-                </div>
-                <div className="file-picker-widget__footer">
-                    <Button
-                        text={'Cancel'}
-                        style={['secondary']}
-                        onClick={this.onCancel.bind(this)}
+            <Window style={['modal', 'wide']} closeable={true} onClose={this.onCancel.bind(this)} title={[
+                <Dropdown key={'path'} style={['primary', 'small']} openIcon={'folder'} closeIcon={'folder'}>
+                    <TreeItem icon={'home'} text={'My files'} collapsible={false} onClick={() => this.openDirectory()}/>
+                    <DirectoryTree onDirectoryClick={directory => this.openDirectory(directory)} />
+                </Dropdown>,
+                <Breadcrumbs
+                    key={'breadcrumbs'}
+                    items={this.state.directoryPath}
+                    onClick={item => {
+                        (item ? this.openDirectory(item.id) : this.openDirectory());
+                    }}
+                />
+            ]} actions={[
+                <IconButton key={'view-list'} name={'view_list'} onClick={e => this.changeFileBrowserViewMode('list')} />,
+                <IconButton key={'view-grid'} name={'grid_view'} onClick={e => this.changeFileBrowserViewMode('grid')} />,
+                <Button key={'new-dir'} text={'New directory'} style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} />,
+                <Dropdown key={'upload'} text={'Upload'} style={['primary', 'small']}>
+                    <FileUploader
+                        directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
+                        onFileUploaded={this.handleFileUploaded.bind(this)}
+                        onUploadDone={this.handleUploadDone.bind(this)}
                     />
-                    <Button
-                        text={(this.props.selectionMode ? 'Confirm selection' : 'Select file')}
-                        style={this.state.selectedFileIds.length ? [] : ['disabled',]}
-                        onClick={this.state.selectedFileIds.length ? this.onSelectionConfirm.bind(this) : null}
-                    />
-                </div>
-            </div>
+                </Dropdown>
+            ]} footer={[
+                <Button key={'cancel'} text={'Cancel'} style={['secondary']} onClick={this.onCancel.bind(this)} />,
+                <Button
+                    key={'confirm'}
+                    text={(this.props.selectionMode ? 'Confirm selection' : 'Select file')}
+                    style={this.state.selectedFileIds.length ? [] : ['disabled',]}
+                    onClick={this.state.selectedFileIds.length ? this.onSelectionConfirm.bind(this) : null}
+                />
+            ]}>
+                {this.renderContent()}
+            </Window>
         );
     }
 }

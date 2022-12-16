@@ -1,0 +1,15 @@
+@include block(directory-tree)
+{
+    width: 100%;
+    user-select: none;
+
+    @include element(item)
+    {
+        // for ref
+    }
+
+    @include element(children)
+    {
+        padding-left: $rule / 1.5;
+    }
+}

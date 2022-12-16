@@ -19,6 +19,9 @@
 
     @include element(header-title)
     {
+        display: flex;
+        align-items: center;
+        gap: $rule / 2;
         @include type-9;
     }
 
