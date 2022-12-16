@@ -22,7 +22,7 @@ class Placeholder extends React.Component {
                 </div>
                 {this.props.button ?
                 <div className="placeholder__button">
-                    <Button text={this.props.button} style={'small'} icon={this.props.icon} onClick={this.props.onClick} />
+                    <Button text={this.props.button} style={['secondary', 'small']} icon={this.props.icon} onClick={this.props.onClick} />
                 </div> : null}
             </div>
         );

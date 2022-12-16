@@ -28,14 +28,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Theme image path
+    | Theme
     |--------------------------------------------------------------------------
-    |
-    | This is the source to the image used in external pages such as the login page.
-    | This option is provided to allow for quick customization of the CMF panel.
-    |
     */
-    'theme_image_src' => '/vendor/cmf/splash.jpg',
+    'theme' => [
+        'image' => '/vendor/cmf/splash.jpg',
+        'primary_color' => '#6226db',
+        'primary_color_spin' => -30,
+        'primary_color_strength' => 50,
+    ],
 
     /*
     |--------------------------------------------------------------------------

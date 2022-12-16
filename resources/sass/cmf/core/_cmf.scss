@@ -8,7 +8,7 @@
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        background-color: $color04;
+        background-color: $fill-color;
     }
 
     @include element(logo)
@@ -19,7 +19,7 @@
         width: $nav-width;
         padding: $rule / 2;
         cursor: pointer;
-        background-color: $color03;
+        background-color: $fill-color-alt-1;
     }
 
     @include element(user)
@@ -39,7 +39,7 @@
         display: flex;
         flex-direction: column;
         width: $nav-width;
-        background-color: $color04;
+        background-color: $fill-color;
         padding: $rule $rule / 2;
     }
 

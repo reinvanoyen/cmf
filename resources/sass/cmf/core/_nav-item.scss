@@ -12,7 +12,7 @@
 
     @include modifier(active)
     {
-        background-color: $color03;
+        background-color: $fill-color-alt-1;
     }
 
     @include element(icon)

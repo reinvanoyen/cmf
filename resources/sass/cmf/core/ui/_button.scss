@@ -3,31 +3,51 @@
     position: relative;
     color: $color01;
     border-radius: $border-radius-1;
-    background-color: $color12;
+    background-color: $primary-color;
     padding: $rule / 2 $rule;
     cursor: pointer;
     transition: background-color .25s;
     @include type-2;
+    overflow: hidden;
+
+    &:after // shadow
+    {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-shadow: inset 0 -2px 0 $primary-color-alt-1;
+        opacity: .5;
+    }
+
+    &:before // focus
+    {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        right: 2px;
+        bottom: 2px;
+        border: 1px solid $fill-color;
+        border-radius: $border-radius-1;
+        opacity: 0;
+        transition: opacity 1s;
+    }
 
     &:focus,
     &:active
     {
         &:before
         {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            right: 2px;
-            bottom: 2px;
-            border: 1px dotted rgba($color01, .75);
-            border-radius: $border-radius-1;
+            opacity: .25;
         }
     }
 
     &:hover
     {
-        background-color: lighten($color12, 5%);
+        background-color: $primary-color-alt-1;
     }
 
     @include element(icon)
@@ -51,6 +71,7 @@
     {
         overflow: hidden;
         cursor: not-allowed;
+        box-shadow: none;
 
         &:after
         {
@@ -60,26 +81,32 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba($color03, .75);
+            background-color: $fill-color;
+            box-shadow: none;
+            opacity: .2;
         }
     }
 
     @include modifier(secondary)
     {
         color: $color02;
-        background-color: $color03;
+        background-color: $fill-color-alt-1;
+
+        &:after { display: none; }
 
         &:hover
         {
-            background-color: desaturate(darken($color03, 5%), 5%);
+            background-color: $fill-color-alt-2;
         }
     }
 
     @include modifier(outline)
     {
         background-color: $color01;
-        border: $border-width-2 solid $color03;
-        color: $color12;
+        border: $border-width-2 solid $fill-color-alt-1;
+        color: $primary-color-alt-1;
+
+        &:after { display: none; }
 
         &:hover
         {
@@ -97,6 +124,8 @@
     @include modifier(small)
     {
         padding: $rule / 3 $rule / 1.5;
+
+        &:after { display: none; }
     }
 
     @include modifier(large)

@@ -7,6 +7,7 @@ import Button from "./button";
 import File from "./file";
 import util from "./util";
 import MediaMoveWidget from "./media-move-widget";
+import Overlay from "./overlay";
 
 export default class MultiFileView extends React.Component {
 
@@ -56,7 +57,7 @@ export default class MultiFileView extends React.Component {
         }
 
         return (
-            <div className="overlay">
+            <Overlay>
                 <MediaMoveWidget
                     directory={this.props.files[0].directory ? this.props.files[0].directory.id : null}
                     onCancel={directory => {
@@ -75,7 +76,7 @@ export default class MultiFileView extends React.Component {
                         });
                     }}
                 />
-            </div>
+            </Overlay>
         );
     }
 

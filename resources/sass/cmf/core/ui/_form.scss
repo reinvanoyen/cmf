@@ -20,7 +20,7 @@
         position: sticky;
         top: $rule / 2;
         width: $nav-width * 1.5;
-        background-color: $color04;
+        background-color: $fill-color;
         padding: $rule $rule / 2;
         margin-left: $rule;
     }
@@ -34,7 +34,7 @@
     {
         padding-bottom: $rule / 3;
         margin-bottom: $rule / 3;
-        border-bottom: 1px solid $color03;
+        border-bottom: 1px solid $fill-color-alt-1;
 
         &:last-child
         {

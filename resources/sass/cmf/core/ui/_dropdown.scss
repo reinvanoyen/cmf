@@ -19,22 +19,22 @@
         cursor: pointer;
         border-radius: $border-radius-1;
         color: $color02;
-        background-color: $color03;
+        background-color: $fill-color-alt-1;
         -webkit-appearance: none;
 
         &:hover
         {
-            background-color: desaturate(darken($color03, 5%), 5%);
+            background-color: $fill-color-alt-2;
         }
 
         @include block-modifier(primary)
         {
-            background-color: $color12;
+            background-color: $primary-color;
             color: $color01;
 
             &:hover
             {
-                background-color: lighten($color12, 5%);
+                background-color: $primary-color-alt-1;
             }
         }
 
@@ -74,7 +74,7 @@
         right: 0;
         margin-top: $rule / 3;
         padding: $rule / 3;
-        border: $border-width-2 solid $color03;
+        border: $border-width-2 solid $fill-color-alt-2;
         background-color: $color01;
         border-radius: $border-radius-1;
         width: $rule * 10;

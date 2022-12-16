@@ -1,75 +1,13 @@
 @include block(tags-browser)
 {
-    display: flex;
-    flex-direction: column;
-    padding: $rule / 3;
-    border: $border-width-2 solid $color03;
-    background-color: $color01;
-    border-radius: $border-radius-1;
-    box-shadow: $box-shadow-1;
-    width: 55vw;
-    height: 75vh;
-
-    @include element(header)
-    {
-        display: flex;
-        align-items: center;
-        padding: $rule / 2 $rule;
-        @include type-9;
-    }
-
-    @include element(header-title)
-    {
-        @include type-9;
-    }
-
-    @include element(header-options)
-    {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        flex-grow: 1;
-
-        >*
-        {
-            margin-left: $rule / 3;
-
-            &:first-child
-            {
-                margin-left: 0;
-            }
-        }
-    }
-
     @include element(content)
     {
-        display: flex;
-        flex-grow: 1;
-        overflow-y: scroll;
-        padding: $rule / 2 $rule;
-    }
-
-    @include element(footer)
-    {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        padding: $rule / 2 $rule;
-
-        >*
-        {
-            margin-left: $rule / 3;
-
-            &:first-child
-            {
-                margin-left: 0;
-            }
-        }
+        // for ref
     }
 
     @include element(selected)
     {
-        border: 1px dashed $color06;
+        border: 1px dashed $fill-color-alt-2;
         border-radius: $border-radius-2;
         padding: $rule / 4;
         margin-bottom: $rule / 2;
@@ -77,14 +15,8 @@
 
     @include element(available)
     {
-        border: 1px dashed $color06;
+        border: 1px dashed $fill-color-alt-2;
         border-radius: $border-radius-2;
         padding: $rule / 4;
-    }
-
-    @include element(title)
-    {
-        @include type-6;
-        margin-bottom: $rule / 2;
     }
 }

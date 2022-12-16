@@ -22,13 +22,13 @@ input:-webkit-autofill:active {
 }
 
 input:-webkit-autofill {
-    -webkit-text-fill-color: $color12 !important;
+    -webkit-text-fill-color: $primary-color !important;
 }
 
 *
 {
     -webkit-tap-highlight-color: transparent;
-    @include scrollbar(darken($color03, 10%), $color12, 2px);
+    @include scrollbar($fill-color-alt-2, $primary-color, 2px);
 }
 
-::selection { background: $color12; color: $color01; }
+::selection { background: $primary-color; color: $color01; }

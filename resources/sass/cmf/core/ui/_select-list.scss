@@ -23,12 +23,14 @@
 
         &:hover
         {
-            background-color: $color04;
+            background-color: $fill-color;
         }
 
         @include modifier(selected)
         {
-            background-color: $color04;
+            background-color: $fill-color-alt-1;
+
+            &:hover { background-color: $fill-color-alt-1; }
         }
     }
 

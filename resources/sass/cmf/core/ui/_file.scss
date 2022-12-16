@@ -21,18 +21,22 @@
 
     &:hover
     {
-        background-color: $color08;
+        background-color: $fill-color;
     }
 
     @include modifier(selected)
     {
-        background-color: $color03;
+        background-color: $fill-color-alt-1;
 
-        &:hover { background-color: $color03; }
+        &:hover { background-color: $fill-color-alt-1; }
     }
 
     @include element(preview)
     {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: $rule * 2;
         flex-grow: 0;
         margin-right: $rule / 2;
 
@@ -49,10 +53,15 @@
     @include element(content)
     {
         flex-grow: 1;
+        display: grid;
+        grid-template-columns: repeat(3, 33.33%);
+        grid-gap: $rule / 3;
 
         @include block-modifier(grid)
         {
             order: 3;
+            display: block;
+            width: 100%;
         }
     }
 
@@ -70,22 +79,50 @@
     @include element(name)
     {
         @include type-2;
-        margin-bottom: $rule / 4;
+        line-height: 2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    @include element(type)
+    {
+        color: $color07;
+        @include type-2;
+        line-height: 2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @include block-modifier(grid)
+        {
+            display: none;
+        }
     }
 
     @include element(size)
     {
-        @include type-2;
         color: $color07;
+        @include type-2;
+        line-height: 2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     @include element(label)
     {
+        position: absolute;
+        top: 50%;
+        right: $rule / 1.5;
+        transform: translateY(-50%);
+
         @include block-modifier(grid)
         {
             position: absolute;
             top: $rule / 2;
             right: $rule / 1.5;
+            transform: none;
         }
     }
 }

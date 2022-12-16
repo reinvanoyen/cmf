@@ -4,6 +4,7 @@ import Button from "./button";
 import IconButton from "./icon-button";
 import Placeholder from "./placeholder";
 import Tags from "./tags";
+import Window from "./window";
 
 class TagsBrowser extends React.Component {
 
@@ -121,30 +122,16 @@ class TagsBrowser extends React.Component {
 
     render() {
         return (
-            <div className="tags-browser">
-                <div className="tags-browser__header">
-                    <div className="tags-browser__header-title">
-                        Tags
+            <Window style={'modal'} title={'Tags'} closeable={true} onClose={this.onCancel.bind(this)} footer={[
+                <Button key={0} text={'Cancel'} style={['secondary']} onClick={this.onCancel.bind(this)} />,
+                <Button key={1} text={'Confirm'} onClick={this.onConfirm.bind(this)} />
+            ]}>
+                <div className="tags-browser">
+                    <div className="tags-browser__content">
+                        {this.renderContent()}
                     </div>
-                    <div className="tags-browser__header-options">
-                        <IconButton name={'close'} onClick={this.onCancel.bind(this)} />
-                    </div>
                 </div>
-                <div className="tags-browser__content">
-                    {this.renderContent()}
-                </div>
-                <div className="tags-browser__footer">
-                    <Button
-                        text={'Cancel'}
-                        style={['secondary']}
-                        onClick={this.onCancel.bind(this)}
-                    />
-                    <Button
-                        text={'Confirm'}
-                        onClick={this.onConfirm.bind(this)}
-                    />
-                </div>
-            </div>
+            </Window>
         );
     }
 }

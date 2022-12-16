@@ -4,7 +4,7 @@
     {
         display: flex;
         justify-content: flex-start;
-        border-bottom: $border-width-2 solid $color03;
+        border-bottom: $border-width-2 solid $fill-color-alt-1;
     }
 
     @include element(content)
@@ -38,7 +38,7 @@
 
         @include modifier(active)
         {
-            color: $color12;
+            color: $primary-color;
 
             &:after
             {
@@ -48,7 +48,7 @@
                 left: 0;
                 right: 0;
                 height: $border-width-2;
-                background-color: $color12;
+                background-color: $primary-color;
             }
         }
     }

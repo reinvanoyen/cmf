@@ -12,12 +12,14 @@
             content: '';
             pointer-events: none;
             position: absolute;
-            top: $border-width-2;
-            right: $border-width-2;
-            bottom: $border-width-2;
-            left: $border-width-2;
+            top: 0;
+            right: $rule / 4;
+            bottom: $rule / 4;
+            left: $rule / 4;
+            border-radius: $border-radius-1;
             display: block;
-            background-color: rgba($color10, .5);
+            background-color: $primary-color;
+            opacity: .1;
         }
     }
 }

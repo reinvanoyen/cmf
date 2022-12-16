@@ -2,7 +2,7 @@
 {
     display: flex;
     align-items: center;
-    padding: $rule / 2 $rule / 2;
+    padding: $rule / 2;
     transition: background-color .25s;
     border-radius: $border-radius-1;
     cursor: pointer;
@@ -19,28 +19,76 @@
 
     @include modifier(grid)
     {
-        // for ref
+        flex-direction: column;
+        align-items: center;
     }
 
     &:hover
     {
-        background-color: $color08;
+        background-color: $fill-color;
     }
 
     @include element(icon)
     {
+        width: $rule * 2;
         flex-shrink: 0;
-        //width: $rule * 2;
-        //height: $rule * 2;
+        flex-grow: 0;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-right: $rule / 2;
+
+        @include block-modifier(grid)
+        {
+            order: 2;
+            flex-grow: 1;
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: $rule / 2;
+        }
+    }
+
+    @include element(content)
+    {
+        flex-grow: 1;
+        display: grid;
+        grid-template-columns: repeat(3, 33.33%);
+        grid-gap: $rule / 3;
+
+        @include block-modifier(grid)
+        {
+            order: 3;
+            display: block;
+            width: 100%;
+        }
     }
 
     @include element(name)
     {
-        display: flex;
-        align-items: center;
+        @include type-2;
+        line-height: 2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @include block-modifier(grid)
+        {
+            text-align: center;
+        }
+    }
+
+    @include element(type)
+    {
+        color: $color07;
+        @include type-2;
+        line-height: 2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @include block-modifier(grid)
+        {
+            display: none;
+        }
     }
 }

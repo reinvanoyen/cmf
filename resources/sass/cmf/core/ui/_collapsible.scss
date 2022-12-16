@@ -1,7 +1,7 @@
 @include block(collapsible)
 {
     border-radius: $border-radius-1;
-    border: $border-width-1 solid $color06;
+    border: $border-width-1 solid $fill-color-alt-1;
     background-color: $color01;
     margin-bottom: $rule / 2;
 
@@ -11,7 +11,7 @@
         align-items: center;
         justify-content: space-between;
         padding: $rule / 6 $rule / 3;
-        background-color: lighten($color03, 2%);
+        background-color: $fill-color;
     }
 
     @include element(title)

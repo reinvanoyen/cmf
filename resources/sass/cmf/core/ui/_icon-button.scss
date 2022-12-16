@@ -9,11 +9,11 @@
     height: $rule;
     cursor: pointer;
     transition: background-color .25s;
-    background-color: $color03;
+    background-color: $fill-color-alt-1;
 
     &:hover
     {
-        background-color: desaturate(darken($color03, 5%), 5%);
+        background-color: $fill-color-alt-2;
     }
 
     @include modifier(transparent)

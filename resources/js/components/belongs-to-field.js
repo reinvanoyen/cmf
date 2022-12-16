@@ -7,6 +7,8 @@ import components from "../rendering/components";
 import ui from "../core/ui/util";
 import IconButton from "../core/ui/icon-button";
 import Select from "../core/ui/select";
+import Overlay from "../core/ui/overlay";
+import Window from "../core/ui/window";
 
 class BelongsToField extends React.Component {
 
@@ -141,30 +143,20 @@ class BelongsToField extends React.Component {
     renderCreateWidget() {
         if (this.state.isOpen) {
             return (
-                <div className="overlay">
-                    <div className="belongs-to-field__create">
-                        <div className="belongs-to-field__create-header">
-                            <div className="belongs-to-field__create-header-title">
-                                New {this.props.singular}
-                            </div>
-                            <div className="belongs-to-field__create-header-options">
-                                <IconButton name={'close'} onClick={this.close.bind(this)} />
-                            </div>
-                        </div>
-                        <div className="belongs-to-field__create-content">
-                            <Form
-                                ref={this.createFormRef}
-                                errors={this.state.createFormErrors}
-                                realForm={false}
-                                onSubmit={this.create.bind(this)}
-                                submitButtonText={`Create ${this.props.singular}`}
-                                sidebar={this.renderSidebarComponents()}
-                            >
-                                {this.renderCreateComponents()}
-                            </Form>
-                        </div>
-                    </div>
-                </div>
+                <Overlay>
+                    <Window title={'New '+this.props.singular} style={'modal'} closeable={true} onClose={this.close.bind(this)}>
+                        <Form
+                            ref={this.createFormRef}
+                            errors={this.state.createFormErrors}
+                            realForm={false}
+                            onSubmit={this.create.bind(this)}
+                            submitButtonText={`Create ${this.props.singular}`}
+                            sidebar={this.renderSidebarComponents()}
+                        >
+                            {this.renderCreateComponents()}
+                        </Form>
+                    </Window>
+                </Overlay>
             );
         }
 

@@ -32,11 +32,11 @@
         color: $color02;
         background-color: $color01;
         -webkit-appearance: none;
-        border: $border-width-1 solid $color03;
+        border: $border-width-1 solid $fill-color-alt-1;
 
         &:focus
         {
-            border-color: desaturate(darken($color03, 5%), 5%);
+            border-color: $fill-color-alt-2;
         }
     }
 

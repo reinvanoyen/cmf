@@ -12,7 +12,7 @@
 
     @include modifier(active)
     {
-        color: $color10;
+        color: $primary-color;
     }
 
     @include element(icon)

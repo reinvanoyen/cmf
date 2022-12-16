@@ -1,11 +1,26 @@
 @include block(window)
 {
+    $window-header-height: $rule * 3;
+    $window-modal-height: 75vh;
+
     padding: $rule / 3;
+    padding-top: 0;
     border: $border-width-2 solid $color03;
     background-color: $color01;
     border-radius: $border-radius-1;
     box-shadow: $box-shadow-1;
     max-width: 450px;
+
+    @include modifier(modal)
+    {
+        position: fixed;
+        z-index: 9999;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 60vw;
+        max-width: initial;
+    }
 
     @include modifier(fixed-size)
     {
@@ -14,9 +29,17 @@
 
     @include element(header)
     {
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: $window-header-height;
         padding: $rule / 2 $rule;
-        @include type-3;
+        padding-right: $rule / 2;
+    }
+
+    @include element(title)
+    {
+        @include type-9;
     }
 
     @include element(toolbar)
@@ -31,6 +54,14 @@
         display: block;
         padding: 0 $rule;
         margin-bottom: $rule / 2;
+
+        @include block-modifier(modal)
+        {
+            height: calc($window-modal-height - $window-header-height);
+            overflow-y: scroll;
+            padding-bottom: $rule / 2;
+            margin-bottom: 0;
+        }
 
         @include block-modifier(fixed-size)
         {

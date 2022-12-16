@@ -18,9 +18,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Material+Icons+Outlined&display=swap" rel="stylesheet" />
 
-    <style type="text/css">
+    <style>
         :root {
-            --theme-image-src: url({{ config('cmf.theme_image_src') }});
+            --theme-image-src: url({{ $theme['image'] }});
+            --primary-color: {{ $theme['primary_color'] }};
+            --primary-color-alt-1: {{ $theme['primary_color_alt_1'] }};
+            --primary-color-alt-2: {{ $theme['primary_color_alt_2'] }};
+            --primary-color-alt-3: {{ $theme['primary_color_alt_3'] }};
+            --fill-color: {{ $theme['fill_color'] }};
+            --fill-color-alt-1: {{ $theme['fill_color_alt_1'] }};
+            --fill-color-alt-2: {{ $theme['fill_color_alt_2'] }};
         }
     </style>
 

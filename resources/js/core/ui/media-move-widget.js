@@ -68,12 +68,12 @@ class MediaMoveWidget extends React.Component {
 
         if (this.state.currentDirectory) {
             placeholderText = `"${this.state.currentDirectory.name}" doesn\'t have any subdirectories`;
-            placeholderBtnText = `Move file(s) to "${this.state.currentDirectory.name}"`;
+            placeholderBtnText = `Move files to "${this.state.currentDirectory.name}"`;
         }
 
         return (
             <Window
-                style={['fixed-size']}
+                style={['modal']}
                 title={'Move file(s)'}
                 toolbar={this.renderBreadcrumbs()}
                 footer={[
@@ -91,11 +91,11 @@ class MediaMoveWidget extends React.Component {
                 ]}
             >
                 <DirectoryList
-                    style={'compact-list'}
+                    viewMode={'compact-list'}
                     directory={this.state.directoryId}
                     onDirectoryClick={this.changeDirectory.bind(this)}
                     placeholder={(
-                        <Placeholder icon={'create_new_folder'} button={placeholderBtnText} onClick={e => this.props.onConfirm(this.state.directoryId)}>
+                        <Placeholder icon={'create_new_folder'}>
                             {placeholderText}
                         </Placeholder>
                     )}

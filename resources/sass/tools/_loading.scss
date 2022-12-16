@@ -10,13 +10,13 @@
             z-index: 9999;
             top: 50%;
             left: 50%;
-            width: $rule * 3;
-            height: $rule * 3;
-            margin-top: -$rule * 1.5;
-            margin-left: -$rule * 1.5;
+            width: $rule * 2;
+            height: $rule * 2;
+            margin-top: -$rule;
+            margin-left: -$rule;
             background-color: $color01;
             border-radius: 50%;
-            border: $border-width-1 solid $color05;
+            border: $border-width-1 solid $fill-color;
             box-shadow: $box-shadow-1;
         }
 
@@ -29,15 +29,15 @@
             box-sizing: border-box;
             top: 50%;
             left: 50%;
-            width: $rule;
-            height: $rule;
-            margin-top: -$rule / 2;
-            margin-left: -$rule / 2;
+            width: $rule / 1.5;
+            height: $rule / 1.5;
+            margin-top: -$rule / 3;
+            margin-left: -$rule / 3;
             border-radius: 50%;
-            border-top: 3px solid $color12;
-            border-right: 3px solid transparent;
-            border-bottom: 3px solid $color12;
-            border-left: 3px solid $color12;
+            border-top: 2px solid $primary-color;
+            border-right: 2px solid transparent;
+            border-bottom: 2px solid $primary-color;
+            border-left: 2px solid $primary-color;
             animation: spin .5s linear infinite;
         }
     }

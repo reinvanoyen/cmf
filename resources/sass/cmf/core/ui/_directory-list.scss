@@ -1,5 +1,6 @@
 @include block(directory-list)
 {
+    width: 100%;
     user-select: none;
 
     @include modifier(list)
@@ -10,7 +11,7 @@
     @include modifier(grid)
     {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(7, minmax(0, 1fr));
         grid-gap: $rule / 3;
     }
 

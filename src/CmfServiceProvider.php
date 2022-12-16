@@ -41,7 +41,7 @@ class CmfServiceProvider extends ServiceProvider
                 $image->resize(400, 400, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-                $image->resizeCanvas(400, 400, 'center', false, '#efeff5');
+                $image->resizeCanvas(400, 400, 'center', false, '#ffffff');
             });
             return $converter;
         });

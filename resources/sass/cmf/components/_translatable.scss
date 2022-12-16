@@ -45,7 +45,7 @@
 
         @include modifier(active)
         {
-            color: $color12;
+            color: $primary-color;
 
             &:after
             {
@@ -55,7 +55,7 @@
                 left: 0;
                 right: 0;
                 height: $border-width-2;
-                background-color: $color12;
+                background-color: $primary-color;
             }
         }
     }

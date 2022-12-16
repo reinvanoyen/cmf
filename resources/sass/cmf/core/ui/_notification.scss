@@ -3,11 +3,12 @@
     display: block;
     padding: $rule / 2 $rule;
     border-radius: $border-radius-1;
-    background-color: $color12;
+    background-color: $primary-color;
     color: $color01;
     transition: transform .25s, opacity .25s;
     animation: slidein .25s;
     margin-bottom: $rule / 3;
+    opacity: .9;
 
     &:last-child
     {

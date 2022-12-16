@@ -12,7 +12,7 @@
 
         &:has(input:hover)
         {
-            border: 1px dashed darken($color09, 10%);
+            border: 1px dashed $fill-color-alt-2;
             border-radius: $border-radius-2;
         }
 

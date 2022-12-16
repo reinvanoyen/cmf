@@ -9,5 +9,6 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba($color03, .75);
+    background-color: $fill-color;
+    opacity: .75;
 }

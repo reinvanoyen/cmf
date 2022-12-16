@@ -4,6 +4,7 @@ import api from "../api/api";
 import Tags from "../core/ui/tags";
 import IconButton from "../core/ui/icon-button";
 import TagsBrowser from "../core/ui/tags-browser";
+import Overlay from "../core/ui/overlay";
 
 export default class TextField extends React.Component {
 
@@ -209,7 +210,7 @@ export default class TextField extends React.Component {
 
         if (this.state.browserIsOpen) {
             browser = (
-                <div className="overlay">
+                <Overlay>
                     <TagsBrowser
                         id={this.props.id}
                         path={this.props.path}
@@ -217,7 +218,7 @@ export default class TextField extends React.Component {
                         onCancel={this.closeBrowser.bind(this)}
                         onConfirm={tags => this.confirmBrowser(tags)}
                     />
-                </div>
+                </Overlay>
             );
         }
 

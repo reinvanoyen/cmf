@@ -10,6 +10,7 @@ import file from "../../util/file";
 import DefinitionList from "./definition-list";
 import mimetypes from "../../data/mimetypes";
 import MediaMoveWidget from "./media-move-widget";
+import Overlay from "./overlay";
 
 export default class FileView extends React.Component {
 
@@ -98,7 +99,7 @@ export default class FileView extends React.Component {
         }
 
         return (
-            <div className="overlay">
+            <Overlay>
                 <MediaMoveWidget
                     directory={this.props.file.directory}
                     onCancel={directory => {
@@ -114,7 +115,7 @@ export default class FileView extends React.Component {
                         });
                     }}
                 />
-            </div>
+            </Overlay>
         );
     }
 

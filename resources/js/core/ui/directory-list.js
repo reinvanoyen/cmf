@@ -1,14 +1,13 @@
 import React from 'react';
 import api from "../../api/api";
-import Icon from "./icon";
 import helpers from "../../util/helpers";
-import Placeholder from "./placeholder";
+import Directory from "./directory";
 
 class DirectoryList extends React.Component {
 
     static defaultProps = {
         directory: null,
-        style: 'list',
+        viewMode: 'list',
         onDirectoryClick: directoryId => {},
         placeholder: null
     };
@@ -38,10 +37,7 @@ class DirectoryList extends React.Component {
 
     async load() {
         await api.media.loadDirectories(this.props.directory).then(response => {
-
-            let directories = response.data.data;
-
-            this.setState({directories});
+            this.setState({directories: response.data.data});
         });
     }
 
@@ -54,21 +50,16 @@ class DirectoryList extends React.Component {
             return null;
         }
 
-        let iconStyle = [(this.props.style === 'compact-list' ? 'default' : 'large'), 'alt'];
-
         return (
-            <div className={helpers.className('directory-list', this.props.style)}>
+            <div className={helpers.className('directory-list', this.props.viewMode)}>
                 {this.state.directories.map((directory, i) => {
                     return (
                         <div className="directory-list__item" key={i}>
-                            <div className={helpers.className('directory', this.props.style)} onClick={e => this.props.onDirectoryClick(directory.id)}>
-                                <div className="directory__icon">
-                                    <Icon name={'folder'} style={iconStyle} />
-                                </div>
-                                <div className="directory__name">
-                                    {directory.name}
-                                </div>
-                            </div>
+                            <Directory
+                                viewMode={this.props.viewMode}
+                                directory={directory}
+                                onClick={(e, directory) => this.props.onDirectoryClick(directory.id)}
+                            />
                         </div>
                     );
                 })}

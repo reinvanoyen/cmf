@@ -7,6 +7,8 @@ import Icon from "./icon";
 import Manager from "../messaging/manager";
 import FilePlaceholder from "./file-placeholder";
 import MediaMoveWidget from "./media-move-widget";
+import Overlay from "./overlay";
+import Directory from "./directory";
 
 class FileBrowser extends React.Component {
 
@@ -256,7 +258,7 @@ class FileBrowser extends React.Component {
         }
 
         return (
-            <div className="overlay">
+            <Overlay>
                 <MediaMoveWidget
                     directory={this.props.currentDirectory}
                     onCancel={directory => {
@@ -278,7 +280,7 @@ class FileBrowser extends React.Component {
                         });
                     }}
                 />
-            </div>
+            </Overlay>
         );
     }
 
@@ -366,14 +368,11 @@ class FileBrowser extends React.Component {
                                 ]}
                                 onClick={path => this.onDirectoryContextClick(path, directory)}
                             >
-                                <div className="directory" onClick={e => this.props.onDirectoryClick(directory.id)}>
-                                    <div className="directory__icon">
-                                        <Icon name={'folder'} style={['large', 'alt']} />
-                                    </div>
-                                    <div className="directory__name">
-                                        {directory.name}
-                                    </div>
-                                </div>
+                                <Directory
+                                    viewMode={this.props.viewMode}
+                                    directory={directory}
+                                    onClick={(e, directory) => this.props.onDirectoryClick(directory.id)}
+                                />
                             </ContextMenu>
                         </div>
                     );

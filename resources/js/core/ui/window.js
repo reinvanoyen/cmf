@@ -1,5 +1,6 @@
 import React from 'react';
 import helpers from "../../util/helpers";
+import IconButton from "./icon-button";
 
 class Window extends React.Component {
 
@@ -7,8 +8,14 @@ class Window extends React.Component {
         title: '',
         style: 'default',
         toolbar: null,
-        footer: null
+        footer: null,
+        closeable: false,
+        onClose: () => {}
     };
+
+    close() {
+        this.props.onClose();
+    }
 
     renderToolbar() {
         if (this.props.toolbar) {
@@ -34,11 +41,23 @@ class Window extends React.Component {
         return null;
     }
 
+    renderActions() {
+        if (this.props.closeable) {
+            return <IconButton name={'close'} style={'transparent'} onClick={this.close.bind(this)} />;
+        }
+        return null;
+    }
+
     render() {
         return (
             <div className={helpers.className('window', this.props.style)}>
                 <div className="window__header">
-                    {this.props.title}
+                    <div className="window__title">
+                        {this.props.title}
+                    </div>
+                    <div className="window__actions">
+                        {this.renderActions()}
+                    </div>
                 </div>
                 {this.renderToolbar()}
                 <div className="window__content">

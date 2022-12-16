@@ -11,7 +11,7 @@
     border-radius: $knob-size;
     height: $knob-size + $padding;
     width: $width + $padding;
-    background-color: $color03;
+    background-color: $fill-color-alt-1;
     transition: background-color .25s;
 
     &:after
@@ -30,7 +30,7 @@
 
     @include modifier(checked)
     {
-        background-color: $color12;
+        background-color: $primary-color-alt-1;
 
         &:after
         {

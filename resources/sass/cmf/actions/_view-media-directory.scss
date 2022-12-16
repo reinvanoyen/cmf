@@ -1,7 +1,7 @@
 @include block(view-media-directory)
 {
     border-radius: $border-radius-1;
-    border: $border-width-2 solid $color03;
+    border: $border-width-2 solid $fill-color-alt-1;
     background-color: $color01;
     transition: opacity .5s;
 

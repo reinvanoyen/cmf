@@ -32,7 +32,7 @@
         padding: $rule / 6 $rule / 3;
         margin-top: $rule / 3;
         border-radius: $border-radius-3;
-        background-color: lighten($color12, 40%);
+        background-color: $primary-color-alt-1;
         @include type-2;
         line-height: 1.25;
     }

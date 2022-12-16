@@ -5,6 +5,7 @@ import FileThumb from "../core/ui/file-thumb";
 import Placeholder from "../core/ui/placeholder";
 import helpers from "../util/helpers";
 import Icon from "../core/ui/icon";
+import Overlay from "../core/ui/overlay";
 
 class FileSelectField extends React.Component {
 
@@ -87,7 +88,7 @@ class FileSelectField extends React.Component {
 
         if (this.state.isOpen) {
             widget = (
-                <div className="overlay">
+                <Overlay>
                     <FilePickerWidget
                         fileLabels={this.props.fileLabels}
                         defaultSelectedFiles={this.state.selectedFile ? [this.state.selectedFile] : null}
@@ -96,7 +97,7 @@ class FileSelectField extends React.Component {
                         onCancel={this.close.bind(this)}
                         onSelectionConfirm={this.onSelectionConfirm.bind(this)}
                     />
-                </div>
+                </Overlay>
             );
         }
 
@@ -104,9 +105,6 @@ class FileSelectField extends React.Component {
             <React.Fragment>
                 <Field name={this.props.name} label={this.props.label} errors={this.props.errors}>
                     <div className={helpers.className('file-select-field', this.props.style)} onClick={this.open.bind(this)}>
-                        <div className="file-select-field__icon">
-                            <Icon name={'library_add'} style={'medium'} />
-                        </div>
                         {this.renderFilePreview()}
                     </div>
                 </Field>

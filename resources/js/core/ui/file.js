@@ -5,6 +5,7 @@ import FilePreview from "./file-preview";
 import fileUtil from "../../util/file";
 import IconButton from "./icon-button";
 import TagLabel from "./tag-label";
+import mimetypes from '../../data/mimetypes';
 
 export default class File extends React.Component {
 
@@ -60,6 +61,17 @@ export default class File extends React.Component {
         return null;
     }
 
+    getFileType() {
+
+        let map = mimetypes;
+
+        if (! map[this.props.file.mime_type]) {
+            return 'unknown';
+        }
+
+        return map[this.props.file.mime_type].description;
+    }
+
     render() {
         return (
             <div className={'file file--'+this.props.viewMode+(this.props.isSelected ? ' file--selected' : '')} onClick={e => this.props.onClick(e, this.props.file)}>
@@ -74,6 +86,9 @@ export default class File extends React.Component {
                 <div className="file__content">
                     <div className="file__name">
                         {this.props.file.name}
+                    </div>
+                    <div className="file__type">
+                        {this.getFileType()}
                     </div>
                     <div className="file__size">
                         {fileUtil.filesize(this.props.file.size)} ({this.props.file.disk})

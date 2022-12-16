@@ -5,7 +5,7 @@
     display: block;
     width: 100%;
     border-radius: $border-radius-2;
-    border: $border-width-2 solid $color03;
+    border: $border-width-2 solid $fill-color-alt-1;
 
     @include element(nav)
     {
@@ -13,7 +13,7 @@
         justify-content: center;
         width: 100%;
         padding: $rule 0;
-        border-bottom: $border-width-2 solid $color03;
+        border-bottom: $border-width-2 solid $fill-color-alt-1;
     }
 
     @include element(steps)
@@ -29,7 +29,7 @@
         align-items: center;
         padding: 0 $rule * 2;
         @include type-9;
-        color: $color03;
+        color: $fill-color-alt-2;
 
         &:after
         {
@@ -40,7 +40,7 @@
             left: 0;
             right: 0;
             height: $border-width-2;
-            background-color: $color03;
+            background-color: $fill-color-alt-2;
         }
 
         &:first-child:after
@@ -63,28 +63,28 @@
             align-items: center;
             width: $disc-size;
             height: $disc-size;
-            background-color: $color03;
+            background-color: $fill-color-alt-2;
             border-radius: 50%;
             margin-bottom: $rule / 3;
             @include type-3;
             color: $color01;
-            border: $border-width-1 solid $color03;
+            border: $border-width-1 solid $fill-color-alt-2;
             transition: background-color .25s;
         }
 
         @include modifier(active)
         {
-            color: $color10;
+            color: $primary-color;
 
             span
             {
-                background-color: $color10;
-                border-color: $color10;
+                background-color: $primary-color;
+                border-color: $primary-color;
             }
 
             &:after
             {
-                background-color: $color10;
+                background-color: $primary-color;
             }
         }
     }

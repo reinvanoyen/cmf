@@ -77,12 +77,15 @@ export default {
 
         // Overlay
         let overlayEl = this.overlay();
-        overlayEl.appendChild(promptEl);
+        document.body.appendChild(promptEl);
 
         // Focus the input field
         promptInputEl.focus();
 
-        let close = () => document.body.removeChild(overlayEl);
+        let close = () => {
+            document.body.removeChild(promptEl);
+            document.body.removeChild(overlayEl);
+        };
     },
     confirm(opts) {
 
@@ -134,11 +137,15 @@ export default {
 
         // Overlay
         let overlayEl = this.overlay();
-        overlayEl.appendChild(confirmEl);
+
+        document.body.appendChild(confirmEl);
 
         confirmConfirmBtnEl.focus();
 
-        let close = () => document.body.removeChild(overlayEl);
+        let close = () => {
+            document.body.removeChild(confirmEl);
+            document.body.removeChild(overlayEl);
+        };
     },
     button(text, onClick = null) {
 

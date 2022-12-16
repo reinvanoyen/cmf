@@ -6,6 +6,7 @@ import IconButton from "../core/ui/icon-button";
 import Placeholder from "../core/ui/placeholder";
 import array from "../util/array";
 import FileThumb from "../core/ui/file-thumb";
+import Overlay from "../core/ui/overlay";
 
 class GalleryField extends React.Component {
 
@@ -162,7 +163,7 @@ class GalleryField extends React.Component {
 
         if (this.state.isOpen) {
             widget = (
-                <div className="overlay">
+                <Overlay>
                     <FilePickerWidget
                         fileLabels={this.props.fileLabels}
                         selectionMode={true}
@@ -171,7 +172,7 @@ class GalleryField extends React.Component {
                         onCancel={this.close.bind(this)}
                         onSelectionConfirm={this.onSelectionConfirm.bind(this)}
                     />
-                </div>
+                </Overlay>
             );
         }
 
