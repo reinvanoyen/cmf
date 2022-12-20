@@ -13,6 +13,7 @@
 
     <meta name="csrf" content="{{ csrf_token() }}" />
     <meta name="cmf:path" content="{{ Cmf::getPath() }}" />
+    <meta name="cmf:version" content="{{ Cmf::getVersion() }}" />
 
     <link href="{{ mix('app.css', 'vendor/cmf') }}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -28,6 +29,7 @@
             --fill-color: {{ $theme['fill_color'] }};
             --fill-color-alt-1: {{ $theme['fill_color_alt_1'] }};
             --fill-color-alt-2: {{ $theme['fill_color_alt_2'] }};
+            --fill-color-alt-3: {{ $theme['fill_color_alt_3'] }};
         }
     </style>
 

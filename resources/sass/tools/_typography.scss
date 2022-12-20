@@ -88,3 +88,12 @@
     line-height: 1.2;
     letter-spacing: -.02em;
 }
+
+@mixin type-11
+{
+    @include default-font;
+    font-weight: 500;
+    font-size: .85rem;
+    line-height: 1;
+    letter-spacing: -.02em;
+}
