@@ -79,3 +79,11 @@
     font-size: 1.25rem;
     line-height: 1.5;
 }
+
+@mixin type-10
+{
+    @include default-font;
+    font-weight: 500;
+    font-size: .85rem;
+    line-height: 1;
+}

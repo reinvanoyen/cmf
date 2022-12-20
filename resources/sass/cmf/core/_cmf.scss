@@ -52,4 +52,12 @@
     {
         padding: $rule 0;
     }
+
+    @include element(footer)
+    {
+        @include type-10;
+        text-align: center;
+        color: $fill-color-alt-3;
+        padding-bottom: $rule / 2;
+    }
 }

@@ -47,6 +47,7 @@ class FrontController extends Controller
                 'fill_color' => $primaryColorDesaturated->tint(95),
                 'fill_color_alt_1' => $primaryColorDesaturated->tint(85),
                 'fill_color_alt_2' => $primaryColorDesaturated->tint(75),
+                'fill_color_alt_3' => $primaryColorDesaturated->tint(50),
             ],
             'cmf' => $this->cmf,
         ]);

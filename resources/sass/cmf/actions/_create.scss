@@ -1,4 +1,13 @@
 @include block(create)
 {
-    //
+    border-radius: $border-radius-1;
+    border: $border-width-2 solid $fill-color-alt-1;
+    background-color: $color01;
+    padding: $rule;
+    transition: opacity .5s;
+
+    @include modifier(loading)
+    {
+        opacity: 0;
+    }
 }

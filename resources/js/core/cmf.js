@@ -9,8 +9,8 @@ import UserPanel from "./user-panel";
 import ui from "./ui/util";
 import Logo from "./logo";
 import helpers from "../util/helpers";
-import ErrorPage from "./error-page";
 import ErrorModule from "./module/error-module";
+import meta from "../util/meta";
 
 class Cmf extends React.Component {
 
@@ -100,6 +100,10 @@ class Cmf extends React.Component {
         this.setState({
             isLoading: true
         });
+    }
+
+    getVersion() {
+        return meta.get('cmf:version');
     }
 
     onAuthSuccess(user) {
@@ -208,6 +212,9 @@ class Cmf extends React.Component {
                     <div className="cmf__content">
                         <div className="cmf__module">
                             {module}
+                        </div>
+                        <div className="cmf__footer">
+                            &copy; {this.props.title} – CMF {this.getVersion()}
                         </div>
                     </div>
                 </div>
