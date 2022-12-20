@@ -75,8 +75,15 @@
     @include element(header)
     {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        gap: $rule / 2;
         padding: $rule / 2 $rule;
+
+        @include breakpoint(2)
+        {
+            flex-direction: row;
+            align-items: center;
+        }
     }
 
     @include element(header-title)
@@ -88,18 +95,19 @@
     {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: flex-start;
         flex-grow: 1;
+        gap: $rule / 2;
+
+        @include breakpoint(2)
+        {
+            justify-content: flex-end;
+        }
     }
 
     @include element(header-search)
     {
-        margin-right: $rule / 2;
-
-        &:last-child
-        {
-            margin-right: 0;
-        }
+        // for ref
     }
 
     @include element(header-filter)

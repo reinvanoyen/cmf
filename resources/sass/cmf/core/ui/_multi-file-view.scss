@@ -14,21 +14,14 @@
 
     @include element(actions)
     {
+        display: flex;
+        flex-direction: column;
+        gap: $rule / 4;
         margin-bottom: $rule / 2;
-
-        >*
-        {
-            margin-bottom: $rule / 4;
-
-            &:last-child
-            {
-                margin-bottom: 0;
-            }
-        }
     }
 
     @include element(footer)
     {
-        margin-top: $rule;
+        margin-top: $rule / 2;
     }
 }

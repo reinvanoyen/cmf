@@ -6,11 +6,16 @@
     padding: $rule / 4 $rule / 2;
     cursor: pointer;
     @include type-1;
-    transition: color .25s;
     border-radius: $border-radius-1;
     color: $color13;
+    transition: color .25s, background-color .5s;
 
     @include modifier(active)
+    {
+        background-color: $fill-color-alt-1;
+    }
+
+    &:hover
     {
         background-color: $fill-color-alt-1;
     }

@@ -1,4 +1,5 @@
 // settings
+@import 'settings/breakpoints';
 @import 'settings/colors';
 @import 'settings/space';
 @import 'settings/shadows';
@@ -72,6 +73,9 @@
 @import 'cmf/core/ui/tag-label';
 @import 'cmf/core/ui/tags-browser';
 @import 'cmf/core/ui/file-browser';
+@import 'cmf/core/ui/directory-tree';
+@import 'cmf/core/ui/tree-item';
+@import 'cmf/core/ui/sticky-sidebar';
 
 // actions
 @import 'cmf/actions/index';

@@ -9,6 +9,7 @@ use ReinVanOyen\Cmf\Console\InstallCommand;
 use ReinVanOyen\Cmf\Console\MetaCommand;
 use ReinVanOyen\Cmf\Console\ModuleCommand;
 use ReinVanOyen\Cmf\Console\UserCommand;
+use ReinVanOyen\Cmf\Console\VersionCommand;
 use ReinVanOyen\Cmf\Contracts\MediaConverter;
 use ReinVanOyen\Cmf\Media\FileAdder;
 use ReinVanOyen\Cmf\Media\ImageConverter;
@@ -52,6 +53,7 @@ class CmfServiceProvider extends ServiceProvider
             MetaCommand::class,
             ModuleCommand::class,
             ClearMediaConversionsCommand::class,
+            VersionCommand::class,
         ]);
     }
 

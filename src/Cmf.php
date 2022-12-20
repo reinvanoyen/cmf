@@ -26,6 +26,14 @@ class Cmf
     }
 
     /**
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return '0.1.12-dev';
+    }
+
+    /**
      * @param array $modules
      */
     public function registerModules(array $modules)

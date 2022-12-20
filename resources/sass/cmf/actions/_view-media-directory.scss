@@ -19,6 +19,9 @@
 
     @include element(header-title)
     {
+        display: flex;
+        align-items: center;
+        gap: $rule / 2;
         @include type-9;
     }
 
@@ -48,6 +51,7 @@
     @include element(main)
     {
         width: 75%;
+        padding: $rule / 2;
     }
 
     @include element(side)

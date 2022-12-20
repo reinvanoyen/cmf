@@ -7,6 +7,7 @@ class Window extends React.Component {
     static defaultProps = {
         title: '',
         style: 'default',
+        actions: [],
         toolbar: null,
         footer: null,
         closeable: false,
@@ -41,13 +42,6 @@ class Window extends React.Component {
         return null;
     }
 
-    renderActions() {
-        if (this.props.closeable) {
-            return <IconButton name={'close'} style={'transparent'} onClick={this.close.bind(this)} />;
-        }
-        return null;
-    }
-
     render() {
         return (
             <div className={helpers.className('window', this.props.style)}>
@@ -56,7 +50,8 @@ class Window extends React.Component {
                         {this.props.title}
                     </div>
                     <div className="window__actions">
-                        {this.renderActions()}
+                        {this.props.actions}
+                        {this.props.closeable ? <IconButton key={'window-close'} name={'close'} style={'transparent'} onClick={this.close.bind(this)} /> : null}
                     </div>
                 </div>
                 {this.renderToolbar()}

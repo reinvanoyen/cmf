@@ -9,7 +9,9 @@
 
     @include element(content)
     {
-        padding: $rule / 2;
+        display: flex;
+        flex-direction: column;
+        gap: $rule / 3;
         padding-top: 0;
     }
 }

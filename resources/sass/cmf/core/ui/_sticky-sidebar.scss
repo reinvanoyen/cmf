@@ -1,0 +1,19 @@
+@include block(sticky-sidebar)
+{
+    display: flex;
+    gap: $rule / 2;
+
+    @include element(content)
+    {
+        width: 75%;
+    }
+
+    @include element(side)
+    {
+        position: sticky;
+        top: 0;
+        width: 25%;
+        height: 100%;
+        padding-top: $rule;
+    }
+}

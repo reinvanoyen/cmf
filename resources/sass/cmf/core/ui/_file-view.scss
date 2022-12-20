@@ -19,20 +19,14 @@
 
     @include element(actions)
     {
-        >*
-        {
-            margin-bottom: $rule / 4;
-
-            &:last-child
-            {
-                margin-bottom: 0;
-            }
-        }
+        display: flex;
+        flex-direction: column;
+        gap: $rule / 4;
     }
 
     @include element(footer)
     {
-        margin-top: $rule;
+        margin-top: $rule / 2;
     }
 
     @include element(label-select)

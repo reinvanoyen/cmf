@@ -1,0 +1,46 @@
+@include block(tree-item)
+{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    @include element(toggle)
+    {
+        display: flex;
+        align-items: center;
+    }
+
+    @include element(content)
+    {
+        display: flex;
+        align-items: center;
+        padding: $rule / 6 $rule / 3;
+        border-radius: $border-radius-1;
+        transition: background-color .25s;
+        @include type-2;
+
+        &:hover
+        {
+            background-color: $fill-color;
+        }
+
+        @include block-modifier(selected)
+        {
+            background-color: $fill-color-alt-1;
+        }
+    }
+
+    @include element(icon)
+    {
+        display: flex;
+        align-items: center;
+        margin-right: $rule / 3;
+    }
+
+    @include element(text)
+    {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+}

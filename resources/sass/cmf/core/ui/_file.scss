@@ -16,7 +16,13 @@
     @include modifier(grid)
     {
         flex-direction: column;
-        align-items: flex-start
+        align-items: flex-start;
+        border: 1px solid $fill-color-alt-1;
+
+        &:hover
+        {
+            border-color: $fill-color-alt-2;
+        }
     }
 
     &:hover
@@ -27,6 +33,7 @@
     @include modifier(selected)
     {
         background-color: $fill-color-alt-1;
+        border-color: $fill-color-alt-2;
 
         &:hover { background-color: $fill-color-alt-1; }
     }
@@ -63,6 +70,13 @@
             display: block;
             width: 100%;
         }
+
+        @include block-modifier(minimal)
+        {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+        }
     }
 
     @include element(checkbox)
@@ -98,6 +112,11 @@
         {
             display: none;
         }
+
+        @include block-modifier(minimal)
+        {
+            display: none;
+        }
     }
 
     @include element(size)
@@ -108,6 +127,11 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        @include block-modifier(minimal)
+        {
+            display: none;
+        }
     }
 
     @include element(label)
