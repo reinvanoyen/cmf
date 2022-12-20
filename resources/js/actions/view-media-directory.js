@@ -416,8 +416,10 @@ class ViewMediaDirectory extends React.Component {
                 <div className="view-media-directory__header">
                     <div className="view-media-directory__header-title">
                         <Dropdown style={['primary', 'small']} openIcon={'folder'} closeIcon={'folder'}>
-                            <TreeItem icon={'home'} text={'My files'} collapsible={false} onClick={() => this.openDirectory()}/>
-                            <DirectoryTree onDirectoryClick={directory => this.openDirectory(directory)} />
+                            <DirectoryTree
+                                selectedDirectory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
+                                onDirectoryClick={directory => this.openDirectory(directory)}
+                            />
                         </Dropdown>
                         {this.renderBreadcrumbs()}
                     </div>

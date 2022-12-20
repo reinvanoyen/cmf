@@ -1,16 +1,24 @@
-@mixin global-modifier( $class_names... )
+@mixin breakpoint($i)
 {
-    @include parent-option( 'body', $class_names )
+    @media screen and (min-width: nth($breakpoints, $i))
     {
         @content;
     }
 }
 
-@mixin parent-option( $selector, $class_names )
+@mixin global-modifier($class_names...)
 {
-    @for $i from 1 through length( $class_names )
+    @include parent-option('body', $class_names)
     {
-        #{$selector}.#{nth( $class_names, $i )} &
+        @content;
+    }
+}
+
+@mixin parent-option($selector, $class_names)
+{
+    @for $i from 1 through length($class_names)
+    {
+        #{$selector}.#{nth($class_names, $i)} &
         {
             @content;
         }

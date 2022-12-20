@@ -216,7 +216,7 @@ class FileBrowser extends React.Component {
     }
 
     handleFileClick(e, file) {
-        if (e.shiftKey || this.props.selectionMode) {
+        if (e.shiftKey || e.metaKey || this.props.selectionMode) {
             this.toggleFileSelection(file);
         } else {
             this.deselectAllExcept(file);

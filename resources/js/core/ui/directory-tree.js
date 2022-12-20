@@ -6,6 +6,7 @@ class DirectoryTree extends React.Component {
 
     static defaultProps = {
         directory: null,
+        selectedDirectory: null,
         onDirectoryClick: directoryId => {}
     };
 
@@ -32,7 +33,7 @@ class DirectoryTree extends React.Component {
         //
     }
 
-    select(directoryId) {
+    select(directoryId = null) {
         this.props.onDirectoryClick(directoryId);
     }
 
@@ -80,7 +81,9 @@ class DirectoryTree extends React.Component {
         return (
             <div className={'directory-tree__item'} key={directory.id}>
                 <TreeItem
+                    icon={'folder'}
                     text={directory.name}
+                    style={(this.props.selectedDirectory === directory.id ? 'selected' : 'default')}
                     onToggle={() => this.toggleCollapse(directory.id)}
                     onClick={() => this.select(directory.id)}
                 />
@@ -99,6 +102,13 @@ class DirectoryTree extends React.Component {
 
         return (
             <div className={'directory-tree'}>
+                <TreeItem
+                    icon={'home'}
+                    text={'My files'}
+                    style={(this.props.selectedDirectory === null ? 'selected' : 'default')}
+                    collapsible={false}
+                    onClick={() => this.select()}
+                />
                 {this.state.directories.map(directory => {
                     return this.renderDirectory(directory);
                 })}

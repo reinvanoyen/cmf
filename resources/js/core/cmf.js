@@ -10,6 +10,7 @@ import ui from "./ui/util";
 import Logo from "./logo";
 import helpers from "../util/helpers";
 import ErrorPage from "./error-page";
+import Icon from "./ui/icon";
 import ErrorModule from "./module/error-module";
 
 class Cmf extends React.Component {
@@ -26,6 +27,7 @@ class Cmf extends React.Component {
             isLoading: true,
             isLoggedIn: false,
             isError: false,
+            isNavOpen: false,
             user: {},
             modules: [],
             path: {},
@@ -123,6 +125,11 @@ class Cmf extends React.Component {
         });
     }
 
+    toggleNavigation() {
+        this.setState({isNavOpen: ! this.state.isNavOpen});
+        document.body.classList.toggle('open-nav');
+    }
+
     onLoginSuccess(user) {
         ui.notify('Welcome back, '+user.name);
         this.onAuthSuccess(user);
@@ -211,6 +218,9 @@ class Cmf extends React.Component {
                         </div>
                     </div>
                 </div>
+                <button className="cmf__nav-trigger" onClick={this.toggleNavigation.bind(this)}>
+                    <Icon style={'medium'} name={(this.state.isNavOpen ? 'close' : 'menu')} />
+                </button>
             </div>
         );
     }

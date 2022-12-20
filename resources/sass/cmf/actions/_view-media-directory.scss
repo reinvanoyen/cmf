@@ -51,6 +51,7 @@
     @include element(main)
     {
         width: 75%;
+        padding: $rule / 2;
     }
 
     @include element(side)

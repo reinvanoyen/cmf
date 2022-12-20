@@ -2,11 +2,13 @@
 
 import React from 'react';
 import Icon from "./icon";
+import helpers from "../../util/helpers";
 
 export default class TreeItem extends React.Component {
 
     static defaultProps = {
         icon: 'folder',
+        style: 'default',
         text: '',
         collapsible: true,
         onOpen: () => {},
@@ -37,7 +39,7 @@ export default class TreeItem extends React.Component {
 
     render() {
         return (
-            <div className={'tree-item'+(this.state.isSelected ? ' tree-item--selected' : '')}>
+            <div className={helpers.className('tree-item', this.props.style)}>
                 {this.props.collapsible ?
                     <div className="tree-item__toggle">
                         <Icon name={(this.state.isOpen ? 'expand_more' : 'chevron_right')} onClick={this.toggle.bind(this)} />

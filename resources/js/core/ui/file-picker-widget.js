@@ -214,7 +214,7 @@ class FilePickerWidget extends React.Component {
                                     links={links}
                                     onClick={path => this.onSelectedFileContextClick(path, file)}
                                 >
-                                    <File file={file} actions={[
+                                    <File file={file} viewMode={'minimal'} actions={[
                                         <IconButton
                                             key={'delete'}
                                             name={'delete'}
@@ -273,8 +273,10 @@ class FilePickerWidget extends React.Component {
         return (
             <Window style={['modal', 'wide']} closeable={true} onClose={this.onCancel.bind(this)} title={[
                 <Dropdown key={'path'} style={['primary', 'small']} openIcon={'folder'} closeIcon={'folder'}>
-                    <TreeItem icon={'home'} text={'My files'} collapsible={false} onClick={() => this.openDirectory()}/>
-                    <DirectoryTree onDirectoryClick={directory => this.openDirectory(directory)} />
+                    <DirectoryTree
+                        selectedDirectory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
+                        onDirectoryClick={directory => this.openDirectory(directory)}
+                    />
                 </Dropdown>,
                 <Breadcrumbs
                     key={'breadcrumbs'}

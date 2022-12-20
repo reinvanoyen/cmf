@@ -40,6 +40,7 @@ export default class File extends React.Component {
         return (
             <div className="file__checkbox">
                 <IconButton
+                    onClick={e => this.props.onClick(e, this.props.file)}
                     name={(this.props.isSelected ? 'check_box' : 'check_box_outline_blank')}
                     style={'transparent'}
                 />

@@ -27,6 +27,11 @@
 
     @include element(main)
     {
-        padding: 0 $rule;
+        padding: 0 $rule / 3;
+
+        @include breakpoint(2)
+        {
+            padding: 0 $rule;
+        }
     }
 }

@@ -21,6 +21,12 @@
     {
         flex-direction: column;
         align-items: center;
+        border: 1px solid $fill-color-alt-1;
+
+        &:hover
+        {
+            border-color: $fill-color-alt-2;
+        }
     }
 
     &:hover

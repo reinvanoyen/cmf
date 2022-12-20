@@ -3,7 +3,6 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    //padding: $rule / 3 $rule / 4;
 
     @include element(toggle)
     {
@@ -23,6 +22,11 @@
         &:hover
         {
             background-color: $fill-color;
+        }
+
+        @include block-modifier(selected)
+        {
+            background-color: $fill-color-alt-1;
         }
     }
 

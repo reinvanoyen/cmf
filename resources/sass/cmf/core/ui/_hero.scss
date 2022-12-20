@@ -1,5 +1,10 @@
 @include block(hero)
 {
-    @include type-8;
+    @include type-10;
     color: $color01;
+
+    @include breakpoint(2)
+    {
+        @include type-8;
+    }
 }
