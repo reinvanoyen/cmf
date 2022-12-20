@@ -6,6 +6,8 @@ import Placeholder from "./placeholder";
 import str from "../../util/str";
 import Item from "./item";
 import Search from "./search";
+import StickySidebar from "./sticky-sidebar";
+import Window from "./window";
 
 class ItemPickerWidget extends React.Component {
 
@@ -192,47 +194,33 @@ class ItemPickerWidget extends React.Component {
         }
     }
 
-    renderContent() {
-        return (
-            <React.Fragment>
-                <div className="item-picker-widget__main">
-                    {this.state.items.length ? this.renderRows() : this.renderPlaceholder()}
-                </div>
-                <div className="item-picker-widget__side">
-                    {this.renderSidebar()}
-                </div>
-            </React.Fragment>
-        );
-    }
-
     render() {
         return (
-            <div className="item-picker-widget">
-                <div className="item-picker-widget__header">
-                    <div className="item-picker-widget__header-title">
-                        {str.toUpperCaseFirst(this.props.plural)}
-                    </div>
-                    <div className="item-picker-widget__header-options">
-                        {this.props.search ? <Search onSearch={keyword => this.search(keyword)} /> : null}
-                        <IconButton name={'close'} onClick={this.onCancel.bind(this)} />
-                    </div>
-                </div>
-                <div className="item-picker-widget__content">
-                    {this.renderContent()}
-                </div>
-                <div className="item-picker-widget__footer">
+            <Window
+                style={['modal', 'wide']}
+                title={str.toUpperCaseFirst(this.props.plural)}
+                closeable={true}
+                onClose={this.onCancel.bind(this)}
+                actions={[(this.props.search ? <Search onSearch={keyword => this.search(keyword)} /> : null)]}
+                footer={[
                     <Button
+                        key={'cancel'}
                         text={'Cancel'}
                         style={['secondary']}
                         onClick={this.onCancel.bind(this)}
-                    />
+                    />,
                     <Button
+                        key={'confirm'}
                         text={(this.props.selectionMode ? 'Confirm selection' : 'Select '+this.props.singular)}
                         style={this.state.selectedItemIds.length ? [] : ['disabled',]}
                         onClick={this.state.selectedItemIds.length ? this.onSelectionConfirm.bind(this) : null}
                     />
-                </div>
-            </div>
+                ]}
+            >
+                <StickySidebar sidebar={this.renderSidebar()}>
+                    {this.state.items.length ? this.renderRows() : this.renderPlaceholder()}
+                </StickySidebar>
+            </Window>
         );
     }
 }

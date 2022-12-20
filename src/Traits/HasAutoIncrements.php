@@ -5,11 +5,6 @@ namespace ReinVanOyen\Cmf\Traits;
 trait HasAutoIncrements
 {
     /**
-     * @var $increment
-     */
-    protected $increment;
-
-    /**
      * Boot the Incrementable trait for a model.
      *
      * @return void
