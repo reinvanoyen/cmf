@@ -30,7 +30,7 @@ trait BuildsQuery
     /**
      * @var array $searchFields
      */
-    private array $searchFields;
+    private array $searchFields = [];
 
     /**
      * @var array $where
@@ -55,7 +55,7 @@ trait BuildsQuery
     /**
      * @var Sorter $sorter
      */
-    private Sorter $sorter;
+    private $sorter;
 
     /**
      * @param string $column
