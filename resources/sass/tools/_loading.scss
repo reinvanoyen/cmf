@@ -1,44 +1,64 @@
 @mixin loading
 {
+    &:before
+    {
+        content: '';
+        display: block;
+        position: fixed;
+        z-index: 9999;
+        top: $rule * 1.5;
+        left: 50%;
+        width: $rule * 2;
+        height: $rule * 2;
+        margin-top: -$rule;
+        margin-left: -$rule;
+        background-color: $color01;
+        border-radius: 50%;
+        border: $border-width-1 solid $fill-color;
+        box-shadow: $box-shadow-1;
+        pointer-events: none;
+        opacity: 0;
+        transform: scale(.25);
+        transition: transform .2s, opacity .1s;
+    }
+
+    &:after
+    {
+        content: '';
+        display: block;
+        position: fixed;
+        z-index: 9999;
+        box-sizing: border-box;
+        top: $rule * 1.5;
+        left: 50%;
+        width: $rule / 1.5;
+        height: $rule / 1.5;
+        margin-top: -$rule / 3;
+        margin-left: -$rule / 3;
+        border-radius: 50%;
+        border-top: 2px solid $primary-color;
+        border-right: 2px solid transparent;
+        border-bottom: 2px solid $primary-color;
+        border-left: 2px solid $primary-color;
+        pointer-events: none;
+        opacity: 0;
+    }
+
     @include global-modifier(api-loading)
     {
         &:before
         {
-            content: '';
-            display: block;
-            position: fixed;
-            z-index: 9999;
-            top: 50%;
-            left: 50%;
-            width: $rule * 2;
-            height: $rule * 2;
-            margin-top: -$rule;
-            margin-left: -$rule;
-            background-color: $color01;
-            border-radius: 50%;
-            border: $border-width-1 solid $fill-color;
-            box-shadow: $box-shadow-1;
+            transform: scale(1);
+            opacity: 1;
+            transition-delay: .2s;
         }
 
         &:after
         {
-            content: '';
-            display: block;
-            position: fixed;
-            z-index: 9999;
-            box-sizing: border-box;
-            top: 50%;
-            left: 50%;
-            width: $rule / 1.5;
-            height: $rule / 1.5;
-            margin-top: -$rule / 3;
-            margin-left: -$rule / 3;
-            border-radius: 50%;
-            border-top: 2px solid $primary-color;
-            border-right: 2px solid transparent;
-            border-bottom: 2px solid $primary-color;
-            border-left: 2px solid $primary-color;
-            animation: spin .5s linear infinite;
+            opacity: 1;
+            animation: spin .5s linear infinite both;
+            transition: opacity .2s;
+            transition-delay: .2s;
         }
     }
 }
