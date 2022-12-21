@@ -5,6 +5,7 @@ import IconButton from "../core/ui/icon-button";
 import Placeholder from "../core/ui/placeholder";
 import ItemPickerWidget from "../core/ui/item-picker-widget";
 import Item from "../core/ui/item";
+import Overlay from "../core/ui/overlay";
 
 class ManyToManyField extends React.Component {
 
@@ -114,7 +115,7 @@ class ManyToManyField extends React.Component {
 
         if (this.state.isOpen) {
             widget = (
-                <div className="overlay">
+                <Overlay>
                     <ItemPickerWidget
                         id={this.props.id}
                         path={this.props.path}
@@ -128,7 +129,7 @@ class ManyToManyField extends React.Component {
                         defaultSelectedItems={this.state.selectedItems}
                         defaultSelectedItemIds={this.state.selectedItemsIds}
                     />
-                </div>
+                </Overlay>
             );
         }
 

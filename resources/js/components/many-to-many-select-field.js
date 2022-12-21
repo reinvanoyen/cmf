@@ -7,6 +7,8 @@ import Button from "../core/ui/button";
 import IconButton from "../core/ui/icon-button";
 import Form from "../core/ui/form";
 import components from "../rendering/components";
+import Overlay from "../core/ui/overlay";
+import Window from "../core/ui/window";
 
 class ManyToManySelectField extends React.Component {
 
@@ -21,7 +23,8 @@ class ManyToManySelectField extends React.Component {
         titleColumn: '',
         tooltip: '',
         create: false,
-        createComponents: []
+        createComponents: [],
+        sidebarComponents: []
     };
 
     constructor(props) {
@@ -79,14 +82,9 @@ class ManyToManySelectField extends React.Component {
     }
 
     handleChange(values) {
-
-        let selectedItems = this.state.items.filter(v => {
-            return (values.includes(`${v.id}`));
-        });
-
         this.setState({
             selectedItemsIds: values,
-            selectedItems: selectedItems
+            selectedItems: this.state.items.filter(v => values.includes(`${v.id}`))
         });
     }
 
@@ -136,32 +134,31 @@ class ManyToManySelectField extends React.Component {
             });
     }
 
+    renderSidebarComponents() {
+        return components.renderComponents(this.props.sidebarComponents, {}, this.props.path);
+    }
+
+    renderCreateComponents() {
+        return components.renderComponents(this.props.createComponents, {}, this.props.path);
+    }
+
     renderCreateWidget() {
         if (this.state.isOpen) {
             return (
-                <div className="overlay">
-                    <div className="belongs-to-field__create">
-                        <div className="belongs-to-field__create-header">
-                            <div className="belongs-to-field__create-header-title">
-                                New {this.props.singular}
-                            </div>
-                            <div className="belongs-to-field__create-header-options">
-                                <IconButton name={'close'} onClick={this.close.bind(this)} />
-                            </div>
-                        </div>
-                        <div className="belongs-to-field__create-content">
-                            <Form
-                                ref={this.createFormRef}
-                                errors={this.state.createFormErrors}
-                                realForm={false}
-                                onSubmit={this.create.bind(this)}
-                                submitButtonText={`Create ${this.props.singular}`}
-                            >
-                                {components.renderComponents(this.props.createComponents, {}, this.props.path)}
-                            </Form>
-                        </div>
-                    </div>
-                </div>
+                <Overlay>
+                    <Window title={'New '+this.props.singular} style={'modal'} closeable={true} onClose={this.close.bind(this)}>
+                        <Form
+                            ref={this.createFormRef}
+                            errors={this.state.createFormErrors}
+                            realForm={false}
+                            onSubmit={this.create.bind(this)}
+                            submitButtonText={`Create ${this.props.singular}`}
+                            sidebar={this.renderSidebarComponents()}
+                        >
+                            {this.renderCreateComponents()}
+                        </Form>
+                    </Window>
+                </Overlay>
             );
         }
 
@@ -174,7 +171,7 @@ class ManyToManySelectField extends React.Component {
                 <div className="many-to-many-select-field__btn">
                     <Button
                         icon={'add'}
-                        style={['small', 'secondary']}
+                        style={['full', 'small', 'secondary']}
                         text={'New '+this.props.singular}
                         onClick={this.open.bind(this)}
                     />
@@ -200,9 +197,10 @@ class ManyToManySelectField extends React.Component {
                             options={this.state.options}
                             nullText={`– No ${this.props.plural} selected –`}
                             onChange={(values) => this.handleChange(values)}
-                        />
+                        >
+                            {this.renderCreate()}
+                        </Select>
                     </div>
-                    {this.renderCreate()}
                 </div>
                 {this.renderCreateWidget()}
             </Field>

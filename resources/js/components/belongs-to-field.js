@@ -5,7 +5,6 @@ import api from '../api/api';
 import Form from "../core/ui/form";
 import components from "../rendering/components";
 import ui from "../core/ui/util";
-import IconButton from "../core/ui/icon-button";
 import Select from "../core/ui/select";
 import Overlay from "../core/ui/overlay";
 import Window from "../core/ui/window";

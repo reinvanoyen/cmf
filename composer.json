@@ -25,7 +25,8 @@
         "ozdemirburak/iris": "^2.5"
     },
     "require-dev": {
-        "orchestra/testbench": "^7.11"
+        "orchestra/testbench": "^7.11",
+        "vimeo/psalm": "^5.4"
     },
     "autoload": {
         "psr-4": {
@@ -50,6 +51,9 @@
     "scripts": {
         "test": [
             "./vendor/bin/phpunit -c phpunit.xml"
+        ],
+        "psalm": [
+            "./vendor/bin/psalm"
         ]
     }
 }
