@@ -9,7 +9,7 @@ interface MediaConverter
     /**
      * @param string $name
      * @param callable $conversion
-     * @return mixed
+     * @return void
      */
     public function registerConversion(string $name, callable $conversion);
 

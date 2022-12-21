@@ -19,6 +19,7 @@ abstract class Converter implements MediaConverter
     /**
      * @param string $name
      * @param callable $conversion
+     * @return void
      */
     public function registerConversion(string $name, callable $conversion)
     {

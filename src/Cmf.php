@@ -14,7 +14,7 @@ class Cmf
     /**
      * @var ModuleRegistry $modules
      */
-    private $modules;
+    private ModuleRegistry $modules;
 
     /**
      * Cmf constructor.
@@ -50,8 +50,10 @@ class Cmf
     {
         $module = $this->modules->add($module);
 
-        foreach ($module->submodules() as $submodule) {
-            $this->modules->add($submodule, false);
+        if ($module) {
+            foreach ($module->submodules() as $submodule) {
+                $this->modules->add($submodule, false);
+            }
         }
     }
 

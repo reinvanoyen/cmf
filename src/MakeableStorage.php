@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace ReinVanOyen\Cmf;
 
@@ -15,14 +16,14 @@ class MakeableStorage
      *
      * @var int $id
      */
-    private $id;
+    private int $id = 0;
 
     /**
      * An associative array holding all makeables, the key is the id, the value is the makeable
      *
      * @var array $makeable
      */
-    private $makeables = [];
+    private array $makeables = [];
 
     /**
      * Store the makeable in the storage
@@ -55,9 +56,9 @@ class MakeableStorage
     /**
      * Get the last created id
      *
-     * @return mixed
+     * @return int
      */
-    public function getLastCreatedId()
+    public function getLastCreatedId(): int
     {
         return $this->id;
     }

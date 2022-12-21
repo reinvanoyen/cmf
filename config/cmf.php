@@ -66,7 +66,7 @@ return [
     | The namespace of your Meta classes, excluding the application namespace.
     | e.g. App\Cmf\Meta becomes Cmf\Meta
     */
-    'meta_namespace' => 'Cmf\\Meta',
+    'meta_namespace' => 'App\\Cmf\\Meta',
 
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
     | The namespace of your Module classes, excluding the application namespace.
     | e.g. App\Cmf\Modules becomes Cmf\Modules
     */
-    'modules_namespace' => 'Cmf\\Modules',
+    'modules_namespace' => 'App\\Cmf\\Modules',
 
     /*
     |--------------------------------------------------------------------------

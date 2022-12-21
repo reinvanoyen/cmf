@@ -18,7 +18,7 @@ class Create extends Action
     private array $sidebar = [];
 
     /**
-     * @var int $restrictByFk
+     * @var string $restrictByFk
      */
     private $restrictByFk;
 

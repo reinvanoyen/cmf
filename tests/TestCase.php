@@ -2,9 +2,7 @@
 
 namespace ReinVanOyen\Cmf\Tests;
 
-use ReinVanOyen\Cmf\Facades\Cmf;
 use ReinVanOyen\Cmf\CmfServiceProvider;
-use ReinVanOyen\Cmf\Tests\Fixtures\Modules\UserModule;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -13,10 +11,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         $this->loadMigrations();
-
-        Cmf::registerModules([
-            UserModule::class,
-        ]);
     }
 
     /**
@@ -46,6 +40,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+
+        $app['config']->set('cmf.meta_namespace', 'ReinVanOyen\\Cmf\\Tests\\Fixtures\\Meta');
+        $app['config']->set('cmf.modules_namespace', 'ReinVanOyen\\Cmf\\Tests\\Fixtures\\Modules');
     }
 
     /**

@@ -16,23 +16,9 @@ abstract class Component implements Exportable, Makeable, \JsonSerializable
     use CanBeMade;
 
     /**
-     * @var int $id
-     */
-    private $id;
-
-    /**
      * @var Action $action
      */
     protected $action;
-
-    /**
-     * @param int $id
-     */
-    final public function setId(int $id)
-    {
-        $this->id = $id;
-        $this->export('id', $this->id);
-    }
 
     /**
      * @param Model $model

@@ -42,7 +42,7 @@ class Mimetype implements Rule
     /**
      * Get the validation error message.
      *
-     * @return string
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Translation\Translator|string|null
      */
     public function message()
     {

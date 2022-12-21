@@ -30,27 +30,32 @@ trait BuildsQuery
     /**
      * @var array $searchFields
      */
-    private $searchFields;
+    private array $searchFields;
 
     /**
      * @var array $where
      */
-    private $where = [];
+    private array $where = [];
 
     /**
      * @var array $whereNull
      */
-    private $whereNull = [];
+    private array $whereNull = [];
+
+    /**
+     * @var array $orderBy
+     */
+    private array $orderBy = [];
 
     /**
      * @var array $filters
      */
-    private $filters = [];
+    private array $filters = [];
 
     /**
      * @var Sorter $sorter
      */
-    private $sorter;
+    private Sorter $sorter;
 
     /**
      * @param string $column

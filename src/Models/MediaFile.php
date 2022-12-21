@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use ReinVanOyen\Cmf\Contracts\MediaConverter;
 
+/**
+ * @property string $visibility
+ * @property string $disk
+ * @property string $filename
+ * @property string $mime_type
+ */
 class MediaFile extends Model
 {
     /**

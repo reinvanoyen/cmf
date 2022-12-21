@@ -5,7 +5,6 @@ namespace ReinVanOyen\Cmf\Components;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
-use ReinVanOyen\Cmf\Traits\BuildsQuery;
 use ReinVanOyen\Cmf\Traits\HasLabel;
 use ReinVanOyen\Cmf\Traits\HasName;
 
@@ -13,7 +12,6 @@ class BelongsToView extends Component
 {
     use HasName;
     use HasLabel;
-    use BuildsQuery;
 
     /**
      * @var string $titleColumn
@@ -21,9 +19,9 @@ class BelongsToView extends Component
     private $titleColumn;
 
     /**
-     * BelongsToView constructor.
      * @param string $name
      * @param string|null $meta
+     * @throws \ReinVanOyen\Cmf\Exceptions\CouldntGuessMetaException
      */
     public function __construct(string $name, string $meta = null)
     {

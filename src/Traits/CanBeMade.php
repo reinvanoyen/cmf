@@ -9,12 +9,12 @@ trait CanBeMade
     /**
      * @var int $id
      */
-    private $id;
+    private int $id;
 
     /**
      * @var bool $isResolved
      */
-    private $isResolved = false;
+    private bool $isResolved = false;
 
     /**
      * @param mixed ...$arguments
@@ -29,6 +29,7 @@ trait CanBeMade
 
     /**
      * @param int $id
+     * @return void
      */
     final public function setId(int $id)
     {
@@ -39,7 +40,7 @@ trait CanBeMade
     /**
      * @return int
      */
-    final protected function getId()
+    final protected function getId(): int
     {
         return $this->id;
     }

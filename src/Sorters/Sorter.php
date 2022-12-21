@@ -4,7 +4,6 @@ namespace ReinVanOyen\Cmf\Sorters;
 
 use ReinVanOyen\Cmf\Contracts\{Exportable, Makeable};
 use Illuminate\Http\Request;
-use ReinVanOyen\Cmf\Action\Action;
 use ReinVanOyen\Cmf\Action\CollectionAction;
 use ReinVanOyen\Cmf\Traits\CanExport;
 use ReinVanOyen\Cmf\Traits\CanBeMade;
@@ -15,9 +14,9 @@ abstract class Sorter implements Exportable, Makeable, \JsonSerializable
     use CanBeMade;
 
     /**
-     * @var Action $action
+     * @var CollectionAction $action
      */
-    protected $action;
+    private CollectionAction $action;
 
     /**
      * @param Request $request
@@ -35,5 +34,13 @@ abstract class Sorter implements Exportable, Makeable, \JsonSerializable
     public function resolve(CollectionAction $action)
     {
         $this->action = $action;
+    }
+
+    /**
+     * @return CollectionAction
+     */
+    public function getAction(): CollectionAction
+    {
+        return $this->action;
     }
 }

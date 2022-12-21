@@ -68,7 +68,7 @@ abstract class Module implements \JsonSerializable
         ];
         $this->exports['url'] = url(Cmf::getPath().'/'.$this->id());
         $this->exports['submodules'] = array_map(function($module) {
-            return ModuleFactory::make($module);
+            return (new ModuleFactory())->make($module);
         }, $this->submodules());
 
         return $this->exports;

@@ -22,7 +22,7 @@ class CreateWizard extends Action
     private $steps;
 
     /**
-     * @var int $restrictByFk
+     * @var string $restrictByFk
      */
     private $restrictByFk;
 

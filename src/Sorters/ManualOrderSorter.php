@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 class ManualOrderSorter extends Sorter
 {
     /**
-     * @var array $columns
+     * @var string $column
      */
-    private $column;
+    private string $column;
 
     /**
      * ManualOrderSorter constructor.
@@ -47,7 +47,7 @@ class ManualOrderSorter extends Sorter
      */
     public function sortUp(Request $request)
     {
-        $results = $this->action->apiLoad($request);
+        $results = $this->getAction()->apiLoad($request);
         $id = (int) $request->get('id');
 
         $this->switchValue($results, $id, -1);
@@ -58,7 +58,7 @@ class ManualOrderSorter extends Sorter
      */
     public function sortDown(Request $request)
     {
-        $results = $this->action->apiLoad($request);
+        $results = $this->getAction()->apiLoad($request);
         $id = (int) $request->get('id');
 
         $this->switchValue($results, $id, 1);

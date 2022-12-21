@@ -3,6 +3,8 @@
 namespace ReinVanOyen\Cmf\Action;
 
 use ReinVanOyen\Cmf\Contracts\{Exportable, Makeable};
+use ReinVanOyen\Cmf\Exceptions\InvalidMetaException;
+use ReinVanOyen\Cmf\Meta;
 use ReinVanOyen\Cmf\Module;
 use ReinVanOyen\Cmf\Traits\CanExport;
 use ReinVanOyen\Cmf\Traits\CanBeMade;
@@ -18,14 +20,14 @@ abstract class Action implements Exportable, Makeable, \JsonSerializable
     protected $meta;
 
     /**
-     * @var Module $module
+     * @var string $moduleId
      */
-    private $moduleId;
+    private string $moduleId;
 
     /**
-     * @var string $id
+     * @var string $actionId
      */
-    private $id;
+    private $actionId;
 
     /**
      * @var string $model
@@ -38,27 +40,32 @@ abstract class Action implements Exportable, Makeable, \JsonSerializable
     protected $components;
 
     /**
-     * @param string $id
+     * @param string $actionId
      */
-    final public function id(string $id)
+    final public function id(string $actionId)
     {
-        $this->id = $id;
+        $this->actionId = $actionId;
     }
 
     /**
      * @param string $meta
      * @return $this
+     * @throws InvalidMetaException
      */
     public function meta(string $meta)
     {
+        if (! is_subclass_of($meta, Meta::class)) {
+            throw new InvalidMetaException();
+        }
+
         $this->meta = $meta;
         return $this;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getMeta(): ?string
+    public function getMeta(): string
     {
         return $this->meta;
     }
@@ -86,7 +93,7 @@ abstract class Action implements Exportable, Makeable, \JsonSerializable
 
         $this->export('path', [
             'module' => $this->moduleId,
-            'action' => $this->id,
+            'action' => $this->actionId,
         ]);
     }
 

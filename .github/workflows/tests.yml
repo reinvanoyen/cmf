@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - dev
       - '*.x'
   pull_request:
 
@@ -32,7 +33,7 @@ jobs:
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-interaction
-    
+
     - name: Execute tests
       run: composer run test
 

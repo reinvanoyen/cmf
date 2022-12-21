@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Support\Str;
 use ReinVanOyen\Cmf\Traits\HasLabel;
@@ -65,20 +66,20 @@ class TagsField extends Component
         $search = $request->input('search');
         $tags = Tag::containing($search)->get();
 
-        return $tags->map(function ($tag) {
+        return $tags->map(function (Tag $tag) {
             return $tag->name;
         });
     }
 
     /**
      * @param Request $request
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection|Model[]|Collection|Tag[]
      */
     public function apiLoad(Request $request)
     {
         $tags = Tag::all();
 
-        return $tags->map(function ($tag) {
+        return $tags->map(function (Tag $tag) {
             return $tag->name;
         });
     }

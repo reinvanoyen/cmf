@@ -67,7 +67,7 @@ class Tabs extends Component
     /**
      * @param Model $model
      * @param Request $request
-     * @return mixed|void
+     * @return void
      */
     public function save(Model $model, Request $request)
     {

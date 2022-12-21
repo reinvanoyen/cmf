@@ -4,25 +4,27 @@ namespace ReinVanOyen\Cmf;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
+use ReinVanOyen\Cmf\Exceptions\CouldntGuessMetaException;
 
 class RelationshipMetaGuesser
 {
     /**
-     * Get the meta class name from the relationship name
+     * Guess the meta class name from the relationship name
      *
-     * @param  string  $name
+     * @param $name
      * @return string
+     * @throws CouldntGuessMetaException
      */
-    public static function getMeta($name): ?string
+    public static function getMeta($name): string
     {
         $name = Str::studly(Str::singular($name));
         $model = self::getMetaNamespace().'\\'.$name.'Meta';
 
-        if (class_exists($model)) {
-            return $model;
+        if (! class_exists($model)) {
+            throw new CouldntGuessMetaException();
         }
 
-        return null;
+        return $model;
     }
 
     /**
@@ -30,6 +32,6 @@ class RelationshipMetaGuesser
      */
     public static function getMetaNamespace()
     {
-        return Application::getInstance()->getNamespace().config('cmf.meta_namespace');
+        return config('cmf.meta_namespace');
     }
 }

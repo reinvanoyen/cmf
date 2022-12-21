@@ -21,13 +21,13 @@ class TagFilter extends Filter
 
     /**
      * @param Request $request
-     * @return \Illuminate\Database\Eloquent\Collection|Tag[]
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model[]|\Illuminate\Support\Collection|Tag[]
      */
     public function apiLoad(Request $request)
     {
         $tags = Tag::all();
 
-        return $tags->map(function ($tag) {
+        return $tags->map(function (Tag $tag) {
             return [
                 'id' => $tag->id,
                 'name' => $tag->name,

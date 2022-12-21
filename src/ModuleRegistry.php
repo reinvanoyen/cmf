@@ -7,23 +7,41 @@ use ReinVanOyen\Cmf\Factories\ModuleFactory;
 class ModuleRegistry
 {
     /**
+     * @var ModuleFactory $factory
+     */
+    private ModuleFactory $factory;
+
+    /**
      * @var array $modules
      */
-    private $modules;
+    private array $modules = [];
 
     /**
      * @var array $modulesMap
      */
-    private $modulesMap;
+    private array $modulesMap = [];
 
     /**
-     * @param $module
-     * @param bool $isRoot
-     * @return \Illuminate\Contracts\Foundation\Application|mixed|null
+     * @param ModuleFactory $factory
      */
-    public function add($module, $isRoot = true)
+    public function __construct(ModuleFactory $factory)
     {
-        $module = ModuleFactory::make($module);
+        $this->factory = $factory;
+    }
+
+    /**
+     * @param string|Module $module
+     * @param bool $isRoot
+     * @return Module|null
+     */
+    public function add(Module|string $module, bool $isRoot = true): ?Module
+    {
+        $module = $this->factory->make($module);
+
+        if (! $module) {
+            return null;
+        }
+
         $this->modulesMap[$module->id()] = $module;
 
         if ($isRoot) {
@@ -55,6 +73,6 @@ class ModuleRegistry
      */
     public function all(): array
     {
-        return array_keys($this->modulesMap);
+        return array_values($this->modulesMap);
     }
 }

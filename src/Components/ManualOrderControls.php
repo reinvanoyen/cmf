@@ -16,25 +16,25 @@ class ManualOrderControls extends Component
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return void
      */
     public function apiSortUp(Request $request)
     {
-        $sorter = $this->action->getSorter();
-        $sorter->sortUp($request);
-
-        return true;
+        if (method_exists($this->action, 'getSorter')) {
+            $sorter = $this->action->getSorter();
+            $sorter->sortUp($request);
+        }
     }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return void
      */
     public function apiSortDown(Request $request)
     {
-        $sorter = $this->action->getSorter();
-        $sorter->sortDown($request);
-
-        return true;
+        if (method_exists($this->action, 'getSorter')) {
+            $sorter = $this->action->getSorter();
+            $sorter->sortDown($request);
+        }
     }
 }

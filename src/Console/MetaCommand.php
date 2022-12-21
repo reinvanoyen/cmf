@@ -48,11 +48,7 @@ class MetaCommand extends Command
 
         $contents = $this->filesystem->get(__DIR__.'/stubs/Meta.stub');
 
-        $contents = str_replace(
-            ['{{model}}', '{{ model }}',],
-            [$model, $model,],
-            $contents
-        );
+        $contents = str_replace(['{{model}}', '{{ model }}',], [$model, $model,], $contents);
 
         $contents = str_replace(
             ['{{namespace}}', '{{ namespace }}',],
@@ -79,6 +75,6 @@ class MetaCommand extends Command
      */
     private function getMetaNamespace()
     {
-        return Application::getInstance()->getNamespace().config('cmf.meta_namespace');
+        return config('cmf.meta_namespace');
     }
 }

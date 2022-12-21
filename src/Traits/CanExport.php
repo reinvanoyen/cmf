@@ -10,10 +10,11 @@ trait CanExport
     private $exports = [];
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
+     * @return void
      */
-    protected function export($key, $value)
+    protected function export(string $key, mixed $value)
     {
         $this->exports[$key] = $value;
     }

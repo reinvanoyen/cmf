@@ -14,24 +14,26 @@ class Index extends CollectionAction
 
     /**
      * Index constructor.
+     *
      * @param string $meta
      * @param array $components
+     * @throws \ReinVanOyen\Cmf\Exceptions\InvalidMetaException
      */
     public function __construct(string $meta, array $components = [])
     {
         $this->meta($meta);
-        $this->singular($meta::getSingular());
-        $this->plural($meta::getPlural());
-        $this->paginate($meta::getPerPage());
-        $this->components(count($components) ? $components : $meta::index());
-        $this->model = $meta::getModel();
+        $this->singular($this->getMeta()::getSingular());
+        $this->plural($this->getMeta()::getPlural());
+        $this->paginate($this->getMeta()::getPerPage());
+        $this->components(count($components) ? $components : $this->getMeta()::index());
+        $this->model = $this->getMeta()::getModel();
 
-        if (count($meta::getSearchColumns())) {
-            $this->search($meta::getSearchColumns());
+        if (count($this->getMeta()::getSearchColumns())) {
+            $this->search($this->getMeta()::getSearchColumns());
         }
 
-        if ($this->meta::getSorting()) {
-            $this->sorter(StaticSorter::make($this->meta::getSorting()));
+        if ($this->getMeta()::getSorting()) {
+            $this->sorter(StaticSorter::make($this->getMeta()::getSorting()));
         }
     }
 

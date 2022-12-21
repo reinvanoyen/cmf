@@ -80,7 +80,7 @@ class ModuleCommand extends Command
      */
     private function getModulesNamespace()
     {
-        return Application::getInstance()->getNamespace().config('cmf.modules_namespace');
+        return config('cmf.modules_namespace');
     }
 
     /**
@@ -88,6 +88,6 @@ class ModuleCommand extends Command
      */
     private function getMetaNamespace()
     {
-        return Application::getInstance()->getNamespace().config('cmf.meta_namespace');
+        return config('cmf.meta_namespace');
     }
 }

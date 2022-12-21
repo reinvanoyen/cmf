@@ -9,16 +9,16 @@ use ReinVanOyen\Cmf\Action\Edit;
 use ReinVanOyen\Cmf\Action\Index;
 use ReinVanOyen\Cmf\Components\Link;
 use ReinVanOyen\Cmf\Module;
-use ReinVanOyen\Cmf\Tests\Fixtures\Meta\UserMeta;
+use ReinVanOyen\Cmf\Tests\Fixtures\Meta\ProductMeta;
 
-class UserModule extends Module
+class ProductModule extends Module
 {
     /**
      * @return string
      */
     protected function title(): string
     {
-        return 'Users';
+        return 'Products';
     }
 
     /**
@@ -34,14 +34,12 @@ class UserModule extends Module
      */
     public function index(): Action
     {
-        return Index::make(UserMeta::class)
+        return Index::make(ProductMeta::class)
             ->action('edit')
-            ->grid([1, 1, 0, 0,])
             ->header([
-                Link::make('New user', 'create')
+                Link::make('New product', 'create')
                     ->style('button'),
-            ])
-            ->search(['name',]);
+            ]);
     }
 
     /**
@@ -49,7 +47,7 @@ class UserModule extends Module
      */
     public function create(): Action
     {
-        return Create::make(UserMeta::class);
+        return Create::make(ProductMeta::class);
     }
 
     /**
@@ -57,7 +55,7 @@ class UserModule extends Module
      */
     public function edit(): Action
     {
-        return Edit::make(UserMeta::class);
+        return Edit::make(ProductMeta::class);
     }
 
     /**
@@ -65,6 +63,6 @@ class UserModule extends Module
      */
     public function delete(): Action
     {
-        return Delete::make(UserMeta::class);
+        return Delete::make(ProductMeta::class);
     }
 }
