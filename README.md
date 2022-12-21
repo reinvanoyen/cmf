@@ -12,7 +12,7 @@
 
 ## Introduction
 
-Laravel CMF is the flexible Content Management Framework for next application. This software allows for rapid creation of your Content Management System while not being opinionated on how you build your Laravel application.
+Laravel CMF is the flexible Content Management Framework for your next application. This software allows for rapid creation of your Content Management System while not being opinionated on how you build your Laravel application.
 
 ## Installation
 
