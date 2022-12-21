@@ -42,6 +42,7 @@ Route::middleware([
         Route::post('media/rename-directory', [MediaController::class, 'renameDirectory']);
         Route::post('media/delete-directory', [MediaController::class, 'deleteDirectory']);
         Route::post('media/create-directory', [MediaController::class, 'createDirectory']);
+        Route::post('media/move-directory', [MediaController::class, 'moveDirectory']);
 
         Route::post('media/upload', [MediaController::class, 'upload']);
         Route::post('media/upload-chunk', [MediaController::class, 'uploadChunk']);

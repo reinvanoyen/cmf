@@ -27,18 +27,14 @@ class FileBrowser extends React.Component {
         onFileClick: id => {},
         onDirectoryDelete: id => {},
         onDirectoryRename: (name, id) => {},
+        onDirectoryMove: (directory, id) => {},
         onFileDelete: id => {},
         onFileRename: id => {},
         onFileMove: (directory, id) => {},
         onFileOpen: file => {},
         onSelectionChange: (ids, files) => {},
         onSelectionDelete: (ids, files) => {},
-        onSelectionMove: (directory, ids) => {},
-
-        // Move action state
-        moveAction: false,
-        moveFileId: null,
-        moveFileIds: []
+        onSelectionMove: (directory, ids) => {}
     };
 
     constructor(props) {
@@ -46,7 +42,13 @@ class FileBrowser extends React.Component {
 
         this.state = {
             uploads: [],
-            files: this.props.files
+            files: this.props.files,
+
+            // Move action state
+            moveAction: false,
+            moveFileId: null,
+            moveFileIds: [],
+            moveDirectoryId: null
         };
 
         this.handleOnUploadQueued = this.onUploadQueued.bind(this);
@@ -166,6 +168,13 @@ class FileBrowser extends React.Component {
                 defaultValue: directory.name,
                 confirm: value => this.props.onDirectoryRename(value, directory.id)
             });
+
+        } else if (action === 'move') {
+
+            this.setState({
+                moveAction: true,
+                moveDirectoryId: directory.id
+            });
         }
     }
 
@@ -265,7 +274,8 @@ class FileBrowser extends React.Component {
                         this.setState({
                             moveAction: false,
                             moveFileId: null,
-                            moveFileIds: []
+                            moveFileIds: [],
+                            moveDirectoryId: null
                         });
                     }}
                     onConfirm={directory => {
@@ -274,8 +284,17 @@ class FileBrowser extends React.Component {
                         }, () => {
                             if (this.state.moveFileIds.length) {
                                 this.props.onSelectionMove(directory, this.state.moveFileIds);
-                            } else {
+                            } else if (this.state.moveFileId) {
                                 this.props.onFileMove(directory, this.state.moveFileId);
+                            }
+
+                            if (this.state.moveDirectoryId === directory) {
+                                util.notify('Can\'t move directory inside itself!');
+                                return;
+                            }
+
+                            if (this.state.moveDirectoryId) {
+                                this.props.onDirectoryMove(directory, this.state.moveDirectoryId);
                             }
                         });
                     }}
@@ -364,6 +383,7 @@ class FileBrowser extends React.Component {
                                 key={i}
                                 links={[
                                     ['Rename', 'rename'],
+                                    ['Move', 'move'],
                                     ['Delete', 'delete']
                                 ]}
                                 onClick={path => this.onDirectoryContextClick(path, directory)}

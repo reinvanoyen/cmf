@@ -277,6 +277,26 @@ class MediaController extends Controller
 
     /**
      * @param Request $request
+     * @return MediaDirectoryResource
+     */
+    public function moveDirectory(Request $request)
+    {
+        $directory = MediaDirectory::findOrFail($request->input('id'));
+
+        if ($request->input('directory')) {
+            $mediaDirectory = MediaDirectory::findOrFail($request->input('directory'));
+            $directory->directory()->associate($mediaDirectory);
+        } else {
+            $directory->directory()->dissociate();
+        }
+
+        $directory->save();
+
+        return new MediaDirectoryResource($directory);
+    }
+
+    /**
+     * @param Request $request
      * @return MediaFileResource
      */
     public function renameFile(Request $request)
@@ -435,7 +455,6 @@ class MediaController extends Controller
 
         return new MediaFileResource($mediaFile);
     }
-
 
     /**
      * @param Request $request

@@ -12,7 +12,6 @@ import MultiFileView from "../core/ui/multi-file-view";
 import FileUploader from "../core/ui/file-uploader";
 import Breadcrumbs from "../core/ui/breadcrumbs";
 import IconButton from "../core/ui/icon-button";
-import TreeItem from "../core/ui/tree-item";
 import DirectoryTree from "../core/ui/directory-tree";
 
 class ViewMediaDirectory extends React.Component {
@@ -237,6 +236,15 @@ class ViewMediaDirectory extends React.Component {
         }
     }
 
+    handleMoveDirectory(moveToId, directoryId) {
+        api.media.moveDirectory(moveToId, directoryId).then(response => {
+            util.notify('Directory moved');
+            this.refresh();
+        }, error => {
+            util.notify('Directory could not be moved');
+        });
+    }
+
     handleMoveFile(directoryId, fileId) {
         api.media.moveFile(directoryId, fileId).then(response => {
             util.notify('File moved');
@@ -392,6 +400,8 @@ class ViewMediaDirectory extends React.Component {
                             onDirectoryClick={this.openDirectory.bind(this)}
                             onDirectoryDelete={this.handleDeleteDirectory.bind(this)}
                             onDirectoryRename={this.handleRenameDirectory.bind(this)}
+                            onDirectoryMove={this.handleMoveDirectory.bind(this)}
+
                             onFileDelete={this.handleDeleteFile.bind(this)}
                             onFileRename={this.handleRenameFile.bind(this)}
                             onFileOpen={this.handleOpenFile.bind(this)}

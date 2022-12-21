@@ -135,6 +135,10 @@ api.media.deleteDirectory = directory => {
     return axios.post('cmf/api/media/delete-directory', {directory});
 };
 
+api.media.moveDirectory = (directory, id) => {
+    return axios.post('cmf/api/media/move-directory', {directory, id});
+};
+
 api.media.renameFile = (name, file) => {
     return axios.post('cmf/api/media/rename-file', {name, file});
 };

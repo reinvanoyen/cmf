@@ -34,7 +34,10 @@ class MediaMoveWidget extends React.Component {
                     />
                 ]}
             >
-                <DirectoryTree onDirectoryClick={id => this.confirmMove(id)} />
+                <DirectoryTree
+                    selectedDirectory={this.props.directory ? this.props.directory.id : null}
+                    onDirectoryClick={id => this.confirmMove(id)}
+                />
             </Window>
         );
     }
