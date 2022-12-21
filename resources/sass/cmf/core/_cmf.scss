@@ -82,7 +82,7 @@
             opacity: 1;
             pointer-events: all;
             margin-left: 0;
-            max-height: 100vh;
+            max-height: initial;
             overflow-y: auto;
             padding: $rule $rule / 2;
             background-color: $fill-color;

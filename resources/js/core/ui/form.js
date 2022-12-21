@@ -122,7 +122,12 @@ export default class Form extends React.Component {
             sidebar = (
                 <div className="form__sidebar">
                     <div className="form__sidebar-save">
-                        <Button text={this.props.submitButtonText} type={(this.props.realForm ? 'submit' : 'button')} onClick={this.props.realForm ? null : this.submit.bind(this)} style={'full'} />
+                        <Button
+                            text={this.props.submitButtonText}
+                            type={(this.props.realForm ? 'submit' : 'button')}
+                            onClick={this.props.realForm ? null : this.submit.bind(this)}
+                            style={'full'}
+                        />
                     </div>
                     {this.renderSidebar()}
                 </div>
@@ -130,7 +135,11 @@ export default class Form extends React.Component {
         } else {
             footer = (
                 <div className="form__footer">
-                    <Button text={this.props.submitButtonText} type={(this.props.realForm ? 'submit' : 'button')} onClick={this.props.realForm ? null : this.submit.bind(this)} />
+                    <Button
+                        text={this.props.submitButtonText}
+                        type={(this.props.realForm ? 'submit' : 'button')}
+                        onClick={this.props.realForm ? null : this.submit.bind(this)}
+                    />
                 </div>
             );
         }
