@@ -4,6 +4,7 @@ import Button from "../core/ui/button";
 import IconButton from "../core/ui/icon-button";
 import Placeholder from "../core/ui/placeholder";
 import components from "../rendering/components";
+import i18n from "../util/i18n";
 
 class JsonField extends React.Component {
 
@@ -147,7 +148,7 @@ class JsonField extends React.Component {
                             onClick={this.addItem.bind(this)}
                             icon={'add'}
                             style={['small', 'secondary']}
-                            text={'Add '+this.props.singular}
+                            text={i18n.get('snippets.add_singular', {singular: this.props.singular})}
                         />
                     </div>
                 </div>

@@ -16,7 +16,7 @@ Route::middleware(['web', SetLocale::class])
     ->prefix(Cmf::getPath())
     ->group(function () {
 
-        Route::get('js/i18n.js', [TranslationsController::class, 'javascript']);
+        Route::get('js/i18n', [TranslationsController::class, 'javascript']);
 
         Route::get('/', [FrontController::class, 'index']);
         Route::get('{path}', [FrontController::class, 'index'])->where('path', '.*');

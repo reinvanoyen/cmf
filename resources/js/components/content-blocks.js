@@ -252,8 +252,16 @@ export default class ContentBlocks extends React.Component {
         }
     }
 
-    getTypeLinks(prefix = '', suffix = '') {
-        return Object.getOwnPropertyNames(this.props.blocks).map(type => [prefix+this.props.blocks[type].name+suffix, type]);
+    getTypeLinks() {
+        return Object.getOwnPropertyNames(this.props.blocks).map(type => {
+            return [this.props.blocks[type].name, type];
+        });
+    }
+
+    getTypeLinksInsertBelow() {
+        return Object.getOwnPropertyNames(this.props.blocks).map(type => {
+            return [i18n.get('snippets.insert_singular_below', {singular: this.props.blocks[type].name}), type];
+        });
     }
 
     renderContentBlocks() {
@@ -290,7 +298,7 @@ export default class ContentBlocks extends React.Component {
                         <IconButton key={0} style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />,
                         <IconButton key={1} style={['transparent', (i < this.state.addedBlocks.length - 1 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/>,
                         <Dropdown key={3} autoClose={true} openIcon={'more_horiz'} closeIcon={'more_horiz'}>
-                            <LinkList links={this.getTypeLinks('Insert ', ' below')} onClick={type => this.addBlock(type, (i+1))} />
+                            <LinkList links={this.getTypeLinksInsertBelow()} onClick={type => this.addBlock(type, (i+1))} />
                             <Divider />
                             <LinkList
                                 style={'warning'}
