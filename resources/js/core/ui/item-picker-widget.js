@@ -8,6 +8,7 @@ import Item from "./item";
 import Search from "./search";
 import StickySidebar from "./sticky-sidebar";
 import Window from "./window";
+import i18n from "../../util/i18n";
 
 class ItemPickerWidget extends React.Component {
 
@@ -149,10 +150,10 @@ class ItemPickerWidget extends React.Component {
         return (
             <div className={'item-picker-widget__selection'}>
                 <div className="item-picker-widget__selection-header">
-                    Your selection ({this.state.selectedItems.length})
+                    {i18n.get('snippets.your_selection')} ({this.state.selectedItems.length})
                 </div>
                 <Placeholder icon={'checklist'}>
-                    Your selection is empty
+                    {i18n.get('snippets.your_selection_is_empty')}
                 </Placeholder>
             </div>
         );
@@ -163,14 +164,14 @@ class ItemPickerWidget extends React.Component {
         if (this.state.searchKeyword) {
             return (
                 <div className="index__placeholder">
-                    No {this.props.plural} found for your search "{this.state.searchKeyword}".
+                    {i18n.get('snippets.no_plural_found_for_search', {plural: this.props.plural, search: this.state.searchKeyword})}
                 </div>
             );
         }
 
         return (
             <div className="index__placeholder">
-                No {this.props.plural.toLowerCase()} found.
+                {i18n.get('snippets.no_plural_found', {plural: this.props.plural})}
             </div>
         );
     }
@@ -205,13 +206,13 @@ class ItemPickerWidget extends React.Component {
                 footer={[
                     <Button
                         key={'cancel'}
-                        text={'Cancel'}
+                        text={i18n.get('snippets.cancel')}
                         style={['secondary']}
                         onClick={this.onCancel.bind(this)}
                     />,
                     <Button
                         key={'confirm'}
-                        text={(this.props.selectionMode ? 'Confirm selection' : 'Select '+this.props.singular)}
+                        text={(this.props.selectionMode ? i18n.get('snippets.confirm_selection') : i18n.get('select_singular', {singular: this.props.singular}))}
                         style={this.state.selectedItemIds.length ? [] : ['disabled',]}
                         onClick={this.state.selectedItemIds.length ? this.onSelectionConfirm.bind(this) : null}
                     />

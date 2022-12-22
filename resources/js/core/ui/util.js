@@ -1,5 +1,8 @@
 "use strict";
 
+import i18n from "../../util/i18n";
+import str from "../../util/str";
+
 export default {
     overlay() {
         // Create overlay
@@ -160,6 +163,9 @@ export default {
 
         return buttonEl;
     },
+    i18nNotify(string, params = {}) {
+        this.notify(i18n.get(string, params));
+    },
     notify(text) {
 
         if (! this.notificationStackEl) {
@@ -170,7 +176,7 @@ export default {
 
         let el = document.createElement('div');
         el.classList.add('notification');
-        el.textContent = text;
+        el.textContent = str.toUpperCaseFirst(text);
         this.notificationStackEl.appendChild(el);
 
         setTimeout(() => {

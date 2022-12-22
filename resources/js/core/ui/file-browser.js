@@ -3,12 +3,12 @@ import ContextMenu from "./context-menu";
 import Placeholder from "./placeholder";
 import util from "./util";
 import File from "./file";
-import Icon from "./icon";
 import Manager from "../messaging/manager";
 import FilePlaceholder from "./file-placeholder";
 import MediaMoveWidget from "./media-move-widget";
 import Overlay from "./overlay";
 import Directory from "./directory";
+import i18n from "../../util/i18n";
 
 class FileBrowser extends React.Component {
 
@@ -154,17 +154,17 @@ class FileBrowser extends React.Component {
         if (action === 'delete') {
 
             util.confirm({
-                title: 'Delete directory?',
-                text: 'Deleting this directory will also permanently delete all of its contents from your library.',
-                confirmButtonText: 'Yes, delete directory',
-                cancelButtonText: 'No, keep directory',
+                title: i18n.get('snippets.delete_directory_title'),
+                text: i18n.get('snippets.delete_directory_text'),
+                confirmButtonText: i18n.get('snippets.delete_directory_confirm'),
+                cancelButtonText: i18n.get('snippets.delete_directory_cancel'),
                 confirm: () => this.props.onDirectoryDelete(directory.id)
             });
 
         } else if (action === 'rename') {
 
             util.prompt({
-                title: 'New name',
+                title: i18n.get('snippets.rename'),
                 defaultValue: directory.name,
                 confirm: value => this.props.onDirectoryRename(value, directory.id)
             });
@@ -183,17 +183,17 @@ class FileBrowser extends React.Component {
         if (action === 'delete') {
 
             util.confirm({
-                title: 'Delete file?',
-                text: 'Deleting this file will permanently delete it from your library.',
-                confirmButtonText: 'Yes, delete file',
-                cancelButtonText: 'No, keep file',
+                title: i18n.get('snippets.delete_file_title'),
+                text: i18n.get('snippets.delete_file_text'),
+                confirmButtonText: i18n.get('snippets.delete_file_confirm'),
+                cancelButtonText: i18n.get('snippets.delete_file_cancel'),
                 confirm: () => this.props.onFileDelete(file.id)
             });
 
         } else if (action === 'rename') {
 
             util.prompt({
-                title: 'New name',
+                title: i18n.get('snippets.rename_file'),
                 defaultValue: file.name,
                 confirm: value => this.props.onFileRename(value, file.id)
             });
@@ -289,7 +289,7 @@ class FileBrowser extends React.Component {
                             }
 
                             if (this.state.moveDirectoryId === directory) {
-                                util.notify('Can\'t move directory inside itself!');
+                                util.notify(i18n.get('snippets.cant_move_directory_inside_self'));
                                 return;
                             }
 
@@ -329,16 +329,16 @@ class FileBrowser extends React.Component {
         }
 
         let links = [
-            ['Rename', 'rename'],
-            ['Move', 'move'],
-            ['Download', 'download'],
-            ['Delete', 'delete']
+            [i18n.get('snippets.rename'), 'rename'],
+            [i18n.get('snippets.move'), 'move'],
+            [i18n.get('snippets.download'), 'download'],
+            [i18n.get('snippets.delete'), 'delete']
         ];
 
         if (this.props.selectedFileIds.length > 1) {
             links = [
-                ['Move '+this.props.selectedFileIds.length+' files', 'multi-move'],
-                ['Delete '+this.props.selectedFileIds.length+' files', 'multi-delete']
+                [i18n.get('snippets.move_files', {amount: this.props.selectedFileIds.length}), 'multi-move'],
+                [i18n.get('snippets.delete_files', {amount: this.props.selectedFileIds.length}), 'multi-delete']
             ];
         }
 
@@ -382,9 +382,9 @@ class FileBrowser extends React.Component {
                             <ContextMenu
                                 key={i}
                                 links={[
-                                    ['Rename', 'rename'],
-                                    ['Move', 'move'],
-                                    ['Delete', 'delete']
+                                    [i18n.get('snippets.rename'), 'rename'],
+                                    [i18n.get('snippets.move'), 'move'],
+                                    [i18n.get('snippets.delete'), 'delete']
                                 ]}
                                 onClick={path => this.onDirectoryContextClick(path, directory)}
                             >
@@ -416,7 +416,7 @@ class FileBrowser extends React.Component {
             <div className="file-browser__content">
                 <div className="file-browser__placeholder">
                     <Placeholder>
-                        This directory is empty
+                        {i18n.get('snippets.directory_is_empty')}
                     </Placeholder>
                 </div>
             </div>

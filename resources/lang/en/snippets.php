@@ -33,6 +33,7 @@ return [
 
     'select_files_from_computer' => 'Select files from your computer',
 
+    'rename_file' => 'Rename file',
     'rename_file_title' => 'Rename file',
     'rename_file_confirm' => 'Rename bestand',
     'rename_file_cancel' => 'Cancel',
@@ -41,6 +42,8 @@ return [
     'delete_file_text' => 'Deleting this file will permanently delete it from your library.',
     'delete_file_confirm' => 'Delete file',
     'delete_file_cancel' => 'Keep file',
+
+    'delete_file' => 'Delete file',
 
     'delete_files_title' => 'Delete :amount files?',
     'delete_files_text' => 'Deleting these files will permanently remove them from your media library. This action is irreversible.',
@@ -100,4 +103,64 @@ return [
     'singular_created_selected' => ':singular was created and selected',
 
     'form_has_errors' => 'Something went wrong with the form',
+
+    'directory_is_empty' => 'This folder is empty',
+    'unknown_filetype' => 'Unknown filetype',
+    'no_label_selected' => 'No label selected',
+    'uploaded' => 'Uploaded',
+    'modified' => 'Modified',
+    'description' => 'Description',
+    'copyright' => 'Copyright',
+    'filesize' => 'Size',
+    'mimetype' => 'Mimetype',
+    'visibility' => 'Visibility',
+    'disk' => 'Disk',
+    'conversions_disk' => 'Conversions disk',
+
+    'move' => 'Move',
+    'download' => 'Download',
+
+    'open' => 'Open',
+    'open_new_window' => 'Open in new window',
+
+    'move_files' => 'Move :amount files',
+    'delete_files' => 'Delete :amount files',
+    'cant_move_directory_inside_self' => 'Can\'t move folder inside itself',
+
+    'move_files_text' => 'Are you sure you wish to move your files here?',
+    'move_files_confirm' => 'Move files',
+    'move_files_cancel' => 'Cancel',
+
+    'none' => 'None',
+    'changes_successful' => 'Changes were saved',
+    'changes_unsuccessful' => 'Saving changes unsuccessful',
+
+    'save' => 'Save',
+
+    'directory_renamed' => 'Folder renamed',
+    'directory_moved' => 'Folder was moved',
+    'directory_deleted' => 'Folder was deleted',
+    'directory_not_deleted' => 'Couldn\'t delete folder',
+
+    'file_moved' => 'File was moved',
+    'file_deleted' => 'File was deleted',
+    'files_moved' => 'Files were moved',
+    'file_not_deleted' => 'Couldn\'t delete file',
+    'amount_files_deleted' => ':amount files were deleted',
+    'files_not_deleted' => 'Couldn\'t delete files',
+
+    'delete_directory' => 'Delete folder',
+    'delete_directory_title' => 'Delete folder?',
+    'delete_directory_text' => 'Deleting this folder will also delete all of its contents from the media library.',
+    'delete_directory_confirm' => 'Yes, delete folder',
+    'delete_directory_cancel' => 'Cancel',
+
+    'jump_to_folder' => 'Jump to folder',
+    'deselect' => 'Deselect',
+    'your_selection_is_empty' => 'Your selection is empty',
+    'confirm_selection' => 'Confirm selection',
+    'select_file' => 'Select a file',
+    'your_selection' => 'Your selection',
+
+    'files_uploaded' => 'Your files were uploaded',
 ];

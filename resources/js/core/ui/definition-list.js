@@ -3,6 +3,7 @@
 import React from 'react';
 import util from "./util";
 import Icon from "./icon";
+import i18n from "../../util/i18n";
 
 export default class DefinitionList extends React.Component {
 
@@ -25,7 +26,7 @@ export default class DefinitionList extends React.Component {
                             onClick={isEditable ? e => this.openEditPrompt(item[0], item[1]) : null}
                         >
                             <span className={'definition-list__key'}>
-                                {item[0]}
+                                {i18n.get('snippets.'+item[0])}
                             </span>
                             <span className={'definition-list__value'}>
                                 {(item[1] || (isEditable ? <Icon style={'mini'} name={'edit'} /> : '–'))}
@@ -39,10 +40,10 @@ export default class DefinitionList extends React.Component {
 
     openEditPrompt(property, value) {
         util.prompt({
-            title: property,
+            title: i18n.get('snippets.'+property),
             defaultValue: value,
             confirm: newValue => this.props.onPropertyChange(property, newValue),
-            confirmButtonText: 'Save'
+            confirmButtonText: i18n.get('snippets.save')
         });
     }
 }

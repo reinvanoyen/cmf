@@ -3,6 +3,7 @@ import path from "../state/path";
 import ContextMenu from "./ui/context-menu";
 import NavItem from "./nav-item";
 import SubnavItem from "./subnav-item";
+import i18n from "../util/i18n";
 
 class Nav extends React.Component {
 
@@ -54,8 +55,8 @@ class Nav extends React.Component {
                         <ContextMenu
                             key={module.id}
                             links={[
-                                ['Open', 'open'],
-                                ['Open in new window', 'open_new']
+                                [i18n.get('snippets.open'), 'open'],
+                                [i18n.get('snippets.open_new_window'), 'open_new']
                             ]}
                             onClick={path => this.onContextMenuClick(path, module)}
                         >
@@ -81,8 +82,8 @@ class Nav extends React.Component {
                             <React.Fragment key={module.id}>
                                 <ContextMenu
                                     links={[
-                                        ['Open', 'open'],
-                                        ['Open in new window', 'open_new']
+                                        [i18n.get('snippets.open'), 'open'],
+                                        [i18n.get('snippets.open_new_window'), 'open_new']
                                     ]}
                                     onClick={path => this.onContextMenuClick(path, module)}
                                 >

@@ -22,7 +22,7 @@ return [
     'create' => 'Aanmaken',
     'delete' => 'Verwijder',
     'edit' => 'Bewerk',
-    'rename' => 'Hernoem',
+    'rename' => 'Hernoemen',
     'upload' => 'Uploaden',
 
     'next' => 'Volgende',
@@ -33,9 +33,12 @@ return [
 
     'select_files_from_computer' => 'Selecteer bestanden van uw computer',
 
+    'rename_file' => 'Hernoem bestand',
     'rename_file_title' => 'Hernoem bestand',
     'rename_file_confirm' => 'Hernoem bestand',
     'rename_file_cancel' => 'Annuleer',
+
+    'delete_file' => 'Verwijder bestand',
 
     'delete_file_title' => 'Bestand verwijderen?',
     'delete_file_text' => 'Dit bestand verwijderen zal het permanent uit je media bibliotheek verwijderen.',
@@ -83,7 +86,6 @@ return [
     'select_singular' => 'Selecteer een :singular',
     'add_singular' => ':singular toevoegen',
 
-
     'select_plural' => 'Selecteer :plural',
     'add_plural' => ':plural toevoegen',
 
@@ -100,4 +102,64 @@ return [
     'singular_created_selected' => ':singular werd aangemaakt en geselecteerd',
 
     'form_has_errors' => 'Er ging iets mis met het formulier',
+
+    'directory_is_empty' => 'Deze map is leeg',
+    'unknown_filetype' => 'Ongekend bestandstype',
+    'no_label_selected' => 'Geen label geselecteerd',
+    'uploaded' => 'Geüpload',
+    'modified' => 'Laatst bewerkt',
+    'description' => 'Beschrijving',
+    'copyright' => 'Copyright',
+    'filesize' => 'Bestandsgrootte',
+    'mimetype' => 'Mimetype',
+    'visibility' => 'Zichtbaarheid',
+    'disk' => 'Schijf',
+    'conversions_disk' => 'Conversie schijf',
+
+    'move' => 'Verplaatsen',
+    'download' => 'Downloaden',
+
+    'open' => 'Openen',
+    'open_new_window' => 'In nieuw venster openen',
+
+    'move_files' => 'Verplaats :amount bestanden',
+    'delete_files' => 'Verwijder :amount bestanden',
+    'cant_move_directory_inside_self' => 'Kan de map niet in zichzelf verplaatsen',
+
+    'move_files_text' => 'Weet je zeker dat je je bestanden hiernaar wil verplaatsen?',
+    'move_files_confirm' => 'Verplaats bestanden',
+    'move_files_cancel' => 'Annuleer',
+
+    'none' => 'Geen',
+    'changes_successful' => 'De wijzigingen werden opgeslaan',
+    'changes_unsuccessful' => 'De wijzigingen konden niet worden opgeslaan',
+
+    'save' => 'Opslaan',
+
+    'directory_renamed' => 'Map hernoemd',
+    'directory_moved' => 'Map werd verplaatst',
+    'directory_deleted' => 'Map werd verwijderd',
+    'directory_not_deleted' => 'Map kon niet worden verwijderd',
+
+    'file_moved' => 'Bestand werd verplaatst',
+    'file_deleted' => 'Bestand werd verwijderd',
+    'files_moved' => 'Bestanden werden verplaatst',
+    'file_not_deleted' => 'Bestand kon niet worden verwijderd',
+    'amount_files_deleted' => ':amount bestanden werden verwijderd',
+    'files_not_deleted' => 'Bestanden konden niet worden verwijderd',
+
+    'delete_directory' => 'Verwijder map',
+    'delete_directory_title' => 'Map verwijderen?',
+    'delete_directory_text' => 'Deze map verwijderen zal ook de inhoud van deze map verwijderen uit jouw media bibliotheek.',
+    'delete_directory_confirm' => 'Ja, verwijder map',
+    'delete_directory_cancel' => 'Annuleer',
+
+    'jump_to_folder' => 'Ga naar map',
+    'deselect' => 'Deselecteer',
+    'your_selection_is_empty' => 'Uw selectie is leeg',
+    'confirm_selection' => 'Bevestig selectie',
+    'select_file' => 'Selecteer een bestand',
+    'your_selection' => 'Jouw selectie',
+
+    'files_uploaded' => 'Jouw bestanden werden geüpload',
 ];

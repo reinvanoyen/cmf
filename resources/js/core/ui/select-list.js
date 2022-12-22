@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from "./icon";
+import i18n from "../../util/i18n";
 
 class SelectList extends React.Component {
 
@@ -31,7 +32,7 @@ class SelectList extends React.Component {
                         {this.props.multiple ? <Icon name={isSelected ? 'check_box' : 'check_box_outline_blank'} /> : <Icon name={isSelected ? 'radio_button_checked' : 'radio_button_unchecked'} />}
                     </div>
                     <div className="select-list__option-value">
-                        – None –
+                        – {i18n.get('snippets.none')} –
                     </div>
                 </div>
             );

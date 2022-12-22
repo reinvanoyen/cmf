@@ -92,7 +92,7 @@ class FileDropZone extends React.Component {
 
                 let directory = response.data.data;
 
-                util.notify('Directory created');
+                util.i18nNotify('snippets.directory_created');
                 this.props.onCreateDirectory(directory);
 
                 // Get folder contents

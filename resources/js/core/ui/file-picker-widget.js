@@ -14,7 +14,7 @@ import Placeholder from "./placeholder";
 import DirectoryTree from "./directory-tree";
 import Window from "./window";
 import StickySidebar from "./sticky-sidebar";
-import TreeItem from "./tree-item";
+import i18n from "../../util/i18n";
 
 class FilePickerWidget extends React.Component {
 
@@ -118,7 +118,7 @@ class FilePickerWidget extends React.Component {
     }
 
     handleUploadDone() {
-        util.notify('Your file(s) have been uploaded');
+        util.i18nNotify('snippets.files_uploaded');
         this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
     }
 
@@ -129,10 +129,10 @@ class FilePickerWidget extends React.Component {
     handleRenameFile(name, fileId) {
         if (name) {
             api.media.renameFile(name, fileId).then(response => {
-                util.notify('File renamed');
+                util.i18nNotify('snippets.file_renamed');
                 this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
             }, error => {
-                util.notify('File could not be renamed');
+                util.i18nNotify('snippets.changes_unsuccessful');
             });
         }
     }
@@ -140,40 +140,40 @@ class FilePickerWidget extends React.Component {
     handleRenameDirectory(name, directoryId) {
         if (name) {
             api.media.renameDirectory(name, directoryId).then(response => {
-                util.notify('Directory renamed');
+                util.i18nNotify('snippets.directory_renamed');
                 this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
             }, error => {
-                util.notify('Directory could not be renamed');
+                util.i18nNotify('snippets.changes_unsuccessful');
             });
         }
     }
 
     handleMoveSelection(directoryId, fileIds) {
         api.media.moveFiles(directoryId, fileIds).then(response => {
-            util.notify('Files moved');
+            util.i18nNotify('snippets.files_moved');
             this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
         }, error => {
-            util.notify('Files could not be moved');
+            util.i18nNotify('snippets.file_not_moved');
         });
     }
 
     handleMoveFile(directoryId, fileId) {
         api.media.moveFile(directoryId, fileId).then(response => {
-            util.notify('File moved');
+            util.i18nNotify('snippets.file_moved');
             this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
         }, error => {
-            util.notify('File could not be moved');
+            util.i18nNotify('snippets.file_not_moved');
         });
     }
 
     promptCreateDirectory() {
         util.prompt({
-            title: 'New directory',
-            confirmButtonText: 'Create',
-            cancelButtonText: 'Cancel',
+            title: i18n.get('snippets.new_directory'),
+            confirmButtonText: i18n.get('snippets.confirm'),
+            cancelButtonText: i18n.get('snippets.cancel'),
             confirm: value => {
                 api.media.createDirectory(value, (this.state.currentDirectory ? this.state.currentDirectory.id : null)).then(() => {
-                    util.notify('Directory created');
+                    util.i18nNotify('snippets.directory_created');
                     this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
                 });
             }
@@ -197,15 +197,15 @@ class FilePickerWidget extends React.Component {
     renderSidebar() {
 
         let links = [
-            ['Deselect', 'deselect'],
-            ['Jump to folder', 'jump_to']
+            [i18n.get('snippets.deselect'), 'deselect'],
+            [i18n.get('snippets.jump_to_folder'), 'jump_to']
         ];
 
         if (this.state.selectedFiles.length) {
             return (
                 <div className={'file-picker-widget__selection'}>
                     <div className="file-picker-widget__selection-header">
-                        Your selection ({this.state.selectedFiles.length})
+                        {i18n.get('snippets.your_selection')} ({this.state.selectedFiles.length})
                     </div>
                     {this.state.selectedFiles.map((file, i) => {
                         return (
@@ -232,11 +232,8 @@ class FilePickerWidget extends React.Component {
 
         return (
             <div className={'file-picker-widget__selection'}>
-                <div className="file-picker-widget__selection-header">
-                    Your selection ({this.state.selectedFiles.length})
-                </div>
                 <Placeholder icon={'checklist'}>
-                    Your selection is empty
+                    {i18n.get('snippets.your_selection_is_empty')}
                 </Placeholder>
             </div>
         );
@@ -288,8 +285,8 @@ class FilePickerWidget extends React.Component {
             ]} actions={[
                 <IconButton key={'view-list'} name={'view_list'} onClick={e => this.changeFileBrowserViewMode('list')} />,
                 <IconButton key={'view-grid'} name={'grid_view'} onClick={e => this.changeFileBrowserViewMode('grid')} />,
-                <Button key={'new-dir'} text={'New directory'} style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} />,
-                <Dropdown key={'upload'} text={'Upload'} style={['primary', 'small']}>
+                <Button key={'new-dir'} text={i18n.get('snippets.new_directory')} style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} />,
+                <Dropdown key={'upload'} text={i18n.get('snippets.upload')} style={['primary', 'small']}>
                     <FileUploader
                         directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
                         onFileUploaded={this.handleFileUploaded.bind(this)}
@@ -297,10 +294,10 @@ class FilePickerWidget extends React.Component {
                     />
                 </Dropdown>
             ]} footer={[
-                <Button key={'cancel'} text={'Cancel'} style={['secondary']} onClick={this.onCancel.bind(this)} />,
+                <Button key={'cancel'} text={i18n.get('snippets.cancel')} style={['secondary']} onClick={this.onCancel.bind(this)} />,
                 <Button
                     key={'confirm'}
-                    text={(this.props.selectionMode ? 'Confirm selection' : 'Select file')}
+                    text={(this.props.selectionMode ? i18n.get('snippets.confirm_selection') : i18n.get('snippets.select_file'))}
                     style={this.state.selectedFileIds.length ? [] : ['disabled',]}
                     onClick={this.state.selectedFileIds.length ? this.onSelectionConfirm.bind(this) : null}
                 />

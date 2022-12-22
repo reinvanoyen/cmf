@@ -1,12 +1,13 @@
 import React from 'react';
 import Button from "./button";
+import i18n from "../../util/i18n";
 
 export default class Form extends React.Component {
 
     static defaultProps = {
         realForm: true,
         errors: {},
-        submitButtonText: 'Submit',
+        submitButtonText: i18n.get('snippets.confirm'),
         sidebar: [],
         onSubmit: () => {}
     };

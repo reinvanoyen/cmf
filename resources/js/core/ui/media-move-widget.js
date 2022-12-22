@@ -3,6 +3,7 @@ import Window from "./window";
 import Button from "./button";
 import DirectoryTree from "./directory-tree";
 import util from "./util";
+import i18n from "../../util/i18n";
 
 class MediaMoveWidget extends React.Component {
 
@@ -14,21 +15,21 @@ class MediaMoveWidget extends React.Component {
 
     confirmMove(id) {
         util.confirm({
-            title: 'Move files',
-            text: 'Are you sure you wish to move files here?',
-            confirmButtonText: 'Yes, move files',
-            cancelButtonText: 'No',
+            title: i18n.get('snippets.move'),
+            text: i18n.get('snippets.move_files_text'),
+            confirmButtonText: i18n.get('snippets.move_files_confirm'),
+            cancelButtonText: i18n.get('snippets.move_files_cancel'),
             confirm: () => this.props.onConfirm(id)
         });
     }
 
     render() {
         return (
-            <Window style={['modal']} title={'Move file(s)'}
+            <Window style={['modal']} title={i18n.get('snippets.move')}
                 footer={[
                     <Button
                         key={'cancel'}
-                        text={'Cancel'}
+                        text={i18n.get('snippets.move_files_cancel')}
                         style={'secondary'}
                         onClick={e => this.props.onCancel()}
                     />

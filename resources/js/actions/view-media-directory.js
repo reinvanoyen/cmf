@@ -14,6 +14,7 @@ import Breadcrumbs from "../core/ui/breadcrumbs";
 import IconButton from "../core/ui/icon-button";
 import DirectoryTree from "../core/ui/directory-tree";
 import i18n from "../util/i18n";
+import str from "../util/str";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -127,21 +128,21 @@ class ViewMediaDirectory extends React.Component {
                 selectedFiles: [],
                 selectedFileIds: [],
             }, () => {
-                util.notify('Directory deleted');
+                util.i18nNotify('snippets.directory_deleted');
                 this.refresh();
             });
         }, error => {
-            util.notify('Directory could not be deleted');
+            util.i18nNotify('snippets.directory_not_deleted');
         })
     }
 
     handleRenameDirectory(name, directoryId) {
         if (name) {
             api.media.renameDirectory(name, directoryId).then(response => {
-                util.notify('Directory renamed');
+                util.i18nNotify('snippets.directory_renamed');
                 this.refresh();
             }, error => {
-                util.notify('Directory could not be renamed');
+                util.i18nNotify('snippets.changes_successful');
             });
         }
     }
@@ -149,10 +150,10 @@ class ViewMediaDirectory extends React.Component {
     handleRenameFile(name, fileId) {
         if (name) {
             api.media.renameFile(name, fileId).then(response => {
-                util.notify('File renamed');
+                util.i18nNotify('snippets.file_renamed');
                 this.refresh();
             }, error => {
-                util.notify('File could not be renamed');
+                util.i18nNotify('snippets.changes_successful');
             });
         }
     }
@@ -164,11 +165,11 @@ class ViewMediaDirectory extends React.Component {
                 selectedFiles: [],
                 selectedFileIds: [],
             }, () => {
-                util.notify('File deleted');
+                util.i18nNotify('snippets.file_deleted');
                 this.refresh();
             });
         }, error => {
-            util.notify('File could not be deleted');
+            util.notify(i18n.get('snippets.file_not_deleted'));
         });
     }
 
@@ -179,11 +180,11 @@ class ViewMediaDirectory extends React.Component {
                 selectedFiles: [],
                 selectedFileIds: [],
             }, () => {
-                util.notify(fileIds.length+' files were deleted');
+                util.i18nNotify('snippets.amount_files_deleted', {amount: fileIds.length});
                 this.refresh();
             });
         }, error => {
-            util.notify('Files could not be deleted');
+            util.i18nNotify('snippets.files_not_deleted');
         });
     }
 
@@ -192,75 +193,75 @@ class ViewMediaDirectory extends React.Component {
             this.setState({
                 currentFile: response.data.data
             }, () => {
-                util.notify((label ? label+' label added to file' : 'File label removed'));
+                util.i18nNotify('snippets.changes_successful');
                 this.refresh();
             });
         }, error => {
-            util.notify('File could not be labeled');
+            util.i18nNotify('snippets.changes_successful');
         });
     }
 
     handleChangeFileProperty(property, value, fileId) {
 
-        let propertiesMap = ['Visibility', 'Description', 'Copyright'];
+        let propertiesMap = ['visibility', 'description', 'copyright'];
 
         if (propertiesMap.includes(property)) {
-            let apiCall = api.media['updateFile'+property];
+            let apiCall = api.media['updateFile'+str.toUpperCaseFirst(property)];
 
             apiCall(value, fileId).then(response => {
                 this.setState({
                     currentFile: response.data.data
                 }, () => {
-                    util.notify(property+' updated');
+                    util.notify(i18n.get('snippets.changes_successful'));
                     this.refresh();
                 });
             }, error => {
-                util.notify(property+' of file could not be updated');
+                util.notify(i18n.get('snippets.changes_unsuccessful'));
             });
         }
     }
 
     handleChangeFilesProperty(property, value, fileIds) {
 
-        let propertiesMap = ['Description', 'Copyright'];
+        let propertiesMap = ['description', 'copyright'];
 
         if (propertiesMap.includes(property)) {
 
-            let apiCall = api.media['updateFiles'+property];
+            let apiCall = api.media['updateFiles'+str.toUpperCaseFirst(property)];
 
             apiCall(value, fileIds).then(response => {
-                util.notify(property+' updated for all files');
+                util.notify(i18n.get('snippets.changes_successful'));
                 this.refresh();
             }, error => {
-                util.notify(property+' of file(s) could not be updated');
+                util.notify(i18n.get('snippets.changes_unsuccessful'));
             });
         }
     }
 
     handleMoveDirectory(moveToId, directoryId) {
         api.media.moveDirectory(moveToId, directoryId).then(response => {
-            util.notify('Directory moved');
+            util.notify(i18n.get('snippets.directory_moved'));
             this.refresh();
         }, error => {
-            util.notify('Directory could not be moved');
+            util.notify(i18n.get('snippets.changes_unsuccessful'));
         });
     }
 
     handleMoveFile(directoryId, fileId) {
         api.media.moveFile(directoryId, fileId).then(response => {
-            util.notify('File moved');
+            util.notify(i18n.get('snippets.file_moved'));
             this.refresh();
         }, error => {
-            util.notify('File could not be moved');
+            util.notify(i18n.get('snippets.changes_unsuccessful'));
         });
     }
 
     handleMoveFiles(directoryId, fileIds) {
         api.media.moveFiles(directoryId, fileIds).then(response => {
-            util.notify('Files moved');
+            util.notify(i18n.get('snippets.files_moved'));
             this.refresh();
         }, error => {
-            util.notify('Files could not be moved');
+            util.notify(i18n.get('snippets.changes_unsuccessful'));
         });
     }
 
@@ -383,7 +384,7 @@ class ViewMediaDirectory extends React.Component {
     renderContent() {
         return (
             <React.Fragment>
-                <div className="view-media-directory__main">
+                <div className={'view-media-directory__main'}>
                     <FileDropZone
                         directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
                         onCreateDirectory={this.handleCreateDirectory.bind(this)}
