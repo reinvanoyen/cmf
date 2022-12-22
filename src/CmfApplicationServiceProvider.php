@@ -2,7 +2,6 @@
 
 namespace ReinVanOyen\Cmf;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use ReinVanOyen\Cmf\Events\ServingCmf;
 

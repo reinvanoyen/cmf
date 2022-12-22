@@ -2,6 +2,7 @@ import React from 'react';
 import util from "../core/ui/util";
 import Icon from "../core/ui/icon";
 import str from "../util/str";
+import i18n from "../util/i18n";
 
 class TextView extends React.Component {
 
@@ -23,7 +24,7 @@ class TextView extends React.Component {
 
     copyValue() {
         util.copyText(this.props.data[this.props.name], () => {
-            util.notify('Copied to clipboard!');
+            util.notify(i18n.get('snippets.copied_to_clipboard'));
         });
     }
 

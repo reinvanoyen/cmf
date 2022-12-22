@@ -3,6 +3,7 @@ import api from "../api/api";
 import path from "../state/path";
 import ui from "../core/ui/util";
 import Button from "../core/ui/button";
+import i18n from "../util/i18n";
 
 class Delete extends React.Component {
 
@@ -35,7 +36,7 @@ class Delete extends React.Component {
             this.redirect();
 
             // Notify the user
-            ui.notify(`${this.props.singular} was successfully deleted`);
+            ui.notify(i18n.get('snippets.singular_deleted', {singular: this.props.singular}));
         });
     }
 
@@ -47,14 +48,14 @@ class Delete extends React.Component {
         return (
             <div className="delete">
                 <div className="delete__text">
-                    {`Are you sure you wish to delete this ${this.props.singular}?`}
+                    {i18n.get('snippets.delete_singular_title', {singular: this.props.singular})}
                 </div>
                 <div className="delete__footer">
                     <div className="delete__confirm">
-                        <Button onClick={this.delete.bind(this)} text={`Yes, delete ${this.props.singular}`} />
+                        <Button onClick={this.delete.bind(this)} text={i18n.get('snippets.delete_singular_confirm', {plural: this.props.singular})} />
                     </div>
                     <div className="delete__cancel">
-                        <Button onClick={this.redirect.bind(this)} text={'No'} style={'secondary'} />
+                        <Button onClick={this.redirect.bind(this)} text={i18n.get('snippets.delete_singular_cancel')} style={'secondary'} />
                     </div>
                 </div>
             </div>

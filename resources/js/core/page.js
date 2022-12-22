@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from "./logo";
+import i18n from "../util/i18n";
 
 class Page extends React.Component {
 
@@ -12,7 +13,7 @@ class Page extends React.Component {
             <div className="page">
                 <div className="page__visual">
                     <div className="hero">
-                        The Solid Foundation For Your Content.
+                        {i18n.get('snippets.baseline')}
                     </div>
                 </div>
                 <div className="page__content">

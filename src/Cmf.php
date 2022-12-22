@@ -89,10 +89,11 @@ class Cmf
     }
 
     /**
+     * @param $path
      * @return string
      */
-    public function getPath(): string
+    public function getPath($path = null): string
     {
-        return config('cmf.path', 'admin');
+        return config('cmf.path', 'admin').($path ? '/'.$path : '');
     }
 }

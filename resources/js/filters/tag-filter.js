@@ -4,6 +4,7 @@ import Dropdown from "../core/ui/dropdown";
 import SelectList from "../core/ui/select-list";
 import str from "../util/str";
 import api from "../api/api";
+import i18n from "../util/i18n";
 
 class TagFilter extends React.Component {
 
@@ -19,7 +20,7 @@ class TagFilter extends React.Component {
 
         this.state = {
             options: [],
-            humanReadableValue: 'All'
+            humanReadableValue: i18n.get('snippets.tags_all')
         };
 
         this.selectListRef = React.createRef();
@@ -49,7 +50,7 @@ class TagFilter extends React.Component {
         let readableValues = values.map(value => this.state.options[value]);
 
         this.setState({
-            humanReadableValue: (readableValues.length ? readableValues.join(', ') : 'All')
+            humanReadableValue: (readableValues.length ? readableValues.join(', ') : i18n.get('snippets.tags_all'))
         });
 
         this.props.onChange(this.props.id, values.join(','));
@@ -61,12 +62,16 @@ class TagFilter extends React.Component {
 
     render() {
 
-        let label = (this.props.label ? this.props.label : 'Tag');
+        let label = (this.props.label ? this.props.label : i18n.get('snippets.tag'));
 
         return (
             <div className="enum-filter">
                 <Dropdown label={label} text={this.state.humanReadableValue}>
-                    <SelectList options={this.state.options} onChange={this.handleChange.bind(this)} ref={this.selectListRef} />
+                    <SelectList
+                        options={this.state.options}
+                        onChange={this.handleChange.bind(this)}
+                        ref={this.selectListRef}
+                    />
                 </Dropdown>
             </div>
         );

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Icon from "./icon";
+import i18n from "../../util/i18n";
 
 export default class Directory extends React.Component {
 
@@ -31,7 +32,7 @@ export default class Directory extends React.Component {
                         {this.props.directory.name}
                     </div>
                     <div className="directory__type">
-                        Directory
+                        {i18n.get('snippets.directory')}
                     </div>
                 </div>
             </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import components from "../rendering/components";
 import api from "../api/api";
-import http from "../util/http";
 import path from "../state/path";
 import ui from "../core/ui/util";
 import Button from "../core/ui/button";
 import Link from "../core/ui/link";
+import i18n from "../util/i18n";
 
 class CreateWizard extends React.Component {
 
@@ -47,7 +47,7 @@ class CreateWizard extends React.Component {
                 this.redirect(response.data);
 
                 // Notify the user
-                ui.notify(`${this.props.singular} was successfully created`);
+                ui.notify(i18n.get('snippets.singular_created', {singular: this.props.singular}));
 
             }, error => {
 
@@ -95,7 +95,13 @@ class CreateWizard extends React.Component {
     renderWizardFooter() {
         return [
             (this.state.currentStepIndex > 0 ? <div className="wizard__footer-component" key={1}><Link onClick={this.goToPrev.bind(this)} text={'Previous'} /></div> : null),
-            <div className="wizard__footer-component" key={2}><Button style={'large'} onClick={this.goToNext.bind(this)} text={this.isLastStep() ? 'Create' : 'Next'} /></div>
+            <div className="wizard__footer-component" key={2}>
+                <Button
+                    style={'large'}
+                    onClick={this.goToNext.bind(this)}
+                    text={this.isLastStep() ? i18n.get('snippets.create') : i18n.get('snippets.next')}
+                />
+            </div>
         ];
     }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import api from "../../api/api";
 import TreeItem from "./tree-item";
+import i18n from "../../util/i18n";
 
 class DirectoryTree extends React.Component {
 
@@ -104,7 +105,7 @@ class DirectoryTree extends React.Component {
             <div className={'directory-tree'}>
                 <TreeItem
                     icon={'home'}
-                    text={'My files'}
+                    text={i18n.get('snippets.files_root')}
                     style={(this.props.selectedDirectory === null ? 'selected' : 'default')}
                     collapsible={false}
                     onClick={() => this.select()}

@@ -1,11 +1,12 @@
 "use strict";
 
 import React from 'react';
+import i18n from "../../util/i18n";
 
 export default class Breadcrumbs extends React.Component {
 
     static defaultProps = {
-        rootText: 'My files',
+        rootText: i18n.get('snippets.files_root'),
         items: [],
         onClick: item => {}
     };

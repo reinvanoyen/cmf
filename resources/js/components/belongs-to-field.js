@@ -8,6 +8,7 @@ import ui from "../core/ui/util";
 import Select from "../core/ui/select";
 import Overlay from "../core/ui/overlay";
 import Window from "../core/ui/window";
+import i18n from "../util/i18n";
 
 class BelongsToField extends React.Component {
 
@@ -113,7 +114,7 @@ class BelongsToField extends React.Component {
                 });
 
                 // Notify the user
-                ui.notify(`${this.props.singular} was created and selected`);
+                ui.notify(i18n.get('snippets.singular_created_selected', {singular: this.props.singular}));
 
             }, error => {
 
@@ -143,13 +144,13 @@ class BelongsToField extends React.Component {
         if (this.state.isOpen) {
             return (
                 <Overlay>
-                    <Window title={'New '+this.props.singular} style={'modal'} closeable={true} onClose={this.close.bind(this)}>
+                    <Window title={i18n.get('snippets.new_singular', {singular: this.props.singular})} style={'modal'} closeable={true} onClose={this.close.bind(this)}>
                         <Form
                             ref={this.createFormRef}
                             errors={this.state.createFormErrors}
                             realForm={false}
                             onSubmit={this.create.bind(this)}
-                            submitButtonText={`Create ${this.props.singular}`}
+                            submitButtonText={i18n.get('snippets.create_singular', {singular: this.props.singular})}
                             sidebar={this.renderSidebarComponents()}
                         >
                             {this.renderCreateComponents()}
@@ -169,7 +170,7 @@ class BelongsToField extends React.Component {
                     <Button
                         icon={'add'}
                         style={['full', 'small', 'secondary']}
-                        text={'New '+this.props.singular}
+                        text={i18n.get('snippets.new_singular', {singular: this.props.singular})}
                         onClick={this.open.bind(this)}
                     />
                 </div>
@@ -189,7 +190,7 @@ class BelongsToField extends React.Component {
                     <div className="belongs-to-field__field">
                         <Select
                             nullable={this.props.nullable}
-                            nullText={'– No '+this.props.singular+' selected –'}
+                            nullText={'– '+i18n.get('snippets.no_singular_selected', {singular: this.props.singular})+' –'}
                             options={this.state.options}
                             value={this.state.value}
                             onChange={value => this.handleChange(value)}

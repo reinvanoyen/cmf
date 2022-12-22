@@ -16,7 +16,7 @@ class WelcomeModule extends Module
      */
     protected function title(): string
     {
-        return 'Welcome';
+        return trans('cmf::snippets.welcome');
     }
 
     /**
@@ -43,13 +43,9 @@ class WelcomeModule extends Module
         return Dashboard::make([
             Stack::make([
                 Section::make([
-                    TextLiteral::make('Welcome to your CMF application!')
+                    TextLiteral::make(trans('cmf::snippets.welcome_title'))
                         ->style('primary'),
-                    TextLiteral::make('
-                        Laravel CMF aims to be a flexible and extendable solution for your content management needs.
-                        This software allows for rapid creation of your Content Management System while not being
-                        opinionated on how you build your Laravel application.
-                    '),
+                    TextLiteral::make(trans('cmf::snippets.welcome_text')),
                 ]),
                 Section::make([
                     Stack::make([
@@ -60,7 +56,7 @@ class WelcomeModule extends Module
                         TextLiteral::make('Laravel Docs')
                             ->url('https://laravel.com/docs'),
                     ])->vertical()->gapless(),
-                ])->title('Useful Resources'),
+                ])->title(trans('cmf::snippets.useful_resources')),
             ]),
         ]);
     }

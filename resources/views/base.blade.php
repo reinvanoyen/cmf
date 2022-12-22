@@ -37,6 +37,7 @@
 
 <body>
 @yield('body')
+<script src="{{ Cmf::getPath('js/i18n.js') }}"></script>
 <script src="{{ mix('app.js', 'vendor/cmf')  }}"></script>
 </body>
 </html>

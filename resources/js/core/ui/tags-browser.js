@@ -5,6 +5,7 @@ import IconButton from "./icon-button";
 import Placeholder from "./placeholder";
 import Tags from "./tags";
 import Window from "./window";
+import i18n from "../../util/i18n";
 
 class TagsBrowser extends React.Component {
 
@@ -91,7 +92,9 @@ class TagsBrowser extends React.Component {
         if (this.state.selectedTags.length) {
             selected = (
                 <div className="tags-browser__selected">
-                    <div className="tags-browser__title">Selected tags</div>
+                    <div className="tags-browser__title">
+                        {i18n.get('snippets.selected_tags')}
+                    </div>
                     <Tags
                         tags={this.state.selectedTags}
                         onClick={this.onSelectedTagClick.bind(this)}
@@ -103,7 +106,9 @@ class TagsBrowser extends React.Component {
         if (this.state.tags.length) {
             available = (
                 <div className="tags-browser__available">
-                    <div className="tags-browser__title">Available tags</div>
+                    <div className="tags-browser__title">
+                        {i18n.get('snippets.available_tags')}
+                    </div>
                     <Tags
                         tags={this.state.tags}
                         onClick={this.onTagClick.bind(this)}

@@ -12,6 +12,7 @@ import helpers from "../util/helpers";
 import Icon from "./ui/icon";
 import ErrorModule from "./module/error-module";
 import meta from "../util/meta";
+import i18n from "../util/i18n";
 
 class Cmf extends React.Component {
 
@@ -135,12 +136,12 @@ class Cmf extends React.Component {
     }
 
     onLoginSuccess(user) {
-        ui.notify('Welcome back, '+user.name);
+        ui.notify(i18n.get('snippets.welcome_back', {name: user.name}));
         this.onAuthSuccess(user);
     }
 
     onLoginFail() {
-        ui.notify('User login failed');
+        ui.notify(i18n.get('snippets.login_failed'));
     }
 
     bindPopState() {

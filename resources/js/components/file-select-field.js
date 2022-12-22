@@ -4,8 +4,8 @@ import Field from "../core/ui/field";
 import FileThumb from "../core/ui/file-thumb";
 import Placeholder from "../core/ui/placeholder";
 import helpers from "../util/helpers";
-import Icon from "../core/ui/icon";
 import Overlay from "../core/ui/overlay";
+import i18n from "../util/i18n";
 
 class FileSelectField extends React.Component {
 
@@ -79,7 +79,11 @@ class FileSelectField extends React.Component {
             )
         }
 
-        return <Placeholder icon={'library_add'}>Select a {this.props.label}</Placeholder>;
+        return (
+            <Placeholder icon={'library_add'}>
+                {i18n.get('snippets.select_singular', {singular: this.props.label})}
+            </Placeholder>
+        );
     }
 
     render() {

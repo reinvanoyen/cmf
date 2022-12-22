@@ -3,11 +3,11 @@ import components from "../rendering/components";
 import filters from "../rendering/filters";
 import api from "../api/api";
 import path from "../state/path";
-import Loader from "../core/ui/loader";
 import Pagination from "../core/ui/pagination";
 import Search from "../core/ui/search";
 import Link from "../core/ui/link";
 import str from "../util/str";
+import i18n from "../util/i18n";
 
 class Index extends React.Component {
 
@@ -135,7 +135,7 @@ class Index extends React.Component {
                 <div className="index__header-filters-tool">
                     {this.renderFilters()}
                     <div className="index__header-clear-filters">
-                        <Link onClick={this.state.hasActiveFilters ? this.clearFilters.bind(this) : null} text={'Clear filters'} style={this.state.hasActiveFilters ? '' : 'disabled'} />
+                        <Link onClick={this.state.hasActiveFilters ? this.clearFilters.bind(this) : null} text={i18n.get('snippets.clear_filters')} style={this.state.hasActiveFilters ? '' : 'disabled'} />
                     </div>
                 </div>
             );
@@ -187,14 +187,14 @@ class Index extends React.Component {
         if (this.state.searchKeyword) {
             return (
                 <div className="index__placeholder">
-                    No {this.props.plural} found for your search "{this.state.searchKeyword}".
+                    {i18n.get('snippets.no_plural_found_for_search', {plural: this.props.plural, search: this.state.searchKeyword})}
                 </div>
             );
         }
 
         return (
             <div className="index__placeholder">
-                No {this.props.plural.toLowerCase()} found.
+                {i18n.get('snippets.no_plural_found', {plural: this.props.plural})}
             </div>
         );
     }

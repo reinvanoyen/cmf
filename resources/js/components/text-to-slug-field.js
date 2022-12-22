@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from "./text-field";
 import str from "../util/str";
 import util from "../core/ui/util";
+import i18n from "../util/i18n";
 
 export default class TextToSlugField extends TextField {
 
@@ -56,7 +57,7 @@ export default class TextToSlugField extends TextField {
 
     changeSlugValue() {
         util.prompt({
-            title: 'Update slug',
+            title: i18n.get('snippets.update_slug'),
             defaultValue: this.state.slugValue,
             confirm: (newSlug) => {
                 this.setState({

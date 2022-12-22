@@ -13,6 +13,7 @@ import FileUploader from "../core/ui/file-uploader";
 import Breadcrumbs from "../core/ui/breadcrumbs";
 import IconButton from "../core/ui/icon-button";
 import DirectoryTree from "../core/ui/directory-tree";
+import i18n from "../util/i18n";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -285,12 +286,12 @@ class ViewMediaDirectory extends React.Component {
 
     promptCreateDirectory() {
         util.prompt({
-            title: 'New directory',
-            confirmButtonText: 'Create',
-            cancelButtonText: 'Cancel',
+            title: i18n.get('snippets.new_directory_title'),
+            confirmButtonText: i18n.get('snippets.create'),
+            cancelButtonText: i18n.get('snippets.cancel'),
             confirm: value => {
                 api.media.createDirectory(value, this.props.path.params.directory).then(() => {
-                    util.notify('Directory created');
+                    util.notify(i18n.get('snippets.directory_created'));
                     this.refresh();
                 });
             }
@@ -299,10 +300,10 @@ class ViewMediaDirectory extends React.Component {
 
     confirmDeleteFiles(ids, files) {
         util.confirm({
-            title: 'Delete '+ids.length+' files?',
-            text: 'Deleting these files will permanently delete them from your library. This action is irreversible.',
-            confirmButtonText: 'Yes, delete '+ids.length+' files',
-            cancelButtonText: 'No, keep files',
+            title: i18n.get('snippets.delete_files_title', {amount: ids.length}),
+            text: i18n.get('snippets.delete_files_text'),
+            confirmButtonText: i18n.get('snippets.delete_files_confirm', {amount: ids.length}),
+            cancelButtonText: i18n.get('snippets.delete_files_cancel'),
             confirm: () => this.handleDeleteFiles(ids)
         });
     }
@@ -338,25 +339,25 @@ class ViewMediaDirectory extends React.Component {
                     onChangeFileProperty={(property, value) => this.handleChangeFileProperty(property, value, this.state.currentFile.id)}
                     onDeleteFile={() => {
                         util.confirm({
-                            title: 'Delete file?',
-                            text: 'Deleting this file will permanently delete it from your library.',
-                            confirmButtonText: 'Yes, delete file',
-                            cancelButtonText: 'No, keep file',
+                            title: i18n.get('snippets.delete_file_title'),
+                            text: i18n.get('snippets.delete_file_text'),
+                            confirmButtonText: i18n.get('snippets.delete_file_confirm'),
+                            cancelButtonText: i18n.get('snippets.delete_file_cancel'),
                             confirm: () => this.handleDeleteFile(this.state.currentFile.id)
                         });
                     }}
                     onRenameFile={() => {
                         util.prompt({
-                            title: 'Rename file',
+                            title: i18n.get('snippets.rename_file_title'),
                             defaultValue: this.state.currentFile.name,
-                            confirmButtonText: 'Rename',
-                            cancelButtonText: 'Cancel',
+                            confirmButtonText: i18n.get('snippets.rename_file_confirm'),
+                            cancelButtonText: i18n.get('snippets.rename_file_cancel'),
                             confirm: value => {
                                 api.media.renameFile(value, this.state.currentFile.id).then(response => {
                                     this.setState({
                                         currentFile: response.data.data
                                     }, () => {
-                                        util.notify('File renamed');
+                                        util.notify(i18n.get('snippets.file_renamed'));
                                         this.refresh();
                                     });
                                 });
@@ -439,9 +440,9 @@ class ViewMediaDirectory extends React.Component {
                         <Button
                             style={['secondary', 'small']}
                             onClick={this.promptCreateDirectory.bind(this)}
-                            text={'New directory'}
+                            text={i18n.get('snippets.new_directory')}
                         />
-                        <Dropdown text={'Upload'} style={['primary', 'small']} autoClose={true}>
+                        <Dropdown text={i18n.get('snippets.upload')} style={['primary', 'small']} autoClose={true}>
                             <FileUploader
                                 directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
                                 onUploadDone={this.handleUploadDone.bind(this)}

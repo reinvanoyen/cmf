@@ -7,6 +7,7 @@ import Placeholder from "../core/ui/placeholder";
 import array from "../util/array";
 import FileThumb from "../core/ui/file-thumb";
 import Overlay from "../core/ui/overlay";
+import i18n from "../util/i18n";
 
 class GalleryField extends React.Component {
 
@@ -149,12 +150,18 @@ class GalleryField extends React.Component {
                             </div>
                         );
                     })}
-                    <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>Add more {this.props.plural}</Placeholder>
+                    <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>
+                        {i18n.get('snippets.add_plural', {plural: this.props.plural})}
+                    </Placeholder>
                 </div>
             );
         }
 
-        return <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>Select {this.props.plural}</Placeholder>;
+        return (
+            <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>
+                {i18n.get('snippets.select_plural', {plural: this.props.plural})}
+            </Placeholder>
+        );
     }
 
     render() {
@@ -185,7 +192,12 @@ class GalleryField extends React.Component {
             >
                 <div className="gallery-field">
                     <div className="gallery-field__btn">
-                        <Button style={['small', 'secondary']} icon={'add'} text={'Select '+this.props.plural} onClick={this.open.bind(this)} />
+                        <Button
+                            style={['small', 'secondary']}
+                            icon={'add'}
+                            text={i18n.get('snippets.select_plural', {plural: this.props.plural})}
+                            onClick={this.open.bind(this)}
+                        />
                     </div>
                     <div className="gallery-field__content">
                         {this.renderContent()}

@@ -4,6 +4,8 @@ import Form from "../core/ui/form";
 import api from "../api/api";
 import path from "../state/path";
 import ui from "../core/ui/util";
+import i18n from "../util/i18n";
+import str from "../util/str";
 
 class Edit extends React.Component {
 
@@ -65,7 +67,7 @@ class Edit extends React.Component {
                 // Redirect
                 this.redirect(response.data);
                 // Notify the user
-                ui.notify(`${this.props.singular} was successfully updated`);
+                ui.notify(i18n.get('snippets.singular_updated', {singular: this.props.singular}));
             }, error => {
 
                 let response = error.response;
@@ -77,7 +79,7 @@ class Edit extends React.Component {
                 this.setState({
                     formErrors: response.data.errors
                 });
-                ui.notify('The form contains errors');
+                ui.notify(i18n.get('form_has_errors'));
             });
     }
 
@@ -100,7 +102,7 @@ class Edit extends React.Component {
                     ref={this.formRef}
                     errors={this.state.formErrors}
                     onSubmit={this.save.bind(this)}
-                    submitButtonText={`Save ${this.props.singular}`}
+                    submitButtonText={str.toUpperCaseFirst(i18n.get('snippets.save_singular', {singular: this.props.singular}))}
                     sidebar={this.renderSidebar()}
                 >
                     {this.renderContent()}

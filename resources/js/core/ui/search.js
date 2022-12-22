@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from "./icon";
 import IconButton from "./icon-button";
+import i18n from "../../util/i18n";
 
 class Search extends React.Component {
 
@@ -62,7 +63,7 @@ class Search extends React.Component {
                     name="search"
                     value={this.state.value}
                     onChange={this.handleChange.bind(this)}
-                    placeholder="Search"
+                    placeholder={i18n.get('snippets.search')}
                 />
                 <div className="search__clear">
                     <IconButton

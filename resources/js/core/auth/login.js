@@ -3,6 +3,7 @@ import Form from "../ui/form";
 import TextField from "../../components/text-field";
 import api from "../../api/api";
 import Page from "../page";
+import i18n from "../../util/i18n";
 
 class Login extends React.Component {
 
@@ -34,10 +35,10 @@ class Login extends React.Component {
                     <Form
                         ref={this.formRef}
                         onSubmit={this.loginAttempt.bind(this)}
-                        submitButtonText={'Login'}
+                        submitButtonText={i18n.get('snippets.login')}
                     >
-                        <TextField name="email" label={'Email address'} />
-                        <TextField name="password" label={'Password'} htmlType={'password'} />
+                        <TextField name="email" label={i18n.get('snippets.email_address')} />
+                        <TextField name="password" label={i18n.get('snippets.password')} htmlType={'password'} />
                     </Form>
                 </div>
             </Page>

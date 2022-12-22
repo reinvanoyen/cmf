@@ -13,7 +13,7 @@ class MediaLibraryModule extends Module
      */
     protected function title(): string
     {
-        return 'Media library';
+        return trans('cmf::snippets.media_library');
     }
 
     /**

@@ -3,6 +3,7 @@
 import React from 'react';
 import Placeholder from "./placeholder";
 import upload from "../../util/upload";
+import i18n from "../../util/i18n";
 
 export default class FileUploader extends React.Component {
 
@@ -32,7 +33,7 @@ export default class FileUploader extends React.Component {
                     <input type={'file'} name={'file-uploader'} multiple={true} onChange={this.handleChange.bind(this)} />
                 </div>
                 <div className="file-uploader__placeholder">
-                    <Placeholder>Select your file(s)</Placeholder>
+                    <Placeholder>{i18n.get('snippets.select_files_from_computer')}</Placeholder>
                 </div>
             </div>
         );

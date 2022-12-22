@@ -9,6 +9,8 @@ import IconButton from "../core/ui/icon-button";
 import Button from '../core/ui/button';
 import Collapsible from "../core/ui/collapsible";
 import Divider from "../core/ui/divider";
+import i18n from "../util/i18n";
+import str from "../util/str";
 
 export default class ContentBlocks extends React.Component {
 
@@ -137,7 +139,7 @@ export default class ContentBlocks extends React.Component {
             addedBlocks: addedBlocks
         });
 
-        util.notify('Order successfully changed');
+        util.notify(i18n.get('snippets.order_changed'));
     }
 
     sortDown(index) {
@@ -153,14 +155,14 @@ export default class ContentBlocks extends React.Component {
             addedBlocks: addedBlocks
         });
 
-        util.notify('Order successfully changed');
+        util.notify(i18n.get('snippets.order_changed'));
     }
 
     removeBlock(index, id) {
 
         util.confirm({
-            title: 'Delete '+this.props.singular+'?',
-            text: 'Are you sure you wish to delete this '+this.props.singular+'?',
+            title: i18n.get('snippets.delete_singular_title', {singular: this.props.singular}),
+            text: i18n.get('snippets.delete_singular_text', {singular: this.props.singular}),
             confirm: () => {
 
                 let blocksToRemoveById = this.state.blocksToRemoveById;
@@ -180,7 +182,7 @@ export default class ContentBlocks extends React.Component {
                     blocksToRemoveByOrder
                 });
 
-                util.notify(this.props.singular+' successfully removed');
+                util.notify(i18n.get('snippets.singular_deleted', {singular: this.props.singular}));
             }
         });
     }
@@ -200,10 +202,10 @@ export default class ContentBlocks extends React.Component {
 
         if (atIndex !== null) {
             addedBlocks.splice(atIndex, 0, block);
-            util.notify(this.props.singular+' inserted');
+            util.notify(i18n.get('snippets.singular_inserted', {singular: this.props.singular}));
         } else {
             addedBlocks.push(block);
-            util.notify(this.props.singular+' added');
+            util.notify(i18n.get('snippets.singular_added', {singular: this.props.singular}));
         }
 
         this.setState({ addedBlocks });
@@ -259,7 +261,11 @@ export default class ContentBlocks extends React.Component {
         this.componentLists = [];
 
         if (! this.state.addedBlocks.length) {
-            return <Placeholder icon={'post_add'}>No {this.props.plural} added yet</Placeholder>;
+            return (
+                <Placeholder icon={'post_add'}>
+                    {i18n.get('snippets.no_plural_added', {plural: this.props.plural})}
+                </Placeholder>
+            );
         }
 
         return this.state.addedBlocks.map((blockData, i) => {
@@ -286,7 +292,13 @@ export default class ContentBlocks extends React.Component {
                         <Dropdown key={3} autoClose={true} openIcon={'more_horiz'} closeIcon={'more_horiz'}>
                             <LinkList links={this.getTypeLinks('Insert ', ' below')} onClick={type => this.addBlock(type, (i+1))} />
                             <Divider />
-                            <LinkList style={'warning'} links={[['Delete '+this.props.singular, 'delete']]} onClick={action => this.optionDropdownClick(action, i, blockData.id)} />
+                            <LinkList
+                                style={'warning'}
+                                links={[
+                                    [i18n.get('snippets.delete_singular', {singular: this.props.singular}), 'delete']
+                                ]}
+                                onClick={action => this.optionDropdownClick(action, i, blockData.id)}
+                            />
                         </Dropdown>
                     ]}>
                         {componentList.map(obj => obj.component)}
@@ -308,7 +320,7 @@ export default class ContentBlocks extends React.Component {
                         {this.renderContentBlocks()}
                     </div>
                     <div className={'content-blocks__footer'}>
-                        {this.renderAddBlockDropdown('Add '+this.props.singular)}
+                        {this.renderAddBlockDropdown(str.toUpperCaseFirst(i18n.get('snippets.add_singular', {singular: this.props.singular})))}
                     </div>
                 </div>
             </Field>

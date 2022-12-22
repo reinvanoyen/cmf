@@ -4,6 +4,8 @@ import Form from "../core/ui/form";
 import api from "../api/api";
 import path from "../state/path";
 import ui from "../core/ui/util";
+import i18n from "../util/i18n";
+import str from "../util/str";
 
 class Create extends React.Component {
 
@@ -50,7 +52,7 @@ class Create extends React.Component {
                 // Redirect
                 this.redirect(response.data);
                 // Notify the user
-                ui.notify(`${this.props.singular} was created`);
+                ui.notify(i18n.get('snippets.singular_created', {singular: this.props.singular}));
 
             }, error => {
 
@@ -86,7 +88,7 @@ class Create extends React.Component {
                     ref={this.formRef}
                     errors={this.state.formErrors}
                     onSubmit={this.save.bind(this)}
-                    submitButtonText={`Create ${this.props.singular}`}
+                    submitButtonText={str.toUpperCaseFirst(i18n.get('snippets.create_singular', {singular: this.props.singular}))}
                     sidebar={this.renderSidebar()}
                 >
                     {this.renderContent()}

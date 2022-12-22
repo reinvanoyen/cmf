@@ -9,12 +9,14 @@ use ReinVanOyen\Cmf\Http\Controllers\{
 
 use \ReinVanOyen\Cmf\Http\Middleware\{
     Authenticate,
-    DispatchServingCmfEvent
+    DispatchServingCmfEvent,
+    SetLocale
 };
 
 Route::middleware([
     \Illuminate\Cookie\Middleware\EncryptCookies::class,
     \Illuminate\Session\Middleware\StartSession::class,
+    SetLocale::class,
     Authenticate::class,
     DispatchServingCmfEvent::class,
 ])
@@ -64,5 +66,5 @@ Route::middleware([
     });
 
 Route::post('cmf/api/auth/login', [AuthController::class, 'login'])
-    ->middleware(['web', 'guest',]);
+    ->middleware(['web', 'guest', SetLocale::class]);
 
