@@ -38,12 +38,12 @@ return [
     'rename_file_confirm' => 'Hernoem bestand',
     'rename_file_cancel' => 'Annuleer',
 
-    'delete_file' => 'Verwijder bestand',
-
     'delete_file_title' => 'Bestand verwijderen?',
     'delete_file_text' => 'Dit bestand verwijderen zal het permanent uit je media bibliotheek verwijderen.',
     'delete_file_confirm' => 'Verwijder bestand',
     'delete_file_cancel' => 'Annuleer',
+
+    'delete_file' => 'Verwijder bestand',
 
     'delete_files_title' => ':amount bestanden verwijderen?',
     'delete_files_text' => 'Deze bestanden verwijderen zal ze permanent uit je media bibliotheek verwijderen. Deze actie is onomkeerbaar.',
@@ -162,4 +162,9 @@ return [
     'your_selection' => 'Jouw selectie',
 
     'files_uploaded' => 'Jouw bestanden werden geüpload',
+
+    'insert_singular_below' => ':singular onder invoegen',
+
+    'tags' => 'Tags',
+    'no_tags_available' => 'Er zijn geen tags beschikbaar',
 ];

@@ -86,7 +86,6 @@ return [
     'select_singular' => 'Select :singular',
     'add_singular' => 'Add :singular',
 
-
     'select_plural' => 'Select :plural',
     'add_plural' => 'Add :plural',
 
@@ -163,4 +162,9 @@ return [
     'your_selection' => 'Your selection',
 
     'files_uploaded' => 'Your files were uploaded',
+
+    'insert_singular_below' => 'Insert :singular below',
+
+    'tags' => 'Tags',
+    'no_tags_available' => 'No tags available',
 ];

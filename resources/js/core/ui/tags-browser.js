@@ -1,7 +1,6 @@
 import React from 'react';
 import api from "../../api/api";
 import Button from "./button";
-import IconButton from "./icon-button";
 import Placeholder from "./placeholder";
 import Tags from "./tags";
 import Window from "./window";
@@ -82,7 +81,7 @@ class TagsBrowser extends React.Component {
 
         if (! this.state.tags.length) {
             return (
-                <Placeholder>No tags available.</Placeholder>
+                <Placeholder>{i18n.get('snippets.no_tags_available')}</Placeholder>
             );
         }
 
@@ -127,9 +126,9 @@ class TagsBrowser extends React.Component {
 
     render() {
         return (
-            <Window style={'modal'} title={'Tags'} closeable={true} onClose={this.onCancel.bind(this)} footer={[
-                <Button key={0} text={'Cancel'} style={['secondary']} onClick={this.onCancel.bind(this)} />,
-                <Button key={1} text={'Confirm'} onClick={this.onConfirm.bind(this)} />
+            <Window style={'modal'} title={i18n.get('snippets.tags')} closeable={true} onClose={this.onCancel.bind(this)} footer={[
+                <Button key={0} text={i18n.get('snippets.cancel')} style={['secondary']} onClick={this.onCancel.bind(this)} />,
+                <Button key={1} text={i18n.get('snippets.confirm')} onClick={this.onConfirm.bind(this)} />
             ]}>
                 <div className="tags-browser">
                     <div className="tags-browser__content">

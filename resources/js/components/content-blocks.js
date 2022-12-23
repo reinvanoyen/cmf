@@ -303,7 +303,7 @@ export default class ContentBlocks extends React.Component {
                             <LinkList
                                 style={'warning'}
                                 links={[
-                                    [i18n.get('snippets.delete_singular', {singular: this.props.singular}), 'delete']
+                                    [str.toUpperCaseFirst(i18n.get('snippets.delete_singular', {singular: this.props.singular})), 'delete']
                                 ]}
                                 onClick={action => this.optionDropdownClick(action, i, blockData.id)}
                             />

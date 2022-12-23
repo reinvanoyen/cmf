@@ -95,8 +95,8 @@ export default {
         // Options
         let title = opts.title || '';
         let text = opts.text || '';
-        let confirmButtonText = opts.confirmButtonText || 'Confirm';
-        let cancelButtonText = opts.cancelButtonText || 'Cancel';
+        let confirmButtonText = opts.confirmButtonText || i18n.get('snippets.confirm');
+        let cancelButtonText = opts.cancelButtonText || i18n.get('snippets.cancel');
         let confirmCb = opts.confirm;
         let cancelCb = opts.cancel;
 
