@@ -8,6 +8,12 @@
   <a href="https://github.com/reinvanoyen/cmf/actions"><img src="https://github.com/reinvanoyen/cmf/workflows/tests/badge.svg" alt="Tests" /></a>
 </p>
 
+[![Tests](https://github.com/reinvanoyen/cmf/workflows/tests/badge.svg)](https://github.com/reinvanoyen/cmf/actions)
+[![License](http://poser.pugx.org/reinvanoyen/cmf/license)](https://packagist.org/packages/reinvanoyen/cmf)
+[![Latest Stable Version](http://poser.pugx.org/reinvanoyen/cmf/v)](https://packagist.org/packages/reinvanoyen/cmf)
+[![PHP Version Require](http://poser.pugx.org/reinvanoyen/cmf/require/php)](https://packagist.org/packages/reinvanoyen/cmf)
+[![Total Downloads](http://poser.pugx.org/reinvanoyen/cmf/downloads)](https://packagist.org/packages/reinvanoyen/cmf)
+
 # Laravel CMF
 
 ## Introduction
