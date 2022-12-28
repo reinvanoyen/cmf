@@ -13,11 +13,16 @@ abstract class Module implements \JsonSerializable
     use CanExport;
 
     /**
+     * The title of the module
+     *
      * @return string
      */
     abstract protected function title(): string;
 
     /**
+     * The id of the module
+     * By default this is the slugified title of the module
+     *
      * @return string
      */
     public function id(): string
@@ -26,6 +31,8 @@ abstract class Module implements \JsonSerializable
     }
 
     /**
+     * Is the module visible in the navigation?
+     *
      * @return bool
      */
     protected function inNavigation(): bool
@@ -34,6 +41,8 @@ abstract class Module implements \JsonSerializable
     }
 
     /**
+     * The icon of the module as a Material Icons string
+     *
      * @return string
      */
     protected function icon()
@@ -42,11 +51,15 @@ abstract class Module implements \JsonSerializable
     }
 
     /**
+     * The default (index) action of the module
+     *
      * @return Action
      */
     abstract public function index(): Action;
 
     /**
+     * The submodules of the module
+     *
      * @return array
      */
     public function submodules(): array
@@ -55,6 +68,9 @@ abstract class Module implements \JsonSerializable
     }
 
     /**
+     * The export of the module
+     * Here we define everything the API call will receive
+     *
      * @return array
      */
     public function exportAll(): array

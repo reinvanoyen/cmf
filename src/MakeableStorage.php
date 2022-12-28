@@ -43,7 +43,7 @@ class MakeableStorage
     }
 
     /**
-     * Get the makeable from the storage by id
+     * Get the makeable from the storage by its id
      *
      * @param int $id
      * @return Makeable

@@ -30,11 +30,14 @@ class ModuleRegistry
     }
 
     /**
+     * Add a module to the registry. If the module you're passing is a string, we'll try to make it into an instance
+     * before registering.
+     *
      * @param string|Module $module
      * @param bool $isRoot
      * @return Module|null
      */
-    public function add(Module|string $module, bool $isRoot = true): ?Module
+    public function add($module, bool $isRoot = true): ?Module
     {
         $module = $this->factory->make($module);
 
@@ -52,6 +55,8 @@ class ModuleRegistry
     }
 
     /**
+     * Get a module from the registry by its id
+     *
      * @param string $id
      * @return mixed|null
      */
@@ -61,6 +66,8 @@ class ModuleRegistry
     }
 
     /**
+     * Get all root modules
+     *
      * @return array
      */
     public function root(): array
@@ -69,6 +76,8 @@ class ModuleRegistry
     }
 
     /**
+     * Get all modules
+     *
      * @return array
      */
     public function all(): array

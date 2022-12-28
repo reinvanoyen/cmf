@@ -32,7 +32,7 @@ abstract class Meta
     protected static $sort = [];
 
     /**
-     * Get the model classname for the resource
+     * Get the model classname of this meta
      *
      * @return string
      */
@@ -42,7 +42,7 @@ abstract class Meta
     }
 
     /**
-     * Get the column representing the title for the resource
+     * Get the column representing the title for this meta
      *
      * @return string
      */
@@ -52,7 +52,7 @@ abstract class Meta
     }
 
     /**
-     * Get the singular word for the resource
+     * Get the singular word for this meta
      *
      * @return string
      */
@@ -62,7 +62,7 @@ abstract class Meta
     }
 
     /**
-     * Get the plural word for the resource
+     * Get the plural word for this meta
      *
      * @return string
      */
@@ -72,7 +72,7 @@ abstract class Meta
     }
 
     /**
-     * Get the amount of items per page for this resource
+     * Get the amount of items per page for this meta
      *
      * @return int
      */
@@ -82,7 +82,7 @@ abstract class Meta
     }
 
     /**
-     * Get the searchable columns for this resource
+     * Get the searchable columns for this meta
      *
      * @return array
      */

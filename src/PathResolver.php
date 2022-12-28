@@ -22,6 +22,8 @@ class PathResolver
     }
 
     /**
+     * Get registered modules
+     *
      * @return array
      */
     public function modules(): array
@@ -30,7 +32,7 @@ class PathResolver
     }
 
     /**
-     * Get a module from the CMF by module id
+     * Get a registered module by its id
      *
      * @param string $moduleId
      * @return Module|null

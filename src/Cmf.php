@@ -26,6 +26,8 @@ class Cmf
     }
 
     /**
+     * Get the version number of this package
+     *
      * @return string
      */
     public function getVersion(): string
@@ -34,6 +36,8 @@ class Cmf
     }
 
     /**
+     * Register an array of modules
+     *
      * @param array $modules
      */
     public function registerModules(array $modules)
@@ -44,6 +48,8 @@ class Cmf
     }
 
     /**
+     * Register a module, all its submodules will also get registered
+     *
      * @param $module
      */
     public function registerModule($module)
@@ -79,7 +85,7 @@ class Cmf
     }
 
     /**
-     * Call a callback function when the CMF is serving
+     * Register a callback for when the application is serving
      *
      * @param $call
      */
@@ -89,6 +95,8 @@ class Cmf
     }
 
     /**
+     * Get the path to the admin panel
+     *
      * @param $path
      * @return string
      */
