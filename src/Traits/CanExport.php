@@ -7,14 +7,14 @@ trait CanExport
     /**
      * @var array $exports
      */
-    private $exports = [];
+    private array $exports = [];
 
     /**
      * @param string $key
      * @param mixed $value
      * @return void
      */
-    protected function export(string $key, mixed $value)
+    protected function export(string $key, $value)
     {
         $this->exports[$key] = $value;
     }
