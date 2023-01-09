@@ -1,4 +1,5 @@
 import TextField from "./text-field";
+import NumberField from "./number-field";
 import TextView from "./text-view";
 import Link from "./link";
 import Stack from "./stack";
@@ -41,9 +42,12 @@ import ColorField from "./color-field";
 import ManualOrderControls from "./manual-order-controls";
 import EnumSwitchField from "./enum-switch-field";
 import TextLiteral from "./text-literal";
+import TimeField from "./time-field";
 
 export default {
     'text-literal': TextLiteral,
+    'time-field': TimeField,
+    'number-field': NumberField,
     'date-field': DateField,
     'date-time-field': DateTimeField,
     'date-time-view': DateTimeView,

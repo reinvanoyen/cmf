@@ -95,18 +95,28 @@ class Edit extends React.Component {
         return components.renderComponents(this.props.sidebar, this.state.data, this.props.path);
     }
 
+    renderForm() {
+        if (this.state.isLoading) {
+            return null;
+        }
+
+        return (
+            <Form
+                ref={this.formRef}
+                errors={this.state.formErrors}
+                onSubmit={this.save.bind(this)}
+                submitButtonText={str.toUpperCaseFirst(i18n.get('snippets.save_singular', {singular: this.props.singular}))}
+                sidebar={this.renderSidebar()}
+            >
+                {this.renderContent()}
+            </Form>
+        );
+    }
+
     render() {
         return (
             <div className={'edit'+(this.state.isLoading ? ' edit--loading' : '')}>
-                <Form
-                    ref={this.formRef}
-                    errors={this.state.formErrors}
-                    onSubmit={this.save.bind(this)}
-                    submitButtonText={str.toUpperCaseFirst(i18n.get('snippets.save_singular', {singular: this.props.singular}))}
-                    sidebar={this.renderSidebar()}
-                >
-                    {this.renderContent()}
-                </Form>
+                {this.renderForm()}
             </div>
         );
     }

@@ -15,7 +15,7 @@ export default class DateField extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: ''
+            value: this.props.data[this.props.name] || ''
         };
     }
 

@@ -12,6 +12,7 @@ class Item extends React.Component {
         selectionMode: false,
         components: [],
         actions: [],
+        grid: [],
         onClick: (e, item) => {}
     };
 
@@ -44,9 +45,16 @@ class Item extends React.Component {
     }
 
     getRowStyle() {
-        return {
+
+        let rowStyle = {
             gridTemplateColumns: 'repeat('+this.props.components.length+', 1fr)'
         };
+
+        if (this.props.grid.length) {
+            rowStyle.gridTemplateColumns = this.props.grid.join('fr ')+'fr';
+        }
+
+        return rowStyle;
     }
 
     renderItemContent() {

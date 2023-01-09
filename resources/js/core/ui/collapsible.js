@@ -24,11 +24,32 @@ export default class Collapsible extends React.Component {
         })
     }
 
+    renderCollapseButton() {
+        if (! this.props.children.length) {
+            return;
+        }
+
+        return <IconButton name={(this.state.isOpen ? 'remove' : 'add')} iconStyle={'mini'} onClick={this.toggle.bind(this)} />;
+    }
+
+    renderContent() {
+
+        if (! this.props.children.length) {
+            return;
+        }
+
+        return (
+            <div className="collapsible__content">
+                {this.props.children}
+            </div>
+        );
+    }
+
     render() {
         return (
             <div className={'collapsible'+(this.state.isOpen ? ' collapsible--open' : ' collapsible--closed')}>
                 <div className="collapsible__header">
-                    <IconButton name={(this.state.isOpen ? 'remove' : 'add')} iconStyle={'mini'} onClick={this.toggle.bind(this)} />
+                    {this.renderCollapseButton()}
                     <div className="collapsible__title">
                         {this.props.title}
                     </div>
@@ -36,9 +57,7 @@ export default class Collapsible extends React.Component {
                         {this.props.actions}
                     </div>
                 </div>
-                <div className="collapsible__content">
-                    {this.props.children}
-                </div>
+                {this.renderContent()}
             </div>
         );
     }

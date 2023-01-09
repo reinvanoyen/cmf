@@ -32,6 +32,11 @@ abstract class Meta
     protected static $sort = [];
 
     /**
+     * @var array $indexGrid
+     */
+    protected static $indexGrid = [];
+
+    /**
      * Get the model classname of this meta
      *
      * @return string
@@ -79,6 +84,16 @@ abstract class Meta
     public static function getPerPage(): int
     {
         return static::$perPage;
+    }
+
+    /**
+     * Get grid definition for the index
+     *
+     * @return array
+     */
+    public static function getIndexGrid(): array
+    {
+        return static::$indexGrid;
     }
 
     /**

@@ -1,0 +1,19 @@
+@include block(number-field)
+{
+    display: block;
+    width: 100%;
+    border: $border-width-1 solid $fill-color-alt-1;
+    border-radius: $border-radius-3;
+    padding: $rule / 3;
+
+    &:focus
+    {
+        border-color: $fill-color-alt-2;
+    }
+
+    @include modifier(primary)
+    {
+        @include type-3;
+        color: $color13;
+    }
+}

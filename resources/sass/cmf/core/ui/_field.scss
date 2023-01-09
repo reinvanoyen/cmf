@@ -14,6 +14,11 @@
     @include element(label)
     {
         display: block;
+
+        @include block-modifier(has-error)
+        {
+            color: $primary-color-alt-1;
+        }
     }
 
     @include element(tooltip)
@@ -33,6 +38,7 @@
         margin-top: $rule / 3;
         border-radius: $border-radius-3;
         background-color: $primary-color-alt-1;
+        color: $color01;
         @include type-2;
         line-height: 1.25;
     }

@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use ReinVanOyen\Cmf\Action\Index;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
@@ -42,6 +43,11 @@ class ManyToManyField extends Component
     private $components;
 
     /**
+     * @var array $pivotComponents
+     */
+    private $pivotComponents;
+
+    /**
      * ManyToManyField constructor.
      * @param string $name
      * @param string|null $meta
@@ -57,6 +63,8 @@ class ManyToManyField extends Component
         $this->singular($this->meta::getSingular());
         $this->plural($this->meta::getPlural());
         $this->model = $this->meta::getModel();
+
+        $this->grid($this->meta::getIndexGrid());
         $this->titleColumn($this->meta::getTitleColumn());
 
         $this->components(count($components) ? $components : $this->meta::index());
@@ -64,6 +72,8 @@ class ManyToManyField extends Component
         if (count($this->meta::getSearchColumns())) {
             $this->search($this->meta::getSearchColumns());
         }
+
+        $this->paginate($this->meta::getPerPage());
 
         foreach ($this->meta::getSorting() as $column => $method) {
             $this->orderBy($column, $method);
@@ -79,6 +89,16 @@ class ManyToManyField extends Component
     }
 
     /**
+     * @param array $grid
+     * @return $this
+     */
+    public function grid(array $grid)
+    {
+        $this->export('grid', $grid);
+        return $this;
+    }
+
+    /**
      * @param string $column
      * @return $this
      */
@@ -91,17 +111,28 @@ class ManyToManyField extends Component
 
     /**
      * @param array $components
+     * @return $this
+     */
+    public function pivot(array $components)
+    {
+        $this->pivotComponents = $components;
+        $this->export('pivotComponents', $this->pivotComponents);
+        return $this;
+    }
+
+    /**
+     * @param array $components
+     * @return $this
      */
     public function components(array $components)
     {
         $this->components = $components;
-
         /*
         foreach ($this->components as $component) {
             $component->resolve($this);
         }*/
-
         $this->export('components', $this->components);
+        return $this;
     }
 
     /**
@@ -110,22 +141,38 @@ class ManyToManyField extends Component
      */
     public function provision(ModelResource $model, array &$attributes)
     {
-        $attributes[$this->getName()] = $model->{$this->getName()};
+        if (empty($this->pivotComponents)) {
+            $attributes[$this->getName()] = $model->{$this->getName()};
+            return;
+        }
+
+        // Provision the pivotComponents
+        $pivotAttributes = [];
+        foreach ($this->pivotComponents as $component) {
+            $component->provision($model, $pivotAttributes);
+        }
+
+        $attributes[$this->getName()] = $model->{$this->getName()}()->withPivot(array_keys($pivotAttributes))->get();
     }
 
     /**
      * @param Model $model
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
+     * @return void
      */
-    public function save(Model $model, $request)
+    public function save(Model $model, Request $request)
     {
         if ($request->has($this->getName())) {
 
-            $items = $request->get($this->getName());
-            $itemIds = ($items ? explode(',', $items) : []);
+            $payload = json_decode($request->input($this->getName()), true);
 
-            $model::saved(function ($model) use ($itemIds) {
-                $model->{$this->getName()}()->sync($itemIds);
+            $itemIds = ($payload['ids'] ?: []);
+            $pivotData = ($payload['pivot'] ?: []);
+
+            $model::saved(function ($model) use ($itemIds, $pivotData) {
+
+                // Sync the ids
+                $model->{$this->getName()}()->sync($pivotData);
             });
         }
     }

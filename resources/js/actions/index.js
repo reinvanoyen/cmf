@@ -107,7 +107,7 @@ class Index extends React.Component {
             gridTemplateColumns: 'repeat('+this.props.components.length+', 1fr)'
         };
 
-        if (this.props.grid) {
+        if (this.props.grid.length) {
             rowStyle.gridTemplateColumns = this.props.grid.join('fr ')+'fr';
         }
 

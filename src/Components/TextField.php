@@ -38,6 +38,16 @@ class TextField extends Component
     }
 
     /**
+     * @param string $placeholderText
+     * @return $this
+     */
+    public function placeholder(string $placeholderText)
+    {
+        $this->export('placeholder', $placeholderText);
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function multiline()

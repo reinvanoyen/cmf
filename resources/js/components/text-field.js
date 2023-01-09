@@ -15,12 +15,12 @@ export default class TextField extends React.Component {
         multiline: false,
         errors: {},
         style: '',
-        tooltip: ''
+        tooltip: '',
+        placeholder: ''
     };
 
     constructor(props) {
         super(props);
-
         this.state = {
             value: this.props.data[this.props.name] || ''
         };
@@ -60,6 +60,7 @@ export default class TextField extends React.Component {
                     id={dom.inputId(this.props.name)}
                     className={helpers.className('text-field', this.props.style)}
                     value={this.state.value || ''}
+                    placeholder={this.props.placeholder}
                     onChange={this.handleChange.bind(this)}
                     onKeyUp={this.handleChange.bind(this)}
                 />
@@ -72,6 +73,7 @@ export default class TextField extends React.Component {
                     className={helpers.className('text-field', this.props.style)}
                     type={this.props.htmlType}
                     value={this.state.value || ''}
+                    placeholder={this.props.placeholder}
                     disabled={this.props.disabled}
                     onChange={this.handleChange.bind(this)}
                     onKeyUp={this.handleChange.bind(this)}

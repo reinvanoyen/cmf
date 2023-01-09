@@ -21,8 +21,8 @@ export default class TextToSlugField extends TextField {
         super(props);
 
         this.state = {
-            value: '',
-            slugValue: ''
+            value: this.props.data[this.props.name] || '',
+            slugValue: this.props.data[this.props.slugName] || ''
         };
     }
 

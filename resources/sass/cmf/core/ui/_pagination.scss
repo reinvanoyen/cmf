@@ -2,27 +2,28 @@
 {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
-
-    @include element(prev)
-    {
-        display: flex;
-        justify-content: flex-start;
-        width: 25%;
-    }
-
-    @include element(next)
-    {
-        display: flex;
-        justify-content: flex-end;
-        width: 25%;
-    }
+    gap: $rule / 2;
 
     @include element(status)
     {
         display: flex;
         justify-content: center;
         text-align: center;
-        width: 50%;
+    }
+
+    @include element(controls)
+    {
+        display: flex;
+        gap: $rule / 4;
+    }
+
+    @include element(prev)
+    {
+    }
+
+    @include element(next)
+    {
     }
 }

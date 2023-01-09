@@ -4,8 +4,11 @@ import Button from "../core/ui/button";
 import IconButton from "../core/ui/icon-button";
 import Placeholder from "../core/ui/placeholder";
 import ItemPickerWidget from "../core/ui/item-picker-widget";
-import Item from "../core/ui/item";
 import Overlay from "../core/ui/overlay";
+import components from "../rendering/components";
+import Collapsible from "../core/ui/collapsible";
+import util from "../core/ui/util";
+import i18n from "../util/i18n";
 
 class ManyToManyField extends React.Component {
 
@@ -13,13 +16,15 @@ class ManyToManyField extends React.Component {
         path: {},
         data: {},
         components: [],
+        pivotComponents: [],
         label: '',
         name: '',
         style: '',
         singular: '',
         plural: '',
         titleColumn: '',
-        search: false
+        search: false,
+        grid: []
     };
 
     constructor(props) {
@@ -30,6 +35,8 @@ class ManyToManyField extends React.Component {
             selectedItems: this.props.data[this.props.name] || [],
             selectedItemsIds: (this.props.data[this.props.name] ? this.props.data[this.props.name].map(item => item.id) : [])
         };
+
+        this.pivotComponentLists = [];
     }
 
     componentDidUpdate(prevProps) {
@@ -47,7 +54,27 @@ class ManyToManyField extends React.Component {
     }
 
     handleSubmit(data) {
-        data[this.props.name] = this.state.selectedItemsIds || [];
+
+        let payload = {
+            ids: this.state.selectedItemsIds || []
+        };
+
+        let pivotPayload = {};
+
+        this.pivotComponentLists.forEach((componentListData, index) => {
+
+            let [componentList, id] = componentListData;
+
+            if (this.state.selectedItemsIds.includes(id)) {
+                let data = {};
+                componentList.forEach(obj => obj.ref.current.handleSubmit(data));
+                pivotPayload[id] = data;
+            }
+        });
+
+        payload['pivot'] = pivotPayload;
+
+        data[this.props.name] = JSON.stringify(payload);
     }
 
     open() {
@@ -64,12 +91,21 @@ class ManyToManyField extends React.Component {
 
     deselect(item) {
 
-        let itemIds = this.state.selectedItemsIds.filter(itemId => itemId !== item.id);
-        let items = this.state.selectedItems.filter(currItem => currItem.id !== item.id);
+        util.confirm({
+            title: i18n.get('snippets.delete_singular_title', {singular: this.props.singular}),
+            text: i18n.get('snippets.delete_singular_text', {singular: this.props.singular}),
+            confirm: () => {
 
-        this.setState({
-            selectedItemsIds: itemIds,
-            selectedItems: items
+                let itemIds = this.state.selectedItemsIds.filter(itemId => itemId !== item.id);
+                let items = this.state.selectedItems.filter(currItem => currItem.id !== item.id);
+
+                this.setState({
+                    selectedItemsIds: itemIds,
+                    selectedItems: items
+                });
+
+                util.notify(i18n.get('snippets.singular_deleted', {singular: this.props.singular}));
+            }
         });
     }
 
@@ -81,32 +117,53 @@ class ManyToManyField extends React.Component {
         });
     }
 
+    renderPivotComponents(item) {
+
+        let data = item.pivot || {};
+
+        let componentList = components.renderComponentsWith(this.props.pivotComponents, data, this.props.path, (component, i) => {
+            return (
+                <div className="many-to-many-field__pivot-component" key={i}>
+                    {component}
+                </div>
+            );
+        }, true);
+
+        this.pivotComponentLists.push([componentList, item.id]);
+
+        return componentList.map(obj => obj.component);
+    }
+
     renderContent() {
+
+        this.pivotComponentLists = [];
+
         if (this.state.selectedItems.length) {
             return (
                 <div className={'many-to-many-field__list'}>
                     {this.state.selectedItems.map((item, i) => {
                         return (
-                            <Item
-                                key={i}
-                                item={item}
-                                titleColumn={this.props.titleColumn}
-                                actions={[
-                                    <IconButton
-                                        key={'delete'}
-                                        name={'delete'}
-                                        style={'transparent'}
-                                        onClick={e => this.deselect(item)}
-                                    />
-                                ]}
-                            />
+                            <Collapsible title={item[this.props.titleColumn]} key={i} actions={[
+                                <IconButton
+                                    key={'delete'}
+                                    name={'delete'}
+                                    style={'transparent'}
+                                    onClick={e => this.deselect(item)}
+                                />
+                            ]}>
+                                {this.renderPivotComponents(item)}
+                            </Collapsible>
                         );
                     })}
                 </div>
             );
         }
 
-        return <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>Select {this.props.plural}</Placeholder>;
+        return (
+            <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>
+                Select {this.props.plural}
+            </Placeholder>
+        );
     }
 
     render() {
@@ -122,6 +179,7 @@ class ManyToManyField extends React.Component {
                         plural={this.props.plural}
                         singular={this.props.plural}
                         titleColumn={this.props.titleColumn}
+                        grid={this.props.grid}
                         components={this.props.components}
                         search={this.props.search}
                         onCancel={this.close.bind(this)}
@@ -136,12 +194,12 @@ class ManyToManyField extends React.Component {
         return (
             <Field name={this.props.name} label={this.props.label} errors={this.props.errors}>
                 <div className="many-to-many-field">
-                        <div className="many-to-many-field__btn">
-                            <Button style={['small', 'secondary']} icon={'add'} text={'Select '+this.props.plural} onClick={this.open.bind(this)} />
-                        </div>
-                        <div className="many-to-many-field__content">
-                            {this.renderContent()}
-                        </div>
+                    <div className="many-to-many-field__btn">
+                        <Button style={['small', 'secondary']} icon={'add'} text={'Select '+this.props.plural} onClick={this.open.bind(this)} />
+                    </div>
+                    <div className="many-to-many-field__content">
+                        {this.renderContent()}
+                    </div>
                 </div>
                 {widget}
             </Field>

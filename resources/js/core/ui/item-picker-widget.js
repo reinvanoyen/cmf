@@ -9,6 +9,7 @@ import Search from "./search";
 import StickySidebar from "./sticky-sidebar";
 import Window from "./window";
 import i18n from "../../util/i18n";
+import Pagination from "./pagination";
 
 class ItemPickerWidget extends React.Component {
 
@@ -16,6 +17,7 @@ class ItemPickerWidget extends React.Component {
         id: 0,
         path: {},
         titleColumn: '',
+        grid: [],
         components: [],
         defaultSelectedItemIds: [],
         defaultSelectedItems: [],
@@ -32,6 +34,7 @@ class ItemPickerWidget extends React.Component {
             isLoading: true,
             searchKeyword: '',
             items: [],
+            meta: null,
             selectedItemIds: this.props.defaultSelectedItemIds || [],
             selectedItems: this.props.defaultSelectedItems || []
         };
@@ -41,9 +44,7 @@ class ItemPickerWidget extends React.Component {
         this.load();
     }
 
-    load() {
-
-        let params = {};
+    load(params = {}) {
 
         // Search for search keyword
         if (this.state.searchKeyword) {
@@ -54,8 +55,9 @@ class ItemPickerWidget extends React.Component {
         api.execute.get(this.props.path, this.props.id,'load', params).then(response => {
             let items = response.data.data;
             this.setState({
+                isLoading: false,
                 items: items,
-                isLoading: false
+                meta: response.data.meta || null
             });
         });
     }
@@ -119,6 +121,12 @@ class ItemPickerWidget extends React.Component {
         return this.state.selectedItemIds.includes(item.id);
     }
 
+    changePage(page) {
+        this.load({
+            page: page
+        });
+    }
+
     renderSidebar() {
         if (this.state.selectedItems.length) {
             return (
@@ -159,7 +167,6 @@ class ItemPickerWidget extends React.Component {
         );
     }
 
-
     renderPlaceholder() {
         if (this.state.searchKeyword) {
             return (
@@ -176,20 +183,41 @@ class ItemPickerWidget extends React.Component {
         );
     }
 
+    renderPagination() {
+        if (! this.state.meta || ! this.state.meta.total) {
+            return null;
+        }
+
+        return (
+            <Pagination
+                key={'pagination'}
+                currentPage={this.state.meta.current_page}
+                lastPage={this.state.meta.last_page}
+                perPage={this.state.meta.per_page}
+                total={this.state.meta.total}
+                from={this.state.meta.from}
+                to={this.state.meta.to}
+                onPageChange={this.changePage.bind(this)}
+            />
+        );
+    }
+
     renderRows() {
         if (! this.state.isLoading) {
             return this.state.items.map((item, i) => {
                 return (
-                    <Item
-                        key={i}
-                        path={this.props.path}
-                        item={item}
-                        titleColumn={this.props.titleColumn}
-                        components={this.props.components}
-                        isSelected={this.isItemSelected(item)}
-                        selectionMode={true}
-                        onClick={e => this.toggleItemSelection(item)}
-                    />
+                    <div key={i} className="item-picker-widget__row">
+                        <Item
+                            path={this.props.path}
+                            item={item}
+                            titleColumn={this.props.titleColumn}
+                            grid={this.props.grid}
+                            components={this.props.components}
+                            isSelected={this.isItemSelected(item)}
+                            selectionMode={true}
+                            onClick={e => this.toggleItemSelection(item)}
+                        />
+                    </div>
                 );
             });
         }
@@ -202,20 +230,27 @@ class ItemPickerWidget extends React.Component {
                 title={str.toUpperCaseFirst(this.props.plural)}
                 closeable={true}
                 onClose={this.onCancel.bind(this)}
-                actions={[(this.props.search ? <Search onSearch={keyword => this.search(keyword)} /> : null)]}
+                actions={[(this.props.search ? <Search key={'search'} onSearch={keyword => this.search(keyword)} /> : null)]}
                 footer={[
-                    <Button
-                        key={'cancel'}
-                        text={i18n.get('snippets.cancel')}
-                        style={['secondary']}
-                        onClick={this.onCancel.bind(this)}
-                    />,
-                    <Button
-                        key={'confirm'}
-                        text={(this.props.selectionMode ? i18n.get('snippets.confirm_selection') : i18n.get('select_singular', {singular: this.props.singular}))}
-                        style={this.state.selectedItemIds.length ? [] : ['disabled',]}
-                        onClick={this.state.selectedItemIds.length ? this.onSelectionConfirm.bind(this) : null}
-                    />
+                    <div className="item-picker-widget__footer">
+                        <div className="item-picker-widget__footer-pagination">
+                            {this.renderPagination()}
+                        </div>
+                        <div className="item-picker-widget__footer-actions">
+                            <Button
+                                key={'cancel'}
+                                text={i18n.get('snippets.cancel')}
+                                style={['secondary']}
+                                onClick={this.onCancel.bind(this)}
+                            />
+                            <Button
+                                key={'confirm'}
+                                text={(this.props.selectionMode ? i18n.get('snippets.confirm_selection') : i18n.get('snippets.select_singular', {singular: this.props.singular}))}
+                                style={this.state.selectedItemIds.length ? [] : ['disabled',]}
+                                onClick={this.state.selectedItemIds.length ? this.onSelectionConfirm.bind(this) : null}
+                            />
+                        </div>
+                    </div>
                 ]}
             >
                 <StickySidebar sidebar={this.renderSidebar()}>

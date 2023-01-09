@@ -52,7 +52,7 @@ class Field extends React.Component {
         }
 
         return (
-            <div className="field">
+            <div className={'field'+(this.props.errors[this.props.name] ? ' field--has-error' : '')}>
                 {label || tooltip ? <div className="field__header">{label} {tooltip}</div> : null}
                 <div className="field__input">
                     {this.props.children}

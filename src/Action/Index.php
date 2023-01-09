@@ -22,9 +22,13 @@ class Index extends CollectionAction
     public function __construct(string $meta, array $components = [])
     {
         $this->meta($meta);
+
         $this->singular($this->getMeta()::getSingular());
         $this->plural($this->getMeta()::getPlural());
         $this->paginate($this->getMeta()::getPerPage());
+        $this->paginate($this->getMeta()::getPerPage());
+        $this->grid($this->getMeta()::getIndexGrid());
+
         $this->components(count($components) ? $components : $this->getMeta()::index());
         $this->model = $this->getMeta()::getModel();
 

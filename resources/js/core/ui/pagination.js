@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from "./button";
+import IconButton from "./icon-button";
 
 class Pagination extends React.Component {
 
@@ -23,26 +24,28 @@ class Pagination extends React.Component {
 
         if (this.props.currentPage > 1) {
             prevBtn = (
-                <Button style={['secondary', 'small']} text="Previous" onClick={e => this.changePage(this.props.currentPage - 1)} />
+                <IconButton name={'arrow_left'} onClick={e => this.changePage(this.props.currentPage - 1)} />
             );
         }
 
         if (this.props.currentPage < this.props.lastPage) {
             nextBtn = (
-                <Button style={['secondary', 'small']} text="Next" onClick={e => this.changePage(this.props.currentPage + 1)} />
+                <IconButton name={'arrow_right'} onClick={e => this.changePage(this.props.currentPage + 1)} />
             );
         }
 
         return (
             <div className="pagination">
-                <div className="pagination__prev">
-                    {prevBtn}
-                </div>
                 <div className="pagination__status">
                     {this.props.from} - {this.props.to} of {this.props.total}
                 </div>
-                <div className="pagination__next">
-                    {nextBtn}
+                <div className="pagination__controls">
+                    <div className="pagination__prev">
+                        {prevBtn}
+                    </div>
+                    <div className="pagination__next">
+                        {nextBtn}
+                    </div>
                 </div>
             </div>
         );
