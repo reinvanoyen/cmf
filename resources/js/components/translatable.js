@@ -4,6 +4,7 @@ import components from "../rendering/components";
 class Translatable extends React.Component {
 
     static defaultProps = {
+        id: null,
         components: [],
         path: {},
         data: {},
@@ -20,6 +21,23 @@ class Translatable extends React.Component {
         };
 
         this.componentList = {};
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        for (let i = 0; i < this.props.components.length; i++) {
+            // We're checking if any of the components are changed
+            if (
+                ! prevProps.components[i] ||
+                this.props.components[i].type !== prevProps.components[i].type ||
+                this.props.components[i].name !== prevProps.components[i].name
+            ) {
+                // If so, translate them again!
+                this.setState({
+                    translatedComponents: this.translateComponentsForAllLanguages()
+                });
+                break;
+            }
+        }
     }
 
     handleSubmit(data) {
@@ -40,13 +58,10 @@ class Translatable extends React.Component {
     }
 
     translateComponentsForAllLanguages() {
-
         let components = {};
-
         this.props.languages.forEach(language => {
             components[language] = this.translateComponents(language);
         });
-
         return components;
     }
 
@@ -91,7 +106,7 @@ class Translatable extends React.Component {
                     <div className={'translatable__components'+(this.state.language === language ? ' translatable__components--active' : '')} key={language}>
                         {componentListRenders}
                     </div>
-                )
+                );
             }
         }
 

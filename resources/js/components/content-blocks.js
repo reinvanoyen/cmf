@@ -110,9 +110,7 @@ export default class ContentBlocks extends React.Component {
     }
 
     syncBlocksData() {
-
         let addedBlocks = this.state.addedBlocks;
-
         this.componentLists.forEach((componentListData, i) => {
             let [componentList, id, type] = componentListData;
             let data = addedBlocks[i].data;
