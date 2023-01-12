@@ -4,13 +4,13 @@
     width: $rule / 3;
     height: $rule / 3;
     margin-top: $rule / 4;
-    background-color: $success-color;
+    background-color: $fill-color-alt-2;
     border-radius: 100%;
     transition: background-color .25s;
 
     @include modifier(checked)
     {
         color: $color01;
-        background-color: $fill-color-alt-2;
+        background-color: $success-color;
     }
 }
