@@ -2,6 +2,7 @@
 
 namespace ReinVanOyen\Cmf;
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Event;
 use ReinVanOyen\Cmf\Events\ServingCmf;
 
@@ -11,6 +12,11 @@ use ReinVanOyen\Cmf\Events\ServingCmf;
  */
 class Cmf
 {
+    /**
+     * @var callable $gate
+     */
+    private $gate;
+
     /**
      * @var ModuleRegistry $modules
      */
@@ -32,7 +38,25 @@ class Cmf
      */
     public function getVersion(): string
     {
-        return '0.1.25';
+        return '0.1.26';
+    }
+
+    /**
+     * @param callable $gate
+     * @return void
+     */
+    public function setGate(callable $gate)
+    {
+        $this->gate = $gate;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function checkGate(User $user): bool
+    {
+        return ($this->gate ? call_user_func($this->gate, $user) : true);
     }
 
     /**

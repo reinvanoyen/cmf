@@ -17,16 +17,8 @@ class Authenticate extends AuthenticationMiddleware
     public function handle($request, Closure $next, ...$guards)
     {
         try {
-            $guard = config('cmf.guard');
-
-            if (! empty($guard)) {
-                $guards[] = $guard;
-            }
-
             return parent::handle($request, $next, ...$guards);
-
         } catch (AuthenticationException $e) {
-
             return response()->json(['message' => 'Unauthenticated',])->setStatusCode(401);
         }
     }

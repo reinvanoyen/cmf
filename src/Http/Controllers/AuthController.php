@@ -5,6 +5,7 @@ namespace ReinVanOyen\Cmf\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use ReinVanOyen\Cmf\Facades\Cmf;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 
 /**
@@ -26,7 +27,6 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         ModelResource::fields($this->fields);
-
         return new ModelResource(Auth::user());
     }
 
@@ -40,9 +40,16 @@ class AuthController extends Controller
 
         if (auth()->attempt($credentials, true)) {
 
-            ModelResource::fields($this->fields);
+            $user = Auth::user();
 
-            return new ModelResource(Auth::user());
+            if (Cmf::checkGate($user)) {
+                ModelResource::fields($this->fields);
+                return new ModelResource($user);
+            }
+
+            return response()->json([
+                'message' => 'Forbidden',
+            ])->setStatusCode(403);
         }
 
         return response()->json([
