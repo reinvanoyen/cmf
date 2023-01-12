@@ -12,14 +12,20 @@ use \ReinVanOyen\Cmf\Http\Middleware\{
 };
 
 use \Illuminate\Cookie\Middleware\EncryptCookies;
+use \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use \Illuminate\Session\Middleware\StartSession;
+use \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 use ReinVanOyen\Cmf\Facades\Cmf;
 
 Route::middleware([
     EncryptCookies::class,
+    AddQueuedCookiesToResponse::class,
     StartSession::class,
-    Gate::class, SetLocale::class])
+    VerifyCsrfToken::class,
+    Gate::class,
+    SetLocale::class,
+])
     ->prefix(Cmf::getPath())
     ->group(function () {
 

@@ -15,11 +15,15 @@ use \ReinVanOyen\Cmf\Http\Middleware\{
 };
 
 use \Illuminate\Cookie\Middleware\EncryptCookies;
+use \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use \Illuminate\Session\Middleware\StartSession;
+use \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 Route::middleware([
     EncryptCookies::class,
+    AddQueuedCookiesToResponse::class,
     StartSession::class,
+    VerifyCsrfToken::class,
     Gate::class,
     SetLocale::class,
     Authenticate::class,
@@ -71,5 +75,12 @@ Route::middleware([
     });
 
 Route::post('cmf/api/auth/login', [AuthController::class, 'login'])
-    ->middleware([EncryptCookies::class, StartSession::class, Gate::class, SetLocale::class]);
+    ->middleware([
+        EncryptCookies::class,
+        AddQueuedCookiesToResponse::class,
+        StartSession::class,
+        VerifyCsrfToken::class,
+        Gate::class,
+        SetLocale::class
+    ]);
 
