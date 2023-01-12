@@ -1,16 +1,16 @@
 @include block(boolean-view)
 {
-    display: inline-block;
-    color: $primary-color;
-    border: 1px solid $primary-color;
-    padding: $rule / 6 $rule / 6;
-    border-radius: $border-radius-3;
+    display: block;
+    width: $rule / 3;
+    height: $rule / 3;
+    margin-top: $rule / 4;
+    background-color: $success-color;
+    border-radius: 100%;
     transition: background-color .25s;
-    @include type-2;
 
     @include modifier(checked)
     {
         color: $color01;
-        background-color: $primary-color;
+        background-color: $fill-color-alt-2;
     }
 }

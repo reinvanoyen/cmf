@@ -48,11 +48,11 @@ class Delete extends React.Component {
         return (
             <div className="delete">
                 <div className="delete__text">
-                    {i18n.get('snippets.delete_singular_title', {singular: this.props.singular})}
+                    {i18n.get('snippets.delete_singular_text', {singular: this.props.singular})}
                 </div>
                 <div className="delete__footer">
                     <div className="delete__confirm">
-                        <Button onClick={this.delete.bind(this)} text={i18n.get('snippets.delete_singular_confirm', {plural: this.props.singular})} />
+                        <Button onClick={this.delete.bind(this)} text={i18n.get('snippets.delete_singular_confirm', {singular: this.props.singular})} />
                     </div>
                     <div className="delete__cancel">
                         <Button onClick={this.redirect.bind(this)} text={i18n.get('snippets.delete_singular_cancel')} style={'secondary'} />

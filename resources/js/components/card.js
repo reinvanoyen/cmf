@@ -9,13 +9,12 @@ class Card extends React.Component {
         titleField: '',
         subtitleField: '',
         labelField: '',
+        booleanView: null,
         photo: ''
     };
 
     constructor(props) {
-
         super(props);
-
         this.componentList = [];
     }
 
@@ -23,6 +22,18 @@ class Card extends React.Component {
         this.componentList.forEach(obj => {
             obj.ref.current.handleSubmit(data);
         });
+    }
+
+    renderBooleanView() {
+        if (! this.props.booleanView) {
+            return null;
+        }
+
+        return (
+            <div className="card__boolean">
+                {components.renderComponent(this.props.booleanView, this.props.data, this.props.path)}
+            </div>
+        );
     }
 
     renderComponents() {
@@ -78,6 +89,7 @@ class Card extends React.Component {
             <div className={'card'}>
                 <div className="card__photo" style={photoStyle}>
                     {label}
+                    {this.renderBooleanView()}
                 </div>
                 <div className="card__main">
                     <div className="card__title">

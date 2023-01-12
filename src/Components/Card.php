@@ -28,6 +28,11 @@ class Card extends Compound
     private $photoName;
 
     /**
+     * @var BooleanView $booleanView
+     */
+    private $booleanView;
+
+    /**
      * @return string
      */
     public function type(): string
@@ -58,6 +63,21 @@ class Card extends Compound
         if ($this->photoName) {
             $attributes[$this->photoName] = new MediaFileResource($model->{$this->photoName});
         }
+
+        if ($this->booleanView) {
+            $this->booleanView->provision($model, $attributes);
+        }
+    }
+
+    /**
+     * @param string $booleanColumn
+     * @return $this
+     */
+    public function boolean(string $booleanColumn)
+    {
+        $this->booleanView = BooleanView::make($booleanColumn);
+        $this->export('booleanView', $this->booleanView);
+        return $this;
     }
 
     /**

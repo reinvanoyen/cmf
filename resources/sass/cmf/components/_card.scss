@@ -26,6 +26,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba($color07, .1);
+            background-image: linear-gradient(180deg, rgba(0, 0, 0, .6) 0%, transparent 75%);
         }
     }
 
@@ -38,13 +39,22 @@
     @include element(label)
     {
         position: absolute;
+        z-index: 1;
         top: $rule / 4;
         right: $rule / 3;
-        background-color: rgba($color13, .35);
+        background-color: rgba($color13, .5);
         color: $color01;
         @include type-2;
         border-radius: $border-radius-3;
         padding: $rule / 8 $rule / 3;
+    }
+
+    @include element(boolean)
+    {
+        position: absolute;
+        z-index: 1;
+        top: $rule / 4;
+        left: $rule / 2;
     }
 
     @include element(title)

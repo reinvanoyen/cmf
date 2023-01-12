@@ -14,9 +14,7 @@ class BooleanView extends React.Component {
         if (this.props.data && typeof this.props.data[this.props.name] !== 'undefined') {
             return (
                 <Field name={this.props.name} label={this.props.label}>
-                    <div className={'boolean-view boolean-view--'+(this.props.data[this.props.name] === 1 ? 'checked' : 'unchecked')}>
-                        {this.props.data[this.props.name] === 1 ? 'Yes' : 'No'}
-                    </div>
+                    <div className={'boolean-view boolean-view--'+(this.props.data[this.props.name] === 1 ? 'checked' : 'unchecked')}></div>
                 </Field>
             );
         }
