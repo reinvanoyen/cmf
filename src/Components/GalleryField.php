@@ -3,6 +3,7 @@
 namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use ReinVanOyen\Cmf\Http\Resources\MediaFileResource;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\Support\Str;
@@ -96,7 +97,12 @@ class GalleryField extends Component
             }
 
             $model::saved(function ($model) use ($fileIds) {
+
+                // Sync the file ids to the relationship
                 $model->{$this->name}()->sync($fileIds);
+
+                // Forget about the event listener we just registered, so it only fires once
+                $model::flushEventListeners();
             });
         }
     }

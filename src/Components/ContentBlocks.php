@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use ReinVanOyen\Cmf\Http\Resources\ContentBlockResource;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
@@ -104,6 +105,12 @@ class ContentBlocks extends Component
         });
     }
 
+    /**
+     * @param Model $model
+     * @param $byId
+     * @param $byOrder
+     * @return void
+     */
     private function removeBlocks(Model $model, $byId, $byOrder)
     {
         $foreignModelClassname = $this->meta::getModel();
@@ -118,16 +125,26 @@ class ContentBlocks extends Component
         }
     }
 
+    /**
+     * @param Model $model
+     * @return void
+     */
     private function fixOrderOfBlocks(Model $model)
     {
         // Fix the orders of the remaining items
         $currentItems = $model->{$this->getName()}()->orderBy($this->foreignOrderColumn)->get();
+
         foreach ($currentItems as $index => $currentItem) {
             $currentItem->{$this->foreignOrderColumn} = $index;
             $currentItem->save();
         }
     }
 
+    /**
+     * @param Model $model
+     * @param $items
+     * @return void
+     */
     private function updateOrCreateBlocks(Model $model, $items)
     {
         $foreignModelClassname = $this->meta::getModel();
@@ -141,14 +158,15 @@ class ContentBlocks extends Component
             $components = $this->blocks[$type]['components'];
 
             // Find the model by order or create a new one
-            $foreignModel = $model->{$this->getName()}()->where($this->foreignOrderColumn, $order)->first() ?: new $foreignModelClassname();
-
-            $newRequest = new Request();
-            $newRequest->merge($item);
+            $foreignModel = $model->{$this->getName()}()->where('id', $id)->first() ?: new $foreignModelClassname();
 
             // Save the type column with the new type
             $foreignModel->{$this->foreignTypeColumn} = $type;
             $foreignModel->{$this->foreignOrderColumn} = $order;
+
+            // Create a new request with the data to save to the component
+            $newRequest = new Request();
+            $newRequest->merge($item);
 
             // Save the fields of this blocks to the model
             foreach ($components as $component) {
