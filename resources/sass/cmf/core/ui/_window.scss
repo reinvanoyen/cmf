@@ -18,8 +18,7 @@
         z-index: 9999;
         top: 50%;
         left: 50%;
-        margin-left: -30vw;
-        margin-top: -$window-modal-height / 2;
+        transform: translateX(-50%) translateY(-50%);
         width: 60vw;
         max-width: initial;
     }
@@ -27,7 +26,6 @@
     @include modifier(wide)
     {
         width: 80vw;
-        margin-left: -40vw;
     }
 
     @include modifier(fixed-size)
@@ -75,10 +73,15 @@
 
         @include block-modifier(modal)
         {
-            height: calc($window-modal-height - $window-header-height * 2);
             overflow-y: scroll;
             padding-bottom: $rule / 2;
             margin-bottom: 0;
+            max-height: calc($window-modal-height - $window-header-height * 2);
+        }
+
+        @include block-modifier(wide)
+        {
+            height: calc($window-modal-height - $window-header-height * 2);
         }
 
         @include block-modifier(fixed-size)

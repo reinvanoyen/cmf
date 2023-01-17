@@ -197,6 +197,14 @@ api.modules.action = (path, params = {}) => {
     return axios.get(`cmf/api/modules/${path.module}/${path.action}`, {params});
 };
 
+api.modules.get = (path, execute, params = {}) => {
+    return axios.get(`cmf/api/modules/${path.module}/${path.action}/${execute}`, {params});
+};
+
+api.modules.post = (path, execute, params = {}) => {
+    return axios.post(`cmf/api/modules/${path.module}/${path.action}/${execute}`, http.formData(params));
+};
+
 api.execute.get = (path, id, execute, params = {}) => {
     return axios.get(`cmf/api/modules/${path.module}/${path.action}/${id}/${execute}`, {params});
 };

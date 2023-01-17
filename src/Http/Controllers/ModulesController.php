@@ -52,4 +52,23 @@ class ModulesController extends Controller
 
         return ['data' => $action,];
     }
+
+    /**
+     * @param Request $request
+     * @param string $moduleId
+     * @param string $actionId
+     * @param string $executeId
+     * @return mixed
+     */
+    public function execute(Request $request, string $moduleId, string $actionId, string $executeId)
+    {
+        $action = $this->pathResolver->action($request, $moduleId, $actionId);
+        $methodName = 'api'.ucfirst($executeId);
+
+        if (! $action || ! method_exists($action, $methodName)) {
+            abort(404);
+        }
+
+        return $action->$methodName($request);
+    }
 }

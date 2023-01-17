@@ -2,6 +2,7 @@ import TextField from "./text-field";
 import NumberField from "./number-field";
 import TextView from "./text-view";
 import Link from "./link";
+import ExecuteLink from "./execute-link";
 import Stack from "./stack";
 import Translatable from "./translatable";
 import EnumField from "./enum-field";
@@ -62,6 +63,7 @@ export default {
     'checkbox': Checkbox,
     'boolean-view': BooleanView,
     'link': Link,
+    'execute-link': ExecuteLink,
     'stack': Stack,
     'translatable': Translatable,
     'section': Section,

@@ -35,6 +35,8 @@ Route::middleware([
 
         Route::get('modules', [ModulesController::class, 'index']);
         Route::get('modules/{module}/{action}', [ModulesController::class, 'action']);
+        Route::get('modules/{module}/{action}/{execute}', [ModulesController::class, 'execute']);
+        Route::post('modules/{module}/{action}/{execute}', [ModulesController::class, 'execute']);
 
         Route::get('modules/{module}/{action}/{id}/{execute}', [ComponentsController::class, 'execute'])->where('id', '[0-9]+');
         Route::post('modules/{module}/{action}/{id}/{execute}', [ComponentsController::class, 'execute'])->where('id', '[0-9]+');

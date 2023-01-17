@@ -73,7 +73,7 @@ export default {
 
             this.goBack();
 
-        } else {
+        } else if (props.redirect) {
 
             // @TODO parse path, so we can also go to other modules
 
