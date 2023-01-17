@@ -4192,3 +4192,14 @@ body.api-loading .page:after {
   margin-right: 0;
 }
 
+.inline-frame {
+  display: block;
+  width: 100%;
+}
+
+.inline-frame iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+

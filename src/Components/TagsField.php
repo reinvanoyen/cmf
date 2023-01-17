@@ -54,6 +54,8 @@ class TagsField extends Component
 
         $model::saved(function ($model) use ($tags) {
             $model->syncTags($tags);
+
+            // @TODO remove this event, making it run only once (?)
         });
     }
 

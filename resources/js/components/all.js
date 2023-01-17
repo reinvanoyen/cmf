@@ -44,6 +44,7 @@ import ManualOrderControls from "./manual-order-controls";
 import EnumSwitchField from "./enum-switch-field";
 import TextLiteral from "./text-literal";
 import TimeField from "./time-field";
+import InlineFrame from "./inline-frame";
 
 export default {
     'text-literal': TextLiteral,
@@ -91,5 +92,6 @@ export default {
     'many-to-many-select-field': ManyToManySelectField,
     'json-field': JsonField,
     'thumb': Thumb,
+    'inline-frame': InlineFrame,
     'manual-order-controls': ManualOrderControls
 };

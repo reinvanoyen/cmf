@@ -35175,6 +35175,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _enum_switch_field__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./enum-switch-field */ "./resources/js/components/enum-switch-field.js");
 /* harmony import */ var _text_literal__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! ./text-literal */ "./resources/js/components/text-literal.js");
 /* harmony import */ var _time_field__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./time-field */ "./resources/js/components/time-field.js");
+/* harmony import */ var _inline_frame__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./inline-frame */ "./resources/js/components/inline-frame.js");
+
 
 
 
@@ -35267,6 +35269,7 @@ __webpack_require__.r(__webpack_exports__);
   'many-to-many-select-field': _many_to_many_select_field__WEBPACK_IMPORTED_MODULE_37__["default"],
   'json-field': _json_field__WEBPACK_IMPORTED_MODULE_38__["default"],
   'thumb': _thumb__WEBPACK_IMPORTED_MODULE_40__["default"],
+  'inline-frame': _inline_frame__WEBPACK_IMPORTED_MODULE_46__["default"],
   'manual-order-controls': _manual_order_controls__WEBPACK_IMPORTED_MODULE_42__["default"]
 });
 
@@ -35409,7 +35412,6 @@ var BelongsToField = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleChange",
     value: function handleChange(value) {
-      console.log(value);
       this.setState({
         value: value
       });
@@ -38754,6 +38756,114 @@ _defineProperty(ImageView, "defaultProps", {
 });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/inline-frame.js":
+/*!*************************************************!*\
+  !*** ./resources/js/components/inline-frame.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var InlineFrame = /*#__PURE__*/function (_React$Component) {
+  _inherits(InlineFrame, _React$Component);
+
+  var _super = _createSuper(InlineFrame);
+
+  function InlineFrame(props) {
+    var _this;
+
+    _classCallCheck(this, InlineFrame);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      height: 0,
+      source: _this.props.data[_this.props.id + '_inline-frame'] || ''
+    };
+    return _this;
+  }
+
+  _createClass(InlineFrame, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.data[this.props.id + '_inline-frame'] !== prevProps.data[this.props.id + '_inline-frame']) {
+        this.setState({
+          source: this.props.data[this.props.id + '_inline-frame']
+        });
+      }
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(data) {// do nothing
+    }
+  }, {
+    key: "getData",
+    value: function getData(data) {// do nothing
+    }
+  }, {
+    key: "autoHeight",
+    value: function autoHeight(e) {
+      this.setState({
+        height: e.target.contentWindow.document.documentElement.scrollHeight
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "inline-frame"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
+        src: this.state.source,
+        onLoad: this.autoHeight.bind(this),
+        style: {
+          height: this.state.height + 'px'
+        }
+      }));
+    }
+  }]);
+
+  return InlineFrame;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+_defineProperty(InlineFrame, "defaultProps", {
+  id: 0,
+  path: {},
+  data: {},
+  source: ''
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (InlineFrame);
 
 /***/ }),
 
@@ -51490,8 +51600,8 @@ var id = 0;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/rein/Workspace/cmf-app/cmf/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/rein/Workspace/cmf-app/cmf/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/rein/Workspace/pilar/cmf/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/rein/Workspace/pilar/cmf/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
