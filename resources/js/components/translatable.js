@@ -1,5 +1,6 @@
 import React from 'react';
 import components from "../rendering/components";
+import Manager from "../core/messaging/manager";
 
 class Translatable extends React.Component {
 
@@ -21,6 +22,22 @@ class Translatable extends React.Component {
         };
 
         this.componentList = {};
+        this.onLanguageSwitch = null;
+    }
+
+    componentDidMount() {
+
+        this.onLanguageSwitch = (event) => {
+            if (event.id !== this.props.id) {
+                this.switchLanguage(event.language, false);
+            }
+        };
+
+        Manager.on('language.switch', this.onLanguageSwitch);
+    }
+
+    componentWillUnmount() {
+        Manager.off('language.switch', this.onLanguageSwitch);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -113,7 +130,16 @@ class Translatable extends React.Component {
         return rendered;
     }
 
-    switchLanguage(language) {
+    switchLanguage(language, master = true) {
+
+        if (master) {
+            Manager.trigger('language.switch', {
+                id: this.props.id,
+                prevLanguage: this.state.language,
+                language: language
+            });
+        }
+
         this.setState({
             language: language
         });
