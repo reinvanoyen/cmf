@@ -7,10 +7,16 @@
     {
         display: flex;
         justify-content: flex-end;
+        gap: $rule / 4;
+        padding-right: $rule / 3;
     }
 
     @include element(components)
     {
+        border: $border-width-1 solid $fill-color-alt-1;
+        border-radius: $border-radius-3;
+        padding: $rule / 3;
+        padding-top: $rule / 1.5;
         display: none;
 
         @include modifier(active)
@@ -31,32 +37,27 @@
 
     @include element(button)
     {
-        position: relative;
-        padding: $rule / 6 0;
-        margin-right: $rule / 2;
-        @include type-3;
-        color: $color13;
+        margin-bottom: -$border-width-1;
+        color: $fill-color-alt-3;
+        border-radius: $border-radius-3;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        padding: $rule / 6 $rule / 4;
         cursor: pointer;
-
-        &:last-child
-        {
-            margin-right: 0;
-        }
+        @include type-2;
+        text-transform: uppercase;
+        transition: color .25s, background-color .25s;
 
         @include modifier(active)
         {
             color: $primary-color;
+            border: $border-width-1 solid $fill-color-alt-1;
+            border-bottom-color: $color01;
+        }
 
-            &:after
-            {
-                content: '';
-                position: absolute;
-                bottom: -$border-width-2;
-                left: 0;
-                right: 0;
-                height: $border-width-2;
-                background-color: $primary-color;
-            }
+        &:hover
+        {
+            color: $primary-color;
         }
     }
 }

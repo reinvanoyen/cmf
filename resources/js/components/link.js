@@ -9,7 +9,8 @@ class Link extends React.Component {
         path: {},
         data: {},
         action: '',
-        back: false
+        back: false,
+        style: null
     };
 
     goTo() {
@@ -32,13 +33,13 @@ class Link extends React.Component {
 
     render() {
 
-        if (this.props.style) {
+        if (this.props.style && this.props.style !== 'alt') {
             return (
                 <Button style={this.props.style} text={this.props.text} onClick={this.goTo.bind(this)} />
             );
         }
 
-        return <UiLink onClick={this.goTo.bind(this)} text={this.props.text} />;
+        return <UiLink style={this.props.style} onClick={this.goTo.bind(this)} text={this.props.text} />;
     }
 }
 

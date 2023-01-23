@@ -1,6 +1,7 @@
 import React from 'react';
 import components from "../rendering/components";
 import Manager from "../core/messaging/manager";
+import lang from "../state/lang";
 
 class Translatable extends React.Component {
 
@@ -17,7 +18,7 @@ class Translatable extends React.Component {
         super(props);
 
         this.state = {
-            language: this.props.languages[0],
+            language: this.getDefaultLanguage(),
             translatedComponents: this.translateComponentsForAllLanguages()
         };
 
@@ -25,13 +26,19 @@ class Translatable extends React.Component {
         this.onLanguageSwitch = null;
     }
 
+    getDefaultLanguage() {
+
+        console.log(lang.get());
+
+        if (this.props.languages.includes(lang.get())) {
+            return lang.get();
+        }
+        return this.props.languages[0];
+    }
+
     componentDidMount() {
 
-        this.onLanguageSwitch = (event) => {
-            if (event.id !== this.props.id) {
-                this.switchLanguage(event.language, false);
-            }
-        };
+        this.onLanguageSwitch = (event) => this.switchLanguage(event.language, false);
 
         Manager.on('language.switch', this.onLanguageSwitch);
     }
@@ -133,6 +140,10 @@ class Translatable extends React.Component {
     switchLanguage(language, master = true) {
 
         if (master) {
+            // Set language on state
+            lang.set(language);
+
+            // Trigger event
             Manager.trigger('language.switch', {
                 id: this.props.id,
                 prevLanguage: this.state.language,
@@ -157,7 +168,7 @@ class Translatable extends React.Component {
 
     render() {
         return (
-            <div className="translatable">
+            <div className="translatable" id={'language-'+this.props.id}>
                 <div className="translatable__tabs">
                     {this.renderLanguageSwitcher()}
                 </div>
