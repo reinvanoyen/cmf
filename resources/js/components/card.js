@@ -1,11 +1,12 @@
 import React from 'react';
 import components from "../rendering/components";
-import Thumbnail from "../core/ui/thumbnail";
 
 class Card extends React.Component {
 
     static defaultProps = {
         data: {},
+        components: [],
+        footer: [],
         titleField: '',
         subtitleField: '',
         labelField: '',
@@ -16,10 +17,14 @@ class Card extends React.Component {
     constructor(props) {
         super(props);
         this.componentList = [];
+        this.footerComponentList = [];
     }
 
     handleSubmit(data) {
         this.componentList.forEach(obj => {
+            obj.ref.current.handleSubmit(data);
+        });
+        this.footerComponentList.forEach(obj => {
             obj.ref.current.handleSubmit(data);
         });
     }
@@ -54,6 +59,29 @@ class Card extends React.Component {
 
         return (
             <div className={'card__content'}>
+                {componentListRenders}
+            </div>
+        );
+    }
+
+    renderFooterComponents() {
+
+        if (! this.props.footer.length) {
+            return null;
+        }
+
+        this.footerComponentList = components.renderComponentsWith(this.props.footer, this.props.data, this.props.path, (component, i) => {
+            return (
+                <div className="card__component" key={i}>
+                    {component}
+                </div>
+            );
+        }, true);
+
+        let componentListRenders = this.footerComponentList.map(obj => obj.component);
+
+        return (
+            <div className={'card__footer'}>
                 {componentListRenders}
             </div>
         );
@@ -98,6 +126,7 @@ class Card extends React.Component {
                     {subtitle}
                     {this.renderComponents()}
                 </div>
+                {this.renderFooterComponents()}
             </div>
         );
     }

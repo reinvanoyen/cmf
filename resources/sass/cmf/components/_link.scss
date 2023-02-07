@@ -3,19 +3,29 @@
     cursor: pointer;
     white-space: nowrap;
     color: $primary-color;
-    border-bottom: $border-width-1 dotted $primary-color;
+    border-bottom: 1px solid $primary-color;
+    line-height: 1;
+
+    &:hover
+    {
+        border-bottom: none;
+    }
 
     @include modifier(alt)
     {
-        color: $color01;
-        border-color: $color01;
+        color: $fill-color-alt-3;
+        border-bottom: 1px solid $fill-color-alt-3;
     }
 
     @include modifier(disabled)
     {
-        color: $color02;
-        border-color: $color02;
-        opacity: .3;
         cursor: default;
+        color: $fill-color-alt-2;
+        border-bottom: 1px solid $fill-color-alt-2;
+
+        &:hover
+        {
+            border-bottom: 1px solid $fill-color-alt-2;
+        }
     }
 }

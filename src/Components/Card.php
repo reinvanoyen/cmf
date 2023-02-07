@@ -2,6 +2,8 @@
 
 namespace ReinVanOyen\Cmf\Components;
 
+use Illuminate\Database\Eloquent\Model;
+use ReinVanOyen\Cmf\Action\Action;
 use ReinVanOyen\Cmf\Http\Resources\MediaFileResource;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 
@@ -33,6 +35,11 @@ class Card extends Compound
     private $booleanView;
 
     /**
+     * @var array $footerComponents
+     */
+    private $footerComponents = [];
+
+    /**
      * @return string
      */
     public function type(): string
@@ -47,6 +54,10 @@ class Card extends Compound
     public function provision(ModelResource $model, array &$attributes)
     {
         parent::provision($model, $attributes);
+
+        foreach ($this->footerComponents as $component) {
+            $component->provision($model, $attributes);
+        }
 
         if ($this->titleField) {
             $attributes[$this->titleField] = $model->{$this->titleField};
@@ -67,6 +78,13 @@ class Card extends Compound
         if ($this->booleanView) {
             $this->booleanView->provision($model, $attributes);
         }
+    }
+
+    public function footer(array $components)
+    {
+        $this->footerComponents = $components;
+        $this->export('footer', $components);
+        return $this;
     }
 
     /**
@@ -122,5 +140,44 @@ class Card extends Compound
         $this->photoName = $photoName;
         $this->export('photo', $this->photoName);
         return $this;
+    }
+
+    /**
+     * @param Action $action
+     * @return void
+     */
+    public function resolve(Action $action)
+    {
+        foreach ($this->footerComponents as $component) {
+            $component->resolve($action);
+        }
+        parent::resolve($action);
+    }
+
+    /**
+     * @param array $validationRules
+     * @return array
+     */
+    public function registerValidationRules(array $validationRules): array
+    {
+        foreach ($this->footerComponents as $component) {
+            $validationRules = array_merge($validationRules, $component->registerValidationRules($validationRules));
+        }
+
+        return parent::registerValidationRules($validationRules);
+    }
+
+    /**
+     * @param Model $model
+     * @param $request
+     * @return void
+     */
+    public function save(Model $model, $request)
+    {
+        foreach ($this->footerComponents as $component) {
+            $component->save($model, $request);
+        }
+
+        parent::save($model, $request);
     }
 }

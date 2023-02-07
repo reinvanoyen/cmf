@@ -1,5 +1,7 @@
 import React from 'react';
 import components from "../rendering/components";
+import Manager from "../core/messaging/manager";
+import lang from "../state/lang";
 
 class Translatable extends React.Component {
 
@@ -16,11 +18,33 @@ class Translatable extends React.Component {
         super(props);
 
         this.state = {
-            language: this.props.languages[0],
+            language: this.getDefaultLanguage(),
             translatedComponents: this.translateComponentsForAllLanguages()
         };
 
         this.componentList = {};
+        this.onLanguageSwitch = null;
+    }
+
+    getDefaultLanguage() {
+
+        console.log(lang.get());
+
+        if (this.props.languages.includes(lang.get())) {
+            return lang.get();
+        }
+        return this.props.languages[0];
+    }
+
+    componentDidMount() {
+
+        this.onLanguageSwitch = (event) => this.switchLanguage(event.language, false);
+
+        Manager.on('language.switch', this.onLanguageSwitch);
+    }
+
+    componentWillUnmount() {
+        Manager.off('language.switch', this.onLanguageSwitch);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -113,7 +137,20 @@ class Translatable extends React.Component {
         return rendered;
     }
 
-    switchLanguage(language) {
+    switchLanguage(language, master = true) {
+
+        if (master) {
+            // Set language on state
+            lang.set(language);
+
+            // Trigger event
+            Manager.trigger('language.switch', {
+                id: this.props.id,
+                prevLanguage: this.state.language,
+                language: language
+            });
+        }
+
         this.setState({
             language: language
         });
@@ -131,7 +168,7 @@ class Translatable extends React.Component {
 
     render() {
         return (
-            <div className="translatable">
+            <div className="translatable" id={'language-'+this.props.id}>
                 <div className="translatable__tabs">
                     {this.renderLanguageSwitcher()}
                 </div>

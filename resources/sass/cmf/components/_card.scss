@@ -1,5 +1,7 @@
 @include block(card)
 {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
     border: $border-width-2 solid $color03;
     border-radius: $border-radius-2;
@@ -84,5 +86,14 @@
         {
             margin-bottom: 0;
         }
+    }
+
+    @include element(footer)
+    {
+        display: flex;
+        gap: $rule / 3;
+        border-top: $border-width-2 solid $color03;
+        margin-top: auto;
+        padding: $rule / 3 $rule / 1.5;
     }
 }
