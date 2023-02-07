@@ -1,7 +1,9 @@
 "use strict";
 
+import './index.scss';
+
 import React from 'react';
-import i18n from "../../util/i18n";
+import i18n from '../../../util/i18n';
 
 export default class Breadcrumbs extends React.Component {
 

@@ -1,5 +1,8 @@
+import './index.scss';
+
 import React from 'react';
-import LinkList from "./link-list";
+import LinkList from "../link-list";
+import ReactDOM from "react-dom";
 
 class ContextMenu extends React.Component {
 
@@ -22,6 +25,9 @@ class ContextMenu extends React.Component {
 
         this.handleDocumentClick = this.onDocumentClick.bind(this);
         this.handleDocumentCtxMenu = this.onDocumentCtxMenu.bind(this);
+
+        this.ctxOverlayEl = null;
+        this.ctxMountEl = null;
     }
 
     componentWillUnmount() {
@@ -65,19 +71,34 @@ class ContextMenu extends React.Component {
     }
 
     open(x, y) {
+
         this.setState({
             isOpen: true,
             x: x,
             y: y
+        }, () => {
+
+            this.bindDocumentClick();
+
+            this.ctxOverlayEl = document.body.appendChild(document.createElement('div'));
+            this.ctxOverlayEl.classList.add('ctx-overlay');
+
+            this.ctxMountEl = document.body.appendChild(document.createElement('div'));
+            this.ctxMountEl.classList.add('ctx-mount');
+            ReactDOM.render(this.renderContextMenu(), this.ctxMountEl);
         });
-        this.bindDocumentClick();
     }
 
     close() {
         this.setState({
             isOpen: false
+        }, () => {
+
+            this.unbindDocumentClick();
+
+            this.ctxOverlayEl.remove();
+            this.ctxMountEl.remove();
         });
-        this.unbindDocumentClick();
     }
 
     handleContextMenu(e) {
@@ -86,10 +107,6 @@ class ContextMenu extends React.Component {
     }
 
     renderContextMenu() {
-        if (! this.state.isOpen) {
-            return null;
-        }
-
         return (
             <div className="context-menu__menu" style={{transform: `translateX(${this.state.x}px) translateY(${this.state.y}px)`}} ref={this.contextMenuRef}>
                 <LinkList links={this.props.links} onClick={this.onLinkClick.bind(this)} />
@@ -103,7 +120,6 @@ class ContextMenu extends React.Component {
                 <div className="context-menu__wrap">
                     {this.props.children}
                 </div>
-                {this.renderContextMenu()}
             </div>
         );
     }

@@ -8,6 +8,7 @@ import array from "../util/array";
 import FileThumb from "../core/ui/file-thumb";
 import Overlay from "../core/ui/overlay";
 import i18n from "../util/i18n";
+import ContextMenu from "../core/ui/context-menu";
 
 class GalleryField extends React.Component {
 
@@ -109,10 +110,10 @@ class GalleryField extends React.Component {
 
         if (this.props.orderColumn) {
             if (i !== 0) {
-                orderLeft = <IconButton name={'arrow_back'} onClick={e => this.sortBackward(i)} />;
+                orderLeft = <IconButton style={'transparent'} name={'arrow_back'} onClick={e => this.sortBackward(i)} />;
             }
             if (i !== (this.state.selectedFiles.length - 1)) {
-                orderRight = <IconButton name={'arrow_forward'} onClick={e => this.sortForward(i)} />;
+                orderRight = <IconButton style={'transparent'} name={'arrow_forward'} onClick={e => this.sortForward(i)} />;
             }
 
             orderActions = (
@@ -126,7 +127,7 @@ class GalleryField extends React.Component {
         return (
             <div className="gallery-field__item-overlay">
                 <div className="gallery-field__item-delete">
-                    <IconButton name={'delete'} onClick={e => this.remove(i)} />
+                    <IconButton style={'transparent'} name={'delete'} onClick={e => this.remove(i)} />
                 </div>
                 {orderActions}
             </div>
@@ -140,14 +141,18 @@ class GalleryField extends React.Component {
                 <div className="gallery-field__grid">
                     {this.state.selectedFiles.map((file, i) => {
                         return (
-                            <div className="gallery-field__item" key={i}>
-                                <FileThumb
-                                    file={file}
-                                    fileLabels={this.props.fileLabels}
-                                    mediaConversion={'contain'}
-                                />
-                                {this.renderItemOverlay(i)}
-                            </div>
+                            <ContextMenu links={[
+                                ['Nice', 'nice']
+                            ]}>
+                                <div className="gallery-field__item" key={i}>
+                                    <FileThumb
+                                        file={file}
+                                        fileLabels={this.props.fileLabels}
+                                        mediaConversion={'contain'}
+                                    />
+                                    {this.renderItemOverlay(i)}
+                                </div>
+                            </ContextMenu>
                         );
                     })}
                     <Placeholder icon={'image_search'} onClick={this.open.bind(this)}>

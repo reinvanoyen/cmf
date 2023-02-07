@@ -1,14 +1,8 @@
 // settings
-@import 'settings/breakpoints';
-@import 'settings/colors';
-@import 'settings/space';
-@import 'settings/shadows';
+@import 'settings/index';
 
 // tools
-@import 'tools/bem';
-@import 'tools/util';
-@import 'tools/typography';
-@import 'tools/loading';
+@import 'tools/index';
 
 // generic
 @import 'generic/reset';
@@ -31,7 +25,6 @@
 @import 'cmf/core/ui/divider';
 @import 'cmf/core/ui/hero';
 @import 'cmf/core/ui/title';
-@import 'cmf/core/ui/button';
 @import 'cmf/core/ui/dropdown';
 @import 'cmf/core/ui/icon';
 @import 'cmf/core/ui/form';
@@ -47,11 +40,9 @@
 @import 'cmf/core/ui/directory';
 @import 'cmf/core/ui/file';
 @import 'cmf/core/ui/item';
-@import 'cmf/core/ui/context-menu';
 @import 'cmf/core/ui/overlay';
 @import 'cmf/core/ui/confirm';
 @import 'cmf/core/ui/prompt';
-@import 'cmf/core/ui/breadcrumbs';
 @import 'cmf/core/ui/file-drop-zone';
 @import 'cmf/core/ui/directory-list';
 @import 'cmf/core/ui/file-list';

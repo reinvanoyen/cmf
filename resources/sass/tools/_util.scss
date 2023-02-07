@@ -6,6 +6,14 @@
     }
 }
 
+@mixin container($width)
+{
+    @container (min-width: #{$width})
+    {
+        @content;
+    }
+}
+
 @mixin global-modifier($class_names...)
 {
     @include parent-option('body', $class_names)

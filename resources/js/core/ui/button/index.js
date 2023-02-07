@@ -1,6 +1,8 @@
+import './index.scss';
+
 import React from 'react';
-import helpers from '../../util/helpers';
-import Icon from "./icon";
+import helpers from '../../../util/helpers';
+import Icon from "../icon";
 
 class Button extends React.Component {
 

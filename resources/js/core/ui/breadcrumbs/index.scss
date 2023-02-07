@@ -1,3 +1,6 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
 @include block(breadcrumbs)
 {
     @include element(list)
@@ -11,8 +14,8 @@
             &:after
             {
                 content: '›';
-                margin-left: $rule / 3;
-                margin-right: $rule / 3;
+                margin-left: calc($rule / 3);
+                margin-right: calc($rule / 3);
             }
 
             &:last-child

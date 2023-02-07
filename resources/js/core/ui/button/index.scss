@@ -1,10 +1,13 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
 @include block(button)
 {
     position: relative;
     color: $color01;
     border-radius: $border-radius-1;
     background-color: $primary-color;
-    padding: $rule / 2 $rule;
+    padding: calc($rule / 2) $rule;
     cursor: pointer;
     transition: background-color .25s;
     @include type-2;
@@ -52,13 +55,13 @@
 
     @include element(icon)
     {
-        margin-right: $rule / 4;
+        margin-right: calc($rule / 4);
     }
 
     @include element(label)
     {
         color: $color07;
-        margin-right: $rule / 3;
+        margin-right: calc($rule / 3);
     }
 
     @include modifier(has-icon)
@@ -123,7 +126,7 @@
 
     @include modifier(small)
     {
-        padding: $rule / 3 $rule / 1.5;
+        padding: calc($rule / 3) calc($rule / 1.5);
 
         &:after { display: none; }
     }
@@ -131,7 +134,7 @@
     @include modifier(large)
     {
         @include type-3;
-        padding: $rule / 2 $rule;
+        padding: calc($rule / 2) $rule;
         border-radius: $border-radius-1;
     }
 }

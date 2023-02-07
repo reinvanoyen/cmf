@@ -1,3 +1,26 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(ctx-overlay)
+{
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+@include block(ctx-mount)
+{
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
 @include block(context-menu)
 {
     @include element(menu)
@@ -6,8 +29,8 @@
         top: 0;
         left: 0;
         z-index: 1;
-        margin-top: $rule / 3;
-        padding: $rule / 3;
+        margin-top: calc($rule / 3);
+        padding: calc($rule / 3);
         border: $border-width-2 solid $fill-color-alt-2;
         background-color: $color01;
         border-radius: $border-radius-1;
@@ -30,7 +53,7 @@
                 bottom: 0;
                 left: 0;
                 display: block;
-                border: 1px dashed $primary-color;
+                border: $border-width-2 solid $fill-color-alt-2;
                 border-radius: $border-radius-1;
             }
         }
