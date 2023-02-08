@@ -2,13 +2,13 @@
 {
     @include element(preview)
     {
-        margin-bottom: $rule / 2;
+        margin-bottom: calc($rule / 2);
     }
 
     @include element(name)
     {
         @include type-2;
-        margin-bottom: $rule / 4;
+        margin-bottom: calc($rule / 4);
         color: $color07;
         line-height: 2;
         white-space: nowrap;

@@ -6,7 +6,7 @@
         justify-content: flex-end;
         align-items: center;
         width: 100%;
-        gap: $rule / 2;
+        gap: calc($rule / 2);
     }
 
     @include element(footer-pagination)
@@ -20,7 +20,7 @@
         justify-content: flex-end;
         width: 25%;
         height: 100%;
-        gap: $rule / 2;
+        gap: calc($rule / 2);
     }
 
     @include element(row)
@@ -42,7 +42,7 @@
     {
         @include type-6;
         text-transform: uppercase;
-        padding-left: $rule / 2;
-        margin-bottom: $rule / 2;
+        padding-left: calc($rule / 2);
+        margin-bottom: calc($rule / 2);
     }
 }

@@ -10,6 +10,6 @@
 
     @include element(children)
     {
-        padding-left: $rule / 1.5;
+        padding-left: calc($rule / 1.5);
     }
 }

@@ -1,10 +1,10 @@
 @include block(multi-file-view)
 {
-    padding: $rule / 2;
+    padding: calc($rule / 2);
 
     @include element(header)
     {
-        margin-bottom: $rule / 4;
+        margin-bottom: calc($rule / 4);
     }
 
     @include element(content)
@@ -16,12 +16,12 @@
     {
         display: flex;
         flex-direction: column;
-        gap: $rule / 4;
-        margin-bottom: $rule / 2;
+        gap: calc($rule / 4);
+        margin-bottom: calc($rule / 2);
     }
 
     @include element(footer)
     {
-        margin-top: $rule / 2;
+        margin-top: calc($rule / 2);
     }
 }

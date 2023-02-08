@@ -2,14 +2,14 @@
 {
     display: flex;
     align-items: center;
-    padding: $rule / 2;
+    padding: calc($rule / 2);
     transition: background-color .25s;
     border-radius: $border-radius-1;
     cursor: pointer;
 
     @include modifier(compact-list)
     {
-        padding: $rule / 3 $rule / 4;
+        padding: calc($rule / 3) calc($rule / 4);
     }
 
     @include modifier(list)
@@ -42,7 +42,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: $rule / 2;
+        margin-right: calc($rule / 2);
 
         @include block-modifier(grid)
         {
@@ -50,7 +50,7 @@
             flex-grow: 1;
             width: 100%;
             margin-right: 0;
-            margin-bottom: $rule / 2;
+            margin-bottom: calc($rule / 2);
         }
     }
 
@@ -59,7 +59,7 @@
         flex-grow: 1;
         display: grid;
         grid-template-columns: repeat(3, 33.33%);
-        grid-gap: $rule / 3;
+        grid-gap: calc($rule / 3);
 
         @include block-modifier(grid)
         {

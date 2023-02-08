@@ -7,7 +7,7 @@
     transform: translateX(-50%) translateY(-50%);
     display: flex;
     flex-direction: column;
-    padding: $rule / 3;
+    padding: calc($rule / 3);
     border: $border-width-2 solid $color03;
     background-color: $color01;
     border-radius: $border-radius-1;
@@ -19,7 +19,7 @@
     {
         display: flex;
         align-items: center;
-        padding: $rule / 2 $rule;
+        padding: calc($rule / 2) $rule;
         @include type-9;
     }
 
@@ -34,16 +34,7 @@
         align-items: center;
         justify-content: flex-end;
         flex-grow: 1;
-
-        >*
-        {
-            margin-left: $rule / 3;
-
-            &:first-child
-            {
-                margin-left: 0;
-            }
-        }
+        gap: calc($rule / 3);
     }
 
     @include element(content)
@@ -58,17 +49,8 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        padding: $rule / 2 $rule;
-
-        >*
-        {
-            margin-left: $rule / 3;
-
-            &:first-child
-            {
-                margin-left: 0;
-            }
-        }
+        padding: calc($rule / 2) $rule;
+        gap: calc($rule / 3);
     }
 
     @include element(main)
@@ -93,8 +75,8 @@
     {
         @include type-6;
         text-transform: uppercase;
-        padding-left: $rule / 2;
-        margin-bottom: $rule / 2;
+        padding-left: calc($rule / 2);
+        margin-bottom: calc($rule / 2);
     }
 
     @include element(file)

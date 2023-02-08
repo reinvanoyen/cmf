@@ -15,7 +15,7 @@
     <meta name="cmf:path" content="{{ Cmf::getPath() }}" />
     <meta name="cmf:version" content="{{ Cmf::getVersion() }}" />
 
-    <link href="{{ mix('app.css', 'vendor/cmf') }}" rel="stylesheet" />
+    <link href="{{ mix('css/app.css', 'vendor/cmf') }}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Material+Icons+Outlined&display=swap" rel="stylesheet" />
 
@@ -38,6 +38,8 @@
 <body>
 @yield('body')
 <script src="{{ Cmf::getPath('js/i18n') }}"></script>
-<script src="{{ mix('app.js', 'vendor/cmf')  }}"></script>
+<script src="{{ mix('js/manifest.js', 'vendor/cmf')  }}"></script>
+<script src="{{ mix('js/vendor.js', 'vendor/cmf')  }}"></script>
+<script src="{{ mix('js/app.js', 'vendor/cmf')  }}"></script>
 </body>
 </html>

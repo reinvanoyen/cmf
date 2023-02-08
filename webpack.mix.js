@@ -11,13 +11,17 @@ const mix = require('laravel-mix');
  |
  */
 
-// Styleguide
 mix
-    .sass('resources/sass/app.scss', 'public')
-    .react('resources/js/app.js', 'public')
     .setPublicPath('public')
-    .copy('public', '../public/vendor/cmf');
+    .sass('resources/sass/app.scss', 'public/css')
+    .js('resources/js/app.js', 'public/js').react();
+
+mix.extract(['react', 'react-dom', 'axios', 'react-trix', 'trix'], 'public/js/vendor.js');
 
 if (mix.inProduction()) {
     mix.version();
+    return;
 }
+
+mix.copy('public', '../public/vendor/cmf');
+

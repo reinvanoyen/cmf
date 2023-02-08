@@ -4,5 +4,5 @@
     text-align: center;
     border-radius: $border-radius-2;
     background-color: $color05;
-    padding: $rule / 2 $rule;
+    padding: calc($rule / 2) $rule;
 }

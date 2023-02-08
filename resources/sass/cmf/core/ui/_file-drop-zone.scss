@@ -13,9 +13,9 @@
             pointer-events: none;
             position: absolute;
             top: 0;
-            right: $rule / 4;
-            bottom: $rule / 4;
-            left: $rule / 4;
+            right: calc($rule / 4);
+            bottom: calc($rule / 4);
+            left: calc($rule / 4);
             border-radius: $border-radius-1;
             display: block;
             background-color: $primary-color;

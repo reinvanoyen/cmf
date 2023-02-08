@@ -7,12 +7,12 @@
 
     @include element(footer)
     {
-        margin-top: $rule / 2;
+        margin-top: calc($rule / 2);
     }
 
     @include element(item)
     {
-        margin-bottom: $rule / 4;
+        margin-bottom: calc($rule / 4);
 
         &:last-child
         {

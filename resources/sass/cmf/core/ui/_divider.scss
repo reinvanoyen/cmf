@@ -2,6 +2,6 @@
 {
     border: 0;
     height: 1px;
-    margin: $rule / 4 0;
+    margin: calc($rule / 4) 0;
     background-color: $fill-color-alt-1;
 }

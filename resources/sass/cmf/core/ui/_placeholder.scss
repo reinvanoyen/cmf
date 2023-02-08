@@ -6,7 +6,7 @@
     justify-content: center;
     border: 1px dashed $fill-color-alt-1;
     border-radius: $border-radius-2;
-    padding: $rule $rule / 4;
+    padding: $rule calc($rule / 4);
     text-align: center;
 
     @include element(icon)
@@ -22,7 +22,7 @@
 
     @include element(button)
     {
-        margin-top: $rule / 2;
+        margin-top: calc($rule / 2);
     }
 
     @include modifier(clickable)

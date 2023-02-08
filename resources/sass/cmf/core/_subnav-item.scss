@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: $rule / 6 $rule / 2;
+    padding: calc($rule / 6) calc($rule / 2);
     cursor: pointer;
     @include type-2;
     transition: color .25s;
@@ -17,7 +17,7 @@
 
     @include element(icon)
     {
-        margin-right: $rule / 2;
+        margin-right: calc($rule / 2);
         transition: opacity .25s;
         opacity: 0;
     }

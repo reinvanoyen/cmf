@@ -25,7 +25,7 @@
     @include element(nav-item)
     {
         position: relative;
-        padding: $rule / 3 0;
+        padding: calc($rule / 3) 0;
         margin-right: $rule;
         @include type-3;
         color: $color13;

@@ -7,7 +7,7 @@
         display: block;
         width: 100%;
         border-radius: $border-radius-3;
-        padding: $rule / 3;
+        padding: calc($rule / 3);
         transition: background-color .5s;
         background-color: $color04;
         border: $border-width-1 solid $color03;

@@ -8,7 +8,7 @@
         width: 100%;
         border: $border-width-1 solid $fill-color-alt-1;
         border-radius: $border-radius-3;
-        padding: $rule / 3;
+        padding: calc($rule / 3);
         background-color: $color01;
     }
 
@@ -32,7 +32,7 @@
     {
         width: 100%;
         border: 0;
-        padding-left: $rule / 4;
+        padding-left: calc($rule / 4);
     }
 
     @include element(autosuggest)
@@ -42,8 +42,8 @@
         width: 100%;
         left: 0;
         top: 100%;
-        margin-top: $rule / 3;
-        padding: $rule / 3;
+        margin-top: calc($rule / 3);
+        padding: calc($rule / 3);
         border: $border-width-2 solid $fill-color-alt-1;
         background-color: $color01;
         border-radius: $border-radius-1;
@@ -56,8 +56,8 @@
         cursor: pointer;
         display: flex;
         align-items: center;
-        padding: $rule / 3;
-        padding-left: $rule / 2;
+        padding: calc($rule / 3);
+        padding-left: calc($rule / 2);
         border-radius: $border-radius-1;
         margin-bottom: $border-width-1;
         transition: background-color .25s;

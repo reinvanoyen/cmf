@@ -5,7 +5,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    padding: $rule / 3 $rule / 2;
+    padding: calc($rule / 3) calc($rule / 2);
     transition: background-color .25s;
     border-radius: $border-radius-1;
     background-color: $fill-color;
@@ -13,7 +13,7 @@
     @include element(status)
     {
         flex-grow: 0;
-        margin-right: $rule / 2;
+        margin-right: calc($rule / 2);
     }
 
     @include element(content)
@@ -24,7 +24,7 @@
     @include element(name)
     {
         @include type-2;
-        margin-bottom: $rule / 4;
+        margin-bottom: calc($rule / 4);
     }
 
     @include element(size)
@@ -35,7 +35,7 @@
 
     @include element(progress)
     {
-        margin-top: $rule / 4;
+        margin-top: calc($rule / 4);
         width: 100%;
     }
 

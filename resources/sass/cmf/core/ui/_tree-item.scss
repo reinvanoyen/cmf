@@ -14,7 +14,7 @@
     {
         display: flex;
         align-items: center;
-        padding: $rule / 6 $rule / 3;
+        padding: calc($rule / 6) calc($rule / 3);
         border-radius: $border-radius-1;
         transition: background-color .25s;
         @include type-2;
@@ -34,7 +34,7 @@
     {
         display: flex;
         align-items: center;
-        margin-right: $rule / 3;
+        margin-right: calc($rule / 3);
     }
 
     @include element(text)

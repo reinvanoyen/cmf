@@ -5,7 +5,7 @@
 
     @include element(content)
     {
-        padding: $rule / 2;
+        padding: calc($rule / 2);
 
         @include block-modifier(closed)
         {
@@ -27,7 +27,7 @@
     {
         display: flex;
         justify-content: space-between;
-        padding: $rule / 2;
+        padding: calc($rule / 2);
         @include type-5;
     }
 
@@ -44,9 +44,9 @@
             display: block;
             width: 0;
             height: 0;
-            border-left: $rule / 5 solid transparent;
-            border-right: $rule / 5 solid transparent;
-            border-top: $rule / 5 solid $fill-color-alt-2;
+            border-left: calc($rule / 5) solid transparent;
+            border-right: calc($rule / 5) solid transparent;
+            border-top: calc($rule / 5) solid $fill-color-alt-2;
             transform: rotate(180deg);
             opacity: .5;
             transition: opacity .25s;

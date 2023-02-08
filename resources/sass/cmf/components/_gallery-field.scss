@@ -1,6 +1,7 @@
 @include block(gallery-field)
 {
     position: relative;
+    container-type: inline-size;
 
     @include element(btn)
     {
@@ -9,14 +10,44 @@
 
     @include element(content)
     {
-        margin-top: $rule / 2;
+        margin-top: calc($rule / 2);
     }
 
     @include element(grid)
     {
         display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        grid-gap: $rule / 2;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        grid-gap: calc($rule / 2);
+
+        @include container(300)
+        {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @include container(650)
+        {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        @include container(1000)
+        {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @include container(1100)
+        {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+
+        @include container(1280)
+        {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+
+        @include container(1400)
+        {
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
     }
 
     @include element(item)
@@ -24,15 +55,18 @@
         position: relative;
         border: $border-width-1 solid $fill-color-alt-1;
         border-radius: $border-radius-3;
-        padding: $rule / 4;
+        padding: calc($rule / 4);
 
         &:hover
         {
-            box-shadow: $box-shadow-1;
+            @include element(item-actions)
+            {
+                opacity: 1;
+            }
 
             @include element(item-overlay)
             {
-                display: flex;
+                opacity: .9;
             }
         }
     }
@@ -44,10 +78,22 @@
         right: 0;
         bottom: 0;
         left: 0;
-        display: none;
+        background-color: $fill-color;
+        opacity: 0;
+        transition: opacity .2s;
+    }
+
+    @include element(item-actions)
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         justify-content: center;
         align-items: center;
-        background-color: rgba($color01, .85);
+        opacity: 0;
+        transition: opacity .2s;
     }
 
     @include element(item-delete)
@@ -55,7 +101,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        padding: $rule / 3;
+        padding: calc($rule / 3);
     }
 
     @include element(item-order)
@@ -65,16 +111,7 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: $rule / 3;
-
-        >*
-        {
-            margin-right: $rule / 6;
-
-            &:last-child
-            {
-                margin-right: 0;
-            }
-        }
+        padding: calc($rule / 3);
+        gap: calc($rule / 6);
     }
 }

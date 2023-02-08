@@ -4,11 +4,11 @@
     color: $color01;
     @include type-2;
     border-radius: $border-radius-3;
-    padding: $rule / 8 $rule / 3;
+    padding: calc($rule / 8) calc($rule / 3);
 
     @include modifier(small)
     {
         font-size: .75rem;
-        padding: $rule / 20 $rule / 6;
+        padding: calc($rule / 8) calc($rule / 6);
     }
 }

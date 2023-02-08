@@ -24,8 +24,8 @@
     @include element(row)
     {
         display: grid;
-        grid-gap: $rule / 2;
-        padding: $rule / 2 $rule;
+        grid-gap: calc($rule / 2);
+        padding: calc($rule / 2) $rule;
         border-bottom: $border-width-1 solid $fill-color;
         transition: background-color .25s;
 
@@ -67,17 +67,17 @@
         text-align: center;
         border-radius: $border-radius-1;
         background-color: $fill-color;
-        padding: $rule / 2 $rule;
-        margin: 0 $rule / 2;
-        margin-bottom: $rule / 2;
+        padding: calc($rule / 2) $rule;
+        margin: 0 calc($rule / 2);
+        margin-bottom: calc($rule / 2);
     }
 
     @include element(header)
     {
         display: flex;
         flex-direction: column;
-        gap: $rule / 2;
-        padding: $rule / 2 $rule;
+        gap: calc($rule / 2);
+        padding: calc($rule / 2) $rule;
 
         @include breakpoint(2)
         {
@@ -97,7 +97,7 @@
         align-items: center;
         justify-content: flex-start;
         flex-grow: 1;
-        gap: $rule / 2;
+        gap: calc($rule / 2);
 
         @include breakpoint(2)
         {
@@ -112,7 +112,7 @@
 
     @include element(header-filter)
     {
-        margin-left: $rule / 2;
+        margin-left: calc($rule / 2);
 
         &:first-child
         {
@@ -128,12 +128,12 @@
 
     @include element(header-clear-filters)
     {
-        margin-left: $rule / 2;
+        margin-left: calc($rule / 2);
     }
 
     @include element(footer)
     {
         width: 100%;
-        padding: $rule / 2 $rule;
+        padding: calc($rule / 2) $rule;
     }
 }

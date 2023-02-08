@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: $rule / 2;
+    gap: calc($rule / 2);
 
     @include element(status)
     {
@@ -16,7 +16,7 @@
     @include element(controls)
     {
         display: flex;
-        gap: $rule / 4;
+        gap: calc($rule / 4);
     }
 
     @include element(prev)

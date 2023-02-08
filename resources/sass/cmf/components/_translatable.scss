@@ -7,16 +7,16 @@
     {
         display: flex;
         justify-content: flex-end;
-        gap: $rule / 4;
-        padding-right: $rule / 3;
+        gap: calc($rule / 4);
+        padding-right: calc($rule / 3);
     }
 
     @include element(components)
     {
         border: $border-width-1 solid $fill-color-alt-1;
         border-radius: $border-radius-3;
-        padding: $rule / 3;
-        padding-top: $rule / 1.5;
+        padding: calc($rule / 3);
+        padding-top: calc($rule / 1.5);
         display: none;
 
         @include modifier(active)
@@ -42,7 +42,7 @@
         border-radius: $border-radius-3;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
-        padding: $rule / 6 $rule / 4;
+        padding: calc($rule / 6) calc($rule / 4);
         cursor: pointer;
         @include type-2;
         text-transform: uppercase;

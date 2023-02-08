@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: $rule / 3 $rule / 2;
+    padding: calc($rule / 3) calc($rule / 2);
     transition: background-color .25s;
     border-radius: $border-radius-1;
     cursor: pointer;
@@ -45,7 +45,7 @@
         align-items: center;
         width: $rule * 2;
         flex-grow: 0;
-        margin-right: $rule / 2;
+        margin-right: calc($rule / 2);
 
         @include block-modifier(grid)
         {
@@ -53,7 +53,7 @@
             flex-grow: 1;
             width: 100%;
             margin-right: 0;
-            margin-bottom: $rule / 2;
+            margin-bottom: calc($rule / 2);
         }
     }
 
@@ -62,7 +62,7 @@
         flex-grow: 1;
         display: grid;
         grid-template-columns: repeat(3, 33.33%);
-        grid-gap: $rule / 3;
+        grid-gap: calc($rule / 3);
 
         @include block-modifier(grid)
         {
@@ -82,7 +82,7 @@
     @include element(checkbox)
     {
         flex-grow: 0;
-        margin-right: $rule / 2;
+        margin-right: calc($rule / 2);
     }
 
     @include element(actions)
@@ -138,14 +138,14 @@
     {
         position: absolute;
         top: 50%;
-        right: $rule / 1.5;
+        right: calc($rule / 1.5);
         transform: translateY(-50%);
 
         @include block-modifier(grid)
         {
             position: absolute;
-            top: $rule / 2;
-            right: $rule / 1.5;
+            top: calc($rule / 2);
+            right: calc($rule / 1.5);
             transform: none;
         }
     }

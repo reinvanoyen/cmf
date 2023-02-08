@@ -1,14 +1,10 @@
 @include block(manual-order-controls)
 {
     display: flex;
+    gap: calc($rule / 4);
 
     @include element(item)
     {
-        margin-right: $rule / 4;
-
-        &:last-child
-        {
-            margin-right: 0;
-        }
+        // for ref
     }
 }

@@ -7,14 +7,14 @@
     {
         position: absolute;
         z-index: 2;
-        left: $rule / 3;
+        left: calc($rule / 3);
         top: 50%;
         width: $rule;
         height: $rule;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: -$rule / 2;
+        margin-top: -(calc($rule / 2));
         pointer-events: none;
     }
 
@@ -24,7 +24,7 @@
         line-height: initial;
         position: relative;
         z-index: 1;
-        padding: $rule / 4 $rule / 1.5;
+        padding: calc($rule / 4) calc($rule / 1.5);
         padding-left: $rule * 1.5;
         width: 100%;
         transition: background-color .25s;
@@ -44,14 +44,14 @@
     {
         position: absolute;
         z-index: 2;
-        right: $rule / 3;
+        right: calc($rule / 3);
         top: 50%;
         width: $rule;
         height: $rule;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: -$rule / 2;
+        margin-top: -(calc($rule / 2));
         opacity: 0;
         pointer-events: none;
         transition: opacity .25s;

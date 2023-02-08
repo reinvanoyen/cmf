@@ -26,7 +26,7 @@
 
     @include element(copy)
     {
-        margin-left: $rule / 5;
+        margin-left: calc($rule / 5);
     }
 
     @include modifier(primary)

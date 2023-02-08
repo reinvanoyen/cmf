@@ -17,7 +17,7 @@
         align-items: center;
         height: 100%;
         width: $nav-width;
-        padding: $rule / 2;
+        padding: calc($rule / 2);
         cursor: pointer;
 
         @include breakpoint(2)
@@ -28,7 +28,7 @@
 
     @include element(user)
     {
-        padding-right: $rule / 3;
+        padding-right: calc($rule / 2);
 
         @include breakpoint(2)
         {
@@ -57,8 +57,8 @@
         width: 74vw;
         max-height: 50vh;
         overflow-y: scroll;
-        padding: $rule / 2;
-        margin-left: -(75vw / 2);
+        padding: calc($rule / 2);
+        margin-left: -(calc(75vw / 2));
         transition: opacity .25s, transform .25s;
         background-color: $color01;
         border: 1px solid $fill-color-alt-2;
@@ -84,7 +84,7 @@
             margin-left: 0;
             max-height: initial;
             overflow-y: auto;
-            padding: $rule $rule / 2;
+            padding: $rule calc($rule / 2);
             background-color: $fill-color;
             border: 0;
             border-radius: 0;
@@ -122,7 +122,7 @@
 
     @include element(module)
     {
-        padding: $rule / 3 0;
+        padding: calc($rule / 2) 0;
 
         @include breakpoint(2)
         {
@@ -135,6 +135,6 @@
         @include type-11;
         text-align: center;
         color: $fill-color-alt-3;
-        padding-bottom: $rule / 2;
+        padding-bottom: calc($rule / 2);
     }
 }

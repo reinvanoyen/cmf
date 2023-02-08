@@ -9,13 +9,13 @@
 
     @include element(content)
     {
-        margin-top: $rule / 2;
+        margin-top: calc($rule / 2);
     }
 
     @include element(list)
     {
         display: flex;
         flex-direction: column;
-        gap: $rule / 4;
+        gap: calc($rule / 4);
     }
 }

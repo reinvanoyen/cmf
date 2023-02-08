@@ -1,6 +1,6 @@
 @include block(file-view)
 {
-    padding: $rule / 2;
+    padding: calc($rule / 2);
 
     @include element(header)
     {
@@ -21,12 +21,12 @@
     {
         display: flex;
         flex-direction: column;
-        gap: $rule / 4;
+        gap: calc($rule / 4);
     }
 
     @include element(footer)
     {
-        margin-top: $rule / 2;
+        margin-top: calc($rule / 2);
     }
 
     @include element(label-select)

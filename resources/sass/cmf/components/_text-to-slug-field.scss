@@ -7,7 +7,7 @@
 
     @include element(slug)
     {
-        margin-top: $rule / 3;
+        margin-top: calc($rule / 3);
     }
 
     @include element(slug-prefix)

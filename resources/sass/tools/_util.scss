@@ -8,7 +8,7 @@
 
 @mixin container($width)
 {
-    @container (min-width: #{$width})
+    @container (min-width: #{$width+'px'})
     {
         @content;
     }

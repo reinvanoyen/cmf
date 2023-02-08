@@ -33,7 +33,7 @@
     0%
     {
         opacity: 0;
-        transform: translateY($rule / 3);
+        transform: translateY(calc($rule / 3));
     }
 
     50%
@@ -44,6 +44,6 @@
     100%
     {
         opacity: 0;
-        transform: translateY(-$rule / 3);
+        transform: translateY(-(calc($rule / 3)));
     }
 }

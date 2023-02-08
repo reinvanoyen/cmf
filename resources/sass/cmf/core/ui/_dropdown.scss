@@ -13,7 +13,7 @@
         @include type-2;
         line-height: initial;
         position: relative;
-        padding: $rule / 4 $rule / 1.5;
+        padding: calc($rule / 4) calc($rule / 1.5);
         padding-right: $rule * 1.25;
         transition: background-color .25s;
         cursor: pointer;
@@ -41,7 +41,7 @@
         @include block-modifier(small)
         {
             @include type-2;
-            padding: $rule / 3 $rule / 1.5;
+            padding: calc($rule / 3) calc($rule / 1.5);
             padding-right: $rule * 1.25;
         }
     }
@@ -49,7 +49,7 @@
     @include element(label)
     {
         color: $color07;
-        margin-right: $rule / 3;
+        margin-right: calc($rule / 3);
     }
 
     @include element(icon)
@@ -58,8 +58,8 @@
         opacity: .65;
         position: absolute;
         top: 50%;
-        right: $rule / 4;
-        margin-top: -$rule / 2;
+        right: calc($rule / 4);
+        margin-top: -(calc($rule / 2));
         display: flex;
         justify-content: center;
         align-items: center;
@@ -72,8 +72,8 @@
         position: absolute;
         z-index: 9999;
         right: 0;
-        margin-top: $rule / 3;
-        padding: $rule / 3;
+        margin-top: calc($rule / 3);
+        padding: calc($rule / 3);
         border: $border-width-2 solid $fill-color-alt-2;
         background-color: $color01;
         border-radius: $border-radius-1;
@@ -101,7 +101,7 @@
 
         @include block-modifier(up)
         {
-            top: -$rule / 3;
+            top: -(calc($rule / 3));
             margin-top: 0;
             transform: translateY(-100%);
         }

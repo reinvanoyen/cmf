@@ -4,7 +4,7 @@
     width: 100%;
     border: 1px solid $color06;
     border-radius: $border-radius-3;
-    padding: $rule / 4;
+    padding: calc($rule / 4);
 }
 
 @include block(enum-field2)
@@ -13,6 +13,6 @@
     width: 100%;
     border: $border-width-1 solid $color06;
     border-radius: $border-radius-3;
-    padding: $rule / 3;
+    padding: calc($rule / 3);
     background-color: $color01;
 }

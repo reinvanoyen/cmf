@@ -31,10 +31,10 @@
         box-sizing: border-box;
         top: $rule * 1.5;
         left: 50%;
-        width: $rule / 1.5;
-        height: $rule / 1.5;
-        margin-top: -$rule / 3;
-        margin-left: -$rule / 3;
+        width: calc($rule / 1.5);
+        height: calc($rule / 1.5);
+        margin-top: -(calc($rule / 3));
+        margin-left: -(calc($rule / 3));
         border-radius: 50%;
         border-top: 2px solid $primary-color;
         border-right: 2px solid transparent;

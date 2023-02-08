@@ -4,7 +4,7 @@
     {
         display: flex;
         justify-content: space-between;
-        margin-bottom: $rule / 2;
+        margin-bottom: calc($rule / 2);
         padding: 0 $rule;
     }
 
@@ -17,7 +17,7 @@
     {
         display: flex;
         align-items: center;
-        margin-left: $rule / 3;
+        margin-left: calc($rule / 3);
 
         &:first-child
         {
@@ -27,7 +27,7 @@
 
     @include element(main)
     {
-        padding: 0 $rule / 3;
+        padding: 0 calc($rule / 3);
 
         @include breakpoint(2)
         {

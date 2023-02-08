@@ -5,7 +5,6 @@
     flex-grow: 1;
     border: $border-width-2 solid $color03;
     border-radius: $border-radius-2;
-    //background-color: $color04;
 
     @include element(photo)
     {
@@ -34,29 +33,29 @@
 
     @include element(main)
     {
-        padding: $rule / 2 $rule / 1.5;
-        padding-top: $rule / 1.5;
+        padding: calc($rule / 2) calc($rule / 1.5);
+        padding-top: calc($rule / 1.5);
     }
 
     @include element(label)
     {
         position: absolute;
         z-index: 1;
-        top: $rule / 4;
-        right: $rule / 3;
+        top: calc($rule / 4);
+        right: calc($rule / 3);
         background-color: rgba($color13, .5);
         color: $color01;
         @include type-2;
         border-radius: $border-radius-3;
-        padding: $rule / 8 $rule / 3;
+        padding: calc($rule / 8) calc($rule / 3);
     }
 
     @include element(boolean)
     {
         position: absolute;
         z-index: 1;
-        top: $rule / 4;
-        left: $rule / 2;
+        top: calc($rule / 4);
+        left: calc($rule / 2);
     }
 
     @include element(title)
@@ -67,7 +66,7 @@
 
     @include element(subtitle)
     {
-        margin-top: $rule / 6;
+        margin-top: calc($rule / 6);
         @include type-5;
         line-height: 1.25;
         color: $color07;
@@ -75,12 +74,12 @@
 
     @include element(content)
     {
-        margin-top: $rule / 1.75;
+        margin-top: calc($rule / 1.75);
     }
 
     @include element(component)
     {
-        margin-bottom: $rule / 3;
+        margin-bottom: calc($rule / 3);
 
         &:last-child
         {
@@ -91,9 +90,9 @@
     @include element(footer)
     {
         display: flex;
-        gap: $rule / 3;
+        gap: calc($rule / 3);
         border-top: $border-width-2 solid $color03;
         margin-top: auto;
-        padding: $rule / 3 $rule / 1.5;
+        padding: calc($rule / 3) calc($rule / 1.5);
     }
 }

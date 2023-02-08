@@ -5,8 +5,8 @@
         border-radius: $border-radius-1;
         border: $border-width-2 solid $color03;
         background-color: $color01;
-        margin-bottom: $rule / 3;
-        padding: $rule / 4;
+        margin-bottom: calc($rule / 3);
+        padding: calc($rule / 4);
         display: flex;
 
         &:last-child
@@ -18,28 +18,19 @@
     @include element(item-content)
     {
         flex-grow: 1;
-        margin-right: $rule / 3;
+        margin-right: calc($rule / 3);
     }
 
     @include element(item-actions)
     {
         display: flex;
         align-items: center;
-
-        >*
-        {
-            margin-left: $rule / 3;
-
-            &:first-child
-            {
-                margin-left: 0;
-            }
-        }
+        gap: calc($rule / 3);
     }
 
     @include element(component)
     {
-        margin-bottom: $rule / 2;
+        margin-bottom: calc($rule / 2);
 
         &:last-child
         {
@@ -49,6 +40,6 @@
 
     @include element(footer)
     {
-        margin-top: $rule / 3;
+        margin-top: calc($rule / 3);
     }
 }

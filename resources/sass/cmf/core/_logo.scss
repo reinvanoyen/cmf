@@ -20,7 +20,7 @@
     @include element(name)
     {
         @include type-5;
-        margin-left: $rule / 2;
+        margin-left: calc($rule / 2);
         color: $primary-color-alt-3;
 
         span

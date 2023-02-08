@@ -3,27 +3,27 @@
     border-radius: $border-radius-1;
     border: $border-width-1 solid $fill-color-alt-1;
     background-color: $color01;
-    margin-bottom: $rule / 2;
+    margin-bottom: calc($rule / 2);
 
     @include element(header)
     {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: $rule / 6 $rule / 3;
+        padding: calc($rule / 6) calc($rule / 3);
         background-color: $fill-color;
     }
 
     @include element(title)
     {
-        padding-left: $rule / 2;
+        padding-left: calc($rule / 2);
         width: 100%;
         text-align: left;
     }
 
     @include element(content)
     {
-        padding: $rule / 3;
+        padding: calc($rule / 3);
 
         @include block-modifier(closed)
         {
@@ -35,16 +35,7 @@
     {
         display: flex;
         align-items: center;
-
-        >*
-        {
-            margin-left: $rule / 3;
-
-            &:first-child
-            {
-                margin-left: 0;
-            }
-        }
+        gap: calc($rule / 3);
     }
 
     @include element(component)

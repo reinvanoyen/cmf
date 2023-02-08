@@ -4,7 +4,7 @@
     $window-footer-height: $rule * 3;
     $window-modal-height: 75vh;
 
-    padding: $rule / 3;
+    padding: calc($rule / 3);
     padding-top: 0;
     border: $border-width-2 solid $color03;
     background-color: $color01;
@@ -39,15 +39,15 @@
         justify-content: space-between;
         align-items: center;
         height: $window-header-height;
-        padding: $rule / 2 $rule;
-        padding-right: $rule / 2;
+        padding: calc($rule / 2) $rule;
+        padding-right: calc($rule / 2);
     }
 
     @include element(title)
     {
         display: flex;
         align-items: center;
-        gap: $rule / 2;
+        gap: calc($rule / 2);
         @include type-9;
     }
 
@@ -55,13 +55,13 @@
     {
         display: flex;
         align-items: center;
-        gap: $rule / 2;
+        gap: calc($rule / 2);
     }
 
     @include element(toolbar)
     {
         display: block;
-        padding: $rule / 2 $rule;
+        padding: calc($rule / 2) $rule;
         padding-top: 0;
     }
 
@@ -69,12 +69,12 @@
     {
         display: block;
         padding: 0 $rule;
-        margin-bottom: $rule / 2;
+        margin-bottom: calc($rule / 2);
 
         @include block-modifier(modal)
         {
             overflow-y: scroll;
-            padding-bottom: $rule / 2;
+            padding-bottom: calc($rule / 2);
             margin-bottom: 0;
             max-height: calc($window-modal-height - $window-header-height * 2);
         }
@@ -98,13 +98,13 @@
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
-        gap: $rule / 2;
+        gap: calc($rule / 2);
         height: $window-footer-height;
-        padding: $rule / 2 $rule;
+        padding: calc($rule / 2) $rule;
 
         @include block-modifier(fixed-size)
         {
-            padding: $rule / 4 $rule;
+            padding: calc($rule / 4) $rule;
         }
     }
 }

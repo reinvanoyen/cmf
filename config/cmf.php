@@ -42,7 +42,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'theme' => [
-        'image' => '/vendor/cmf/splash.jpg',
+        'image' => '/vendor/cmf/assets/splash.jpg',
         'primary_color' => '#6226db',
         'primary_color_spin' => -30,
         'primary_color_strength' => 50,

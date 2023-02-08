@@ -1,9 +1,9 @@
 @include block(boolean-view)
 {
     display: block;
-    width: $rule / 3;
-    height: $rule / 3;
-    margin-top: $rule / 4;
+    width: calc($rule / 3);
+    height: calc($rule / 3);
+    margin-top: calc($rule / 4);
     background-color: $fill-color-alt-2;
     border-radius: 100%;
     transition: background-color .25s;

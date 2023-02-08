@@ -18,7 +18,7 @@
 
     @include element(confirm)
     {
-         margin-right: $rule / 3;
+         margin-right: calc($rule / 3);
     }
 
     @include element(cancel)

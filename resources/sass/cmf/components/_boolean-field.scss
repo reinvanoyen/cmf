@@ -1,13 +1,13 @@
 @include block(boolean-field)
 {
-    $padding: $rule / 6;
+    $padding: calc($rule / 6);
     $width: $rule * 1.5;
-    $knob-size: $rule / 1.5;
+    $knob-size: calc($rule / 1.5);
 
     position: relative;
     cursor: pointer;
     display: inline-block;
-    padding: $rule / 6 $rule / 6;
+    padding: calc($rule / 6) calc($rule / 6);
     border-radius: $knob-size;
     height: $knob-size + $padding;
     width: $width + $padding;
@@ -18,8 +18,8 @@
     {
         content: '';
         position: absolute;
-        left: $padding / 2;
-        top: $padding / 2;
+        left: calc($padding / 2);
+        top: calc($padding / 2);
         border-radius: 50%;
         width: $knob-size;
         height: $knob-size;

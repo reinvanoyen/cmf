@@ -124,14 +124,22 @@ class GalleryField extends React.Component {
             );
         }
 
-        return (
-            <div className="gallery-field__item-overlay">
-                <div className="gallery-field__item-delete">
-                    <IconButton style={'transparent'} name={'delete'} onClick={e => this.remove(i)} />
+        return (<>
+                <div className="gallery-field__item-overlay"></div>
+                <div className="gallery-field__item-actions">
+                    <div className="gallery-field__item-delete">
+                        <IconButton style={'transparent'} name={'delete'} onClick={e => this.remove(i)} />
+                    </div>
+                    {orderActions}
                 </div>
-                {orderActions}
-            </div>
+            </>
         );
+    }
+
+    onCtxMenuClick(index, action) {
+        if (action === 'remove') {
+            this.remove(index);
+        }
     }
 
     renderContent() {
@@ -141,10 +149,10 @@ class GalleryField extends React.Component {
                 <div className="gallery-field__grid">
                     {this.state.selectedFiles.map((file, i) => {
                         return (
-                            <ContextMenu links={[
-                                ['Nice', 'nice']
-                            ]}>
-                                <div className="gallery-field__item" key={i}>
+                            <ContextMenu key={i} links={[
+                                ['Remove from selection', 'remove']
+                            ]} onClick={action => this.onCtxMenuClick(i, action)}>
+                                <div className="gallery-field__item">
                                     <FileThumb
                                         file={file}
                                         fileLabels={this.props.fileLabels}

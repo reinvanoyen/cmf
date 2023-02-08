@@ -1,7 +1,7 @@
 @include block(sticky-sidebar)
 {
     display: flex;
-    gap: $rule / 2;
+    gap: calc($rule / 2);
 
     @include element(content)
     {

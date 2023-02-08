@@ -11,8 +11,38 @@
     @include modifier(grid)
     {
         display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        grid-gap: $rule / 3;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        grid-gap: calc($rule / 3);
+
+        @include container(300)
+        {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @include container(450)
+        {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        @include container(650)
+        {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        @include container(800)
+        {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+
+        @include container(1000)
+        {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+
+        @include container(1200)
+        {
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
     }
 
     @include element(item)

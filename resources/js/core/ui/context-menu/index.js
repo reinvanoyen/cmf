@@ -57,8 +57,9 @@ class ContextMenu extends React.Component {
     }
 
     onLinkClick(action) {
-        this.close();
-        this.props.onClick(action);
+        this.close(() => {
+            this.props.onClick(action);
+        });
     }
 
     toggle(e) {
@@ -89,15 +90,18 @@ class ContextMenu extends React.Component {
         });
     }
 
-    close() {
+    close(cb) {
         this.setState({
             isOpen: false
         }, () => {
-
             this.unbindDocumentClick();
 
             this.ctxOverlayEl.remove();
             this.ctxMountEl.remove();
+
+            if (cb) {
+                cb();
+            }
         });
     }
 
