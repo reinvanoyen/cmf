@@ -13,6 +13,7 @@ import Icon from "./ui/icon";
 import ErrorModule from "./module/error-module";
 import meta from "../util/meta";
 import i18n from "../util/i18n";
+import FooterText from "./footer-text";
 
 class Cmf extends React.Component {
 
@@ -222,7 +223,7 @@ class Cmf extends React.Component {
                             {module}
                         </div>
                         <div className="cmf__footer">
-                            &copy; {this.props.title} – CMF {this.getVersion()}
+                            <FooterText title={this.props.title} />
                         </div>
                     </div>
                 </div>

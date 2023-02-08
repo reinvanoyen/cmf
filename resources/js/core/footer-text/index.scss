@@ -1,0 +1,23 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(footer-text)
+{
+    @include type-11;
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: $fill-color-alt-3;
+
+    a
+    {
+        text-decoration: underline;
+        transition: color .5s;
+
+        &:hover
+        {
+            text-decoration: none;
+            color: $primary-color;
+        }
+    }
+}

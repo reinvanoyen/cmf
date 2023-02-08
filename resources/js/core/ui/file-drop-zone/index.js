@@ -1,7 +1,10 @@
+import './index.scss';
+
 import React from 'react';
-import util from "./util";
-import api from "../../api/api";
-import upload from "../../util/upload";
+import util from "../util";
+import api from "../../../api/api";
+import upload from "../../../util/upload";
+import Icon from "../icon";
 
 class FileDropZone extends React.Component {
 
@@ -20,6 +23,9 @@ class FileDropZone extends React.Component {
             isDragOver: false
         };
 
+        this.dragOverCounter = 0;
+
+        this.dragEnterHandler = this.handleDragEnter.bind(this);
         this.dragOverHandler = this.handleDragOver.bind(this);
         this.dragLeaveHandler = this.handleDragLeave.bind(this);
         this.dropHandler = this.handleDrop.bind(this);
@@ -27,31 +33,50 @@ class FileDropZone extends React.Component {
 
     componentDidMount() {
         document.addEventListener('dragover', this.dragOverHandler);
+        document.addEventListener('dragenter', this.dragEnterHandler);
         document.addEventListener('dragleave', this.dragLeaveHandler);
         document.addEventListener('drop', this.dropHandler);
     }
 
     componentWillUnmount() {
+        document.removeEventListener('dragenter', this.dragEnterHandler);
         document.removeEventListener('dragover', this.dragOverHandler);
         document.removeEventListener('dragleave', this.dragLeaveHandler);
         document.removeEventListener('drop', this.dropHandler);
     }
 
-    handleDragOver(e) {
+    handleDragEnter(e) {
+
+        this.dragOverCounter++;
+
         this.setState({
             isDragOver: true
         });
+
+        e.preventDefault();
+    }
+
+    handleDragOver(e) {
         e.preventDefault();
     }
 
     handleDragLeave(e) {
-        this.setState({
-            isDragOver: false
-        });
-        e.preventDefault();
+
+        this.dragOverCounter--;
+
+        if (this.dragOverCounter === 0) {
+
+            this.setState({
+                isDragOver: false
+            });
+
+            e.preventDefault();
+        }
     }
 
     handleDrop(e) {
+
+        this.dragOverCounter = 0;
 
         e.preventDefault();
 
@@ -62,8 +87,10 @@ class FileDropZone extends React.Component {
         });
 
         if( e.dataTransfer ) {
+
             let items = e.dataTransfer.items;
             let files = e.dataTransfer.files;
+
             if (items) { // This goes false when reading items instead of files is unsupported
                 for (let i = 0 ; i < items.length ; i += 1) {
                     let item = items[i].webkitGetAsEntry();
@@ -80,6 +107,7 @@ class FileDropZone extends React.Component {
     uploadFileTree(item, directoryId = null) {
 
         if (item.isFile) {
+
             item.file(file => {
                 if (file.name !== '.DS_Store') {
                     this.upload(file, directoryId);
@@ -91,8 +119,6 @@ class FileDropZone extends React.Component {
             api.media.createDirectory(item.name, directoryId).then(response => {
 
                 let directory = response.data.data;
-
-                util.i18nNotify('snippets.directory_created');
                 this.props.onCreateDirectory(directory);
 
                 // Get folder contents
@@ -121,7 +147,6 @@ class FileDropZone extends React.Component {
     }
 
     uploadMultiple(files, directoryId) {
-
         upload.queueMultiple(files, directoryId, file => {
             this.props.onCreateFile(file);
             if (upload.isDone()) {
@@ -137,6 +162,9 @@ class FileDropZone extends React.Component {
     render() {
         return (
             <div className={'file-drop-zone'+(this.state.isDragOver ? ' file-drop-zone--drag-over' : '')}>
+                <div className="file-drop-zone__overlay">
+                    <Icon name={'upload_file'} style={['extra-large', 'alt']} />
+                </div>
                 {this.props.children}
             </div>
         );

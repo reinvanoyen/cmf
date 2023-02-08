@@ -34,7 +34,7 @@ class UserPanel extends React.Component {
                     {this.props.user.name}
                 </div>
                 <div className="user-panel__actions">
-                    <Dropdown text={i18n.get('snippets.logout')}>
+                    <Dropdown style={['secondary']} text={i18n.get('snippets.logout')}>
                         <Button onClick={this.logout.bind(this)} style={'full'} text={i18n.get('snippets.logout_confirm')} />
                     </Dropdown>
                 </div>

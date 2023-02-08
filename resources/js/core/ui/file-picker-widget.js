@@ -15,6 +15,8 @@ import DirectoryTree from "./directory-tree";
 import Window from "./window";
 import StickySidebar from "./sticky-sidebar";
 import i18n from "../../util/i18n";
+import FileDropZone from "./file-drop-zone";
+import localStorage from "../../util/local-storage";
 
 class FilePickerWidget extends React.Component {
 
@@ -41,7 +43,7 @@ class FilePickerWidget extends React.Component {
             currentDirectory: null,
             selectedFileIds: this.props.defaultSelectedFileIds || [],
             selectedFiles: this.props.defaultSelectedFiles || [],
-            fileBrowserViewMode: 'list'
+            fileBrowserViewMode: localStorage.get('media-view-mode', 'list')
         };
     }
 
@@ -126,6 +128,10 @@ class FilePickerWidget extends React.Component {
         this.select(file);
     }
 
+    handleCreateDirectory() {
+        this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+    }
+
     handleRenameFile(name, fileId) {
         if (name) {
             api.media.renameFile(name, fileId).then(response => {
@@ -191,6 +197,8 @@ class FilePickerWidget extends React.Component {
     changeFileBrowserViewMode(mode) {
         this.setState({
             fileBrowserViewMode: mode
+        }, () => {
+            localStorage.set('media-view-mode', mode);
         });
     }
 
@@ -246,22 +254,28 @@ class FilePickerWidget extends React.Component {
 
         return (
             <StickySidebar sidebar={this.renderSidebar()}>
-                <FileBrowser
-                    viewMode={this.state.fileBrowserViewMode}
-                    fileLabels={this.props.fileLabels}
-                    currentDirectory={this.state.currentDirectory}
-                    selectionMode={this.props.selectionMode}
-                    selectedFiles={this.state.selectedFiles}
-                    selectedFileIds={this.state.selectedFileIds}
-                    directories={this.state.directories}
-                    files={this.state.files}
-                    onDirectoryRename={this.handleRenameDirectory.bind(this)}
-                    onFileRename={this.handleRenameFile.bind(this)}
-                    onFileMove={this.handleMoveFile.bind(this)}
-                    onDirectoryClick={directory => this.openDirectory(directory)}
-                    onSelectionChange={this.onSelectionChange.bind(this)}
-                    onSelectionMove={this.handleMoveSelection.bind(this)}
-                />
+                <FileDropZone
+                    directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
+                    onCreateDirectory={this.handleCreateDirectory.bind(this)}
+                    onUploadDone={this.handleUploadDone.bind(this)}
+                >
+                    <FileBrowser
+                        viewMode={this.state.fileBrowserViewMode}
+                        fileLabels={this.props.fileLabels}
+                        currentDirectory={this.state.currentDirectory}
+                        selectionMode={this.props.selectionMode}
+                        selectedFiles={this.state.selectedFiles}
+                        selectedFileIds={this.state.selectedFileIds}
+                        directories={this.state.directories}
+                        files={this.state.files}
+                        onDirectoryRename={this.handleRenameDirectory.bind(this)}
+                        onFileRename={this.handleRenameFile.bind(this)}
+                        onFileMove={this.handleMoveFile.bind(this)}
+                        onDirectoryClick={directory => this.openDirectory(directory)}
+                        onSelectionChange={this.onSelectionChange.bind(this)}
+                        onSelectionMove={this.handleMoveSelection.bind(this)}
+                    />
+                </FileDropZone>
             </StickySidebar>
         );
     }

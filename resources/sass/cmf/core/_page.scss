@@ -69,6 +69,7 @@
             min-height: 100vh;
             padding: 5%;
             padding-top: $padding-top;
+            padding-bottom: $rule;
         }
     }
 
@@ -88,5 +89,10 @@
     @include element(box)
     {
         width: 100%;
+    }
+
+    @include element(footer)
+    {
+        margin-top: $rule * 2;
     }
 }

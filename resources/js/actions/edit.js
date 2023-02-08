@@ -79,7 +79,7 @@ class Edit extends React.Component {
                 this.setState({
                     formErrors: response.data.errors
                 });
-                ui.notify(i18n.get('form_has_errors'));
+                ui.notify(i18n.get('snippets.form_has_errors'));
             });
     }
 

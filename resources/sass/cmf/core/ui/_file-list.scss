@@ -33,14 +33,19 @@
             grid-template-columns: repeat(5, minmax(0, 1fr));
         }
 
-        @include container(1000)
+        @include container(900)
         {
             grid-template-columns: repeat(6, minmax(0, 1fr));
         }
 
-        @include container(1200)
+        @include container(1000)
         {
             grid-template-columns: repeat(7, minmax(0, 1fr));
+        }
+
+        @include container(1280)
+        {
+            grid-template-columns: repeat(8, minmax(0, 1fr));
         }
     }
 

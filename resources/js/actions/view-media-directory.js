@@ -15,6 +15,7 @@ import IconButton from "../core/ui/icon-button";
 import DirectoryTree from "../core/ui/directory-tree";
 import i18n from "../util/i18n";
 import str from "../util/str";
+import localStorage from "../util/local-storage";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -39,7 +40,7 @@ class ViewMediaDirectory extends React.Component {
             selectedFiles: [],
             selectedFileIds: [],
             directoryPath: [],
-            fileBrowserViewMode: 'list'
+            fileBrowserViewMode: localStorage.get('media-view-mode', 'list')
         };
     }
 
@@ -312,6 +313,8 @@ class ViewMediaDirectory extends React.Component {
     changeFileBrowserViewMode(mode) {
         this.setState({
             fileBrowserViewMode: mode
+        }, () => {
+            localStorage.set('media-view-mode', mode);
         });
     }
 
@@ -443,7 +446,11 @@ class ViewMediaDirectory extends React.Component {
                             onClick={this.promptCreateDirectory.bind(this)}
                             text={i18n.get('snippets.new_directory')}
                         />
-                        <Dropdown text={i18n.get('snippets.upload')} style={['primary', 'small']} autoClose={true}>
+                        <Dropdown
+                            text={i18n.get('snippets.upload')}
+                            style={['primary', 'small']}
+                            autoClose={true}
+                        >
                             <FileUploader
                                 directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
                                 onUploadDone={this.handleUploadDone.bind(this)}

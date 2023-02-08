@@ -83,6 +83,19 @@
     {
         flex-grow: 0;
         margin-right: calc($rule / 2);
+
+        @include block-modifier(grid)
+        {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            margin-right: 0;
+            background-color: $fill-color;
+            border-top-left-radius: $border-radius-1;
+            border-bottom-right-radius: $border-radius-1;
+            border: 1px solid $fill-color-alt-1;
+        }
     }
 
     @include element(actions)

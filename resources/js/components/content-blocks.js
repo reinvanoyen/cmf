@@ -238,7 +238,7 @@ export default class ContentBlocks extends React.Component {
         }
 
         return (
-            <Dropdown autoClose={true} text={text} openIcon={'post_add'} closeIcon={'post_add'} key={index}>
+            <Dropdown style={['secondary']} autoClose={true} text={text} openIcon={'post_add'} closeIcon={'post_add'} key={index}>
                 <LinkList links={this.getTypeLinks()} onClick={type => this.addBlock(type, index)} />
             </Dropdown>
         );

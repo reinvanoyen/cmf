@@ -9,7 +9,7 @@ class Dropdown extends React.Component {
     static defaultProps = {
         label: '',
         text: '',
-        style: null,
+        style: [],
         autoClose: false,
         openIcon: 'expand_more',
         closeIcon: 'expand_less'
@@ -81,11 +81,12 @@ class Dropdown extends React.Component {
     render() {
 
         let button = (
-            <Button text={this.props.text}
-                    label={this.props.label}
-                    style={['secondary', 'small']}
-                    onClick={this.toggle.bind(this)}
-                    icon={(this.state.isOpen ? this.props.closeIcon : this.props.openIcon)}
+            <Button
+                text={this.props.text}
+                label={this.props.label}
+                style={[...this.props.style, 'small']}
+                onClick={this.toggle.bind(this)}
+                icon={(this.state.isOpen ? this.props.closeIcon : this.props.openIcon)}
             />
         );
 
