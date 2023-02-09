@@ -1,40 +1,40 @@
 import React from 'react';
-import path from "../state/path";
 import ContextMenu from "./ui/context-menu";
 import NavItem from "./nav-item";
 import SubnavItem from "./subnav-item";
 import i18n from "../util/i18n";
+import { useDispatch, useSelector } from "react-redux";
 
-class Nav extends React.Component {
+export default function Nav(props) {
 
-    static defaultProps = {
-        modules: [],
-        activeModule: {},
-        onModulesLoaded: () => {},
-        onModuleSwitch: () => {}
+    const dispatch = useDispatch();
+    const location = useSelector(state => state.location.current);
+    const modules = useSelector(state => state.modules.modules);
+
+    const switchModule = (module) => {
+
+        if (props.onModuleSwitch) {
+            props.onModuleSwitch();
+        }
+
+        dispatch({type: 'location/update', payload: {module: module.id, action: 'index'}});
     };
 
-    switchModule(module) {
-        this.props.onModuleSwitch();
-        path.forceRefresh = true;
-        path.goTo(module.id, 'index');
-    }
-
-    onContextMenuClick(path, module) {
+    const onContextMenuClick = (path, module) => {
         if (path === 'open') {
-            this.switchModule(module);
+            switchModule(module);
         } else if (path === 'open_new') {
             window.open(module.url);
         }
     }
 
-    isModuleActive(module) {
-        if (this.props.activeModule && this.props.activeModule.id === module.id) {
+    const isModuleActive = (module) => {
+        if (props.activeModule && props.activeModule.id === module.id) {
             return true;
         }
 
         for (let i = 0; i < module.submodules.length; i++) {
-            if (this.props.activeModule && this.props.activeModule.id === module.submodules[i].id) {
+            if (props.activeModule && props.activeModule.id === module.submodules[i].id) {
                 return true;
             }
         }
@@ -42,14 +42,14 @@ class Nav extends React.Component {
         return false;
     }
 
-    renderSubmodules(module) {
+    const renderSubmodules = (module) => {
 
         if (! module.submodules.length) {
             return null;
         }
 
         return (
-            <div className={'nav__subnav'+(this.isModuleActive(module) ? ' nav__subnav--open' : '')}>
+            <div className={'nav__subnav'+(isModuleActive(module) ? ' nav__subnav--open' : '')}>
                 {module.submodules.map(module => {
                     return (
                         <ContextMenu
@@ -58,9 +58,9 @@ class Nav extends React.Component {
                                 [i18n.get('snippets.open'), 'open'],
                                 [i18n.get('snippets.open_new_window'), 'open_new']
                             ]}
-                            onClick={path => this.onContextMenuClick(path, module)}
+                            onClick={path => onContextMenuClick(path, module)}
                         >
-                            <SubnavItem module={module} onClick={() => this.switchModule(module)} isActive={(this.props.activeModule && this.props.activeModule.id === module.id)} />
+                            <SubnavItem module={module} onClick={() => switchModule(module)} isActive={(props.activeModule && props.activeModule.id === module.id)} />
                         </ContextMenu>
                     );
                 })}
@@ -68,16 +68,14 @@ class Nav extends React.Component {
         );
     }
 
-    render() {
+    const render = () => {
         return (
             <div className="nav">
                 <div>
-                    {this.props.modules.map(module => {
-
+                    {modules.map(module => {
                         if (! module.inNavigation) {
                             return null;
                         }
-
                         return (
                             <React.Fragment key={module.id}>
                                 <ContextMenu
@@ -85,11 +83,11 @@ class Nav extends React.Component {
                                         [i18n.get('snippets.open'), 'open'],
                                         [i18n.get('snippets.open_new_window'), 'open_new']
                                     ]}
-                                    onClick={path => this.onContextMenuClick(path, module)}
+                                    onClick={path => onContextMenuClick(path, module)}
                                 >
-                                    <NavItem module={module} onClick={() => this.switchModule(module)} isActive={this.isModuleActive(module)} />
+                                    <NavItem module={module} onClick={() => switchModule(module)} isActive={isModuleActive(module)} />
                                 </ContextMenu>
-                                {this.renderSubmodules(module)}
+                                {renderSubmodules(module)}
                             </React.Fragment>
                         );
                     })}
@@ -97,6 +95,6 @@ class Nav extends React.Component {
             </div>
         );
     }
-}
 
-export default Nav;
+    return render();
+}

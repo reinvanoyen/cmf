@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Nav from "./nav";
 import Module from "./module/module";
 import api from "../api/api";
@@ -14,159 +14,165 @@ import ErrorModule from "./module/error-module";
 import meta from "../util/meta";
 import i18n from "../util/i18n";
 import FooterText from "./footer-text";
+import useForceUpdate from "../hooks/use-force-update";
+import { useDispatch, useSelector } from "react-redux";
 
-class Cmf extends React.Component {
+export default function Cmf(props) {
 
-    static defaultProps = {
-        title: 'CMF'
-    };
+    const [state, setState] = useState({
+        tick: 0,
+        isAuthenticating: true,
+        isLoading: true,
+        isLoggedIn: false,
+        isError: false,
+        isNavOpen: false,
+        module: null,
+        action: null
+    });
 
-    constructor(props) {
-        super(props);
+    const { user } = useSelector(state => state.auth);
+    const modules = useSelector(state => state.modules.modules);
+    const location = useSelector(state => state.location.current);
+    const prevLocation = useSelector(state => state.location.previous);
+    const dispatch = useDispatch();
+    const forceUpdate = useForceUpdate();
 
-        this.state = {
-            isAuthenticating: true,
-            isLoading: true,
-            isLoggedIn: false,
-            isError: false,
-            isNavOpen: false,
-            user: {},
-            modules: [],
-            path: {},
-            module: null,
-            action: null
-        };
-
-        path.setCmf(this);
-    }
-
-    componentDidMount() {
-        // Check if we're logged in
+    useEffect(() => {
         api.auth.user().then(response => {
-
-            // Looks like we're logged in
-            let user = response.data.data;
-            this.onAuthSuccess(user);
+            onAuthSuccess(response.data.data);
         }, error => {
-            this.setState({
+            setState({
+                ...state,
                 isAuthenticating: false
             });
         });
-    }
+    }, []);
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
+    useEffect(() => {
         if (
-            path.forceRefresh ||
-            this.state.path.module !== path.currentPath.module ||
-            this.state.path.action !== path.currentPath.action ||
-            ! helpers.shallowEqual(this.state.path.params, path.currentPath.params)
+            location.module !== prevLocation.module ||
+            location.action !== prevLocation.action ||
+            ! helpers.shallowEqual(location.params, prevLocation.params)
         ) {
 
-            let module = null;
+            let currModule = null;
 
-            for (let i = 0; i < this.state.modules.length; i++) {
-                if (this.state.modules[i].id === path.currentPath.module) {
-                    module = this.state.modules[i];
+            for (let i = 0; i < modules.length; i++) {
+
+                if (modules[i].id === location.module) {
+                    currModule = modules[i];
                     break;
                 }
-                for (let j = 0; j < this.state.modules[i].submodules.length; j++) {
-                    if (this.state.modules[i].submodules[j].id === path.currentPath.module) {
-                        module = this.state.modules[i].submodules[j];
+
+                for (let j = 0; j < modules[i].submodules.length; j++) {
+                    if (modules[i].submodules[j].id === location.module) {
+                        currModule = modules[i].submodules[j];
                         break;
                     }
                 }
             }
 
-            api.modules.action(path.currentPath, path.currentPath.params).then(response => {
+            api.modules.action(location, location.params).then(response => {
 
                 helpers.scrollTop();
 
-                this.setState({
+                setState({
+                    ...state,
                     isLoading: false,
                     isError: false,
-                    path: path.currentPath,
-                    module,
+                    path: location,
+                    module: currModule,
                     action: response.data.data
                 });
 
             }).catch((error) => {
-                this.setState({
+
+                setState({
+                    ...state,
                     isLoading: false,
                     isError: true,
-                    path: path.currentPath
+                    path: location
                 });
             });
         }
-    }
+    }, [location, prevLocation]);
 
-    setLoadingState() {
-        this.setState({
+    useEffect(() => {
+        if (modules.length) {
+            bindPopState();
+            goToRequestedModule();
+        }
+    }, [modules]);
+
+    useEffect(() => {
+        if (state.isLoggedIn) {
+            // Load all modules from the API
+            api.modules.index().then(response => {
+                dispatch({type: 'modules/update', payload: response.data.data});
+            });
+        }
+    }, [state.isLoggedIn]);
+
+    const setLoadingState = () => {
+        setState({
+            ...state,
             isLoading: true
         });
     }
 
-    getVersion() {
+    const getVersion = () => {
         return meta.get('cmf:version');
     }
 
-    onAuthSuccess(user) {
-
-        this.setState({
+    const onAuthSuccess = (user) => {
+        dispatch({type: 'auth/loggedin', payload: user});
+        setState({
+            ...state,
             isLoggedIn: true,
-            isAuthenticating: false,
-            user: user
-        });
-
-        // Load all modules from the API
-        api.modules.index().then(response => {
-
-            let modules = response.data.data;
-
-            // Update the component with the modules
-            this.setState({modules}, () => {
-                this.bindPopState();
-                this.goToRequestedModule();
-            });
+            isAuthenticating: false
         });
     }
 
-    toggleNavigation() {
-        this.setState({isNavOpen: ! this.state.isNavOpen});
+    const toggleNavigation = () => {
+        setState({
+            ...state,
+            isNavOpen: ! state.isNavOpen
+        });
         document.body.classList.toggle('open-nav');
     }
 
-    onLoginSuccess(user) {
+    const onLoginSuccess = (user) => {
         ui.notify(i18n.get('snippets.welcome_back', {name: user.name}));
-        this.onAuthSuccess(user);
+        onAuthSuccess(user);
     }
 
-    onLoginFail() {
+    const onLoginFail = () => {
         ui.notify(i18n.get('snippets.login_failed'));
     }
 
-    bindPopState() {
-        window.onpopstate = e => this.goToRequestedModule();
+    const bindPopState = () => {
+        window.onpopstate = e => goToRequestedModule();
     }
 
-    goToRequestedModule() {
+    const goToRequestedModule = () => {
 
         // Get controller
         let controller = path.parseLocation(window.location);
-        let module = controller.module || this.state.modules[0].id;
+        let module = controller.module || modules[0].id;
         let action = controller.action || 'index';
+        let params = controller.params;
 
-        // Go to the first module's index
-        path.update(module, action, controller.params);
+        dispatch({type: 'location/update', payload: {module, action, params}});
     }
 
-    goToIndex() {
+    const goToIndex = () => {
         // Go to the first module's index
-        path.goTo(this.state.modules[0].id, 'index');
+        dispatch({type: 'location/update', payload: {module: modules[0].id, action: 'index'}});
     }
 
-    onLogout() {
-        this.setState({
+    const onLogout = () => {
+        setState({
+            ...state,
             isLoggedIn: false
         });
 
@@ -174,65 +180,59 @@ class Cmf extends React.Component {
         ui.notify('User logged out');
     }
 
-    getUserPanel() {
+    const getUserPanel = () => {
         return (
-            <UserPanel
-                user={this.state.user}
-                onLogout={this.onLogout.bind(this)}
-            />
+            <UserPanel onLogout={onLogout.bind(this)} />
         );
     }
 
-    render() {
+    const render = () => {
 
-        if (this.state.isAuthenticating) {
+        if (state.isAuthenticating) {
             return <Loader />;
         }
 
-        if (! this.state.isLoggedIn) {
-            return <Login title={this.props.title} onSuccess={this.onLoginSuccess.bind(this)} onFail={this.onLoginFail.bind(this)} />;
+        if (! state.isLoggedIn) {
+            return <Login title={props.title} onSuccess={onLoginSuccess} onFail={onLoginFail} />;
         }
 
-        let module;
+        let renderModule = null;
 
-        if (this.state.isError) {
-            module = <ErrorModule />;
-        } else if (! this.state.isLoading) {
-            module = <Module {...this.state.module} action={this.state.action} path={this.state.path} key={this.state.module.id} />
+        if (state.isError) {
+            renderModule = <ErrorModule />;
+        } else if (! state.isLoading) {
+            renderModule = <Module {...state.module} action={state.action} path={state.path} key={state.module.id} />;
         }
 
         return (
             <div className="cmf">
                 <div className="cmf__header">
-                    <button className="cmf__logo" onClick={this.goToIndex.bind(this)}>
-                        <Logo name={this.props.title} />
+                    <button className="cmf__logo" onClick={goToIndex}>
+                        <Logo name={props.title} />
                     </button>
                     <div className="cmf__user">
-                        {this.getUserPanel()}
+                        {getUserPanel()}
                     </div>
                 </div>
                 <div className="cmf__main">
                     <div className="cmf__nav">
-                        <Nav
-                            modules={this.state.modules}
-                            activeModule={this.state.module}
-                        />
+                        <Nav activeModule={state.module} />
                     </div>
                     <div className="cmf__content">
                         <div className="cmf__module">
-                            {module}
+                            {renderModule}
                         </div>
                         <div className="cmf__footer">
-                            <FooterText title={this.props.title} />
+                            <FooterText title={props.title} />
                         </div>
                     </div>
                 </div>
-                <button className="cmf__nav-trigger" onClick={this.toggleNavigation.bind(this)}>
-                    <Icon style={'medium'} name={(this.state.isNavOpen ? 'close' : 'menu')} />
+                <button className="cmf__nav-trigger" onClick={toggleNavigation}>
+                    <Icon style={'medium'} name={(state.isNavOpen ? 'close' : 'menu')} />
                 </button>
             </div>
         );
     }
-}
 
-export default Cmf;
+    return render();
+}

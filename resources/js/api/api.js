@@ -2,16 +2,10 @@
 
 import axios from 'axios';
 import http from "../util/http";
-import ApiError from "../errors/ApiError";
 import meta from "../util/meta";
-import util from "../core/ui/util";
-
-const setCsrfToken = token => {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
-};
 
 axios.defaults.withCredentials = true;
-setCsrfToken(meta.get('csrf'));
+axios.defaults.headers.common['X-CSRF-TOKEN'] = meta.get('csrf');
 
 axios.interceptors.request.use((config) => {
     document.body.classList.add('api-loading');

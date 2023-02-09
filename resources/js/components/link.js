@@ -1,10 +1,12 @@
 import React from 'react';
-import path from "../state/path";
 import Button from "../core/ui/button";
 import UiLink from "../core/ui/link";
+import { useDispatch } from "react-redux";
+import path from "../state/path";
 
-class Link extends React.Component {
+export default function Link(props) {
 
+    /*
     static defaultProps = {
         path: {},
         data: {},
@@ -12,35 +14,35 @@ class Link extends React.Component {
         back: false,
         style: null
     };
+    */
+    const dispatch = useDispatch();
 
-    goTo() {
+    const goTo = () => {
 
-        if (this.props.back) {
+        if (props.back) {
             path.goBack();
             return;
         }
 
         let params = {};
 
-        if (this.props.data && this.props.data.id) {
-            params.id = this.props.data.id;
-        } else if (this.props.path.params.id) {
-            params.id = this.props.path.params.id;
+        if (props.data && props.data.id) {
+            params.id = props.data.id;
+        } else if (props.path.params.id) {
+            params.id = props.path.params.id;
         }
 
-        path.goTo(this.props.path.module, this.props.action, params);
+        dispatch({ type: 'location/update', payload: {module: props.path.module, action: props.action, params} });
     }
 
-    render() {
+    const render = () => {
 
-        if (this.props.style && this.props.style !== 'alt') {
-            return (
-                <Button style={this.props.style} text={this.props.text} onClick={this.goTo.bind(this)} />
-            );
+        if (props.style && props.style !== 'alt') {
+            return <Button style={props.style} text={props.text} onClick={goTo} />;
         }
 
-        return <UiLink style={this.props.style} onClick={this.goTo.bind(this)} text={this.props.text} />;
+        return <UiLink style={props.style} onClick={goTo} text={props.text} />;
     }
+
+    return render();
 }
-
-export default Link;

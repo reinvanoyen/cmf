@@ -2,16 +2,13 @@
 
 import http from "../util/http";
 import meta from "../util/meta";
+import store from "../store";
 
 export default {
-    cmf: null,
     forceRefresh: false,
     path: meta.get('cmf:path'),
     currentPath: {},
     history: [],
-    setCmf(cmf) {
-        this.cmf = cmf;
-    },
     parseLocation(location) {
 
         const prefix = '/'+this.path+'/';
@@ -30,18 +27,11 @@ export default {
         };
     },
     update(module, action, params) {
-
-        this.currentPath = {
-            module: module,
-            action: action,
-            params: params
-        };
-
-        this.cmf.forceUpdate(() => this.forceRefresh = false);
+        //
     },
     goTo(module, action, params = {}) {
 
-        let query = http.query(params);
+        const query = http.query(params);
 
         window.history.pushState({}, '', this.path+'/'+module+'/'+action+(query ? '?'+query : ''));
 
@@ -51,32 +41,25 @@ export default {
             params: params
         });
 
-        this.update(module, action, params);
+        store.dispatch({ type: 'location/update', payload: {module, action, params}});
     },
     refresh() {
-        this.cmf.setLoadingState();
         this.forceRefresh = true;
         this.goTo(this.currentPath.module, this.currentPath.action, this.currentPath.params);
     },
     goBack() {
 
-        let {module, action, params} = this.history[this.history.length - 2];
+        const {module, action, params} = this.history[this.history.length - 2];
         this.goTo(module, action, params);
     },
     handleRedirect(props, params = {}) {
 
         if (props.refresh) {
-
             this.refresh();
-
         } else if (props.redirectBack) {
-
             this.goBack();
-
         } else if (props.redirect) {
-
             // @TODO parse path, so we can also go to other modules
-
             // Redirect
             this.goTo(props.path.module, props.redirect, params);
         }
