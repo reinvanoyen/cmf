@@ -167,4 +167,6 @@ return [
 
     'tags' => 'Tags',
     'no_tags_available' => 'No tags available',
+
+    'reloaded_plural' => 'Reloaded :plural',
 ];

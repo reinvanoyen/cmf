@@ -1,0 +1,10 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(button-group)
+{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    border-radius: $border-radius-1;
+}

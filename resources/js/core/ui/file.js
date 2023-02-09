@@ -54,7 +54,7 @@ export default class File extends React.Component {
             if (label) {
                 return (
                     <div className="file__label">
-                        <TagLabel text={label.name} color={label.color} style={this.props.viewMode === 'grid' ? ['small'] : []}/>
+                        <TagLabel text={label.name} color={label.color} style={this.props.viewMode === 'grid' || this.props.viewMode === 'compact-list' ? ['small'] : []}/>
                     </div>
                 );
             }
@@ -74,6 +74,16 @@ export default class File extends React.Component {
     }
 
     render() {
+
+        let filePreviewModifiers = [];
+        if (this.props.viewMode === 'grid') {
+            filePreviewModifiers = ['grid', 'full'];
+        } else if (this.props.viewMode === 'list') {
+            filePreviewModifiers = ['list'];
+        } else if (this.props.viewMode === 'compact-list') {
+            filePreviewModifiers = ['compact-list'];
+        }
+
         return (
             <div className={'file file--'+this.props.viewMode+(this.props.isSelected ? ' file--selected' : '')} onClick={e => this.props.onClick(e, this.props.file)}>
                 {this.renderSelectionMode()}
@@ -81,7 +91,7 @@ export default class File extends React.Component {
                     <FilePreview
                         file={this.props.file}
                         mediaConversion={this.props.viewMode === 'grid' ? 'contain' : 'thumb'}
-                        style={this.props.viewMode === 'grid' ? ['grid', 'full'] : ['list']}
+                        style={filePreviewModifiers}
                     />
                 </div>
                 <div className="file__content">

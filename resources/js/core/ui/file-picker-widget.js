@@ -17,6 +17,7 @@ import StickySidebar from "./sticky-sidebar";
 import i18n from "../../util/i18n";
 import FileDropZone from "./file-drop-zone";
 import localStorage from "../../util/local-storage";
+import ButtonGroup from "./button-group";
 
 class FilePickerWidget extends React.Component {
 
@@ -297,8 +298,16 @@ class FilePickerWidget extends React.Component {
                     }}
                 />
             ]} actions={[
-                <IconButton key={'view-list'} name={'view_list'} onClick={e => this.changeFileBrowserViewMode('list')} />,
-                <IconButton key={'view-grid'} name={'grid_view'} onClick={e => this.changeFileBrowserViewMode('grid')} />,
+                <ButtonGroup
+                    key={'view-btn-group'}
+                    active={this.state.fileBrowserViewMode}
+                    buttons={[
+                        {icon: 'list', key: 'compact-list'},
+                        {icon: 'view_list', key: 'list'},
+                        {icon: 'grid_view', key: 'grid'},
+                    ]}
+                    onClick={key => this.changeFileBrowserViewMode(key)}
+                />,
                 <Button key={'new-dir'} text={i18n.get('snippets.new_directory')} style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} />,
                 <Dropdown key={'upload'} text={i18n.get('snippets.upload')} style={['primary', 'small']}>
                     <FileUploader

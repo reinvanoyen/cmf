@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ContextMenu from "../core/ui/context-menu";
 import Dropdown from "../core/ui/dropdown";
 import SelectList from "../core/ui/select-list";
 import str from "../util/str";
@@ -63,15 +64,25 @@ class BelongsToFilter extends React.Component {
         this.selectListRef.current.clear();
     }
 
+    onCtxMenuClick(action) {
+        if (action === 'clear') {
+            this.clear();
+        }
+    }
+
     render() {
 
         let label = (this.props.label ? this.props.label : str.toUpperCaseFirst(this.props.field));
 
         return (
             <div className="enum-filter">
-                <Dropdown label={label} text={this.state.humanReadableValue}>
-                    <SelectList options={this.state.options} onChange={this.handleChange.bind(this)} ref={this.selectListRef} />
-                </Dropdown>
+                <ContextMenu onClick={this.onCtxMenuClick.bind(this)} links={[
+                    ['Clear this filter', 'clear']
+                ]}>
+                    <Dropdown style={['secondary']} label={label} text={this.state.humanReadableValue}>
+                        <SelectList options={this.state.options} onChange={this.handleChange.bind(this)} ref={this.selectListRef} />
+                    </Dropdown>
+                </ContextMenu>
             </div>
         );
     }

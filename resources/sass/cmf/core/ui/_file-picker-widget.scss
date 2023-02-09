@@ -68,7 +68,9 @@
 
     @include element(selection)
     {
-        // for ref
+        background-color: $fill-color;
+        border-radius: $border-radius-1;
+        padding-top: calc($rule / 2);
     }
 
     @include element(selection-header)

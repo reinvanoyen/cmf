@@ -64,6 +64,11 @@
         margin-right: calc($rule / 3);
     }
 
+    @include modifier(grouped)
+    {
+        border-radius: 0;
+    }
+
     @include modifier(has-icon)
     {
         display: inline-flex;
@@ -103,6 +108,11 @@
         }
     }
 
+    @include modifier(active)
+    {
+        background-color: $fill-color-alt-2;
+    }
+
     @include modifier(outline)
     {
         background-color: $color01;
@@ -126,6 +136,7 @@
 
     @include modifier(small)
     {
+        height: $rule * 1.15;
         padding: calc($rule / 3) calc($rule / 1.5);
 
         &:after { display: none; }

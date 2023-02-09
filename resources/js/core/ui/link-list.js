@@ -16,11 +16,13 @@ class LinkList extends React.Component {
 
     renderLinks() {
         return this.props.links.map((link, i) => {
-            return (
-                <button className={'link-list__button'} onClick={e => this.onClick(e, link[1])} key={i} type={'button'}>
-                    {link[0]}
-                </button>
-            );
+            if (link !== null) {
+                return (
+                    <button className={'link-list__button'} onClick={e => this.onClick(e, link[1])} key={i} type={'button'}>
+                        {link[0]}
+                    </button>
+                );
+            }
         });
     }
 

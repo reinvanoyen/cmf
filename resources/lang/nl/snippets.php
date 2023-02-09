@@ -167,4 +167,6 @@ return [
 
     'tags' => 'Tags',
     'no_tags_available' => 'Er zijn geen tags beschikbaar',
+
+    'reloaded_plural' => ':plural werden opnieuw ingeladen',
 ];

@@ -8,6 +8,11 @@
     border-radius: $border-radius-1;
     cursor: pointer;
 
+    @include modifier(compact-list)
+    {
+        padding: calc($rule / 3) calc($rule / 4);
+    }
+
     @include modifier(list)
     {
         // for ref
@@ -47,6 +52,11 @@
         flex-grow: 0;
         margin-right: calc($rule / 2);
 
+        @include block-modifier(compact-list)
+        {
+            width: $rule;
+        }
+
         @include block-modifier(grid)
         {
             order: 2;
@@ -83,6 +93,11 @@
     {
         flex-grow: 0;
         margin-right: calc($rule / 2);
+
+        @include block-modifier(compact-list)
+        {
+            display: none;
+        }
 
         @include block-modifier(grid)
         {

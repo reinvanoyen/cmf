@@ -16,6 +16,7 @@ import DirectoryTree from "../core/ui/directory-tree";
 import i18n from "../util/i18n";
 import str from "../util/str";
 import localStorage from "../util/local-storage";
+import ButtonGroup from "../core/ui/button-group";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -439,8 +440,15 @@ class ViewMediaDirectory extends React.Component {
                         {this.renderBreadcrumbs()}
                     </div>
                     <div className="view-media-directory__header-options">
-                        <IconButton name={'view_list'} onClick={e => this.changeFileBrowserViewMode('list')} />
-                        <IconButton name={'grid_view'} onClick={e => this.changeFileBrowserViewMode('grid')} />
+                        <ButtonGroup
+                            active={this.state.fileBrowserViewMode}
+                            buttons={[
+                                {icon: 'list', key: 'compact-list'},
+                                {icon: 'view_list', key: 'list'},
+                                {icon: 'grid_view', key: 'grid'},
+                            ]}
+                            onClick={key => this.changeFileBrowserViewMode(key)}
+                        />
                         <Button
                             style={['secondary', 'small']}
                             onClick={this.promptCreateDirectory.bind(this)}

@@ -8,6 +8,8 @@ import Search from "../core/ui/search";
 import Link from "../core/ui/link";
 import str from "../util/str";
 import i18n from "../util/i18n";
+import ContextMenu from "../core/ui/context-menu";
+import util from "../core/ui/util";
 
 class Index extends React.Component {
 
@@ -255,20 +257,30 @@ class Index extends React.Component {
     search(keyword) {
         this.setState({
             searchKeyword: keyword
-        }, () => {
+        }, () => this.load());
+    }
 
+    onCtxMenuClick(action) {
+        if (action === 'refresh') {
             this.load();
-        });
+            util.i18nNotify('snippets.reloaded_plural', {plural: this.props.plural});
+        } else if (action === 'clearFilters') {
+            this.clearFilters();
+        }
     }
 
     render() {
-
         return (
-            <div className={'index index--'+this.props.style+(this.state.isLoading ? ' index--loading' : '')}>
-                {this.renderHeader()}
-                {this.renderRows()}
-                {this.renderFooter()}
-            </div>
+            <ContextMenu onClick={this.onCtxMenuClick.bind(this)} links={[
+                ['Reload '+this.props.plural, 'refresh'],
+                (this.state.hasActiveFilters ? ['Clear filters', 'clearFilters'] : null)
+            ]}>
+                <div className={'index index--'+this.props.style+(this.state.isLoading ? ' index--loading' : '')}>
+                    {this.renderHeader()}
+                    {this.renderRows()}
+                    {this.renderFooter()}
+                </div>
+            </ContextMenu>
         );
     }
 }

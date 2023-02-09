@@ -8,6 +8,12 @@
     border-radius: $border-radius-3;
     overflow: hidden;
 
+    @include modifier(compact-list)
+    {
+        width: calc($default-size / 2);
+        height: calc($default-size / 2);
+    }
+
     @include modifier(list)
     {
         // for ref
@@ -32,6 +38,13 @@
         color: var(--color);
         background-color: $color01;
         @include type-6;
+
+        @include block-modifier(compact-list)
+        {
+            width: calc($default-size / 2);
+            height: calc($default-size / 2);
+            font-size: .5rem;
+        }
 
         @include block-modifier(grid)
         {

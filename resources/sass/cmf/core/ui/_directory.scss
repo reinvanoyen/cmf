@@ -44,6 +44,11 @@
         align-items: center;
         margin-right: calc($rule / 2);
 
+        @include block-modifier(compact-list)
+        {
+            width: $rule;
+        }
+
         @include block-modifier(grid)
         {
             order: 2;
