@@ -16,7 +16,7 @@ mix
     .sass('resources/sass/app.scss', 'public/css')
     .js('resources/js/app.js', 'public/js').react();
 
-mix.extract(['react', 'react-dom', 'react-trix', 'trix'], 'public/js/vendor.js');
+mix.extract(['redux', 'redux-react', 'react', 'react-dom', 'react-trix', 'trix'], 'public/js/vendor.js');
 
 if (mix.inProduction()) {
     mix.version();
