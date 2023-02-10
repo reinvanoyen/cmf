@@ -38,7 +38,7 @@ class Cmf
      */
     public function getVersion(): string
     {
-        return '0.1.34';
+        return '0.1.35';
     }
 
     /**
