@@ -3,6 +3,7 @@ import './index.scss';
 import React from 'react';
 import LinkList from "../link-list";
 import ReactDOM from "react-dom";
+import {createRoot} from "react-dom/client";
 
 class ContextMenu extends React.Component {
 
@@ -28,6 +29,7 @@ class ContextMenu extends React.Component {
 
         this.ctxOverlayEl = null;
         this.ctxMountEl = null;
+        this.root = null;
     }
 
     componentWillUnmount() {
@@ -86,7 +88,9 @@ class ContextMenu extends React.Component {
 
             this.ctxMountEl = document.body.appendChild(document.createElement('div'));
             this.ctxMountEl.classList.add('ctx-mount');
-            ReactDOM.render(this.renderContextMenu(), this.ctxMountEl);
+
+            this.root = createRoot(this.ctxMountEl);
+            this.root.render(this.renderContextMenu());
         });
     }
 
@@ -98,6 +102,7 @@ class ContextMenu extends React.Component {
 
             this.ctxOverlayEl.remove();
             this.ctxMountEl.remove();
+            this.root = null;
 
             if (cb) {
                 cb();

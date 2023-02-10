@@ -26,8 +26,8 @@ export default {
             params: params
         };
     },
-    update(module, action, params) {
-        //
+    update(module, action, params = {}) {
+        store.dispatch({ type: 'location/update', payload: {module, action, params}});
     },
     goTo(module, action, params = {}) {
 
@@ -41,19 +41,17 @@ export default {
             params: params
         });
 
-        store.dispatch({ type: 'location/update', payload: {module, action, params}});
+        this.update(module, action, params);
     },
     refresh() {
         this.forceRefresh = true;
         this.goTo(this.currentPath.module, this.currentPath.action, this.currentPath.params);
     },
     goBack() {
-
         const {module, action, params} = this.history[this.history.length - 2];
         this.goTo(module, action, params);
     },
     handleRedirect(props, params = {}) {
-
         if (props.refresh) {
             this.refresh();
         } else if (props.redirectBack) {

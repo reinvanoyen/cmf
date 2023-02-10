@@ -1,6 +1,7 @@
 import React from 'react';
 import UiDropdown from "../core/ui/dropdown";
 import LinkList from "../core/ui/link-list";
+import path from "../state/path";
 
 export default function Dropdown(props) {
 
@@ -14,7 +15,7 @@ export default function Dropdown(props) {
             params.id = props.path.params.id;
         }
 
-        dispatch({type: 'location/update', payload: {module: props.path.module, actionPath, params}});
+        path.goTo(props.path.module, actionPath, params);
     }
 
     const render = () => {

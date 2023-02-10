@@ -1,7 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/manifest.js": "/js/manifest.js",
-    "/js/vendor.js": "/js/vendor.js",
-    "/css/app.css": "/css/app.css",
-    "/public/vendor/cmf/mix-manifest.json": "/public/vendor/cmf/mix-manifest.json"
+    "/js/app.js": "/js/app.js?id=c443a7a1564d695079b528810a25dd82",
+    "/js/manifest.js": "/js/manifest.js?id=22bb55ce20c9c883a45b5c11d8eca703",
+    "/js/vendor.js": "/js/vendor.js?id=9888fbcf62db0015f4943a92bbecbe8f",
+    "/css/app.css": "/css/app.css?id=8f956d925695d007a773cca75dbcd184"
 }

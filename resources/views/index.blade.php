@@ -4,6 +4,6 @@
 
 @section('body')
 
-    <div class="cmf-mount" data-title="{{ $title }}"></div>
+    <div class="cmf-mount"></div>
 
 @endsection

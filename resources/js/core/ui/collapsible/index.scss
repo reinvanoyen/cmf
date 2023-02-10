@@ -1,3 +1,6 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
 @include block(collapsible)
 {
     border-radius: $border-radius-1;

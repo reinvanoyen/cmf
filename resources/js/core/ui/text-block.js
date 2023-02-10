@@ -3,21 +3,20 @@
 import React from 'react';
 import Title from "./title";
 
-export default class TextBlock extends React.Component {
-
-    static defaultProps = {
-        title: null,
-        text: null
-    };
-
-    render() {
-        return (
-            <div className={'text-block'}>
-                <Title>{this.props.title}</Title>
-                <div>
-                    {this.props.text}
-                </div>
+function TextBlock(props) {
+    return (
+        <div className={'text-block'}>
+            <Title>{props.title}</Title>
+            <div>
+                {props.text}
             </div>
-        );
-    }
+        </div>
+    );
 }
+
+TextBlock.defaultProps = {
+    title: null,
+    text: null
+};
+
+export default TextBlock;

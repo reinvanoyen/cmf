@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Nav from "./nav";
 import Module from "./module/module";
 import api from "../api/api";
@@ -11,42 +11,44 @@ import Logo from "./logo";
 import helpers from "../util/helpers";
 import Icon from "./ui/icon";
 import ErrorModule from "./module/error-module";
-import meta from "../util/meta";
 import i18n from "../util/i18n";
 import FooterText from "./footer-text";
-import useForceUpdate from "../hooks/use-force-update";
 import { useDispatch, useSelector } from "react-redux";
+import useOnMount from "../hooks/use-on-mount";
 
 export default function Cmf(props) {
 
     const [state, setState] = useState({
-        tick: 0,
         isAuthenticating: true,
         isLoading: true,
-        isLoggedIn: false,
         isError: false,
         isNavOpen: false,
         module: null,
         action: null
     });
 
-    const { user } = useSelector(state => state.auth);
+    const { isLoggedIn } = useSelector(state => state.auth);
+    const { title } = useSelector(state => state.cmf);
     const modules = useSelector(state => state.modules.modules);
     const location = useSelector(state => state.location.current);
     const prevLocation = useSelector(state => state.location.previous);
     const dispatch = useDispatch();
-    const forceUpdate = useForceUpdate();
 
-    useEffect(() => {
-        api.auth.user().then(response => {
+    const checkIfUserAuth = async () => {
+        try {
+            const response = await api.auth.user();
             onAuthSuccess(response.data.data);
-        }, error => {
+        } catch (error) {
             setState({
                 ...state,
                 isAuthenticating: false
             });
-        });
-    }, []);
+        }
+    }
+
+    useOnMount(() => {
+        checkIfUserAuth();
+    });
 
     useEffect(() => {
         if (
@@ -105,13 +107,13 @@ export default function Cmf(props) {
     }, [modules]);
 
     useEffect(() => {
-        if (state.isLoggedIn) {
+        if (isLoggedIn) {
             // Load all modules from the API
             api.modules.index().then(response => {
                 dispatch({type: 'modules/update', payload: response.data.data});
             });
         }
-    }, [state.isLoggedIn]);
+    }, [isLoggedIn]);
 
     const setLoadingState = () => {
         setState({
@@ -120,15 +122,10 @@ export default function Cmf(props) {
         });
     }
 
-    const getVersion = () => {
-        return meta.get('cmf:version');
-    }
-
     const onAuthSuccess = (user) => {
         dispatch({type: 'auth/loggedin', payload: user});
         setState({
             ...state,
-            isLoggedIn: true,
             isAuthenticating: false
         });
     }
@@ -162,28 +159,12 @@ export default function Cmf(props) {
         let action = controller.action || 'index';
         let params = controller.params;
 
-        dispatch({type: 'location/update', payload: {module, action, params}});
+        path.update(module, action, params);
     }
 
     const goToIndex = () => {
         // Go to the first module's index
-        dispatch({type: 'location/update', payload: {module: modules[0].id, action: 'index'}});
-    }
-
-    const onLogout = () => {
-        setState({
-            ...state,
-            isLoggedIn: false
-        });
-
-        // Notify the user
-        ui.notify('User logged out');
-    }
-
-    const getUserPanel = () => {
-        return (
-            <UserPanel onLogout={onLogout.bind(this)} />
-        );
+        path.goTo(modules[0].id, 'index');
     }
 
     const render = () => {
@@ -192,8 +173,8 @@ export default function Cmf(props) {
             return <Loader />;
         }
 
-        if (! state.isLoggedIn) {
-            return <Login title={props.title} onSuccess={onLoginSuccess} onFail={onLoginFail} />;
+        if (! isLoggedIn) {
+            return <Login onSuccess={onLoginSuccess} onFail={onLoginFail} />;
         }
 
         let renderModule = null;
@@ -208,10 +189,10 @@ export default function Cmf(props) {
             <div className="cmf">
                 <div className="cmf__header">
                     <button className="cmf__logo" onClick={goToIndex}>
-                        <Logo name={props.title} />
+                        <Logo name={title} />
                     </button>
                     <div className="cmf__user">
-                        {getUserPanel()}
+                        <UserPanel />
                     </div>
                 </div>
                 <div className="cmf__main">
@@ -223,7 +204,7 @@ export default function Cmf(props) {
                             {renderModule}
                         </div>
                         <div className="cmf__footer">
-                            <FooterText title={props.title} />
+                            <FooterText />
                         </div>
                     </div>
                 </div>

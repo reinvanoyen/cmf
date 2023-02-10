@@ -1,22 +1,20 @@
-import React from 'react';
-import Page from "./page";
-import TextBlock from "./ui/text-block";
+import React from "react";
 
-class ErrorPage extends React.Component {
+import Page from './page';
+import TextBlock from './ui/text-block';
 
-    static defaultProps = {
-        title: 'CMF',
-        errorTitle: 'An error occurred',
-        errorText: 'An unknown error occurred.',
-    };
-
-    render() {
-        return (
-            <Page title={this.props.title}>
-                <TextBlock title={this.props.errorTitle} text={this.props.errorText} />
-            </Page>
-        );
-    }
+function ErrorPage(props) {
+    return (
+        <Page title={props.title}>
+            <TextBlock title={props.errorTitle} text={props.errorText} />
+        </Page>
+    );
 }
+
+ErrorPage.defaultProps = {
+    title: 'CMF',
+    errorTitle: 'An error occurred',
+    errorText: 'An unknown error occurred.'
+};
 
 export default ErrorPage;

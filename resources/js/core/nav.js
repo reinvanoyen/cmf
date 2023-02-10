@@ -1,14 +1,13 @@
-import React from 'react';
+import React from "react";
 import ContextMenu from "./ui/context-menu";
 import NavItem from "./nav-item";
 import SubnavItem from "./subnav-item";
 import i18n from "../util/i18n";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import path from "../state/path";
 
 export default function Nav(props) {
 
-    const dispatch = useDispatch();
-    const location = useSelector(state => state.location.current);
     const modules = useSelector(state => state.modules.modules);
 
     const switchModule = (module) => {
@@ -17,7 +16,7 @@ export default function Nav(props) {
             props.onModuleSwitch();
         }
 
-        dispatch({type: 'location/update', payload: {module: module.id, action: 'index'}});
+        path.goTo(module.id, 'index');
     };
 
     const onContextMenuClick = (path, module) => {

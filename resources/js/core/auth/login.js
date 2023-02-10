@@ -1,20 +1,17 @@
 import React, { useRef } from 'react';
-import Form from "../ui/form";
-import TextField from "../../components/text-field";
+import { useSelector } from "react-redux";
+
 import api from "../../api/api";
-import Page from "../page";
 import i18n from "../../util/i18n";
 
-export default function Login(props) {
+import Form from "../ui/form";
+import TextField from "../../components/text-field";
+import Page from "../page";
 
-    /*
-    static defaultProps = {
-        title: 'CMF',
-        onSuccess: user => {},
-        onFail: () => {}
-    };*/
+function Login(props) {
 
     const formRef = useRef();
+    const { title } = useSelector(state => state.cmf);
 
     const loginAttempt = (data) => {
         api.auth.login(data.email, data.password).then(response => {
@@ -26,7 +23,7 @@ export default function Login(props) {
     };
 
     return (
-        <Page title={props.title}>
+        <Page title={title}>
             <div className="login">
                 <Form
                     ref={formRef}
@@ -40,3 +37,11 @@ export default function Login(props) {
         </Page>
     );
 }
+
+Login.defaultProps = {
+    title: 'CMF',
+    onSuccess: user => {},
+    onFail: () => {}
+};
+
+export default Login;

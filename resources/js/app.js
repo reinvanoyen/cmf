@@ -1,17 +1,17 @@
 "use strict";
 
 import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from 'react-redux';
 import store from "./store";
 
 import Cmf from "./core/cmf";
 
-const cmfMountEl = document.querySelector('.cmf-mount');
+const rootEl = document.querySelector('.cmf-mount');
+const root = createRoot(rootEl);
 
-render(
+root.render(
     <Provider store={store}>
-        <Cmf title={cmfMountEl.dataset.title} />
+        <Cmf />
     </Provider>,
-    cmfMountEl
 );

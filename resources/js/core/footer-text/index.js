@@ -1,21 +1,17 @@
 import './index.scss';
 
 import React from 'react';
-import meta from "../../util/meta";
+import { useSelector } from "react-redux";
 
-class FooterText extends React.Component {
+function FooterText() {
 
-    getVersion() {
-        return meta.get('cmf:version');
-    }
+    const { title, version } = useSelector(state => state.cmf);
 
-    render() {
-        return (
-            <div className={'footer-text'}>
-                &copy; {this.props.title || ''} – <a href="https://github.com/reinvanoyen/cmf" title="CMF on Github" target="_blank">CMF {this.getVersion()}</a> – Built with love by <a href="https://www.reinvanoyen.be" title="Rein Van Oyen" target="_blank">Rein Van Oyen</a>
-            </div>
-        );
-    }
+    return (
+        <div className={'footer-text'}>
+            &copy; {title || ''} – <a href="https://github.com/reinvanoyen/cmf" title="CMF on Github" target="_blank">CMF {version}</a> – Built with love by <a href="https://www.reinvanoyen.be" title="Rein Van Oyen" target="_blank">Rein Van Oyen</a>
+        </div>
+    );
 }
 
 export default FooterText;

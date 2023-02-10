@@ -9,6 +9,7 @@ import Window from "../core/ui/window";
 import Form from "../core/ui/form";
 import components from "../rendering/components";
 import ReactDOM from "react-dom";
+import {createRoot} from "react-dom/client";
 
 class ExecuteLink extends React.Component {
 
@@ -29,16 +30,19 @@ class ExecuteLink extends React.Component {
         };
 
         this.widgetMountEl = null;
+        this.root = null;
         this.formRef = React.createRef();
     }
 
     close() {
         this.widgetMountEl.remove();
+        this.root = null;
     }
 
     open() {
         this.widgetMountEl = document.body.appendChild(document.createElement('div'));
-        ReactDOM.render(this.renderAskWidget(), this.widgetMountEl);
+        this.root = createRoot(this.widgetMountEl);
+        this.root.render(this.renderAskWidget());
     }
 
     redirect(response) {

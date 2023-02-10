@@ -1,7 +1,6 @@
 "use strict";
 
 export default {
-
     // General purpose
     'application/json': {
         name: 'json',

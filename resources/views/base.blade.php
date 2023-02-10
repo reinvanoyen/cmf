@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <meta name="csrf" content="{{ csrf_token() }}" />
+    <meta name="cmf:title" content="{{ $title }}" />
     <meta name="cmf:path" content="{{ Cmf::getPath() }}" />
     <meta name="cmf:version" content="{{ Cmf::getVersion() }}" />
 

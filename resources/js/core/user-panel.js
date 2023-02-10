@@ -4,18 +4,21 @@ import api from "../api/api";
 import Icon from "./ui/icon";
 import Dropdown from "./ui/dropdown";
 import i18n from "../util/i18n";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ui from "./ui/util";
 
 export default function UserPanel(props) {
 
+    const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
 
-    const logout = () => {
-        api.auth.logout().then(response => {
-            props.onLogout();
-        }, error => {
-            //
-        });
+    const logout = async () => {
+        await api.auth.logout();
+
+        dispatch({ type: 'auth/loggedout' });
+
+        // Notify the user
+        ui.notify('User logged out');
     };
 
     return (

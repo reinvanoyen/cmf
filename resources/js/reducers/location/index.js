@@ -1,4 +1,5 @@
 const initialState = {
+    history: [],
     previous: {
         module: null,
         action: null,

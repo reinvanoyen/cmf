@@ -1,22 +1,20 @@
-import React from 'react';
+import React from "react";
 
-class Logo extends React.Component {
-
-    static defaultProps = {
-        name: 'CMF'
-    };
-
-    render() {
-        return (
-            <div className="logo">
-                <div className="logo__emblem">{this.props.name[0]}</div>
-                <div className="logo__name">
-                    {this.props.name}<br />
-                    <span>CMF</span>
-                </div>
+const Logo = (props) => {
+    return (
+        <div className="logo">
+            <div className="logo__emblem">{props.name[0]}</div>
+            <div className="logo__name">
+                {props.name}<br />
+                <span>{props.subtitle}</span>
             </div>
-        );
-    }
+        </div>
+    );
 }
+
+Logo.defaultProps = {
+    name: 'CMF',
+    subtitle: 'CMF'
+};
 
 export default Logo;
