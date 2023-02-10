@@ -1,5 +1,7 @@
 "use strict";
 
+import './index.scss';
+
 import React from 'react';
 import Placeholder from "../placeholder";
 import uploadUtil from "../../../util/upload";
@@ -19,7 +21,7 @@ function FileUploader(props) {
             }
         });
     }
-    
+
     return (
         <div className="file-uploader">
             <div className="file-uploader__input">

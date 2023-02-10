@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import components from "../rendering/components";
 import filters from "../rendering/filters";
 import api from "../api/api";
@@ -10,134 +10,133 @@ import str from "../util/str";
 import i18n from "../util/i18n";
 import ContextMenu from "../core/ui/context-menu";
 import util from "../core/ui/util";
+import usePrevious from "../hooks/use-previous";
+import useOnMount from "../hooks/use-on-mount";
+import {useSelector} from "react-redux";
 
-class Index extends React.Component {
+function Index(props) {
 
-    static defaultProps = {
-        type: '',
-        components: [],
-        path: {},
-        id: 0,
-        data: {},
-        params: null,
-        search: false,
-        relationship: false,
-        filters: [],
-        sorter: null,
-        restrictByFk: null,
-        action: '',
-        style: 'default',
-        plural: '',
-        singular: ''
-    };
+    const [state, setState] = useState({
+        isLoading: true,
+        rows: [],
+        meta: null,
+        searchKeyword: null,
+        filterParams: {},
+        hasActiveFilters: false
+    });
 
-    constructor(props) {
+    const prevDataId = usePrevious(props.data.id);
+    const { refresh } = useSelector(state => state.location);
 
-        super(props);
+    let filterList = [];
 
-        this.state = {
-            isLoading: true,
-            rows: [],
-            meta: null,
-            searchKeyword: null,
-            filterParams: {},
-            hasActiveFilters: false
-        };
+    /*
+    useOnMount(() => {
+        if (! props.restrictByFk && ! props.relationship) {
+            load();
+        }
+    });
+    */
 
-        this.filterList = [];
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.restrictByFk || this.props.relationship) {
-            if (this.props.data.id !== prevProps.data.id) {
-                this.load();
+    useEffect(() => {
+        if (props.restrictByFk || props.relationship) {
+            if (props.data.id !== prevDataId) {
+                load();
             }
         }
-    }
+    });
 
-    componentDidMount() {
-        if (! this.props.restrictByFk && ! this.props.relationship) {
-            this.load();
+    useEffect(() => {
+        load();
+    }, [state.searchKeyword, state.filterParams]);
+
+    useEffect(() => {
+        if (refresh) {
+            load();
         }
-    }
+    }, [refresh]);
 
-    load(params = {}) {
+    const load = async (params = {}) => {
 
         // Add FK to the params
-        if (this.props.restrictByFk) {
-            params.foreign = this.props.data.id;
+        if (props.restrictByFk) {
+            params.foreign = props.data.id;
         }
 
         // Add the current data id to the params because we need it to fetch the relationship
-        if (this.props.relationship) {
-            params.relation = this.props.data.id;
+        if (props.relationship) {
+            params.relation = props.data.id;
         }
 
         // Search for search keyword
-        if (this.state.searchKeyword) {
-            params.search = this.state.searchKeyword;
+        if (state.searchKeyword) {
+            params.search = state.searchKeyword;
         }
 
         // If filter params are set, add them to the http params
-        if (this.state.filterParams) {
-            for (let filterId in this.state.filterParams) {
-                if (this.state.filterParams.hasOwnProperty(filterId)) {
-                    params['filter_'+filterId] = this.state.filterParams[filterId];
+        if (state.filterParams) {
+            for (let filterId in state.filterParams) {
+                if (state.filterParams.hasOwnProperty(filterId)) {
+                    params['filter_'+filterId] = state.filterParams[filterId];
                 }
             }
         }
 
         // Execute the get request
-        api.execute.get(this.props.path, this.props.id,'load', params).then(response => {
-            this.setState({
-                isLoading: false,
-                rows: response.data.data,
-                meta: response.data.meta || null
-            });
+        const response = await api.execute.get(props.path, props.id,'load', params);
+
+        setState({
+            ...state,
+            isLoading: false,
+            rows: response.data.data,
+            meta: response.data.meta || null
         });
     }
 
-    onRowClick(row) {
-        path.goTo(this.props.path.module, this.props.action, {
+    const onRowClick = (row) => {
+        path.goTo(props.path.module, props.action, {
             id: row.id
         });
     }
 
-    getRowStyle() {
+    const getRowStyle = () => {
 
-        let rowStyle = {
-            gridTemplateColumns: 'repeat('+this.props.components.length+', 1fr)'
+        const rowStyle = {
+            gridTemplateColumns: 'repeat('+props.components.length+', 1fr)'
         };
 
-        if (this.props.grid.length) {
-            rowStyle.gridTemplateColumns = this.props.grid.join('fr ')+'fr';
+        if (props.grid.length) {
+            rowStyle.gridTemplateColumns = props.grid.join('fr ')+'fr';
         }
 
         return rowStyle;
     }
 
-    renderFilters() {
+    const renderFilters = () => {
 
-        this.filterList = filters.renderFiltersWith(this.props.filters, {}, this.props.path, (filter, i) => {
+        filterList = filters.renderFiltersWith(props.filters, {}, props.path, (filter, i) => {
             return (
                 <div className="index__header-filter" key={i}>
                     {filter}
                 </div>
             );
-        }, this.onFilterChange.bind(this), true);
+        }, onFilterChange, true);
 
-        return this.filterList.map(obj => obj.filter);
+        return filterList.map(obj => obj.filter);
     }
 
-    renderFiltersTool() {
+    const renderFiltersTool = () => {
 
-        if (this.props.filters.length) {
-
+        if (props.filters.length) {
             return (
                 <div className="index__header-filters-tool">
-                    {this.renderFilters()}
+                    {renderFilters()}
                     <div className="index__header-clear-filters">
-                        <Link onClick={this.state.hasActiveFilters ? this.clearFilters.bind(this) : null} text={i18n.get('snippets.clear_filters')} style={this.state.hasActiveFilters ? '' : 'disabled'} />
+                        <Link
+                            onClick={state.hasActiveFilters ? clearFilters : null}
+                            text={i18n.get('snippets.clear_filters')}
+                            style={state.hasActiveFilters ? '' : 'disabled'}
+                        />
                     </div>
                 </div>
             );
@@ -146,77 +145,77 @@ class Index extends React.Component {
         return null;
     }
 
-    renderHeader() {
+    const renderHeader = () => {
 
-        let indexSearch = (this.props.search ? <div className="index__header-search"><Search onSearch={keyword => this.search(keyword)}/></div> : null);
+        const indexSearch = (props.search ? <div className="index__header-search"><Search onSearch={keyword => search(keyword)}/></div> : null);
 
         return (
             <div className="index__header">
                 <div className="index__header-title">
-                    {str.toUpperCaseFirst(this.props.plural)} {this.state.meta ? '('+this.state.meta.total+')' : null}
+                    {str.toUpperCaseFirst(props.plural)} {state.meta ? '('+state.meta.total+')' : null}
                 </div>
                 <div className="index__header-options">
                     {indexSearch}
-                    {this.renderFiltersTool()}
+                    {renderFiltersTool()}
                 </div>
             </div>
         );
     }
 
-    renderFooter() {
+    const renderFooter = () => {
 
-        if (! this.state.meta || ! this.state.meta.total) {
+        if (! state.meta || ! state.meta.total) {
             return null;
         }
 
         return (
             <div className="index__footer">
                 <Pagination
-                    currentPage={this.state.meta.current_page}
-                    lastPage={this.state.meta.last_page}
-                    perPage={this.state.meta.per_page}
-                    total={this.state.meta.total}
-                    from={this.state.meta.from}
-                    to={this.state.meta.to}
-                    onPageChange={this.changePage.bind(this)}
+                    currentPage={state.meta.current_page}
+                    lastPage={state.meta.last_page}
+                    perPage={state.meta.per_page}
+                    total={state.meta.total}
+                    from={state.meta.from}
+                    to={state.meta.to}
+                    onPageChange={changePage}
                 />
             </div>
         );
     }
 
-    renderPlaceholder() {
+    const renderPlaceholder = () => {
 
-        if (this.state.searchKeyword) {
+        if (state.searchKeyword) {
             return (
                 <div className="index__placeholder">
-                    {i18n.get('snippets.no_plural_found_for_search', {plural: this.props.plural, search: this.state.searchKeyword})}
+                    {i18n.get('snippets.no_plural_found_for_search', {plural: props.plural, search: state.searchKeyword})}
                 </div>
             );
         }
 
         return (
             <div className="index__placeholder">
-                {i18n.get('snippets.no_plural_found', {plural: this.props.plural})}
+                {i18n.get('snippets.no_plural_found', {plural: props.plural})}
             </div>
         );
     }
 
-    renderRows() {
+    const renderRows = () => {
 
-        if (this.state.rows.length) {
+        if (state.rows.length) {
             return (
                 <div className="index__rows">
-                    {this.state.rows.map(row => {
-                        let rowContent = this.props.components.map((component, i) => {
+                    {state.rows.map(row => {
+                        let rowContent = props.components.map((component, i) => {
                             return (
                                 <div className="index__component" key={i}>
-                                    {components.renderComponent(component, row, this.props.path)}
+                                    {components.renderComponent(component, row, props.path)}
                                 </div>
                             );
                         });
 
                         return (
-                            <div className={'index__row'+(this.props.action ? ' index__row--clickable' : '')} key={row.id} style={this.getRowStyle()} onClick={this.props.action ? this.onRowClick.bind(this, row) : null}>
+                            <div className={'index__row'+(props.action ? ' index__row--clickable' : '')} key={row.id} style={getRowStyle()} onClick={props.action ? () => onRowClick(row) : null}>
                                 {rowContent}
                             </div>
                         );
@@ -225,64 +224,84 @@ class Index extends React.Component {
             );
         }
 
-        return this.renderPlaceholder();
+        return renderPlaceholder();
     }
 
-    changePage(page) {
-        this.load({
-            page: page
-        });
+    const changePage = (page) => {
+        load({page});
     }
 
-    onFilterChange(filterId, filterValue) {
+    const onFilterChange = (filterId, filterValue) => {
+
+        let { filterParams } = state;
 
         if (filterValue) {
-            this.state.filterParams[filterId] = filterValue;
+            filterParams[filterId] = filterValue;
         } else {
-            delete this.state.filterParams[filterId];
+            delete filterParams[filterId];
         }
 
-        this.setState({
-            filterParams: this.state.filterParams,
-            hasActiveFilters: (Object.keys(this.state.filterParams).length !== 0)
-        }, () => {
-            this.load();
+        setState({
+            ...state,
+            filterParams,
+            hasActiveFilters: (Object.keys(filterParams).length !== 0)
         });
     }
 
-    clearFilters() {
-        this.filterList.forEach(obj => obj.ref.current.clear());
+    const clearFilters = () => {
+        filterList.forEach(obj => obj.ref.current.clear());
     }
 
-    search(keyword) {
-        this.setState({
+    const search = (keyword) => {
+        setState({
+            ...state,
             searchKeyword: keyword
-        }, () => this.load());
+        });
     }
 
-    onCtxMenuClick(action) {
+    const onCtxMenuClick = (action) => {
         if (action === 'refresh') {
-            this.load();
-            util.i18nNotify('snippets.reloaded_plural', {plural: this.props.plural});
+            load();
+            util.i18nNotify('snippets.reloaded_plural', {plural: props.plural});
         } else if (action === 'clearFilters') {
-            this.clearFilters();
+            clearFilters();
         }
     }
 
-    render() {
+    const render = () => {
         return (
-            <ContextMenu onClick={this.onCtxMenuClick.bind(this)} links={[
-                ['Reload '+this.props.plural, 'refresh'],
-                (this.state.hasActiveFilters ? ['Clear filters', 'clearFilters'] : null)
+            <ContextMenu onClick={onCtxMenuClick} links={[
+                ['Reload '+props.plural, 'refresh'],
+                (state.hasActiveFilters ? ['Clear filters', 'clearFilters'] : null)
             ]}>
-                <div className={'index index--'+this.props.style+(this.state.isLoading ? ' index--loading' : '')}>
-                    {this.renderHeader()}
-                    {this.renderRows()}
-                    {this.renderFooter()}
+                <div className={'index index--'+props.style+(state.isLoading ? ' index--loading' : '')}>
+                    {renderHeader()}
+                    {renderRows()}
+                    {renderFooter()}
                 </div>
             </ContextMenu>
         );
     }
+
+    return render();
 }
+
+Index.defaultProps = {
+    type: '',
+    components: [],
+    path: {},
+    id: 0,
+    data: {},
+    params: null,
+    search: false,
+    relationship: false,
+    filters: [],
+    sorter: null,
+    restrictByFk: null,
+    action: '',
+    style: 'default',
+    plural: '',
+    singular: ''
+};
 
 export default Index;

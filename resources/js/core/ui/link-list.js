@@ -6,12 +6,15 @@ class LinkList extends React.Component {
     static defaultProps = {
         links: [],
         style: 'default',
+        stopPropagation: true,
         onClick: actionPath => {}
     };
 
     onClick(e, actionPath) {
-        e.stopPropagation();
         this.props.onClick(actionPath);
+        if (this.props.stopPropagation) {
+            e.stopPropagation();
+        }
     }
 
     renderLinks() {

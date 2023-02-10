@@ -5,7 +5,6 @@ import meta from "../util/meta";
 import store from "../store";
 
 export default {
-    forceRefresh: false,
     path: meta.get('cmf:path'),
     currentPath: {},
     history: [],
@@ -44,8 +43,10 @@ export default {
         this.update(module, action, params);
     },
     refresh() {
-        this.forceRefresh = true;
-        this.goTo(this.currentPath.module, this.currentPath.action, this.currentPath.params);
+        store.dispatch(async (dispatch) => {
+            await dispatch({ type: 'location/refresh'});
+            dispatch({ type: 'location/stop-refresh'});
+        });
     },
     goBack() {
         const {module, action, params} = this.history[this.history.length - 2];

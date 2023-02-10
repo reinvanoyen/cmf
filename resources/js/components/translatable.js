@@ -27,9 +27,6 @@ class Translatable extends React.Component {
     }
 
     getDefaultLanguage() {
-
-        console.log(lang.get());
-
         if (this.props.languages.includes(lang.get())) {
             return lang.get();
         }

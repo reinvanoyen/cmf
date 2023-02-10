@@ -3,7 +3,7 @@
 
 @include block(ctx-overlay)
 {
-    position: absolute;
+    position: fixed;
     z-index: 9999;
     top: 0;
     right: 0;
@@ -21,11 +21,27 @@
     left: 0;
 }
 
+@keyframes context-menu
+{
+    from
+    {
+        transform: scaleY(.85) scaleX(.85);
+        transform-origin: 0 0;
+    }
+
+    to
+    {
+        transform: scaleY(1) scaleX(1);
+        transform-origin: 0 0;
+    }
+}
+
 @include block(context-menu)
 {
     @include element(menu)
     {
-        position: fixed;
+        animation: context-menu .25s;
+        position: absolute;
         top: 0;
         left: 0;
         z-index: 1;

@@ -1,4 +1,5 @@
 const initialState = {
+    refresh: false,
     history: [],
     previous: {
         module: null,
@@ -14,6 +15,18 @@ const initialState = {
 
 export default function locationReducer(state = initialState, action) {
     switch (action.type) {
+        case 'location/refresh': {
+            return {
+                ...state,
+                refresh: true
+            }
+        }
+        case 'location/stop-refresh': {
+            return {
+                ...state,
+                refresh: false
+            }
+        }
         case 'location/update': {
 
             const payload = {...state.current, ...action.payload};

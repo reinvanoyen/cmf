@@ -17,10 +17,7 @@ api.media = {};
 api.auth.user = () => axios.get('cmf/api/auth/user');
 api.auth.logout = () => axios.get('cmf/api/auth/logout');
 api.auth.sessionInfo = () => axios.get('cmf/api/auth/session-info');
-api.auth.keepAlive = () => axios.post('cmf/api/auth/csrf-keep-alive');
-api.auth.login = (email, password) => {
-    return axios.post('cmf/api/auth/login', {email, password});
-};
+api.auth.login = (email, password) => axios.post('cmf/api/auth/login', {email, password});
 
 /*
 * Media API

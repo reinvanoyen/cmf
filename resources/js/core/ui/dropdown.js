@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from "./icon";
 import helpers from "../../util/helpers";
 import IconButton from "./icon-button";
 import Button from "./button";
@@ -67,15 +66,17 @@ class Dropdown extends React.Component {
             isOpen: true,
             dropDirectionX: directionX,
             dropDirectionY: directionY
+        }, () => {
+            this.bindDocumentClick();
         });
-        this.bindDocumentClick();
     }
 
     close() {
         this.setState({
             isOpen: false
+        }, () => {
+            this.unbindDocumentClick();
         });
-        this.unbindDocumentClick();
     }
 
     render() {

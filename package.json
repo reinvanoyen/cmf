@@ -29,9 +29,9 @@
         "react-dnd-html5-backend": "^14.0.2",
         "react-dom": "^18.2.0",
         "react-redux": "^8.0.5",
-        "react-trix": "^0.8.0",
-        "react-trix-rte": "^1.0.13",
+        "react-trix": "^0.10.0",
         "redux": "^4.2.1",
+        "redux-thunk": "^2.4.2",
         "trix": "^1.3.1"
     }
 }

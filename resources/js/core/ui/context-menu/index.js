@@ -2,8 +2,7 @@ import './index.scss';
 
 import React from 'react';
 import LinkList from "../link-list";
-import ReactDOM from "react-dom";
-import {createRoot} from "react-dom/client";
+import { createRoot } from "react-dom/client";
 
 class ContextMenu extends React.Component {
 
@@ -118,7 +117,7 @@ class ContextMenu extends React.Component {
 
     renderContextMenu() {
         return (
-            <div className="context-menu__menu" style={{transform: `translateX(${this.state.x}px) translateY(${this.state.y}px)`}} ref={this.contextMenuRef}>
+            <div className="context-menu__menu" style={{left: `${this.state.x}px`, top: `${this.state.y}px`}} ref={this.contextMenuRef}>
                 <LinkList links={this.props.links} onClick={this.onLinkClick.bind(this)} />
             </div>
         );

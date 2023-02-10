@@ -3,10 +3,32 @@
 import axios from 'axios';
 import meta from "../util/meta";
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common['X-CSRF-TOKEN'] = meta.get('csrf');
+const axiosInstance = axios.create();
 
-axios.interceptors.request.use((config) => {
+axiosInstance.defaults.withCredentials = true;
+axiosInstance.defaults.headers.common['X-CSRF-TOKEN'] = meta.get('csrf');
+
+axiosInstance.interceptors.response.use((response) => response, async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response.status === 419 && !originalRequest._retry) {
+        originalRequest._retry = true;
+
+        const sessionInfo = await axios.get('cmf/api/auth/session-info');
+        const csrfToken = sessionInfo.data.data.csrfToken;
+
+        axiosInstance.defaults.headers.common['X-CSRF-TOKEN'] = sessionInfo.data.data.csrfToken;
+
+        const newRequestConfig = {...originalRequest};
+        newRequestConfig.headers['X-CSRF-TOKEN'] = csrfToken;
+
+        return new axiosInstance(newRequestConfig);
+    }
+
+    throw error;
+});
+
+axiosInstance.interceptors.request.use((config) => {
     document.body.classList.add('api-loading');
     return config;
 }, error => {
@@ -15,7 +37,7 @@ axios.interceptors.request.use((config) => {
 });
 
 // Add a response interceptor
-axios.interceptors.response.use(response => {
+axiosInstance.interceptors.response.use(response => {
     // HTTP response 2xx
     document.body.classList.remove('api-loading');
     return response;
@@ -25,4 +47,4 @@ axios.interceptors.response.use(response => {
     return Promise.reject(error);
 });
 
-export default axios;
+export default axiosInstance;

@@ -15,6 +15,7 @@ import i18n from "../util/i18n";
 import FooterText from "./footer-text";
 import { useDispatch, useSelector } from "react-redux";
 import useOnMount from "../hooks/use-on-mount";
+import useForceUpdate from "../hooks/use-force-update";
 
 export default function Cmf(props) {
 
@@ -97,7 +98,7 @@ export default function Cmf(props) {
                 });
             });
         }
-    }, [location, prevLocation]);
+    }, [location]);
 
     useEffect(() => {
         if (modules.length) {
