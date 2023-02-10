@@ -6,6 +6,7 @@ class SelectList extends React.Component {
 
     static defaultProps = {
         onChange: values => {},
+        onClear: () => {},
         multiple: true,
         options: {},
         defaultValues: [],
@@ -61,7 +62,7 @@ class SelectList extends React.Component {
         this.setState({
             values: []
         }, () => {
-            this.props.onChange(this.state.values);
+            this.props.onClear();
         });
     }
 

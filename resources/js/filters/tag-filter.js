@@ -45,7 +45,7 @@ class TagFilter extends React.Component {
         });
     }
 
-    handleChange(values) {
+    handleChange(values = []) {
 
         let readableValues = values.map(value => this.state.options[value]);
 
@@ -75,10 +75,11 @@ class TagFilter extends React.Component {
                 <ContextMenu onClick={this.onCtxMenuClick.bind(this)} links={[
                     ['Clear this filter', 'clear']
                 ]}>
-                    <Dropdown style={['secondary']} label={label} text={this.state.humanReadableValue}>
+                    <Dropdown stopPropagation={false} style={['secondary']} label={label} text={this.state.humanReadableValue}>
                         <SelectList
                             options={this.state.options}
                             onChange={this.handleChange.bind(this)}
+                            onClear={this.handleChange.bind(this)}
                             ref={this.selectListRef}
                         />
                     </Dropdown>

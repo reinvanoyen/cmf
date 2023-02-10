@@ -8,11 +8,14 @@ class IconButton extends React.Component {
         name: 'fingerprint',
         style: '',
         iconStyle: 'default',
-        onClick: e => {}
+        onClick: e => {},
+        stopPropagation: true
     };
 
     onClick(e) {
-        e.stopPropagation();
+        if (this.props.stopPropagation) {
+            e.stopPropagation();
+        }
         this.props.onClick(e);
     }
 

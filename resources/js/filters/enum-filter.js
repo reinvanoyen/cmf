@@ -26,7 +26,7 @@ class EnumFilter extends React.Component {
         this.selectListRef = React.createRef();
     }
 
-    handleChange(values) {
+    handleChange(values = []) {
 
         let readableValues = values.map(value => this.props.options[value]);
 
@@ -56,8 +56,13 @@ class EnumFilter extends React.Component {
                 <ContextMenu onClick={this.onCtxMenuClick.bind(this)} links={[
                     ['Clear this filter', 'clear']
                 ]}>
-                    <Dropdown style={['secondary']} label={label} text={this.state.humanReadableValue}>
-                        <SelectList options={this.props.options} onChange={this.handleChange.bind(this)} ref={this.selectListRef} />
+                    <Dropdown stopPropagation={false} style={['secondary']} label={label} text={this.state.humanReadableValue}>
+                        <SelectList
+                            options={this.props.options}
+                            onChange={this.handleChange.bind(this)}
+                            onClear={this.handleChange.bind(this)}
+                            ref={this.selectListRef}
+                        />
                     </Dropdown>
                 </ContextMenu>
             </div>

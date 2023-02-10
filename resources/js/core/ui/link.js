@@ -6,13 +6,16 @@ class Link extends React.Component {
     static defaultProps = {
         'text': '',
         style: 'default',
-        onClick: () => {}
+        onClick: () => {},
+        stopPropagation: true
     };
 
     onClick(e) {
-        e.stopPropagation();
         if (this.props.onClick) {
             this.props.onClick();
+        }
+        if (this.props.stopPropagation) {
+            e.stopPropagation();
         }
     }
 

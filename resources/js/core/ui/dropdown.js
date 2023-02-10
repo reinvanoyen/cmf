@@ -11,7 +11,8 @@ class Dropdown extends React.Component {
         style: [],
         autoClose: false,
         openIcon: 'expand_more',
-        closeIcon: 'expand_less'
+        closeIcon: 'expand_less',
+        stopPropagation: true
     };
 
     constructor(props) {
@@ -49,14 +50,15 @@ class Dropdown extends React.Component {
 
     toggle(e) {
 
-        e.stopPropagation();
-
-        let centerY = window.innerHeight / 2;
-        let centerX = window.innerWidth / 2;
+        if (this.props.stopPropagation) {
+            e.stopPropagation();
+        }
 
         if (this.state.isOpen) {
             this.close();
         } else {
+            let centerY = window.innerHeight / 2;
+            let centerX = window.innerWidth / 2;
             this.open((e.clientX > centerX ? 'left' : 'right'), (e.clientY > centerY ? 'up' : 'down'));
         }
     }
@@ -83,6 +85,7 @@ class Dropdown extends React.Component {
 
         let button = (
             <Button
+                stopPropagation={this.props.stopPropagation}
                 text={this.props.text}
                 label={this.props.label}
                 style={[...this.props.style, 'small']}
@@ -94,6 +97,7 @@ class Dropdown extends React.Component {
         if (! this.props.text) {
             button = (
                 <IconButton
+                    stopPropagation={this.props.stopPropagation}
                     name={(this.state.isOpen ? this.props.closeIcon : this.props.openIcon)}
                     iconStyle={'small'}
                     onClick={this.toggle.bind(this)}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
 import components from "../rendering/components";
 import filters from "../rendering/filters";
 import api from "../api/api";
@@ -12,7 +13,6 @@ import ContextMenu from "../core/ui/context-menu";
 import util from "../core/ui/util";
 import usePrevious from "../hooks/use-previous";
 import useOnMount from "../hooks/use-on-mount";
-import {useSelector} from "react-redux";
 
 function Index(props) {
 
@@ -24,6 +24,8 @@ function Index(props) {
         filterParams: {},
         hasActiveFilters: false
     });
+
+    const [filterParams, setFilterParams] = useState({});
 
     const prevDataId = usePrevious(props.data.id);
     const { refresh } = useSelector(state => state.location);
@@ -48,7 +50,7 @@ function Index(props) {
 
     useEffect(() => {
         load();
-    }, [state.searchKeyword, state.filterParams]);
+    }, [state.searchKeyword, filterParams]);
 
     useEffect(() => {
         if (refresh) {
@@ -74,11 +76,9 @@ function Index(props) {
         }
 
         // If filter params are set, add them to the http params
-        if (state.filterParams) {
-            for (let filterId in state.filterParams) {
-                if (state.filterParams.hasOwnProperty(filterId)) {
-                    params['filter_'+filterId] = state.filterParams[filterId];
-                }
+        for (let filterId in filterParams) {
+            if (filterParams.hasOwnProperty(filterId)) {
+                params['filter_'+filterId] = filterParams[filterId];
             }
         }
 
@@ -126,13 +126,13 @@ function Index(props) {
     }
 
     const renderFiltersTool = () => {
-
         if (props.filters.length) {
             return (
                 <div className="index__header-filters-tool">
                     {renderFilters()}
                     <div className="index__header-clear-filters">
                         <Link
+                            stopPropagation={false}
                             onClick={state.hasActiveFilters ? clearFilters : null}
                             text={i18n.get('snippets.clear_filters')}
                             style={state.hasActiveFilters ? '' : 'disabled'}
@@ -233,23 +233,34 @@ function Index(props) {
 
     const onFilterChange = (filterId, filterValue) => {
 
-        let { filterParams } = state;
-
         if (filterValue) {
-            filterParams[filterId] = filterValue;
-        } else {
-            delete filterParams[filterId];
+            setFilterParams({
+                ...filterParams,
+                [filterId]: filterValue
+            });
+            setState({...state, hasActiveFilters: true});
+            return;
         }
 
+        // Remove it
+        const { [filterId]: value, ...newFilterParams } = filterParams;
+
+        setFilterParams(newFilterParams);
         setState({
             ...state,
-            filterParams,
-            hasActiveFilters: (Object.keys(filterParams).length !== 0)
+            hasActiveFilters: (Object.keys(newFilterParams).length !== 0)
         });
     }
 
     const clearFilters = () => {
         filterList.forEach(obj => obj.ref.current.clear());
+
+        setFilterParams({});
+
+        setState({
+            ...state,
+            hasActiveFilters: false
+        });
     }
 
     const search = (keyword) => {

@@ -12,14 +12,17 @@ class Button extends React.Component {
         'type': 'button',
         'style': 'default',
         'icon': '',
-        onClick: e => {}
+        onClick: e => {},
+        stopPropagation: true
     };
 
     onClick(e) {
         if (this.props.onClick) {
             this.props.onClick(e);
         }
-        e.stopPropagation();
+        if (this.props.stopPropagation) {
+            e.stopPropagation();
+        }
     }
 
     render() {
