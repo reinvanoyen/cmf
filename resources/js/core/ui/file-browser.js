@@ -25,13 +25,16 @@ class FileBrowser extends React.Component {
         // Events
         onDirectoryClick: id => {},
         onFileClick: id => {},
+
         onDirectoryDelete: id => {},
         onDirectoryRename: (name, id) => {},
         onDirectoryMove: (directory, id) => {},
+
         onFileDelete: id => {},
         onFileRename: id => {},
         onFileMove: (directory, id) => {},
         onFileOpen: file => {},
+
         onSelectionChange: (ids, files) => {},
         onSelectionDelete: (ids, files) => {},
         onSelectionMove: (directory, ids) => {}

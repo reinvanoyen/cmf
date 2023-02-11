@@ -240,11 +240,9 @@ class FilePickerWidget extends React.Component {
         }
 
         return (
-            <div className={'file-picker-widget__selection'}>
-                <Placeholder icon={'checklist'}>
-                    {i18n.get('snippets.your_selection_is_empty')}
-                </Placeholder>
-            </div>
+            <Placeholder icon={'checklist'}>
+                {i18n.get('snippets.your_selection_is_empty')}
+            </Placeholder>
         );
     }
 

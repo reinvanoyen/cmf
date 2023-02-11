@@ -28,8 +28,8 @@ class MediaFileResource extends JsonResource
             'copyright' => $this->copyright,
             'description' => $this->description,
             'directory' => $this->directory,
-            'created_at' => $this->created_at->format('F j Y H:i'),
-            'updated_at' => $this->updated_at->format('F j Y H:i'),
+            'created_at' => $this->created_at->format('j F Y H:i'),
+            'updated_at' => $this->updated_at->format('j F Y H:i'),
             'is_image' => $this->is_image,
             'url' => route('mediafile', ['id' => $this->id, 'filename' => $this->name,], true),
             'conversions' => [

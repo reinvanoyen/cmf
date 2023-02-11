@@ -1,0 +1,17 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(directory-view)
+{
+    padding: calc($rule / 2);
+
+    @include element(header)
+    {
+        margin-bottom: $rule;
+    }
+
+    @include element(content)
+    {
+        margin-bottom: $rule;
+    }
+}

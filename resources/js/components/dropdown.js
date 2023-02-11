@@ -3,7 +3,7 @@ import UiDropdown from "../core/ui/dropdown";
 import LinkList from "../core/ui/link-list";
 import path from "../state/path";
 
-export default function Dropdown(props) {
+function Dropdown(props) {
 
     const goTo = (actionPath) => {
 
@@ -20,7 +20,7 @@ export default function Dropdown(props) {
 
     const render = () => {
         return (
-            <UiDropdown text={props.text} style={props.style}>
+            <UiDropdown text={props.text} style={[...props.style, 'secondary']}>
                 <LinkList links={props.links} onClick={actionPath => goTo(actionPath)} />
             </UiDropdown>
         );
@@ -28,3 +28,9 @@ export default function Dropdown(props) {
 
     return render();
 }
+
+Dropdown.defaultProps = {
+    style: []
+};
+
+export default Dropdown;

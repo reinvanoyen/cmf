@@ -8,6 +8,12 @@ return [
     'welcome_text' => 'Laravel CMF is the flexible Content Management framework for your next Laravel application.',
     'useful_resources' => 'Useful resources',
 
+    'offline_title' => 'Looks like you\'re offline',
+    'offline_text' => 'It looks like you lost connection to the internet. If you want to continue using this application, please connect to the internet.',
+    'offline_confirm' => 'Check my connection',
+    'offline_notification' => 'Oops, you\'re still offline!',
+    'offline_online_notification' => 'You\'re online again!',
+
     'email_address' => 'Email address',
     'password' => 'Password',
 
@@ -24,6 +30,8 @@ return [
     'edit' => 'Edit',
     'rename' => 'Rename',
     'upload' => 'Upload',
+
+    'created' => 'Created',
 
     'next' => 'Next',
     'previous' => 'Previous',

@@ -8,6 +8,12 @@ return [
     'welcome_text' => 'Laravel CMF is het flexibele Content Management framework voor jouw volgende Laravel applicatie.',
     'useful_resources' => 'Nuttige links',
 
+    'offline_title' => 'Je lijkt offline te zijn',
+    'offline_text' => 'Het lijkt erop dat je de connectie met het internet bent verloren. Als je deze applicatie wil verder gebruiken, gelieve verbinding met het internet te maken.',
+    'offline_confirm' => 'Test mijn connectie',
+    'offline_notification' => 'Oei, je bent nog steeds offline!',
+    'offline_online_notification' => 'Je bent opnieuw online!',
+
     'email_address' => 'E-mailadres',
     'password' => 'Wachtwoord',
 
@@ -24,6 +30,8 @@ return [
     'edit' => 'Bewerk',
     'rename' => 'Hernoemen',
     'upload' => 'Uploaden',
+
+    'created' => 'Aangemaakt',
 
     'next' => 'Volgende',
     'previous' => 'Vorige',

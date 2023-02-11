@@ -213,11 +213,11 @@ class MediaController extends Controller
         }
 
         $mediaDirectory = MediaDirectory::findOrFail($request->input('directory'));
-        $path = [$mediaDirectory,];
+        $path = [new MediaDirectoryResource($mediaDirectory),];
 
         while ($mediaDirectory->directory) {
             $mediaDirectory = $mediaDirectory->directory;
-            array_unshift($path, $mediaDirectory);
+            array_unshift($path, new MediaDirectoryResource($mediaDirectory));
         }
 
         return ['data' => $path,];

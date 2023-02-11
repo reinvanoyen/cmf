@@ -11,12 +11,13 @@ import Dropdown from "../core/ui/dropdown";
 import MultiFileView from "../core/ui/multi-file-view";
 import FileUploader from "../core/ui/file-uploader";
 import Breadcrumbs from "../core/ui/breadcrumbs";
-import IconButton from "../core/ui/icon-button";
 import DirectoryTree from "../core/ui/directory-tree";
 import i18n from "../util/i18n";
 import str from "../util/str";
 import localStorage from "../util/local-storage";
 import ButtonGroup from "../core/ui/button-group";
+import DirectoryView from "../core/ui/directory-view";
+import RootDirectoryView from "../core/ui/root-directory-view";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -77,7 +78,12 @@ class ViewMediaDirectory extends React.Component {
                 directoryPath: path,
                 currentDirectory: path[path.length - 1],
                 directories: directories,
-                files: files
+                files: files,
+
+                // We also clear the selected file(s)
+                currentFile: null,
+                selectedFiles: [],
+                selectedFileIds: []
             });
         }));
     }
@@ -381,8 +387,11 @@ class ViewMediaDirectory extends React.Component {
                     onMoveFiles={this.handleMoveFiles.bind(this)}
                 />
             );
+        } else if (this.state.currentDirectory) {
+            return <DirectoryView directory={this.state.currentDirectory} />;
         }
-        return null;
+
+        return <RootDirectoryView />;
     }
 
     renderContent() {
