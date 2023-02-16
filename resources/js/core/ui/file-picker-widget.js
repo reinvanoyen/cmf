@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import api from "../../api/api";
 import FileBrowser from "./file-browser";
@@ -16,48 +16,36 @@ import Window from "./window";
 import StickySidebar from "./sticky-sidebar";
 import i18n from "../../util/i18n";
 import FileDropZone from "./file-drop-zone";
-import localStorage from "../../util/local-storage";
-import ButtonGroup from "./button-group";
+import MediaViewSwitcher from "./media-view-switcher";
+import useOnMount from "../../hooks/use-on-mount";
 
-class FilePickerWidget extends React.Component {
+function FilePickerWidget(props) {
 
-    static defaultProps = {
-        multiple: false,
-        onSelectionChange: (ids, files) => {},
-        onSelectionConfirm: (ids, files) => {},
-        onCancel: () => {},
-        defaultDirectoryId: null,
-        defaultSelectedFileIds: [],
-        defaultSelectedFiles: [],
-        selectionMode: false,
-        fileLabels: {}
-    };
+    const [state, setState] = useState({
+        isLoading: true,
+        directories: [],
+        files: [],
+        directoryPath: [],
+        currentDirectory: null,
+        selectedFileIds: props.defaultSelectedFileIds || [],
+        selectedFiles: props.defaultSelectedFiles || []
+    });
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isLoading: true,
-            directories: [],
-            files: [],
-            directoryPath: [],
-            currentDirectory: null,
-            selectedFileIds: this.props.defaultSelectedFileIds || [],
-            selectedFiles: this.props.defaultSelectedFiles || [],
-            fileBrowserViewMode: localStorage.get('media-view-mode', 'list')
-        };
-    }
-
-    componentDidMount() {
-        if (this.props.defaultDirectoryId) {
-            this.load(this.props.defaultDirectoryId);
+    useOnMount(() => {
+        if (props.defaultDirectoryId) {
+            load(props.defaultDirectoryId);
             return;
         }
 
-        this.load();
-    }
+        load();
+    });
 
-    async load(directoryId = null) {
+    useEffect(() => {
+        props.onSelectionChange(state.selectedFileIds, state.selectedFiles);
+    }, [state.selectedFileIds, state.selectedFiles]);
+
+    const load = async (directoryId = null) => {
+
         await axios.all([
             api.media.path(directoryId),
             api.media.loadDirectories(directoryId),
@@ -68,7 +56,8 @@ class FilePickerWidget extends React.Component {
             let directories = response2.data.data;
             let files = response3.data.data;
 
-            this.setState({
+            setState({
+                ...state,
                 isLoading: false,
                 directoryPath: path,
                 currentDirectory: path[path.length - 1],
@@ -78,159 +67,150 @@ class FilePickerWidget extends React.Component {
         }));
     }
 
-    onSelectionChange(ids, files) {
-        this.setState({
+    const onSelectionChange = (ids, files) => {
+        setState({
+            ...state,
             selectedFileIds: ids,
             selectedFiles: files
         });
-        this.props.onSelectionChange(ids, files);
+        props.onSelectionChange(ids, files);
     }
 
-    onSelectionConfirm() {
-        this.props.onSelectionConfirm(this.state.selectedFileIds, this.state.selectedFiles);
+    const onSelectionConfirm = () => {
+        props.onSelectionConfirm(state.selectedFileIds, state.selectedFiles);
     }
 
-    deselect(id) {
+    const deselect = (id) => {
 
-        let fileIds = this.state.selectedFileIds.filter(fileId => fileId !== id);
-        let files = this.state.selectedFiles.filter(currFile => currFile.id !== id);
+        let fileIds = state.selectedFileIds.filter(fileId => fileId !== id);
+        let files = state.selectedFiles.filter(currFile => currFile.id !== id);
 
-        this.setState({
+        setState({
+            ...state,
             selectedFileIds: fileIds,
             selectedFiles: files
-        }, () => {
-            this.props.onSelectionChange(this.state.selectedFileIds, this.state.selectedFiles);
         });
     }
 
-    select(file) {
-        this.setState({
-            selectedFileIds: [...this.state.selectedFileIds, file.id],
-            selectedFiles: [...this.state.selectedFiles, file]
-        }, () => {
-            this.props.onSelectionChange(this.state.selectedFileIds, this.state.selectedFiles);
+    const select = (file) => {
+        setState({
+            ...state,
+            selectedFileIds: [...state.selectedFileIds, file.id],
+            selectedFiles: [...state.selectedFiles, file]
         });
     }
 
-    onCancel() {
-        this.props.onCancel();
+    const onCancel = () => {
+        props.onCancel();
     }
 
-    openDirectory(directoryId) {
-        this.load(directoryId);
+    const openDirectory = (directoryId) => {
+        load(directoryId);
     }
 
-    handleUploadDone() {
+    const handleUploadDone = () => {
         util.i18nNotify('snippets.files_uploaded');
-        this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+        load((state.currentDirectory ? state.currentDirectory.id : null));
     }
 
-    handleFileUploaded(file) {
-        this.select(file);
+    const handleFileUploaded = (file) => {
+        select(file);
     }
 
-    handleCreateDirectory() {
-        this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+    const handleCreateDirectory = () => {
+        load((state.currentDirectory ? state.currentDirectory.id : null));
     }
 
-    handleRenameFile(name, fileId) {
+    const handleRenameFile = (name, fileId) => {
         if (name) {
             api.media.renameFile(name, fileId).then(response => {
                 util.i18nNotify('snippets.file_renamed');
-                this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+                load((state.currentDirectory ? state.currentDirectory.id : null));
             }, error => {
                 util.i18nNotify('snippets.changes_unsuccessful');
             });
         }
     }
 
-    handleRenameDirectory(name, directoryId) {
+    const handleRenameDirectory = (name, directoryId) => {
         if (name) {
             api.media.renameDirectory(name, directoryId).then(response => {
                 util.i18nNotify('snippets.directory_renamed');
-                this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+                load((state.currentDirectory ? state.currentDirectory.id : null));
             }, error => {
                 util.i18nNotify('snippets.changes_unsuccessful');
             });
         }
     }
 
-    handleMoveSelection(directoryId, fileIds) {
+    const handleMoveSelection = (directoryId, fileIds) => {
         api.media.moveFiles(directoryId, fileIds).then(response => {
             util.i18nNotify('snippets.files_moved');
-            this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+            load((state.currentDirectory ? state.currentDirectory.id : null));
         }, error => {
             util.i18nNotify('snippets.file_not_moved');
         });
     }
 
-    handleMoveFile(directoryId, fileId) {
+    const handleMoveFile = (directoryId, fileId) => {
         api.media.moveFile(directoryId, fileId).then(response => {
             util.i18nNotify('snippets.file_moved');
-            this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+            load((state.currentDirectory ? state.currentDirectory.id : null));
         }, error => {
             util.i18nNotify('snippets.file_not_moved');
         });
     }
 
-    promptCreateDirectory() {
+    const promptCreateDirectory = () => {
         util.prompt({
             title: i18n.get('snippets.new_directory'),
             confirmButtonText: i18n.get('snippets.confirm'),
             cancelButtonText: i18n.get('snippets.cancel'),
             confirm: value => {
-                api.media.createDirectory(value, (this.state.currentDirectory ? this.state.currentDirectory.id : null)).then(() => {
+                api.media.createDirectory(value, (state.currentDirectory ? state.currentDirectory.id : null)).then(() => {
                     util.i18nNotify('snippets.directory_created');
-                    this.load((this.state.currentDirectory ? this.state.currentDirectory.id : null));
+                    load((state.currentDirectory ? state.currentDirectory.id : null));
                 });
             }
         });
     }
 
-    onSelectedFileContextClick(path, file) {
+    const onSelectedFileContextClick = (path, file) => {
         if (path === 'jump_to') {
-            this.load((file.directory ? file.directory.id : null));
+            load((file.directory ? file.directory.id : null));
         } else if (path === 'deselect') {
-            this.deselect(file.id);
+            deselect(file.id);
         }
     }
 
-    changeFileBrowserViewMode(mode) {
-        this.setState({
-            fileBrowserViewMode: mode
-        }, () => {
-            localStorage.set('media-view-mode', mode);
-        });
-    }
-
-    renderSidebar() {
+    const renderSidebar = () => {
 
         let links = [
             [i18n.get('snippets.deselect'), 'deselect'],
             [i18n.get('snippets.jump_to_folder'), 'jump_to']
         ];
 
-        if (this.state.selectedFiles.length) {
+        if (state.selectedFiles.length) {
             return (
                 <div className={'file-picker-widget__selection'}>
                     <div className="file-picker-widget__selection-header">
-                        {i18n.get('snippets.your_selection')} ({this.state.selectedFiles.length})
+                        {i18n.get('snippets.your_selection')} ({state.selectedFiles.length})
                     </div>
-                    {this.state.selectedFiles.map((file, i) => {
+                    {state.selectedFiles.map((file, i) => {
                         return (
                             <div className="file-picker-widget__file" key={i}>
                                 <ContextMenu
                                     links={links}
-                                    onClick={path => this.onSelectedFileContextClick(path, file)}
+                                    onClick={path => onSelectedFileContextClick(path, file)}
                                 >
                                     <File file={file} viewMode={'minimal'} actions={[
                                         <IconButton
                                             key={'delete'}
                                             name={'delete'}
                                             style={'transparent'}
-                                            onClick={e => this.deselect(file.id)}
+                                            onClick={e => deselect(file.id)}
                                         />
-                                    ]}/>
+                                    ]} />
                                 </ContextMenu>
                             </div>
                         );
@@ -246,87 +226,91 @@ class FilePickerWidget extends React.Component {
         );
     }
 
-    renderContent() {
-        if (this.state.isLoading) {
+    const renderContent = () => {
+        if (state.isLoading) {
             return null;
         }
 
         return (
-            <StickySidebar sidebar={this.renderSidebar()}>
+            <StickySidebar sidebar={renderSidebar()}>
                 <FileDropZone
-                    directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
-                    onCreateDirectory={this.handleCreateDirectory.bind(this)}
-                    onUploadDone={this.handleUploadDone.bind(this)}
+                    directory={state.currentDirectory ? state.currentDirectory.id : null}
+                    onCreateDirectory={handleCreateDirectory}
+                    onUploadDone={handleUploadDone}
                 >
                     <FileBrowser
-                        viewMode={this.state.fileBrowserViewMode}
-                        fileLabels={this.props.fileLabels}
-                        currentDirectory={this.state.currentDirectory}
-                        selectionMode={this.props.selectionMode}
-                        selectedFiles={this.state.selectedFiles}
-                        selectedFileIds={this.state.selectedFileIds}
-                        directories={this.state.directories}
-                        files={this.state.files}
-                        onDirectoryRename={this.handleRenameDirectory.bind(this)}
-                        onFileRename={this.handleRenameFile.bind(this)}
-                        onFileMove={this.handleMoveFile.bind(this)}
-                        onDirectoryClick={directory => this.openDirectory(directory)}
-                        onSelectionChange={this.onSelectionChange.bind(this)}
-                        onSelectionMove={this.handleMoveSelection.bind(this)}
+                        fileLabels={props.fileLabels}
+                        currentDirectory={state.currentDirectory}
+                        selectionMode={props.selectionMode}
+                        selectedFiles={state.selectedFiles}
+                        selectedFileIds={state.selectedFileIds}
+                        directories={state.directories}
+                        files={state.files}
+                        onDirectoryRename={handleRenameDirectory}
+                        onFileRename={handleRenameFile}
+                        onFileMove={handleMoveFile}
+                        onDirectoryClick={directory => openDirectory(directory)}
+                        onSelectionChange={onSelectionChange}
+                        onSelectionMove={handleMoveSelection}
                     />
                 </FileDropZone>
             </StickySidebar>
         );
     }
 
-    render() {
+    const render = () => {
         return (
-            <Window style={['modal', 'wide']} closeable={true} onClose={this.onCancel.bind(this)} title={[
+            <Window style={['modal', 'wide']} closeable={true} onClose={onCancel} title={[
                 <Dropdown key={'path'} style={['primary', 'small']} openIcon={'folder'} closeIcon={'folder'}>
                     <DirectoryTree
-                        selectedDirectory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
-                        onDirectoryClick={directory => this.openDirectory(directory)}
+                        selectedDirectory={state.currentDirectory ? state.currentDirectory.id : null}
+                        onDirectoryClick={directory => openDirectory(directory)}
                     />
                 </Dropdown>,
                 <Breadcrumbs
                     key={'breadcrumbs'}
-                    items={this.state.directoryPath}
+                    items={state.directoryPath}
                     onClick={item => {
-                        (item ? this.openDirectory(item.id) : this.openDirectory());
+                        (item ? openDirectory(item.id) : openDirectory());
                     }}
                 />
             ]} actions={[
-                <ButtonGroup
-                    key={'view-btn-group'}
-                    active={this.state.fileBrowserViewMode}
-                    buttons={[
-                        {icon: 'list', key: 'compact-list'},
-                        {icon: 'view_list', key: 'list'},
-                        {icon: 'grid_view', key: 'grid'},
-                    ]}
-                    onClick={key => this.changeFileBrowserViewMode(key)}
-                />,
-                <Button key={'new-dir'} text={i18n.get('snippets.new_directory')} style={['secondary', 'small']} onClick={this.promptCreateDirectory.bind(this)} />,
+                <MediaViewSwitcher key={'view-switcher'} />,
+                <Button key={'new-dir'} text={i18n.get('snippets.new_directory')} style={['secondary', 'small']} onClick={promptCreateDirectory} />,
                 <Dropdown key={'upload'} text={i18n.get('snippets.upload')} style={['primary', 'small']}>
                     <FileUploader
-                        directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
-                        onFileUploaded={this.handleFileUploaded.bind(this)}
-                        onUploadDone={this.handleUploadDone.bind(this)}
+                        directory={state.currentDirectory ? state.currentDirectory.id : null}
+                        onFileUploaded={handleFileUploaded}
+                        onUploadDone={handleUploadDone}
                     />
                 </Dropdown>
             ]} footer={[
-                <Button key={'cancel'} text={i18n.get('snippets.cancel')} style={['secondary']} onClick={this.onCancel.bind(this)} />,
+                <Button key={'cancel'} text={i18n.get('snippets.cancel')} style={['secondary']} onClick={onCancel} />,
                 <Button
                     key={'confirm'}
-                    text={(this.props.selectionMode ? i18n.get('snippets.confirm_selection') : i18n.get('snippets.select_file'))}
-                    style={this.state.selectedFileIds.length ? [] : ['disabled',]}
-                    onClick={this.state.selectedFileIds.length ? this.onSelectionConfirm.bind(this) : null}
+                    text={(props.selectionMode ? i18n.get('snippets.confirm_selection') : i18n.get('snippets.select_file'))}
+                    style={state.selectedFileIds.length ? [] : ['disabled',]}
+                    onClick={state.selectedFileIds.length ? onSelectionConfirm : null}
                 />
             ]}>
-                {this.renderContent()}
+                {renderContent()}
             </Window>
         );
     }
+
+    return render();
 }
+
+FilePickerWidget.defaultProps = {
+    multiple: false,
+    onSelectionChange: (ids, files) => {},
+    onSelectionConfirm: (ids, files) => {},
+    onCancel: () => {},
+    defaultDirectoryId: null,
+    defaultSelectedFileIds: [],
+    defaultSelectedFiles: [],
+    selectionMode: false,
+    fileLabels: {}
+};
 
 export default FilePickerWidget;

@@ -1357,7 +1357,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var _api_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/api */ "./resources/js/api/api.js");
 /* harmony import */ var _state_path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state/path */ "./resources/js/state/path.js");
 /* harmony import */ var _core_ui_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/ui/util */ "./resources/js/core/ui/util.js");
@@ -1372,11 +1372,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_ui_directory_tree__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../core/ui/directory-tree */ "./resources/js/core/ui/directory-tree.js");
 /* harmony import */ var _util_i18n__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../util/i18n */ "./resources/js/util/i18n.js");
 /* harmony import */ var _util_str__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../util/str */ "./resources/js/util/str.js");
-/* harmony import */ var _util_local_storage__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../util/local-storage */ "./resources/js/util/local-storage.js");
-/* harmony import */ var _core_ui_button_group__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../core/ui/button-group */ "./resources/js/core/ui/button-group/index.js");
-/* harmony import */ var _core_ui_directory_view__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../core/ui/directory-view */ "./resources/js/core/ui/directory-view/index.js");
-/* harmony import */ var _core_ui_root_directory_view__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../core/ui/root-directory-view */ "./resources/js/core/ui/root-directory-view/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _core_ui_directory_view__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../core/ui/directory-view */ "./resources/js/core/ui/directory-view/index.js");
+/* harmony import */ var _core_ui_root_directory_view__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../core/ui/root-directory-view */ "./resources/js/core/ui/root-directory-view/index.js");
+/* harmony import */ var _core_ui_media_view_switcher__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../core/ui/media-view-switcher */ "./resources/js/core/ui/media-view-switcher/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1431,8 +1430,7 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
       currentFile: null,
       selectedFiles: [],
       selectedFileIds: [],
-      directoryPath: [],
-      fileBrowserViewMode: _util_local_storage__WEBPACK_IMPORTED_MODULE_15__["default"].get('media-view-mode', 'list')
+      directoryPath: []
     };
     return _this;
   }
@@ -1466,7 +1464,7 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
             case 0:
               directoryId = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_20__["default"].all([_api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.path(directoryId), _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadDirectories(directoryId), _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadFiles(directoryId)]).then(axios__WEBPACK_IMPORTED_MODULE_20__["default"].spread(function (response1, response2, response3) {
+              return axios__WEBPACK_IMPORTED_MODULE_19__["default"].all([_api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.path(directoryId), _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadDirectories(directoryId), _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadFiles(directoryId)]).then(axios__WEBPACK_IMPORTED_MODULE_19__["default"].spread(function (response1, response2, response3) {
                 var path = response1.data.data;
                 var directories = response2.data.data;
                 var files = response3.data.data;
@@ -1750,19 +1748,10 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "changeFileBrowserViewMode",
-    value: function changeFileBrowserViewMode(mode) {
-      this.setState({
-        fileBrowserViewMode: mode
-      }, function () {
-        _util_local_storage__WEBPACK_IMPORTED_MODULE_15__["default"].set('media-view-mode', mode);
-      });
-    }
-  }, {
     key: "renderBreadcrumbs",
     value: function renderBreadcrumbs() {
       var _this16 = this;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_breadcrumbs__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_breadcrumbs__WEBPACK_IMPORTED_MODULE_11__["default"], {
         items: this.state.directoryPath,
         onClick: function onClick(item) {
           if (item) {
@@ -1778,7 +1767,7 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
     value: function renderSidebar() {
       var _this17 = this;
       if (this.state.currentFile) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_file_view__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_file_view__WEBPACK_IMPORTED_MODULE_7__["default"], {
           file: this.state.currentFile,
           fileLabels: this.props.fileLabels,
           onLabelFile: function onLabelFile(label) {
@@ -1819,7 +1808,7 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
           onMoveFile: this.handleMoveFile.bind(this)
         });
       } else if (this.state.selectedFiles.length) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_multi_file_view__WEBPACK_IMPORTED_MODULE_9__["default"], {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_multi_file_view__WEBPACK_IMPORTED_MODULE_9__["default"], {
           files: this.state.selectedFiles,
           onDeleteFiles: function onDeleteFiles() {
             return _this17.confirmDeleteFiles(_this17.state.selectedFileIds, _this17.state.selectedFiles);
@@ -1830,23 +1819,23 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
           onMoveFiles: this.handleMoveFiles.bind(this)
         });
       } else if (this.state.currentDirectory) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_directory_view__WEBPACK_IMPORTED_MODULE_17__["default"], {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_directory_view__WEBPACK_IMPORTED_MODULE_15__["default"], {
           directory: this.state.currentDirectory
         });
       }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_root_directory_view__WEBPACK_IMPORTED_MODULE_18__["default"], {});
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_root_directory_view__WEBPACK_IMPORTED_MODULE_16__["default"], {});
     }
   }, {
     key: "renderContent",
     value: function renderContent() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.Fragment, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
           className: 'view-media-directory__main',
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_file_drop_zone__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_file_drop_zone__WEBPACK_IMPORTED_MODULE_6__["default"], {
             directory: this.state.currentDirectory ? this.state.currentDirectory.id : null,
             onCreateDirectory: this.handleCreateDirectory.bind(this),
             onUploadDone: this.handleUploadDone.bind(this),
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_file_browser__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_file_browser__WEBPACK_IMPORTED_MODULE_5__["default"], {
               viewMode: this.state.fileBrowserViewMode,
               currentDirectory: this.state.currentDirectory,
               directories: this.state.directories,
@@ -1867,7 +1856,7 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
               onSelectionDelete: this.confirmDeleteFiles.bind(this)
             })
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
           className: "view-media-directory__side",
           children: this.renderSidebar()
         })]
@@ -1877,55 +1866,40 @@ var ViewMediaDirectory = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var _this18 = this;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
         className: 'view-media-directory' + (this.state.isLoading ? ' view-media-directory--loading' : '') + (this.state.isDragOver ? ' view-media-directory--drag-over' : ''),
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
           className: "view-media-directory__header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
             className: "view-media-directory__header-title",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_dropdown__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_dropdown__WEBPACK_IMPORTED_MODULE_8__["default"], {
               style: ['primary', 'small'],
               openIcon: 'folder',
               closeIcon: 'folder',
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_directory_tree__WEBPACK_IMPORTED_MODULE_12__["default"], {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_directory_tree__WEBPACK_IMPORTED_MODULE_12__["default"], {
                 selectedDirectory: this.state.currentDirectory ? this.state.currentDirectory.id : null,
                 onDirectoryClick: function onDirectoryClick(directory) {
                   return _this18.openDirectory(directory);
                 }
               })
             }), this.renderBreadcrumbs()]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
             className: "view-media-directory__header-options",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_button_group__WEBPACK_IMPORTED_MODULE_16__["default"], {
-              active: this.state.fileBrowserViewMode,
-              buttons: [{
-                icon: 'list',
-                key: 'compact-list'
-              }, {
-                icon: 'view_list',
-                key: 'list'
-              }, {
-                icon: 'grid_view',
-                key: 'grid'
-              }],
-              onClick: function onClick(key) {
-                return _this18.changeFileBrowserViewMode(key);
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_media_view_switcher__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_button__WEBPACK_IMPORTED_MODULE_4__["default"], {
               style: ['secondary', 'small'],
               onClick: this.promptCreateDirectory.bind(this),
               text: _util_i18n__WEBPACK_IMPORTED_MODULE_13__["default"].get('snippets.new_directory')
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_dropdown__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_dropdown__WEBPACK_IMPORTED_MODULE_8__["default"], {
               text: _util_i18n__WEBPACK_IMPORTED_MODULE_13__["default"].get('snippets.upload'),
               style: ['primary', 'small'],
               autoClose: true,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_core_ui_file_uploader__WEBPACK_IMPORTED_MODULE_10__["default"], {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_core_ui_file_uploader__WEBPACK_IMPORTED_MODULE_10__["default"], {
                 directory: this.state.currentDirectory ? this.state.currentDirectory.id : null,
                 onUploadDone: this.handleUploadDone.bind(this)
               })
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
           className: "view-media-directory__content",
           children: this.state.isLoading ? null : this.renderContent()
         })]
@@ -10255,6 +10229,64 @@ _defineProperty(DefinitionList, "defaultProps", {
 
 /***/ }),
 
+/***/ "./resources/js/core/ui/directory-list/index.js":
+/*!******************************************************!*\
+  !*** ./resources/js/core/ui/directory-list/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _context_menu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../context-menu */ "./resources/js/core/ui/context-menu/index.js");
+/* harmony import */ var _directory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../directory */ "./resources/js/core/ui/directory.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+function DirectoryList(props) {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+      return state.media;
+    }),
+    viewMode = _useSelector.viewMode;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    className: 'file-list file-list--' + viewMode,
+    children: props.directories.map(function (directory, i) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "file-list__item",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_context_menu__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          links: props.contextMenuLinks,
+          onClick: function onClick(path) {
+            return props.onContextClick(path, directory);
+          },
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_directory__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            directory: directory,
+            onClick: function onClick(e, directory) {
+              return props.onClick(e, directory);
+            }
+          })
+        }, i)
+      }, i);
+    })
+  });
+}
+DirectoryList.defaultProps = {
+  directories: [],
+  contextMenuLinks: [],
+  onClick: function onClick(e, directory) {},
+  onContextClick: function onContextClick(path, directory) {}
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DirectoryList);
+
+/***/ }),
+
 /***/ "./resources/js/core/ui/directory-tree.js":
 /*!************************************************!*\
   !*** ./resources/js/core/ui/directory-tree.js ***!
@@ -10525,84 +10557,65 @@ DirectoryView.defaultProps = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Directory)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./icon */ "./resources/js/core/ui/icon.js");
 /* harmony import */ var _util_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/i18n */ "./resources/js/util/i18n.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
 
 
-var Directory = /*#__PURE__*/function (_React$Component) {
-  _inherits(Directory, _React$Component);
-  var _super = _createSuper(Directory);
-  function Directory() {
-    _classCallCheck(this, Directory);
-    return _super.apply(this, arguments);
-  }
-  _createClass(Directory, [{
-    key: "render",
-    value: function render() {
-      var _this = this;
-      var iconStyle = 'default';
-      if (this.props.viewMode === 'grid') {
-        iconStyle = 'extra-large';
-      } else if (this.props.viewMode === 'list') {
-        iconStyle = 'large';
-      }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: 'directory directory--' + this.props.viewMode,
-        onClick: function onClick(e) {
-          return _this.props.onClick(e, _this.props.directory);
-        },
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "directory__icon",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            name: 'folder',
-            style: [iconStyle, 'alt']
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "directory__content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "directory__name",
-            children: this.props.directory.name
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "directory__type",
-            children: _util_i18n__WEBPACK_IMPORTED_MODULE_2__["default"].get('snippets.directory')
-          })]
-        })]
-      });
+
+
+
+function Directory(props) {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_3__.useSelector)(function (state) {
+      return state.media;
+    }),
+    viewMode = _useSelector.viewMode;
+  var render = function render() {
+    var iconStyle = 'default';
+    if (viewMode === 'grid') {
+      iconStyle = 'extra-large';
+    } else if (viewMode === 'list') {
+      iconStyle = 'large';
     }
-  }]);
-  return Directory;
-}((react__WEBPACK_IMPORTED_MODULE_0___default().Component));
-_defineProperty(Directory, "defaultProps", {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: 'directory directory--' + viewMode,
+      onClick: function onClick(e) {
+        return props.onClick(e, props.directory);
+      },
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "directory__icon",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          name: 'folder',
+          style: [iconStyle, 'alt']
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "directory__content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "directory__name",
+          children: props.directory.name
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "directory__type",
+          children: _util_i18n__WEBPACK_IMPORTED_MODULE_2__["default"].get('snippets.directory')
+        })]
+      })]
+    });
+  };
+  return render();
+}
+Directory.defaultProps = {
   directory: {},
-  viewMode: 'list',
   actions: [],
   onClick: function onClick(e, directory) {}
-});
-
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Directory);
 
 /***/ }),
 
@@ -10620,38 +10633,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-var Divider = /*#__PURE__*/function (_React$Component) {
-  _inherits(Divider, _React$Component);
-  var _super = _createSuper(Divider);
-  function Divider() {
-    _classCallCheck(this, Divider);
-    return _super.apply(this, arguments);
-  }
-  _createClass(Divider, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("hr", {
-        className: 'divider'
-      });
-    }
-  }]);
-  return Divider;
-}((react__WEBPACK_IMPORTED_MODULE_0___default().Component));
+function Divider(props) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("hr", {
+    className: 'divider'
+  });
+}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Divider);
 
 /***/ }),
@@ -10943,17 +10931,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _context_menu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./context-menu */ "./resources/js/core/ui/context-menu/index.js");
-/* harmony import */ var _placeholder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./placeholder */ "./resources/js/core/ui/placeholder.js");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util */ "./resources/js/core/ui/util.js");
-/* harmony import */ var _file__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./file */ "./resources/js/core/ui/file.js");
-/* harmony import */ var _messaging_manager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../messaging/manager */ "./resources/js/core/messaging/manager.js");
-/* harmony import */ var _file_placeholder__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./file-placeholder */ "./resources/js/core/ui/file-placeholder.js");
-/* harmony import */ var _media_move_widget__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./media-move-widget */ "./resources/js/core/ui/media-move-widget.js");
-/* harmony import */ var _overlay__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./overlay */ "./resources/js/core/ui/overlay.js");
-/* harmony import */ var _directory__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./directory */ "./resources/js/core/ui/directory.js");
-/* harmony import */ var _util_i18n__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../util/i18n */ "./resources/js/util/i18n.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _placeholder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./placeholder */ "./resources/js/core/ui/placeholder.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./util */ "./resources/js/core/ui/util.js");
+/* harmony import */ var _messaging_manager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../messaging/manager */ "./resources/js/core/messaging/manager.js");
+/* harmony import */ var _file_placeholder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./file-placeholder */ "./resources/js/core/ui/file-placeholder.js");
+/* harmony import */ var _media_move_widget__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./media-move-widget */ "./resources/js/core/ui/media-move-widget.js");
+/* harmony import */ var _overlay__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./overlay */ "./resources/js/core/ui/overlay.js");
+/* harmony import */ var _util_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../util/i18n */ "./resources/js/util/i18n.js");
+/* harmony import */ var _file_list__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./file-list */ "./resources/js/core/ui/file-list/index.js");
+/* harmony import */ var _directory_list__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./directory-list */ "./resources/js/core/ui/directory-list/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -11023,22 +11010,22 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].on('media.upload.queued', this.handleOnUploadQueued);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].on('media.upload.queuedMultiple', this.handleOnUploadQueuedMultiple);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].on('media.upload.start', this.handleOnUploadStart);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].on('media.upload.progress', this.handleOnUploadProgress);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].on('media.upload.success', this.handleOnUploadSuccess);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].on('media.upload.fail', this.handleOnUploadFail);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].on('media.upload.queued', this.handleOnUploadQueued);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].on('media.upload.queuedMultiple', this.handleOnUploadQueuedMultiple);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].on('media.upload.start', this.handleOnUploadStart);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].on('media.upload.progress', this.handleOnUploadProgress);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].on('media.upload.success', this.handleOnUploadSuccess);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].on('media.upload.fail', this.handleOnUploadFail);
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].off('media.upload.queued', this.handleOnUploadQueued);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].off('media.upload.queuedMultiple', this.handleOnUploadQueuedMultiple);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].off('media.upload.start', this.handleOnUploadStart);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].off('media.upload.progress', this.handleOnUploadProgress);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].off('media.upload.success', this.handleOnUploadSuccess);
-      _messaging_manager__WEBPACK_IMPORTED_MODULE_5__["default"].off('media.upload.fail', this.handleOnUploadFail);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].off('media.upload.queued', this.handleOnUploadQueued);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].off('media.upload.queuedMultiple', this.handleOnUploadQueuedMultiple);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].off('media.upload.start', this.handleOnUploadStart);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].off('media.upload.progress', this.handleOnUploadProgress);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].off('media.upload.success', this.handleOnUploadSuccess);
+      _messaging_manager__WEBPACK_IMPORTED_MODULE_3__["default"].off('media.upload.fail', this.handleOnUploadFail);
     }
   }, {
     key: "onUploadQueued",
@@ -11115,18 +11102,18 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
     value: function onDirectoryContextClick(action, directory) {
       var _this2 = this;
       if (action === 'delete') {
-        _util__WEBPACK_IMPORTED_MODULE_3__["default"].confirm({
-          title: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_directory_title'),
-          text: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_directory_text'),
-          confirmButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_directory_confirm'),
-          cancelButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_directory_cancel'),
+        _util__WEBPACK_IMPORTED_MODULE_2__["default"].confirm({
+          title: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_directory_title'),
+          text: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_directory_text'),
+          confirmButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_directory_confirm'),
+          cancelButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_directory_cancel'),
           confirm: function confirm() {
             return _this2.props.onDirectoryDelete(directory.id);
           }
         });
       } else if (action === 'rename') {
-        _util__WEBPACK_IMPORTED_MODULE_3__["default"].prompt({
-          title: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.rename'),
+        _util__WEBPACK_IMPORTED_MODULE_2__["default"].prompt({
+          title: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.rename'),
           defaultValue: directory.name,
           confirm: function confirm(value) {
             return _this2.props.onDirectoryRename(value, directory.id);
@@ -11144,18 +11131,18 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
     value: function onFileContextClick(action, file) {
       var _this3 = this;
       if (action === 'delete') {
-        _util__WEBPACK_IMPORTED_MODULE_3__["default"].confirm({
-          title: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_file_title'),
-          text: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_file_text'),
-          confirmButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_file_confirm'),
-          cancelButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_file_cancel'),
+        _util__WEBPACK_IMPORTED_MODULE_2__["default"].confirm({
+          title: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_file_title'),
+          text: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_file_text'),
+          confirmButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_file_confirm'),
+          cancelButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_file_cancel'),
           confirm: function confirm() {
             return _this3.props.onFileDelete(file.id);
           }
         });
       } else if (action === 'rename') {
-        _util__WEBPACK_IMPORTED_MODULE_3__["default"].prompt({
-          title: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.rename_file'),
+        _util__WEBPACK_IMPORTED_MODULE_2__["default"].prompt({
+          title: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.rename_file'),
           defaultValue: file.name,
           confirm: function confirm(value) {
             return _this3.props.onFileRename(value, file.id);
@@ -11229,8 +11216,8 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
       if (!this.state.moveAction) {
         return null;
       }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_overlay__WEBPACK_IMPORTED_MODULE_8__["default"], {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_media_move_widget__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_overlay__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_media_move_widget__WEBPACK_IMPORTED_MODULE_5__["default"], {
           directory: this.props.currentDirectory,
           onCancel: function onCancel(directory) {
             _this4.setState({
@@ -11250,7 +11237,7 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
                 _this4.props.onFileMove(directory, _this4.state.moveFileId);
               }
               if (_this4.state.moveDirectoryId === directory) {
-                _util__WEBPACK_IMPORTED_MODULE_3__["default"].notify(_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.cant_move_directory_inside_self'));
+                _util__WEBPACK_IMPORTED_MODULE_2__["default"].notify(_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.cant_move_directory_inside_self'));
                 return;
               }
               if (_this4.state.moveDirectoryId) {
@@ -11267,12 +11254,12 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
       if (!this.state.uploads.length) {
         return null;
       }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
         className: 'file-list',
         children: this.state.uploads.map(function (file, i) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
             className: "file-list__item",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_file_placeholder__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_file_placeholder__WEBPACK_IMPORTED_MODULE_4__["default"], {
               data: file
             })
           }, i);
@@ -11286,37 +11273,26 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
       if (!this.state.files.length) {
         return null;
       }
-      var links = [[_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.rename'), 'rename'], [_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.move'), 'move'], [_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.download'), 'download'], [_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete'), 'delete']];
+      var links = [[_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.rename'), 'rename'], [_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.move'), 'move'], [_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.download'), 'download'], [_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete'), 'delete']];
       if (this.props.selectedFileIds.length > 1) {
-        links = [[_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.move_files', {
+        links = [[_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.move_files', {
           amount: this.props.selectedFileIds.length
-        }), 'multi-move'], [_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete_files', {
+        }), 'multi-move'], [_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete_files', {
           amount: this.props.selectedFileIds.length
         }), 'multi-delete']];
       }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
-        className: 'file-list file-list--' + this.props.viewMode,
-        children: this.state.files.map(function (file, i) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
-            className: "file-list__item",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_context_menu__WEBPACK_IMPORTED_MODULE_1__["default"], {
-              links: links,
-              onClick: function onClick(path) {
-                return _this5.onFileContextClick(path, file);
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_file__WEBPACK_IMPORTED_MODULE_4__["default"], {
-                viewMode: _this5.props.viewMode,
-                file: file,
-                fileLabels: _this5.props.fileLabels,
-                isSelected: _this5.isFileSelected(file),
-                selectionMode: _this5.props.selectionMode,
-                onClick: function onClick(e, file) {
-                  return _this5.handleFileClick(e, file);
-                }
-              })
-            }, i)
-          }, i);
-        })
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_file_list__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        files: this.state.files,
+        fileLabels: this.props.fileLabels,
+        selection: this.props.selectedFileIds,
+        selectionMode: this.props.selectionMode,
+        contextMenuLinks: links,
+        onClick: function onClick(e, file) {
+          return _this5.handleFileClick(e, file);
+        },
+        onContextClick: function onContextClick(path, file) {
+          return _this5.onFileContextClick(path, file);
+        }
       });
     }
   }, {
@@ -11326,25 +11302,16 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
       if (!this.props.directories.length) {
         return null;
       }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
-        className: 'directory-list directory-list--' + this.props.viewMode,
-        children: this.props.directories.map(function (directory, i) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
-            className: "directory-list__item",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_context_menu__WEBPACK_IMPORTED_MODULE_1__["default"], {
-              links: [[_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.rename'), 'rename'], [_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.move'), 'move'], [_util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.delete'), 'delete']],
-              onClick: function onClick(path) {
-                return _this6.onDirectoryContextClick(path, directory);
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_directory__WEBPACK_IMPORTED_MODULE_9__["default"], {
-                viewMode: _this6.props.viewMode,
-                directory: directory,
-                onClick: function onClick(e, directory) {
-                  return _this6.props.onDirectoryClick(directory.id);
-                }
-              })
-            }, i)
-          }, i);
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_directory_list__WEBPACK_IMPORTED_MODULE_9__["default"], {
+          directories: this.props.directories,
+          contextMenuLinks: [[_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.rename'), 'rename'], [_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.move'), 'move'], [_util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.delete'), 'delete']],
+          onContextClick: function onContextClick(path, directory) {
+            return _this6.onDirectoryContextClick(path, directory);
+          },
+          onClick: function onClick(e, directory) {
+            return _this6.props.onDirectoryClick(directory.id);
+          }
         })
       });
     }
@@ -11352,17 +11319,17 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
     key: "renderContent",
     value: function renderContent() {
       if (this.state.uploads.length || this.props.directories.length || this.state.files.length) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
           className: "file-browser__content",
           children: [this.renderUploads(), this.renderDirectories(), this.renderFiles()]
         });
       }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
         className: "file-browser__content",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
           className: "file-browser__placeholder",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_placeholder__WEBPACK_IMPORTED_MODULE_2__["default"], {
-            children: _util_i18n__WEBPACK_IMPORTED_MODULE_10__["default"].get('snippets.directory_is_empty')
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_placeholder__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            children: _util_i18n__WEBPACK_IMPORTED_MODULE_7__["default"].get('snippets.directory_is_empty')
           })
         })
       });
@@ -11370,7 +11337,7 @@ var FileBrowser = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
         className: "file-browser",
         children: [this.renderContent(), this.renderMoveWidget()]
       });
@@ -11386,7 +11353,6 @@ _defineProperty(FileBrowser, "defaultProps", {
   selectionMode: false,
   selectedFileIds: [],
   selectedFiles: [],
-  viewMode: 'list',
   // Events
   onDirectoryClick: function onDirectoryClick(id) {},
   onFileClick: function onFileClick(id) {},
@@ -11613,6 +11579,70 @@ _defineProperty(FileDropZone, "defaultProps", {
 
 /***/ }),
 
+/***/ "./resources/js/core/ui/file-list/index.js":
+/*!*************************************************!*\
+  !*** ./resources/js/core/ui/file-list/index.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _file__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../file */ "./resources/js/core/ui/file.js");
+/* harmony import */ var _context_menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../context-menu */ "./resources/js/core/ui/context-menu/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+function FileList(props) {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
+      return state.media;
+    }),
+    viewMode = _useSelector.viewMode;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    className: 'file-list file-list--' + viewMode,
+    children: props.files.map(function (file, i) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "file-list__item",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_context_menu__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          links: props.contextMenuLinks,
+          onClick: function onClick(path) {
+            return props.onContextClick(path, file);
+          },
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_file__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            file: file,
+            fileLabels: props.fileLabels,
+            isSelected: props.selection.includes(file.id),
+            selectionMode: props.selectionMode,
+            onClick: function onClick(e, file) {
+              return props.onClick(e, file);
+            }
+          })
+        }, i)
+      }, i);
+    })
+  });
+}
+FileList.defaultProps = {
+  files: [],
+  selection: [],
+  fileLabels: {},
+  selectionMode: false,
+  contextMenuLinks: [],
+  onClick: function onClick(e, file) {},
+  onContextClick: function onContextClick(path, file) {}
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FileList);
+
+/***/ }),
+
 /***/ "./resources/js/core/ui/file-picker-widget.js":
 /*!****************************************************!*\
   !*** ./resources/js/core/ui/file-picker-widget.js ***!
@@ -11643,32 +11673,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sticky_sidebar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./sticky-sidebar */ "./resources/js/core/ui/sticky-sidebar.js");
 /* harmony import */ var _util_i18n__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../util/i18n */ "./resources/js/util/i18n.js");
 /* harmony import */ var _file_drop_zone__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./file-drop-zone */ "./resources/js/core/ui/file-drop-zone/index.js");
-/* harmony import */ var _util_local_storage__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../util/local-storage */ "./resources/js/util/local-storage.js");
-/* harmony import */ var _button_group__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./button-group */ "./resources/js/core/ui/button-group/index.js");
+/* harmony import */ var _media_view_switcher__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./media-view-switcher */ "./resources/js/core/ui/media-view-switcher/index.js");
+/* harmony import */ var _hooks_use_on_mount__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../hooks/use-on-mount */ "./resources/js/hooks/use-on-mount.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -11691,361 +11717,276 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
-var FilePickerWidget = /*#__PURE__*/function (_React$Component) {
-  _inherits(FilePickerWidget, _React$Component);
-  var _super = _createSuper(FilePickerWidget);
-  function FilePickerWidget(props) {
-    var _this;
-    _classCallCheck(this, FilePickerWidget);
-    _this = _super.call(this, props);
-    _this.state = {
+function FilePickerWidget(props) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       isLoading: true,
       directories: [],
       files: [],
       directoryPath: [],
       currentDirectory: null,
-      selectedFileIds: _this.props.defaultSelectedFileIds || [],
-      selectedFiles: _this.props.defaultSelectedFiles || [],
-      fileBrowserViewMode: _util_local_storage__WEBPACK_IMPORTED_MODULE_17__["default"].get('media-view-mode', 'list')
-    };
-    return _this;
-  }
-  _createClass(FilePickerWidget, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      if (this.props.defaultDirectoryId) {
-        this.load(this.props.defaultDirectoryId);
-        return;
-      }
-      this.load();
+      selectedFileIds: props.defaultSelectedFileIds || [],
+      selectedFiles: props.defaultSelectedFiles || []
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    state = _useState2[0],
+    setState = _useState2[1];
+  (0,_hooks_use_on_mount__WEBPACK_IMPORTED_MODULE_18__["default"])(function () {
+    if (props.defaultDirectoryId) {
+      load(props.defaultDirectoryId);
+      return;
     }
-  }, {
-    key: "load",
-    value: function () {
-      var _load = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _this2 = this;
-        var directoryId,
-          _args = arguments;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              directoryId = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_20__["default"].all([_api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.path(directoryId), _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadDirectories(directoryId), _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadFiles(directoryId)]).then(axios__WEBPACK_IMPORTED_MODULE_20__["default"].spread(function (response1, response2, response3) {
-                var path = response1.data.data;
-                var directories = response2.data.data;
-                var files = response3.data.data;
-                _this2.setState({
-                  isLoading: false,
-                  directoryPath: path,
-                  currentDirectory: path[path.length - 1],
-                  directories: directories,
-                  files: files
-                });
+    load();
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    props.onSelectionChange(state.selectedFileIds, state.selectedFiles);
+  }, [state.selectedFileIds, state.selectedFiles]);
+  var load = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var directoryId,
+        _args = arguments;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            directoryId = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
+            _context.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_20__["default"].all([_api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.path(directoryId), _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadDirectories(directoryId), _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.loadFiles(directoryId)]).then(axios__WEBPACK_IMPORTED_MODULE_20__["default"].spread(function (response1, response2, response3) {
+              var path = response1.data.data;
+              var directories = response2.data.data;
+              var files = response3.data.data;
+              setState(_objectSpread(_objectSpread({}, state), {}, {
+                isLoading: false,
+                directoryPath: path,
+                currentDirectory: path[path.length - 1],
+                directories: directories,
+                files: files
               }));
-            case 3:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee);
-      }));
-      function load() {
-        return _load.apply(this, arguments);
-      }
-      return load;
-    }()
-  }, {
-    key: "onSelectionChange",
-    value: function onSelectionChange(ids, files) {
-      this.setState({
-        selectedFileIds: ids,
-        selectedFiles: files
-      });
-      this.props.onSelectionChange(ids, files);
-    }
-  }, {
-    key: "onSelectionConfirm",
-    value: function onSelectionConfirm() {
-      this.props.onSelectionConfirm(this.state.selectedFileIds, this.state.selectedFiles);
-    }
-  }, {
-    key: "deselect",
-    value: function deselect(id) {
-      var _this3 = this;
-      var fileIds = this.state.selectedFileIds.filter(function (fileId) {
-        return fileId !== id;
-      });
-      var files = this.state.selectedFiles.filter(function (currFile) {
-        return currFile.id !== id;
-      });
-      this.setState({
-        selectedFileIds: fileIds,
-        selectedFiles: files
-      }, function () {
-        _this3.props.onSelectionChange(_this3.state.selectedFileIds, _this3.state.selectedFiles);
-      });
-    }
-  }, {
-    key: "select",
-    value: function select(file) {
-      var _this4 = this;
-      this.setState({
-        selectedFileIds: [].concat(_toConsumableArray(this.state.selectedFileIds), [file.id]),
-        selectedFiles: [].concat(_toConsumableArray(this.state.selectedFiles), [file])
-      }, function () {
-        _this4.props.onSelectionChange(_this4.state.selectedFileIds, _this4.state.selectedFiles);
-      });
-    }
-  }, {
-    key: "onCancel",
-    value: function onCancel() {
-      this.props.onCancel();
-    }
-  }, {
-    key: "openDirectory",
-    value: function openDirectory(directoryId) {
-      this.load(directoryId);
-    }
-  }, {
-    key: "handleUploadDone",
-    value: function handleUploadDone() {
-      _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.files_uploaded');
-      this.load(this.state.currentDirectory ? this.state.currentDirectory.id : null);
-    }
-  }, {
-    key: "handleFileUploaded",
-    value: function handleFileUploaded(file) {
-      this.select(file);
-    }
-  }, {
-    key: "handleCreateDirectory",
-    value: function handleCreateDirectory() {
-      this.load(this.state.currentDirectory ? this.state.currentDirectory.id : null);
-    }
-  }, {
-    key: "handleRenameFile",
-    value: function handleRenameFile(name, fileId) {
-      var _this5 = this;
-      if (name) {
-        _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.renameFile(name, fileId).then(function (response) {
-          _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.file_renamed');
-          _this5.load(_this5.state.currentDirectory ? _this5.state.currentDirectory.id : null);
-        }, function (error) {
-          _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.changes_unsuccessful');
-        });
-      }
-    }
-  }, {
-    key: "handleRenameDirectory",
-    value: function handleRenameDirectory(name, directoryId) {
-      var _this6 = this;
-      if (name) {
-        _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.renameDirectory(name, directoryId).then(function (response) {
-          _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.directory_renamed');
-          _this6.load(_this6.state.currentDirectory ? _this6.state.currentDirectory.id : null);
-        }, function (error) {
-          _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.changes_unsuccessful');
-        });
-      }
-    }
-  }, {
-    key: "handleMoveSelection",
-    value: function handleMoveSelection(directoryId, fileIds) {
-      var _this7 = this;
-      _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.moveFiles(directoryId, fileIds).then(function (response) {
-        _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.files_moved');
-        _this7.load(_this7.state.currentDirectory ? _this7.state.currentDirectory.id : null);
-      }, function (error) {
-        _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.file_not_moved');
-      });
-    }
-  }, {
-    key: "handleMoveFile",
-    value: function handleMoveFile(directoryId, fileId) {
-      var _this8 = this;
-      _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.moveFile(directoryId, fileId).then(function (response) {
-        _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.file_moved');
-        _this8.load(_this8.state.currentDirectory ? _this8.state.currentDirectory.id : null);
-      }, function (error) {
-        _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.file_not_moved');
-      });
-    }
-  }, {
-    key: "promptCreateDirectory",
-    value: function promptCreateDirectory() {
-      var _this9 = this;
-      _util__WEBPACK_IMPORTED_MODULE_9__["default"].prompt({
-        title: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.new_directory'),
-        confirmButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.confirm'),
-        cancelButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.cancel'),
-        confirm: function confirm(value) {
-          _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.createDirectory(value, _this9.state.currentDirectory ? _this9.state.currentDirectory.id : null).then(function () {
-            _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.directory_created');
-            _this9.load(_this9.state.currentDirectory ? _this9.state.currentDirectory.id : null);
-          });
+            }));
+          case 3:
+          case "end":
+            return _context.stop();
         }
+      }, _callee);
+    }));
+    return function load() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+  var onSelectionChange = function onSelectionChange(ids, files) {
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      selectedFileIds: ids,
+      selectedFiles: files
+    }));
+    props.onSelectionChange(ids, files);
+  };
+  var onSelectionConfirm = function onSelectionConfirm() {
+    props.onSelectionConfirm(state.selectedFileIds, state.selectedFiles);
+  };
+  var deselect = function deselect(id) {
+    var fileIds = state.selectedFileIds.filter(function (fileId) {
+      return fileId !== id;
+    });
+    var files = state.selectedFiles.filter(function (currFile) {
+      return currFile.id !== id;
+    });
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      selectedFileIds: fileIds,
+      selectedFiles: files
+    }));
+  };
+  var select = function select(file) {
+    setState(_objectSpread(_objectSpread({}, state), {}, {
+      selectedFileIds: [].concat(_toConsumableArray(state.selectedFileIds), [file.id]),
+      selectedFiles: [].concat(_toConsumableArray(state.selectedFiles), [file])
+    }));
+  };
+  var onCancel = function onCancel() {
+    props.onCancel();
+  };
+  var openDirectory = function openDirectory(directoryId) {
+    load(directoryId);
+  };
+  var handleUploadDone = function handleUploadDone() {
+    _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.files_uploaded');
+    load(state.currentDirectory ? state.currentDirectory.id : null);
+  };
+  var handleFileUploaded = function handleFileUploaded(file) {
+    select(file);
+  };
+  var handleCreateDirectory = function handleCreateDirectory() {
+    load(state.currentDirectory ? state.currentDirectory.id : null);
+  };
+  var handleRenameFile = function handleRenameFile(name, fileId) {
+    if (name) {
+      _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.renameFile(name, fileId).then(function (response) {
+        _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.file_renamed');
+        load(state.currentDirectory ? state.currentDirectory.id : null);
+      }, function (error) {
+        _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.changes_unsuccessful');
       });
     }
-  }, {
-    key: "onSelectedFileContextClick",
-    value: function onSelectedFileContextClick(path, file) {
-      if (path === 'jump_to') {
-        this.load(file.directory ? file.directory.id : null);
-      } else if (path === 'deselect') {
-        this.deselect(file.id);
-      }
-    }
-  }, {
-    key: "changeFileBrowserViewMode",
-    value: function changeFileBrowserViewMode(mode) {
-      this.setState({
-        fileBrowserViewMode: mode
-      }, function () {
-        _util_local_storage__WEBPACK_IMPORTED_MODULE_17__["default"].set('media-view-mode', mode);
+  };
+  var handleRenameDirectory = function handleRenameDirectory(name, directoryId) {
+    if (name) {
+      _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.renameDirectory(name, directoryId).then(function (response) {
+        _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.directory_renamed');
+        load(state.currentDirectory ? state.currentDirectory.id : null);
+      }, function (error) {
+        _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.changes_unsuccessful');
       });
     }
-  }, {
-    key: "renderSidebar",
-    value: function renderSidebar() {
-      var _this10 = this;
-      var links = [[_util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.deselect'), 'deselect'], [_util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.jump_to_folder'), 'jump_to']];
-      if (this.state.selectedFiles.length) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
-          className: 'file-picker-widget__selection',
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
-            className: "file-picker-widget__selection-header",
-            children: [_util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.your_selection'), " (", this.state.selectedFiles.length, ")"]
-          }), this.state.selectedFiles.map(function (file, i) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
-              className: "file-picker-widget__file",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_context_menu__WEBPACK_IMPORTED_MODULE_10__["default"], {
-                links: links,
-                onClick: function onClick(path) {
-                  return _this10.onSelectedFileContextClick(path, file);
-                },
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_file__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                  file: file,
-                  viewMode: 'minimal',
-                  actions: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_icon_button__WEBPACK_IMPORTED_MODULE_4__["default"], {
-                    name: 'delete',
-                    style: 'transparent',
-                    onClick: function onClick(e) {
-                      return _this10.deselect(file.id);
-                    }
-                  }, 'delete')]
-                })
-              })
-            }, i);
-          })]
+  };
+  var handleMoveSelection = function handleMoveSelection(directoryId, fileIds) {
+    _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.moveFiles(directoryId, fileIds).then(function (response) {
+      _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.files_moved');
+      load(state.currentDirectory ? state.currentDirectory.id : null);
+    }, function (error) {
+      _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.file_not_moved');
+    });
+  };
+  var handleMoveFile = function handleMoveFile(directoryId, fileId) {
+    _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.moveFile(directoryId, fileId).then(function (response) {
+      _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.file_moved');
+      load(state.currentDirectory ? state.currentDirectory.id : null);
+    }, function (error) {
+      _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.file_not_moved');
+    });
+  };
+  var promptCreateDirectory = function promptCreateDirectory() {
+    _util__WEBPACK_IMPORTED_MODULE_9__["default"].prompt({
+      title: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.new_directory'),
+      confirmButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.confirm'),
+      cancelButtonText: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.cancel'),
+      confirm: function confirm(value) {
+        _api_api__WEBPACK_IMPORTED_MODULE_1__["default"].media.createDirectory(value, state.currentDirectory ? state.currentDirectory.id : null).then(function () {
+          _util__WEBPACK_IMPORTED_MODULE_9__["default"].i18nNotify('snippets.directory_created');
+          load(state.currentDirectory ? state.currentDirectory.id : null);
         });
       }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_placeholder__WEBPACK_IMPORTED_MODULE_11__["default"], {
-        icon: 'checklist',
-        children: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.your_selection_is_empty')
+    });
+  };
+  var onSelectedFileContextClick = function onSelectedFileContextClick(path, file) {
+    if (path === 'jump_to') {
+      load(file.directory ? file.directory.id : null);
+    } else if (path === 'deselect') {
+      deselect(file.id);
+    }
+  };
+  var renderSidebar = function renderSidebar() {
+    var links = [[_util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.deselect'), 'deselect'], [_util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.jump_to_folder'), 'jump_to']];
+    if (state.selectedFiles.length) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+        className: 'file-picker-widget__selection',
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+          className: "file-picker-widget__selection-header",
+          children: [_util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.your_selection'), " (", state.selectedFiles.length, ")"]
+        }), state.selectedFiles.map(function (file, i) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+            className: "file-picker-widget__file",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_context_menu__WEBPACK_IMPORTED_MODULE_10__["default"], {
+              links: links,
+              onClick: function onClick(path) {
+                return onSelectedFileContextClick(path, file);
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_file__WEBPACK_IMPORTED_MODULE_5__["default"], {
+                file: file,
+                viewMode: 'minimal',
+                actions: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_icon_button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+                  name: 'delete',
+                  style: 'transparent',
+                  onClick: function onClick(e) {
+                    return deselect(file.id);
+                  }
+                }, 'delete')]
+              })
+            })
+          }, i);
+        })]
       });
     }
-  }, {
-    key: "renderContent",
-    value: function renderContent() {
-      var _this11 = this;
-      if (this.state.isLoading) {
-        return null;
-      }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_sticky_sidebar__WEBPACK_IMPORTED_MODULE_14__["default"], {
-        sidebar: this.renderSidebar(),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_file_drop_zone__WEBPACK_IMPORTED_MODULE_16__["default"], {
-          directory: this.state.currentDirectory ? this.state.currentDirectory.id : null,
-          onCreateDirectory: this.handleCreateDirectory.bind(this),
-          onUploadDone: this.handleUploadDone.bind(this),
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_file_browser__WEBPACK_IMPORTED_MODULE_2__["default"], {
-            viewMode: this.state.fileBrowserViewMode,
-            fileLabels: this.props.fileLabels,
-            currentDirectory: this.state.currentDirectory,
-            selectionMode: this.props.selectionMode,
-            selectedFiles: this.state.selectedFiles,
-            selectedFileIds: this.state.selectedFileIds,
-            directories: this.state.directories,
-            files: this.state.files,
-            onDirectoryRename: this.handleRenameDirectory.bind(this),
-            onFileRename: this.handleRenameFile.bind(this),
-            onFileMove: this.handleMoveFile.bind(this),
-            onDirectoryClick: function onDirectoryClick(directory) {
-              return _this11.openDirectory(directory);
-            },
-            onSelectionChange: this.onSelectionChange.bind(this),
-            onSelectionMove: this.handleMoveSelection.bind(this)
-          })
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_placeholder__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      icon: 'checklist',
+      children: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.your_selection_is_empty')
+    });
+  };
+  var renderContent = function renderContent() {
+    if (state.isLoading) {
+      return null;
+    }
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_sticky_sidebar__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      sidebar: renderSidebar(),
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_file_drop_zone__WEBPACK_IMPORTED_MODULE_16__["default"], {
+        directory: state.currentDirectory ? state.currentDirectory.id : null,
+        onCreateDirectory: handleCreateDirectory,
+        onUploadDone: handleUploadDone,
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_file_browser__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          fileLabels: props.fileLabels,
+          currentDirectory: state.currentDirectory,
+          selectionMode: props.selectionMode,
+          selectedFiles: state.selectedFiles,
+          selectedFileIds: state.selectedFileIds,
+          directories: state.directories,
+          files: state.files,
+          onDirectoryRename: handleRenameDirectory,
+          onFileRename: handleRenameFile,
+          onFileMove: handleMoveFile,
+          onDirectoryClick: function onDirectoryClick(directory) {
+            return openDirectory(directory);
+          },
+          onSelectionChange: onSelectionChange,
+          onSelectionMove: handleMoveSelection
         })
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this12 = this;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_window__WEBPACK_IMPORTED_MODULE_13__["default"], {
-        style: ['modal', 'wide'],
-        closeable: true,
-        onClose: this.onCancel.bind(this),
-        title: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_dropdown__WEBPACK_IMPORTED_MODULE_7__["default"], {
-          style: ['primary', 'small'],
-          openIcon: 'folder',
-          closeIcon: 'folder',
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_directory_tree__WEBPACK_IMPORTED_MODULE_12__["default"], {
-            selectedDirectory: this.state.currentDirectory ? this.state.currentDirectory.id : null,
-            onDirectoryClick: function onDirectoryClick(directory) {
-              return _this12.openDirectory(directory);
-            }
-          })
-        }, 'path'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_breadcrumbs__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          items: this.state.directoryPath,
-          onClick: function onClick(item) {
-            item ? _this12.openDirectory(item.id) : _this12.openDirectory();
+      })
+    });
+  };
+  var render = function render() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_window__WEBPACK_IMPORTED_MODULE_13__["default"], {
+      style: ['modal', 'wide'],
+      closeable: true,
+      onClose: onCancel,
+      title: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_dropdown__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        style: ['primary', 'small'],
+        openIcon: 'folder',
+        closeIcon: 'folder',
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_directory_tree__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          selectedDirectory: state.currentDirectory ? state.currentDirectory.id : null,
+          onDirectoryClick: function onDirectoryClick(directory) {
+            return openDirectory(directory);
           }
-        }, 'breadcrumbs')],
-        actions: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_button_group__WEBPACK_IMPORTED_MODULE_18__["default"], {
-          active: this.state.fileBrowserViewMode,
-          buttons: [{
-            icon: 'list',
-            key: 'compact-list'
-          }, {
-            icon: 'view_list',
-            key: 'list'
-          }, {
-            icon: 'grid_view',
-            key: 'grid'
-          }],
-          onClick: function onClick(key) {
-            return _this12.changeFileBrowserViewMode(key);
-          }
-        }, 'view-btn-group'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          text: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.new_directory'),
-          style: ['secondary', 'small'],
-          onClick: this.promptCreateDirectory.bind(this)
-        }, 'new-dir'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_dropdown__WEBPACK_IMPORTED_MODULE_7__["default"], {
-          text: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.upload'),
-          style: ['primary', 'small'],
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_file_uploader__WEBPACK_IMPORTED_MODULE_8__["default"], {
-            directory: this.state.currentDirectory ? this.state.currentDirectory.id : null,
-            onFileUploaded: this.handleFileUploaded.bind(this),
-            onUploadDone: this.handleUploadDone.bind(this)
-          })
-        }, 'upload')],
-        footer: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          text: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.cancel'),
-          style: ['secondary'],
-          onClick: this.onCancel.bind(this)
-        }, 'cancel'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          text: this.props.selectionMode ? _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.confirm_selection') : _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.select_file'),
-          style: this.state.selectedFileIds.length ? [] : ['disabled'],
-          onClick: this.state.selectedFileIds.length ? this.onSelectionConfirm.bind(this) : null
-        }, 'confirm')],
-        children: this.renderContent()
-      });
-    }
-  }]);
-  return FilePickerWidget;
-}((react__WEBPACK_IMPORTED_MODULE_0___default().Component));
-_defineProperty(FilePickerWidget, "defaultProps", {
+        })
+      }, 'path'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_breadcrumbs__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        items: state.directoryPath,
+        onClick: function onClick(item) {
+          item ? openDirectory(item.id) : openDirectory();
+        }
+      }, 'breadcrumbs')],
+      actions: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_media_view_switcher__WEBPACK_IMPORTED_MODULE_17__["default"], {}, 'view-switcher'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        text: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.new_directory'),
+        style: ['secondary', 'small'],
+        onClick: promptCreateDirectory
+      }, 'new-dir'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_dropdown__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        text: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.upload'),
+        style: ['primary', 'small'],
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_file_uploader__WEBPACK_IMPORTED_MODULE_8__["default"], {
+          directory: state.currentDirectory ? state.currentDirectory.id : null,
+          onFileUploaded: handleFileUploaded,
+          onUploadDone: handleUploadDone
+        })
+      }, 'upload')],
+      footer: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        text: _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.cancel'),
+        style: ['secondary'],
+        onClick: onCancel
+      }, 'cancel'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        text: props.selectionMode ? _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.confirm_selection') : _util_i18n__WEBPACK_IMPORTED_MODULE_15__["default"].get('snippets.select_file'),
+        style: state.selectedFileIds.length ? [] : ['disabled'],
+        onClick: state.selectedFileIds.length ? onSelectionConfirm : null
+      }, 'confirm')],
+      children: renderContent()
+    });
+  };
+  return render();
+}
+FilePickerWidget.defaultProps = {
   multiple: false,
   onSelectionChange: function onSelectionChange(ids, files) {},
   onSelectionConfirm: function onSelectionConfirm(ids, files) {},
@@ -12055,7 +11996,7 @@ _defineProperty(FilePickerWidget, "defaultProps", {
   defaultSelectedFiles: [],
   selectionMode: false,
   fileLabels: {}
-});
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FilePickerWidget);
 
 /***/ }),
@@ -12633,7 +12574,7 @@ _defineProperty(FileView, "defaultProps", {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ File)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -12642,23 +12583,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icon_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icon-button */ "./resources/js/core/ui/icon-button.js");
 /* harmony import */ var _tag_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tag-label */ "./resources/js/core/ui/tag-label.js");
 /* harmony import */ var _data_mimetypes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../data/mimetypes */ "./resources/js/data/mimetypes.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
@@ -12667,121 +12593,114 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
-var File = /*#__PURE__*/function (_React$Component) {
-  _inherits(File, _React$Component);
-  var _super = _createSuper(File);
-  function File() {
-    _classCallCheck(this, File);
-    return _super.apply(this, arguments);
-  }
-  _createClass(File, [{
-    key: "renderActions",
-    value: function renderActions() {
-      if (!this.props.actions.length) {
-        return null;
-      }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "file__actions",
-        children: this.props.actions
-      });
-    }
-  }, {
-    key: "renderSelectionMode",
-    value: function renderSelectionMode() {
-      var _this = this;
-      if (!this.props.selectionMode) {
-        return null;
-      }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "file__checkbox",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_icon_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          onClick: function onClick(e) {
-            return _this.props.onClick(e, _this.props.file);
-          },
-          name: this.props.isSelected ? 'check_box' : 'check_box_outline_blank',
-          style: 'transparent'
-        })
-      });
-    }
-  }, {
-    key: "renderLabel",
-    value: function renderLabel() {
-      if (Object.keys(this.props.fileLabels).length) {
-        var label = this.props.fileLabels[this.props.file.label] || null;
-        if (label) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: "file__label",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_tag_label__WEBPACK_IMPORTED_MODULE_4__["default"], {
-              text: label.name,
-              color: label.color,
-              style: this.props.viewMode === 'grid' || this.props.viewMode === 'compact-list' ? ['small'] : []
-            })
-          });
-        }
-      }
+
+
+
+function File(props) {
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_6__.useSelector)(function (state) {
+      return state.media;
+    }),
+    viewMode = _useSelector.viewMode;
+  var renderActions = function renderActions() {
+    if (!props.actions.length) {
       return null;
     }
-  }, {
-    key: "getFileType",
-    value: function getFileType() {
-      var map = _data_mimetypes__WEBPACK_IMPORTED_MODULE_5__["default"];
-      if (!map[this.props.file.mime_type]) {
-        return 'unknown';
-      }
-      return map[this.props.file.mime_type].description;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "file__actions",
+      children: props.actions
+    });
+  };
+  var renderSelectionMode = function renderSelectionMode() {
+    if (!props.selectionMode) {
+      return null;
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-      var filePreviewModifiers = [];
-      if (this.props.viewMode === 'grid') {
-        filePreviewModifiers = ['grid', 'full'];
-      } else if (this.props.viewMode === 'list') {
-        filePreviewModifiers = ['list'];
-      } else if (this.props.viewMode === 'compact-list') {
-        filePreviewModifiers = ['compact-list'];
-      }
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: 'file file--' + this.props.viewMode + (this.props.isSelected ? ' file--selected' : ''),
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "file__checkbox",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_icon_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
         onClick: function onClick(e) {
-          return _this2.props.onClick(e, _this2.props.file);
+          return props.onClick(e, props.file);
         },
-        children: [this.renderSelectionMode(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "file__preview",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_file_preview__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            file: this.props.file,
-            mediaConversion: this.props.viewMode === 'grid' ? 'contain' : 'thumb',
-            style: filePreviewModifiers
+        name: props.isSelected ? 'check_box' : 'check_box_outline_blank',
+        style: 'transparent'
+      })
+    });
+  };
+  var renderLabel = function renderLabel() {
+    if (Object.keys(props.fileLabels).length) {
+      var label = props.fileLabels[props.file.label] || null;
+      if (label) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "file__label",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_tag_label__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            text: label.name,
+            color: label.color,
+            style: viewMode === 'grid' || viewMode === 'compact-list' ? ['small'] : []
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          className: "file__content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: "file__name",
-            children: this.props.file.name
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: "file__type",
-            children: this.getFileType()
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            className: "file__size",
-            children: [_util_file__WEBPACK_IMPORTED_MODULE_2__["default"].filesize(this.props.file.size), " (", this.props.file.disk, ")"]
-          })]
-        }), this.renderLabel(), this.renderActions()]
-      });
+        });
+      }
     }
-  }]);
-  return File;
-}((react__WEBPACK_IMPORTED_MODULE_0___default().Component));
-_defineProperty(File, "defaultProps", {
+    return null;
+  };
+  var getFileType = function getFileType() {
+    var map = _data_mimetypes__WEBPACK_IMPORTED_MODULE_5__["default"];
+    if (!map[props.file.mime_type]) {
+      return 'unknown';
+    }
+    return map[props.file.mime_type].description;
+  };
+  var render = function render() {
+    var filePreviewModifiers = [];
+    var realViewMode = props.viewMode ? props.viewMode : viewMode;
+    switch (realViewMode) {
+      case 'grid':
+        filePreviewModifiers = ['grid', 'full'];
+        break;
+      case 'list':
+        filePreviewModifiers = ['list'];
+        break;
+      case 'compact-list':
+        filePreviewModifiers = ['compact-list'];
+        break;
+    }
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      className: 'file file--' + realViewMode + (props.isSelected ? ' file--selected' : ''),
+      onClick: function onClick(e) {
+        return props.onClick(e, props.file);
+      },
+      children: [renderSelectionMode(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        className: "file__preview",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_file_preview__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          file: props.file,
+          mediaConversion: realViewMode === 'grid' ? 'contain' : 'thumb',
+          style: filePreviewModifiers
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "file__content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "file__name",
+          children: props.file.name
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          className: "file__type",
+          children: getFileType()
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "file__size",
+          children: [_util_file__WEBPACK_IMPORTED_MODULE_2__["default"].filesize(props.file.size), " (", props.file.disk, ")"]
+        })]
+      }), renderLabel(), renderActions()]
+    });
+  };
+  return render();
+}
+File.defaultProps = {
   file: {},
+  viewMode: '',
   fileLabels: {},
   isSelected: false,
   selectionMode: false,
-  viewMode: 'list',
   actions: [],
   onClick: function onClick(e, file) {}
-});
-
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (File);
 
 /***/ }),
 
@@ -13788,35 +13707,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var Loader = /*#__PURE__*/function (_React$Component) {
-  _inherits(Loader, _React$Component);
-  var _super = _createSuper(Loader);
-  function Loader() {
-    _classCallCheck(this, Loader);
-    return _super.apply(this, arguments);
-  }
-  _createClass(Loader, [{
-    key: "render",
-    value: function render() {
-      return 'Loading...';
-    }
-  }]);
-  return Loader;
-}((react__WEBPACK_IMPORTED_MODULE_0___default().Component));
+function Loader(props) {
+  return 'Loading...';
+}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Loader);
 
 /***/ }),
@@ -13913,6 +13807,60 @@ _defineProperty(MediaMoveWidget, "defaultProps", {
   onConfirm: function onConfirm(directoryId) {}
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MediaMoveWidget);
+
+/***/ }),
+
+/***/ "./resources/js/core/ui/media-view-switcher/index.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/core/ui/media-view-switcher/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _button_group__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../button-group */ "./resources/js/core/ui/button-group/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _util_local_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/local-storage */ "./resources/js/util/local-storage.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+function MediaViewSwitcher() {
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+  var _useSelector = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (state) {
+      return state.media;
+    }),
+    viewMode = _useSelector.viewMode;
+  var switchViewMode = function switchViewMode(mode) {
+    dispatch({
+      type: 'media/view/update',
+      payload: mode
+    });
+    _util_local_storage__WEBPACK_IMPORTED_MODULE_3__["default"].set('media-view-mode', mode);
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_button_group__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    active: viewMode,
+    buttons: [{
+      icon: 'list',
+      key: 'compact-list'
+    }, {
+      icon: 'view_list',
+      key: 'list'
+    }, {
+      icon: 'grid_view',
+      key: 'grid'
+    }],
+    onClick: switchViewMode
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MediaViewSwitcher);
 
 /***/ }),
 
@@ -14125,6 +14073,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Overlay = /*#__PURE__*/function (_React$Component) {
   _inherits(Overlay, _React$Component);
   var _super = _createSuper(Overlay);
@@ -14135,7 +14084,7 @@ var Overlay = /*#__PURE__*/function (_React$Component) {
   _createClass(Overlay, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
           className: "overlay"
         }), this.props.children]
@@ -17042,12 +16991,21 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 var initialState = {
-  viewMode: 'list'
+  viewMode: 'list',
+  currentDirectory: null,
+  directories: [],
+  files: []
 };
 function mediaReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
   switch (action.type) {
+    case 'media/directory/update':
+      {
+        return _objectSpread(_objectSpread({}, state), {}, {
+          currentDirectory: action.payload
+        });
+      }
     case 'media/view/update':
       {
         // We need to return a new state object
@@ -17427,20 +17385,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../reducers */ "./resources/js/reducers/index.js");
 /* harmony import */ var _util_meta__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/meta */ "./resources/js/util/meta.js");
+/* harmony import */ var _util_local_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/local-storage */ "./resources/js/util/local-storage.js");
 
 
 
 
-var store = (0,redux__WEBPACK_IMPORTED_MODULE_2__.createStore)(_reducers__WEBPACK_IMPORTED_MODULE_0__["default"], {
+
+var store = (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_reducers__WEBPACK_IMPORTED_MODULE_0__["default"], {
   cmf: {
     title: _util_meta__WEBPACK_IMPORTED_MODULE_1__["default"].get('cmf:title'),
     version: _util_meta__WEBPACK_IMPORTED_MODULE_1__["default"].get('cmf:version')
+  },
+  media: {
+    viewMode: _util_local_storage__WEBPACK_IMPORTED_MODULE_2__["default"].get('media-view-mode', 'list')
   }
-}, (0,redux__WEBPACK_IMPORTED_MODULE_2__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_3__["default"]));
+}, (0,redux__WEBPACK_IMPORTED_MODULE_3__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_4__["default"]));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
 /***/ }),

@@ -1,14 +1,13 @@
 import React from 'react';
-import ContextMenu from "./context-menu";
 import Placeholder from "./placeholder";
 import util from "./util";
-import File from "./file";
 import Manager from "../messaging/manager";
 import FilePlaceholder from "./file-placeholder";
 import MediaMoveWidget from "./media-move-widget";
 import Overlay from "./overlay";
-import Directory from "./directory";
 import i18n from "../../util/i18n";
+import FileList from "./file-list";
+import DirectoryList from "./directory-list";
 
 class FileBrowser extends React.Component {
 
@@ -20,7 +19,6 @@ class FileBrowser extends React.Component {
         selectionMode: false,
         selectedFileIds: [],
         selectedFiles: [],
-        viewMode: 'list',
 
         // Events
         onDirectoryClick: id => {},
@@ -346,28 +344,15 @@ class FileBrowser extends React.Component {
         }
 
         return (
-            <div className={'file-list file-list--'+this.props.viewMode}>
-                {this.state.files.map((file, i) => {
-                    return (
-                        <div className="file-list__item" key={i}>
-                            <ContextMenu
-                                key={i}
-                                links={links}
-                                onClick={path => this.onFileContextClick(path, file)}
-                            >
-                                <File
-                                    viewMode={this.props.viewMode}
-                                    file={file}
-                                    fileLabels={this.props.fileLabels}
-                                    isSelected={this.isFileSelected(file)}
-                                    selectionMode={this.props.selectionMode}
-                                    onClick={(e, file) => this.handleFileClick(e, file)}
-                                />
-                            </ContextMenu>
-                        </div>
-                    );
-                })}
-            </div>
+            <FileList
+                files={this.state.files}
+                fileLabels={this.props.fileLabels}
+                selection={this.props.selectedFileIds}
+                selectionMode={this.props.selectionMode}
+                contextMenuLinks={links}
+                onClick={(e, file) => this.handleFileClick(e, file)}
+                onContextClick={(path, file) => this.onFileContextClick(path, file)}
+            />
         );
     }
 
@@ -378,29 +363,18 @@ class FileBrowser extends React.Component {
         }
 
         return (
-            <div className={'directory-list directory-list--'+this.props.viewMode}>
-                {this.props.directories.map((directory, i) => {
-                    return (
-                        <div className="directory-list__item" key={i}>
-                            <ContextMenu
-                                key={i}
-                                links={[
-                                    [i18n.get('snippets.rename'), 'rename'],
-                                    [i18n.get('snippets.move'), 'move'],
-                                    [i18n.get('snippets.delete'), 'delete']
-                                ]}
-                                onClick={path => this.onDirectoryContextClick(path, directory)}
-                            >
-                                <Directory
-                                    viewMode={this.props.viewMode}
-                                    directory={directory}
-                                    onClick={(e, directory) => this.props.onDirectoryClick(directory.id)}
-                                />
-                            </ContextMenu>
-                        </div>
-                    );
-                })}
-            </div>
+            <>
+                <DirectoryList
+                    directories={this.props.directories}
+                    contextMenuLinks={[
+                        [i18n.get('snippets.rename'), 'rename'],
+                        [i18n.get('snippets.move'), 'move'],
+                        [i18n.get('snippets.delete'), 'delete']
+                    ]}
+                    onContextClick={(path, directory) => this.onDirectoryContextClick(path, directory)}
+                    onClick={(e, directory) => this.props.onDirectoryClick(directory.id)}
+                />
+            </>
         );
     }
 

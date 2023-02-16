@@ -14,10 +14,9 @@ import Breadcrumbs from "../core/ui/breadcrumbs";
 import DirectoryTree from "../core/ui/directory-tree";
 import i18n from "../util/i18n";
 import str from "../util/str";
-import localStorage from "../util/local-storage";
-import ButtonGroup from "../core/ui/button-group";
 import DirectoryView from "../core/ui/directory-view";
 import RootDirectoryView from "../core/ui/root-directory-view";
+import MediaViewSwitcher from "../core/ui/media-view-switcher";
 
 class ViewMediaDirectory extends React.Component {
 
@@ -41,8 +40,7 @@ class ViewMediaDirectory extends React.Component {
             currentFile: null,
             selectedFiles: [],
             selectedFileIds: [],
-            directoryPath: [],
-            fileBrowserViewMode: localStorage.get('media-view-mode', 'list')
+            directoryPath: []
         };
     }
 
@@ -317,14 +315,6 @@ class ViewMediaDirectory extends React.Component {
         });
     }
 
-    changeFileBrowserViewMode(mode) {
-        this.setState({
-            fileBrowserViewMode: mode
-        }, () => {
-            localStorage.set('media-view-mode', mode);
-        });
-    }
-
     renderBreadcrumbs() {
         return (
             <Breadcrumbs
@@ -396,7 +386,7 @@ class ViewMediaDirectory extends React.Component {
 
     renderContent() {
         return (
-            <React.Fragment>
+            <>
                 <div className={'view-media-directory__main'}>
                     <FileDropZone
                         directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
@@ -431,7 +421,7 @@ class ViewMediaDirectory extends React.Component {
                 <div className="view-media-directory__side">
                     {this.renderSidebar()}
                 </div>
-            </React.Fragment>
+            </>
         );
     }
 
@@ -449,15 +439,7 @@ class ViewMediaDirectory extends React.Component {
                         {this.renderBreadcrumbs()}
                     </div>
                     <div className="view-media-directory__header-options">
-                        <ButtonGroup
-                            active={this.state.fileBrowserViewMode}
-                            buttons={[
-                                {icon: 'list', key: 'compact-list'},
-                                {icon: 'view_list', key: 'list'},
-                                {icon: 'grid_view', key: 'grid'},
-                            ]}
-                            onClick={key => this.changeFileBrowserViewMode(key)}
-                        />
+                        <MediaViewSwitcher />
                         <Button
                             style={['secondary', 'small']}
                             onClick={this.promptCreateDirectory.bind(this)}

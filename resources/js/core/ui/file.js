@@ -6,55 +6,48 @@ import fileUtil from "../../util/file";
 import IconButton from "./icon-button";
 import TagLabel from "./tag-label";
 import mimetypes from '../../data/mimetypes';
+import { useSelector } from "react-redux";
 
-export default class File extends React.Component {
+function File(props) {
 
-    static defaultProps = {
-        file: {},
-        fileLabels: {},
-        isSelected: false,
-        selectionMode: false,
-        viewMode: 'list',
-        actions: [],
-        onClick: (e, file) => {}
-    };
+    const { viewMode } = useSelector(state => state.media);
 
-    renderActions() {
-        if (! this.props.actions.length) {
+    const renderActions = () => {
+        if (! props.actions.length) {
             return null;
         }
 
         return (
             <div className="file__actions">
-                {this.props.actions}
+                {props.actions}
             </div>
         );
     }
 
-    renderSelectionMode() {
+    const renderSelectionMode = () => {
 
-        if (! this.props.selectionMode) {
+        if (! props.selectionMode) {
             return null;
         }
 
         return (
             <div className="file__checkbox">
                 <IconButton
-                    onClick={e => this.props.onClick(e, this.props.file)}
-                    name={(this.props.isSelected ? 'check_box' : 'check_box_outline_blank')}
+                    onClick={e => props.onClick(e, props.file)}
+                    name={(props.isSelected ? 'check_box' : 'check_box_outline_blank')}
                     style={'transparent'}
                 />
             </div>
         );
     }
 
-    renderLabel() {
-        if (Object.keys(this.props.fileLabels).length) {
-            let label = (this.props.fileLabels[this.props.file.label] || null);
+    const renderLabel = () => {
+        if (Object.keys(props.fileLabels).length) {
+            let label = (props.fileLabels[props.file.label] || null);
             if (label) {
                 return (
                     <div className="file__label">
-                        <TagLabel text={label.name} color={label.color} style={this.props.viewMode === 'grid' || this.props.viewMode === 'compact-list' ? ['small'] : []}/>
+                        <TagLabel text={label.name} color={label.color} style={viewMode === 'grid' || viewMode === 'compact-list' ? ['small'] : []}/>
                     </div>
                 );
             }
@@ -62,52 +55,72 @@ export default class File extends React.Component {
         return null;
     }
 
-    getFileType() {
+    const getFileType = () => {
 
         let map = mimetypes;
 
-        if (! map[this.props.file.mime_type]) {
+        if (! map[props.file.mime_type]) {
             return 'unknown';
         }
 
-        return map[this.props.file.mime_type].description;
+        return map[props.file.mime_type].description;
     }
 
-    render() {
+    const render = () => {
 
         let filePreviewModifiers = [];
-        if (this.props.viewMode === 'grid') {
-            filePreviewModifiers = ['grid', 'full'];
-        } else if (this.props.viewMode === 'list') {
-            filePreviewModifiers = ['list'];
-        } else if (this.props.viewMode === 'compact-list') {
-            filePreviewModifiers = ['compact-list'];
+        const realViewMode = (props.viewMode ? props.viewMode : viewMode);
+
+        switch (realViewMode) {
+            case 'grid':
+                filePreviewModifiers = ['grid', 'full'];
+                break;
+            case 'list':
+                filePreviewModifiers = ['list'];
+                break;
+            case 'compact-list':
+                filePreviewModifiers = ['compact-list'];
+                break;
         }
 
         return (
-            <div className={'file file--'+this.props.viewMode+(this.props.isSelected ? ' file--selected' : '')} onClick={e => this.props.onClick(e, this.props.file)}>
-                {this.renderSelectionMode()}
+            <div className={'file file--'+(realViewMode)+(props.isSelected ? ' file--selected' : '')} onClick={e => props.onClick(e, props.file)}>
+                {renderSelectionMode()}
                 <div className="file__preview">
                     <FilePreview
-                        file={this.props.file}
-                        mediaConversion={this.props.viewMode === 'grid' ? 'contain' : 'thumb'}
+                        file={props.file}
+                        mediaConversion={realViewMode === 'grid' ? 'contain' : 'thumb'}
                         style={filePreviewModifiers}
                     />
                 </div>
                 <div className="file__content">
                     <div className="file__name">
-                        {this.props.file.name}
+                        {props.file.name}
                     </div>
                     <div className="file__type">
-                        {this.getFileType()}
+                        {getFileType()}
                     </div>
                     <div className="file__size">
-                        {fileUtil.filesize(this.props.file.size)} ({this.props.file.disk})
+                        {fileUtil.filesize(props.file.size)} ({props.file.disk})
                     </div>
                 </div>
-                {this.renderLabel()}
-                {this.renderActions()}
+                {renderLabel()}
+                {renderActions()}
             </div>
         );
     }
+
+    return render();
 }
+
+File.defaultProps = {
+    file: {},
+    viewMode: '',
+    fileLabels: {},
+    isSelected: false,
+    selectionMode: false,
+    actions: [],
+    onClick: (e, file) => {}
+};
+
+export default File;

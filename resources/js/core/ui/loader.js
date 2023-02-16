@@ -1,12 +1,7 @@
 import React from 'react';
 
-class Loader extends React.Component {
-
-    render() {
-        return (
-            'Loading...'
-        );
-    }
+function Loader(props) {
+    return 'Loading...';
 }
 
 export default Loader;

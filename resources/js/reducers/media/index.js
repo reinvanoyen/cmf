@@ -1,9 +1,18 @@
 const initialState = {
-    viewMode: 'list'
+    viewMode: 'list',
+    currentDirectory: null,
+    directories: [],
+    files: []
 };
 
 export default function mediaReducer(state = initialState, action) {
     switch (action.type) {
+        case 'media/directory/update': {
+            return {
+                ...state,
+                currentDirectory: action.payload
+            }
+        }
         case 'media/view/update': {
             // We need to return a new state object
             return {
