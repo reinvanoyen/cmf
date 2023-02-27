@@ -2,5 +2,5 @@
 
 return [
     'uppercase' => 'Gelieve de waarde in hoofdletters in te vullen.',
-    'mimetype' => ':attribute heeft het foute formaat. (Toegestaan: :mimetypes)',
+    'mimetype' => ':attribute heeft een onjuist formaat. (Toegestaan: :mimetypes)',
 ];
