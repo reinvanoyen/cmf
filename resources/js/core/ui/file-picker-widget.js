@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import api from "../../api/api";
 import FileBrowser from "./file-browser";
@@ -23,13 +24,12 @@ function FilePickerWidget(props) {
 
     const [state, setState] = useState({
         isLoading: true,
-        directories: [],
-        files: [],
-        directoryPath: [],
-        currentDirectory: null,
         selectedFileIds: props.defaultSelectedFileIds || [],
         selectedFiles: props.defaultSelectedFiles || []
     });
+
+    const dispatch = useDispatch();
+    const { isInitialised, path, directory, directories, files } = useSelector(state => state.media);
 
     useOnMount(() => {
         if (props.defaultDirectoryId) {
@@ -37,7 +37,15 @@ function FilePickerWidget(props) {
             return;
         }
 
-        load();
+        if (! isInitialised) {
+            load();
+            return;
+        }
+
+        setState({
+            ...state,
+            isLoading: false
+        });
     });
 
     useEffect(() => {
@@ -52,17 +60,16 @@ function FilePickerWidget(props) {
             api.media.loadFiles(directoryId)
         ]).then(axios.spread((response1, response2, response3) => {
 
-            let path = response1.data.data;
-            let directories = response2.data.data;
-            let files = response3.data.data;
+            const path = response1.data.data;
+            const directories = response2.data.data;
+            const files = response3.data.data;
+            const directory = path[path.length - 1];
+
+            dispatch({ type: 'media/init', payload: {directory, path, directories, files}});
 
             setState({
                 ...state,
-                isLoading: false,
-                directoryPath: path,
-                currentDirectory: path[path.length - 1],
-                directories: directories,
-                files: files
+                isLoading: false
             });
         }));
     }
@@ -82,8 +89,8 @@ function FilePickerWidget(props) {
 
     const deselect = (id) => {
 
-        let fileIds = state.selectedFileIds.filter(fileId => fileId !== id);
-        let files = state.selectedFiles.filter(currFile => currFile.id !== id);
+        const fileIds = state.selectedFileIds.filter(fileId => fileId !== id);
+        const files = state.selectedFiles.filter(currFile => currFile.id !== id);
 
         setState({
             ...state,
@@ -110,43 +117,56 @@ function FilePickerWidget(props) {
 
     const handleUploadDone = () => {
         util.i18nNotify('snippets.files_uploaded');
-        load((state.currentDirectory ? state.currentDirectory.id : null));
     }
 
     const handleFileUploaded = (file) => {
         select(file);
+        dispatch({ type: 'media/files/add', payload: file });
     }
 
-    const handleCreateDirectory = () => {
-        load((state.currentDirectory ? state.currentDirectory.id : null));
-    }
-
-    const handleRenameFile = (name, fileId) => {
+    const handleCreateDirectory = async (name) => {
         if (name) {
-            api.media.renameFile(name, fileId).then(response => {
-                util.i18nNotify('snippets.file_renamed');
-                load((state.currentDirectory ? state.currentDirectory.id : null));
-            }, error => {
+            try {
+                const response = await api.media.createDirectory(name, (directory ? directory.id : null));
+                const directory = response.data.data;
+                util.i18nNotify('snippets.directory_created');
+                dispatch({ type: 'media/directories/add', payload: directory });
+            } catch (error) {
                 util.i18nNotify('snippets.changes_unsuccessful');
-            });
+            }
         }
     }
 
-    const handleRenameDirectory = (name, directoryId) => {
+    const handleRenameFile = async (name, fileId) => {
         if (name) {
-            api.media.renameDirectory(name, directoryId).then(response => {
-                util.i18nNotify('snippets.directory_renamed');
-                load((state.currentDirectory ? state.currentDirectory.id : null));
-            }, error => {
+            try {
+                const response = await api.media.renameFile(name, fileId);
+                const file = response.data.data;
+                dispatch({ type: 'media/files/rename', payload: file});
+                util.i18nNotify('snippets.file_renamed');
+            } catch (error) {
                 util.i18nNotify('snippets.changes_unsuccessful');
-            });
+            }
+        }
+    }
+
+    const handleRenameDirectory = async (name, directoryId) => {
+        if (name) {
+            try {
+                const response = await api.media.renameDirectory(name, directoryId);
+                const directory = response.data.data;
+                dispatch({ type: 'media/directories/rename', payload: directory});
+                util.i18nNotify('snippets.directory_renamed');
+            } catch (error) {
+                util.i18nNotify('snippets.changes_unsuccessful');
+            }
         }
     }
 
     const handleMoveSelection = (directoryId, fileIds) => {
         api.media.moveFiles(directoryId, fileIds).then(response => {
             util.i18nNotify('snippets.files_moved');
-            load((state.currentDirectory ? state.currentDirectory.id : null));
+            load((directory ? directory.id : null));
         }, error => {
             util.i18nNotify('snippets.file_not_moved');
         });
@@ -155,7 +175,7 @@ function FilePickerWidget(props) {
     const handleMoveFile = (directoryId, fileId) => {
         api.media.moveFile(directoryId, fileId).then(response => {
             util.i18nNotify('snippets.file_moved');
-            load((state.currentDirectory ? state.currentDirectory.id : null));
+            load((directory ? directory.id : null));
         }, error => {
             util.i18nNotify('snippets.file_not_moved');
         });
@@ -166,12 +186,7 @@ function FilePickerWidget(props) {
             title: i18n.get('snippets.new_directory'),
             confirmButtonText: i18n.get('snippets.confirm'),
             cancelButtonText: i18n.get('snippets.cancel'),
-            confirm: value => {
-                api.media.createDirectory(value, (state.currentDirectory ? state.currentDirectory.id : null)).then(() => {
-                    util.i18nNotify('snippets.directory_created');
-                    load((state.currentDirectory ? state.currentDirectory.id : null));
-                });
-            }
+            confirm: value => handleCreateDirectory(value)
         });
     }
 
@@ -227,6 +242,7 @@ function FilePickerWidget(props) {
     }
 
     const renderContent = () => {
+
         if (state.isLoading) {
             return null;
         }
@@ -234,18 +250,18 @@ function FilePickerWidget(props) {
         return (
             <StickySidebar sidebar={renderSidebar()}>
                 <FileDropZone
-                    directory={state.currentDirectory ? state.currentDirectory.id : null}
+                    directory={directory ? directory.id : null}
                     onCreateDirectory={handleCreateDirectory}
                     onUploadDone={handleUploadDone}
                 >
                     <FileBrowser
                         fileLabels={props.fileLabels}
-                        currentDirectory={state.currentDirectory}
+                        currentDirectory={directory}
                         selectionMode={props.selectionMode}
                         selectedFiles={state.selectedFiles}
                         selectedFileIds={state.selectedFileIds}
-                        directories={state.directories}
-                        files={state.files}
+                        directories={directories}
+                        files={files}
                         onDirectoryRename={handleRenameDirectory}
                         onFileRename={handleRenameFile}
                         onFileMove={handleMoveFile}
@@ -263,13 +279,13 @@ function FilePickerWidget(props) {
             <Window style={['modal', 'wide']} closeable={true} onClose={onCancel} title={[
                 <Dropdown key={'path'} style={['primary', 'small']} openIcon={'folder'} closeIcon={'folder'}>
                     <DirectoryTree
-                        selectedDirectory={state.currentDirectory ? state.currentDirectory.id : null}
+                        selectedDirectory={directory ? directory.id : null}
                         onDirectoryClick={directory => openDirectory(directory)}
                     />
                 </Dropdown>,
                 <Breadcrumbs
                     key={'breadcrumbs'}
-                    items={state.directoryPath}
+                    items={path}
                     onClick={item => {
                         (item ? openDirectory(item.id) : openDirectory());
                     }}
@@ -279,7 +295,7 @@ function FilePickerWidget(props) {
                 <Button key={'new-dir'} text={i18n.get('snippets.new_directory')} style={['secondary', 'small']} onClick={promptCreateDirectory} />,
                 <Dropdown key={'upload'} text={i18n.get('snippets.upload')} style={['primary', 'small']}>
                     <FileUploader
-                        directory={state.currentDirectory ? state.currentDirectory.id : null}
+                        directory={directory ? directory.id : null}
                         onFileUploaded={handleFileUploaded}
                         onUploadDone={handleUploadDone}
                     />

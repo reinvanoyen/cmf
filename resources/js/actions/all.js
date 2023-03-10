@@ -6,7 +6,7 @@ import View from "./View";
 import Export from "./export";
 import CustomController from "./custom-controller";
 import CreateWizard from "./create-wizard";
-import ViewMediaDirectory from "./view-media-directory";
+import ViewMediaDirectory from "./view-media-directory-functional";
 import Dashboard from "./dashboard";
 
 export default {
