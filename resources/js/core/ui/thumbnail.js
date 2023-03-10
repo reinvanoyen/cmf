@@ -1,61 +1,56 @@
 "use strict";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import usePrevious from "../../hooks/use-previous";
 
-export default class Thumbnail extends React.Component {
+function Thumbnail(props) {
 
-    static defaultProps = {
-        src: '',
-        autoload: true,
-        onLoaded: () => {}
-    };
+    const [state, setState] = useState({
+        isLoaded: false
+    });
 
-    constructor(props) {
+    const prevSrc = usePrevious(props.src);
 
-        super(props);
-
-        this.state = {
-            isLoaded: false
-        };
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.src !== prevProps.src) {
-            this.setState({
+    useEffect(() => {
+        if (prevSrc !== props.src) {
+            setState({
+                ...state,
                 isLoaded: false
-            }, () => {
-                this.load();
             });
         }
-    }
+    }, [props]);
 
-    componentDidMount() {
-        if (this.props.autoload) {
-            this.load();
-        }
-    }
-
-    load() {
-
-        if (! this.state.isLoaded) {
+    useEffect(() => {
+        if (! state.isLoaded) {
 
             let img = new Image();
-            img.src = this.props.src;
+            img.onload = () => { loaded(); };
+            img.src = props.src;
 
-            img.onload = () => {
-                this.setState({
-                    isLoaded: true
-                });
-                this.props.onLoaded();
+            return () => {
+                img.onload = () => {};
             };
         }
-    }
+    }, [state.isLoaded]);
 
-    render() {
-        return (
-            <div className={'thumb' + (this.state.isLoaded ? ' thumb--loaded' : '')}>
-                <img src={this.props.src} className="thumb__img" />
-            </div>
-        );
-    }
+    const loaded = () => {
+        setState({
+            ...state,
+            isLoaded: true
+        });
+    };
+
+    return (
+        <div className={'thumb' + (state.isLoaded ? ' thumb--loaded' : '')}>
+            <img src={props.src} className="thumb__img" />
+        </div>
+    );
 }
+
+Thumbnail.defaultProps = {
+    src: '',
+    autoload: true,
+    onLoaded: () => {}
+};
+
+export default Thumbnail;

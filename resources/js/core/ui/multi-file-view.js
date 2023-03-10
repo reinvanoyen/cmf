@@ -101,7 +101,7 @@ export default class MultiFileView extends React.Component {
                 <div className="multi-file-view__content">
                     {this.props.files.map((file, i) => {
                         return (
-                            <File file={file} key={i} />
+                            <File viewMode={'minimal'} file={file} key={i} />
                         );
                     })}
                 </div>

@@ -8,6 +8,7 @@ export default class TreeItem extends React.Component {
 
     static defaultProps = {
         icon: 'folder',
+        iconOpen: 'folder_open',
         style: 'default',
         text: '',
         collapsible: true,
@@ -47,7 +48,7 @@ export default class TreeItem extends React.Component {
                     : null}
                 <div className="tree-item__content" onClick={this.select.bind(this)}>
                     <div className="tree-item__icon">
-                        <Icon name={this.props.icon} style={'alt'} />
+                        <Icon name={this.state.isOpen ? this.props.iconOpen : this.props.icon} style={'alt'} />
                     </div>
                     <div className="tree-item__text">
                         {this.props.text}
