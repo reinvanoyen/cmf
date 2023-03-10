@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import api from "../api/api";
-import path from "../state/path";
+import pathUtil from "../state/path";
 import util from "../core/ui/util";
 import Button from "../core/ui/button";
 import FileBrowser from "../core/ui/file-browser";
@@ -18,65 +19,45 @@ import DirectoryView from "../core/ui/directory-view";
 import RootDirectoryView from "../core/ui/root-directory-view";
 import MediaViewSwitcher from "../core/ui/media-view-switcher";
 
-class ViewMediaDirectory extends React.Component {
+function ViewMediaDirectory(props) {
 
-    static defaultProps = {
-        type: '',
-        path: {},
-        id: 0,
-        data: {},
-        fileLabels: {}
-    };
+    const [state, setState] = useState({
+        isLoading: true,
+        currentFile: null,
+        selectedFiles: [],
+        selectedFileIds: [],
+        directoryPath: []
+    });
 
-    constructor(props) {
+    const location = useSelector(state => state.location);
+    const { isInitialised, viewMode, path, directory, directories, files } = useSelector(state => state.media);
+    const dispatch = useDispatch();
 
-        super(props);
-
-        this.state = {
-            isLoading: true,
-            directories: [],
-            files: [],
-            currentDirectory: null,
-            currentFile: null,
-            selectedFiles: [],
-            selectedFileIds: [],
-            directoryPath: []
-        };
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.path.params.directory && this.props.path.params.directory !== prevProps.path.params.directory) {
-            this.load(this.props.path.params.directory);
-        } else if (this.props.path.params.directory !== prevProps.path.params.directory) {
-            this.load();
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.path.params.directory) {
-            this.load(this.props.path.params.directory);
+    useEffect(() => {
+        if (location.current.params.directory) {
+            load(location.current.params.directory);
             return;
         }
-        this.load();
-    }
+        load();
+    }, [location]);
 
-    async load(directoryId = null) {
+    const load = async (directoryId = null) => {
         await axios.all([
             api.media.path(directoryId),
             api.media.loadDirectories(directoryId),
             api.media.loadFiles(directoryId)
         ]).then(axios.spread((response1, response2, response3) => {
 
-            let path = response1.data.data;
-            let directories = response2.data.data;
-            let files = response3.data.data;
+            const path = response1.data.data;
+            const directories = response2.data.data;
+            const files = response3.data.data;
+            const directory = path[path.length - 1];
 
-            this.setState({
+            dispatch({ type: 'media/init', payload: {directory, path, directories, files}});
+
+            setState({
+                ...state,
                 isLoading: false,
-                directoryPath: path,
-                currentDirectory: path[path.length - 1],
-                directories: directories,
-                files: files,
 
                 // We also clear the selected file(s)
                 currentFile: null,
@@ -86,40 +67,52 @@ class ViewMediaDirectory extends React.Component {
         }));
     }
 
-    refresh() {
-        if (this.props.path.params.directory) {
-            this.load(this.props.path.params.directory);
+    const refresh = () => {
+        if (location.current.params.directory) {
+            load(location.current.params.directory);
             return;
         }
-        this.load();
+        load();
     }
 
-    openDirectory(id = null) {
+    const openDirectory = (id = null) => {
         if (id) {
-            path.goTo(this.props.path.module, this.props.path.action, {
+            pathUtil.goTo(location.current.module, location.current.action, {
                 directory: id
             });
             return;
         }
 
-        path.goTo(this.props.path.module, this.props.path.action);
+        pathUtil.goTo(location.current.module, location.current.action);
     }
 
-    handleSelectionChange(selectedFileIds, selectedFiles) {
+    const clearSelection = () => {
+        setState({
+            ...state,
+            currentFile: null,
+            selectedFiles: [],
+            selectedFileIds: []
+        });
+    };
+
+    const handleSelectionChange = (selectedFileIds, selectedFiles) => {
         if (! selectedFiles.length) {
-            this.setState({
-                currentFile: null,
-                selectedFiles: [],
-                selectedFileIds: []
-            });
+
+            clearSelection();
+
         } else if (selectedFiles.length === 1) {
-            this.setState({
+
+            setState({
+                ...state,
                 currentFile: selectedFiles[0],
                 selectedFiles: selectedFiles,
                 selectedFileIds: selectedFileIds
             });
+
         } else {
-            this.setState({
+
+            setState({
+                ...state,
                 currentFile: null,
                 selectedFiles: selectedFiles,
                 selectedFileIds: selectedFileIds
@@ -127,322 +120,292 @@ class ViewMediaDirectory extends React.Component {
         }
     }
 
-    handleDeleteDirectory(directoryId) {
-        api.media.deleteDirectory(directoryId).then(response => {
-            this.setState({
-                currentFile: null,
-                selectedFiles: [],
-                selectedFileIds: [],
-            }, () => {
-                util.i18nNotify('snippets.directory_deleted');
-                this.refresh();
-            });
-        }, error => {
+    const handleDeleteDirectory = async (directoryId) => {
+        try {
+            await api.media.deleteDirectory(directoryId);
+            dispatch({ type: 'media/directories/delete', directoryIds: [directoryId]});
+            util.i18nNotify('snippets.directory_deleted');
+            clearSelection();
+        } catch (error) {
             util.i18nNotify('snippets.directory_not_deleted');
-        })
+        }
     }
 
-    handleRenameDirectory(name, directoryId) {
+    const handleRenameDirectory = async (name, directoryId) => {
         if (name) {
-            api.media.renameDirectory(name, directoryId).then(response => {
+            try {
+                const response = await api.media.renameDirectory(name, directoryId);
+                dispatch({ type: 'media/directories/rename', payload: response.data.data});
                 util.i18nNotify('snippets.directory_renamed');
-                this.refresh();
-            }, error => {
-                util.i18nNotify('snippets.changes_successful');
-            });
+                clearSelection();
+            } catch (error) {
+                util.i18nNotify('snippets.changes_unsuccessful');
+            }
         }
     }
 
-    handleRenameFile(name, fileId) {
+    const handleRenameFile = async (name, fileId) => {
         if (name) {
-            api.media.renameFile(name, fileId).then(response => {
+            try {
+                const response = await api.media.renameFile(name, fileId);
+                dispatch({ type: 'media/files/rename', payload: response.data.data});
                 util.i18nNotify('snippets.file_renamed');
-                this.refresh();
-            }, error => {
-                util.i18nNotify('snippets.changes_successful');
-            });
+            } catch (error) {
+                util.i18nNotify('snippets.changes_unsuccessful');
+            }
         }
     }
 
-    handleDeleteFile(fileId) {
-        api.media.deleteFile(fileId).then(response => {
-            this.setState({
-                currentFile: null,
-                selectedFiles: [],
-                selectedFileIds: [],
-            }, () => {
-                util.i18nNotify('snippets.file_deleted');
-                this.refresh();
-            });
-        }, error => {
+    const handleDeleteFile = async (fileId) => {
+        try {
+            await api.media.deleteFile(fileId);
+            dispatch({ type: 'media/files/delete', fileIds: [fileId] });
+            util.i18nNotify('snippets.file_deleted');
+            clearSelection();
+        } catch (error) {
             util.notify(i18n.get('snippets.file_not_deleted'));
-        });
+        }
     }
 
-    handleDeleteFiles(fileIds) {
-        api.media.deleteFiles(fileIds).then(response => {
-            this.setState({
-                currentFile: null,
-                selectedFiles: [],
-                selectedFileIds: [],
-            }, () => {
-                util.i18nNotify('snippets.amount_files_deleted', {amount: fileIds.length});
-                this.refresh();
-            });
-        }, error => {
+    const handleDeleteFiles = async (fileIds) => {
+        try {
+            await api.media.deleteFiles(fileIds);
+            dispatch({ type: 'media/files/delete', fileIds: fileIds });
+            util.i18nNotify('snippets.amount_files_deleted', {amount: fileIds.length});
+            clearSelection();
+        } catch (error) {
             util.i18nNotify('snippets.files_not_deleted');
-        });
+        }
     }
 
-    handleLabelFile(label, fileId) {
-        api.media.labelFile(label, fileId).then(response => {
-            this.setState({
-                currentFile: response.data.data
-            }, () => {
-                util.i18nNotify('snippets.changes_successful');
-                this.refresh();
-            });
-        }, error => {
+    const handleLabelFile = async (label, fileId) => {
+        try {
+            await api.media.labelFile(label, fileId);
+            dispatch({ type: 'media/files/label', fileId, label });
             util.i18nNotify('snippets.changes_successful');
-        });
-    }
-
-    handleChangeFileProperty(property, value, fileId) {
-
-        let propertiesMap = ['visibility', 'description', 'copyright'];
-
-        if (propertiesMap.includes(property)) {
-            let apiCall = api.media['updateFile'+str.toUpperCaseFirst(property)];
-
-            apiCall(value, fileId).then(response => {
-                this.setState({
-                    currentFile: response.data.data
-                }, () => {
-                    util.notify(i18n.get('snippets.changes_successful'));
-                    this.refresh();
-                });
-            }, error => {
-                util.notify(i18n.get('snippets.changes_unsuccessful'));
-            });
+        } catch (error) {
+            util.i18nNotify('snippets.changes_unsuccessful');
         }
     }
 
-    handleChangeFilesProperty(property, value, fileIds) {
+    const handleChangeFileProperty = async (property, value, fileId) => {
 
-        let propertiesMap = ['description', 'copyright'];
+        if (['visibility', 'description', 'copyright'].includes(property)) {
 
-        if (propertiesMap.includes(property)) {
+            const apiCall = api.media['updateFile'+str.toUpperCaseFirst(property)];
 
-            let apiCall = api.media['updateFiles'+str.toUpperCaseFirst(property)];
-
-            apiCall(value, fileIds).then(response => {
+            try {
+                await apiCall(value, fileId);
+                dispatch({ type: 'media/files/changeProperty', fileId, property, value });
                 util.notify(i18n.get('snippets.changes_successful'));
-                this.refresh();
-            }, error => {
+            } catch(error) {
                 util.notify(i18n.get('snippets.changes_unsuccessful'));
-            });
+            }
         }
     }
 
-    handleMoveDirectory(moveToId, directoryId) {
-        api.media.moveDirectory(moveToId, directoryId).then(response => {
+    const handleMoveDirectory = async (moveToId, directoryId) => {
+        try {
+            await api.media.moveDirectory(moveToId, directoryId);
+            dispatch({ type: 'media/directories/move', moveToId, directoryIds: [directoryId] });
             util.notify(i18n.get('snippets.directory_moved'));
-            this.refresh();
-        }, error => {
+        } catch (error) {
             util.notify(i18n.get('snippets.changes_unsuccessful'));
-        });
+        }
     }
 
-    handleMoveFile(directoryId, fileId) {
-        api.media.moveFile(directoryId, fileId).then(response => {
+    const handleMoveFile = async (moveToId, fileId) => {
+        try {
+            await api.media.moveFile(moveToId, fileId);
+            dispatch({ type: 'media/files/move', moveToId, fileIds: [fileId] });
             util.notify(i18n.get('snippets.file_moved'));
-            this.refresh();
-        }, error => {
+        } catch (error) {
             util.notify(i18n.get('snippets.changes_unsuccessful'));
-        });
+        }
     }
 
-    handleMoveFiles(directoryId, fileIds) {
-        api.media.moveFiles(directoryId, fileIds).then(response => {
+    const handleMoveFiles = async (moveToId, fileIds) => {
+        try {
+            await api.media.moveFiles(moveToId, fileIds);
+            dispatch({ type: 'media/files/move', moveToId, fileIds });
             util.notify(i18n.get('snippets.files_moved'));
-            this.refresh();
-        }, error => {
+        } catch (error) {
             util.notify(i18n.get('snippets.changes_unsuccessful'));
-        });
+        }
     }
 
-    handleOpenFile(file) {
+    const handleOpenFile = file => {
         window.open(file.url);
     }
 
-    handleUploadDone() {
-        this.refresh();
+    const handleUploadDone = () => {
+        refresh();
     }
 
-    handleCreateDirectory(directory) {
+    const handleCreateDirectory = directory => {
         if (
-            (! this.props.path.params.directory && ! directory.directory) ||
+            (! location.current.params.directory && ! directory.directory) ||
             (
-                (directory.directory && this.props.path.params.directory) &&
-                (directory.directory.id === this.props.path.params.directory)
+                (directory.directory && location.current.params.directory) &&
+                (directory.directory.id === location.current.params.directory)
             )
         ) {
-            this.refresh();
+            refresh();
         }
     }
 
-    promptCreateDirectory() {
+    const promptCreateDirectory = () => {
         util.prompt({
             title: i18n.get('snippets.new_directory_title'),
             confirmButtonText: i18n.get('snippets.create'),
             cancelButtonText: i18n.get('snippets.cancel'),
-            confirm: value => {
-                api.media.createDirectory(value, this.props.path.params.directory).then(() => {
-                    util.notify(i18n.get('snippets.directory_created'));
-                    this.refresh();
-                });
+            confirm: async (directoryName) => {
+                const response = await api.media.createDirectory(directoryName, location.current.params.directory);
+                dispatch({ type: 'media/directories/add', payload: response.data.data });
+                util.notify(i18n.get('snippets.directory_created'));
             }
         });
     }
 
-    confirmDeleteFiles(ids, files) {
+    const confirmDeleteFiles = (ids, files) => {
         util.confirm({
             title: i18n.get('snippets.delete_files_title', {amount: ids.length}),
             text: i18n.get('snippets.delete_files_text'),
             confirmButtonText: i18n.get('snippets.delete_files_confirm', {amount: ids.length}),
             cancelButtonText: i18n.get('snippets.delete_files_cancel'),
-            confirm: () => this.handleDeleteFiles(ids)
+            confirm: () => handleDeleteFiles(ids)
         });
     }
 
-    renderBreadcrumbs() {
+    const renderBreadcrumbs = () => {
         return (
             <Breadcrumbs
-                items={this.state.directoryPath}
+                items={path}
                 onClick={item => {
                     if (item) {
-                        this.openDirectory(item.id);
+                        openDirectory(item.id);
                         return;
                     }
-                    this.openDirectory();
+                    openDirectory();
                 }}
             />
         );
     }
 
-    renderSidebar() {
-        if (this.state.currentFile) {
+    const renderSidebar = () => {
+        if (state.currentFile) {
             return (
                 <FileView
-                    file={this.state.currentFile}
-                    fileLabels={this.props.fileLabels}
-                    onLabelFile={label => this.handleLabelFile(label, this.state.currentFile.id)}
-                    onChangeFileProperty={(property, value) => this.handleChangeFileProperty(property, value, this.state.currentFile.id)}
+                    file={state.currentFile}
+                    fileLabels={props.fileLabels}
+                    onLabelFile={label => handleLabelFile(label, state.currentFile.id)}
+                    onChangeFileProperty={(property, value) => handleChangeFileProperty(property, value, state.currentFile.id)}
                     onDeleteFile={() => {
                         util.confirm({
                             title: i18n.get('snippets.delete_file_title'),
                             text: i18n.get('snippets.delete_file_text'),
                             confirmButtonText: i18n.get('snippets.delete_file_confirm'),
                             cancelButtonText: i18n.get('snippets.delete_file_cancel'),
-                            confirm: () => this.handleDeleteFile(this.state.currentFile.id)
+                            confirm: () => handleDeleteFile(state.currentFile.id)
                         });
                     }}
                     onRenameFile={() => {
                         util.prompt({
                             title: i18n.get('snippets.rename_file_title'),
-                            defaultValue: this.state.currentFile.name,
+                            defaultValue: state.currentFile.name,
                             confirmButtonText: i18n.get('snippets.rename_file_confirm'),
                             cancelButtonText: i18n.get('snippets.rename_file_cancel'),
                             confirm: value => {
-                                api.media.renameFile(value, this.state.currentFile.id).then(response => {
-                                    this.setState({
+                                api.media.renameFile(value, state.currentFile.id).then(response => {
+                                    setState({
+                                        ...state,
                                         currentFile: response.data.data
                                     }, () => {
                                         util.notify(i18n.get('snippets.file_renamed'));
-                                        this.refresh();
+                                        refresh();
                                     });
                                 });
                             }
                         });
                     }}
-                    onMoveFile={this.handleMoveFile.bind(this)}
+                    onMoveFile={handleMoveFile}
                 />
             );
-        } else if (this.state.selectedFiles.length) {
+        } else if (state.selectedFiles.length) {
             return (
                 <MultiFileView
-                    files={this.state.selectedFiles}
-                    onDeleteFiles={() => this.confirmDeleteFiles(this.state.selectedFileIds, this.state.selectedFiles)}
-                    onChangeFilesProperty={(property, value) => this.handleChangeFilesProperty(property, value, this.state.selectedFileIds)}
-                    onMoveFiles={this.handleMoveFiles.bind(this)}
+                    files={state.selectedFiles}
+                    onDeleteFiles={() => confirmDeleteFiles(state.selectedFileIds, state.selectedFiles)}
+                    onChangeFilesProperty={(property, value) => handleChangeFileProperty(property, value, state.selectedFileIds)}
+                    onMoveFiles={handleMoveFiles}
                 />
             );
-        } else if (this.state.currentDirectory) {
-            return <DirectoryView directory={this.state.currentDirectory} />;
+        } else if (directory) {
+            return <DirectoryView directory={directory} />;
         }
 
         return <RootDirectoryView />;
     }
 
-    renderContent() {
+    const renderContent = () => {
         return (
             <>
                 <div className={'view-media-directory__main'}>
                     <FileDropZone
-                        directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
-                        onCreateDirectory={this.handleCreateDirectory.bind(this)}
-                        onUploadDone={this.handleUploadDone.bind(this)}
+                        directory={state.currentDirectory ? state.currentDirectory.id : null}
+                        onCreateDirectory={handleCreateDirectory}
+                        onUploadDone={handleUploadDone}
                     >
                         <FileBrowser
-                            viewMode={this.state.fileBrowserViewMode}
-                            currentDirectory={this.state.currentDirectory}
-                            directories={this.state.directories}
-                            files={this.state.files}
-                            fileLabels={this.props.fileLabels}
-                            selectedFiles={this.state.selectedFiles}
-                            selectedFileIds={this.state.selectedFileIds}
+                            viewMode={viewMode}
+                            currentDirectory={directory}
+                            directories={directories}
+                            files={files}
+                            fileLabels={props.fileLabels}
+                            selectedFiles={state.selectedFiles}
+                            selectedFileIds={state.selectedFileIds}
 
-                            onDirectoryClick={this.openDirectory.bind(this)}
-                            onDirectoryDelete={this.handleDeleteDirectory.bind(this)}
-                            onDirectoryRename={this.handleRenameDirectory.bind(this)}
-                            onDirectoryMove={this.handleMoveDirectory.bind(this)}
+                            onDirectoryClick={openDirectory}
+                            onDirectoryDelete={handleDeleteDirectory}
+                            onDirectoryRename={handleRenameDirectory}
+                            onDirectoryMove={handleMoveDirectory}
 
-                            onFileDelete={this.handleDeleteFile.bind(this)}
-                            onFileRename={this.handleRenameFile.bind(this)}
-                            onFileOpen={this.handleOpenFile.bind(this)}
-                            onFileMove={this.handleMoveFile.bind(this)}
-                            onSelectionMove={this.handleMoveFiles.bind(this)}
+                            onFileDelete={handleDeleteFile}
+                            onFileRename={handleRenameFile}
+                            onFileOpen={handleOpenFile}
+                            onFileMove={handleMoveFile}
+                            onSelectionMove={handleMoveFiles}
 
-                            onSelectionChange={this.handleSelectionChange.bind(this)}
-                            onSelectionDelete={this.confirmDeleteFiles.bind(this)}
+                            onSelectionChange={handleSelectionChange}
+                            onSelectionDelete={confirmDeleteFiles}
                         />
                     </FileDropZone>
                 </div>
                 <div className="view-media-directory__side">
-                    {this.renderSidebar()}
+                    {renderSidebar()}
                 </div>
             </>
         );
     }
 
-    render() {
+    const render = () => {
         return (
-            <div className={'view-media-directory'+(this.state.isLoading ? ' view-media-directory--loading' : '')+(this.state.isDragOver ? ' view-media-directory--drag-over' : '')}>
+            <div className={'view-media-directory'+(state.isLoading ? ' view-media-directory--loading' : '')+(state.isDragOver ? ' view-media-directory--drag-over' : '')}>
                 <div className="view-media-directory__header">
                     <div className="view-media-directory__header-title">
                         <Dropdown style={['primary', 'small']} openIcon={'folder'} closeIcon={'folder'}>
                             <DirectoryTree
-                                selectedDirectory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
-                                onDirectoryClick={directory => this.openDirectory(directory)}
+                                selectedDirectory={directory ? directory.id : null}
+                                onDirectoryClick={directory => openDirectory(directory)}
                             />
                         </Dropdown>
-                        {this.renderBreadcrumbs()}
+                        {renderBreadcrumbs()}
                     </div>
                     <div className="view-media-directory__header-options">
                         <MediaViewSwitcher />
                         <Button
                             style={['secondary', 'small']}
-                            onClick={this.promptCreateDirectory.bind(this)}
+                            onClick={promptCreateDirectory}
                             text={i18n.get('snippets.new_directory')}
                         />
                         <Dropdown
@@ -451,18 +414,28 @@ class ViewMediaDirectory extends React.Component {
                             autoClose={true}
                         >
                             <FileUploader
-                                directory={this.state.currentDirectory ? this.state.currentDirectory.id : null}
-                                onUploadDone={this.handleUploadDone.bind(this)}
+                                directory={directory ? directory.id : null}
+                                onUploadDone={handleUploadDone}
                             />
                         </Dropdown>
                     </div>
                 </div>
                 <div className="view-media-directory__content">
-                    {this.state.isLoading ? null : this.renderContent()}
+                    {state.isLoading ? null : renderContent()}
                 </div>
             </div>
         );
     }
+
+    return render();
 }
+
+ViewMediaDirectory.defaultProps = {
+    type: '',
+    path: {},
+    id: 0,
+    data: {},
+    fileLabels: {}
+};
 
 export default ViewMediaDirectory;
