@@ -99,6 +99,10 @@ class ContentBlocks extends Component
         $payload = json_decode($request->input($this->getName()), true);
 
         $model::saved(function ($model) use ($payload) {
+
+            // Forget about the event listener we just registered, so it only fires once
+            $model::flushEventListeners();
+
             $this->removeBlocks($model, $payload['removeById'], $payload['removeByOrder']);
             $this->fixOrderOfBlocks($model);
             $this->updateOrCreateBlocks($model, $payload['update']);
