@@ -352,7 +352,7 @@ function ViewMediaDirectory(props) {
             <>
                 <div className={'view-media-directory__main'}>
                     <FileDropZone
-                        directory={state.currentDirectory ? state.currentDirectory.id : null}
+                        directory={directory ? directory.id : null}
                         onCreateDirectory={handleCreateDirectory}
                         onUploadDone={handleUploadDone}
                     >
