@@ -26,6 +26,9 @@
 
     @include element(content)
     {
+        display: flex;
+        flex-direction: column;
+        gap: $rule;
         padding: calc($rule / 3);
 
         @include block-modifier(closed)

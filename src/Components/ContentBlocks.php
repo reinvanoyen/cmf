@@ -161,7 +161,7 @@ class ContentBlocks extends Component
             $order = $item[$this->foreignOrderColumn];
             $components = $this->blocks[$type]['components'];
 
-            // Find the model by order or create a new one
+            // Find the model by id or create a new one
             $foreignModel = $model->{$this->getName()}()->where('id', $id)->first() ?: new $foreignModelClassname();
 
             // Save the type column with the new type

@@ -4,6 +4,7 @@
 @include block(button)
 {
     position: relative;
+    white-space: nowrap;
     color: $color01;
     border-radius: $border-radius-1;
     background-color: $primary-color;

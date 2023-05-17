@@ -47,7 +47,17 @@ class JsonField extends React.Component {
     }
 
     getData(data) {
-        data[this.props.name] = this.state.addedItems || [];
+
+        let array = [];
+        this.componentLists.forEach(componentList => {
+            let itemData = {};
+            componentList.forEach(item => {
+                item.ref.current.handleSubmit(itemData);
+            });
+            array.push(itemData);
+        });
+
+        data[this.props.name] = array || [];
         return data;
     }
 

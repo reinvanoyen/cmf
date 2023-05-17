@@ -14,16 +14,15 @@ export default class DateTimeField extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
-            value: ''
+            value: this.props.data[this.props.name] || ''
         };
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.data[this.props.name] !== prevProps.data[this.props.name]) {
             this.setState({
-                value: this.props.data[this.props.name]
+                value: this.props.data[this.props.name] || ''
             });
         }
     }

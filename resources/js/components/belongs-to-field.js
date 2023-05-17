@@ -68,9 +68,11 @@ class BelongsToField extends React.Component {
 
             let data = response.data.data;
             let options = {};
+
             data.forEach(item => options[item.id] = item[this.props.titleColumn]);
 
-            let value = this.state.value ? this.state.value : (this.props.nullable ? '' : data[0].id);
+            let defaultId = (data.length ? data[0].id : '');
+            let value = this.state.value ? this.state.value : (this.props.nullable ? '' : defaultId);
 
             // Set the data to the state
             this.setState({value, options}, () => {

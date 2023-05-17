@@ -197,8 +197,11 @@ class BelongsToField extends Component
         if ($request->input($this->getName())) {
 
             $id = $request->input($this->getName());
-            $relatedModel = $this->model::findOrFail($id);
-            $relation->associate($relatedModel);
+
+            if ($id) {
+                $relatedModel = $this->model::findOrFail($id);
+                $relation->associate($relatedModel);
+            }
 
             return;
         }

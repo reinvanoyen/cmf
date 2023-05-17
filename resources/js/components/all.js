@@ -45,6 +45,8 @@ import EnumSwitchField from "./enum-switch-field";
 import TextLiteral from "./text-literal";
 import TimeField from "./time-field";
 import InlineFrame from "./inline-frame";
+import HasManyField from "./has-many-field";
+import Modal from "./modal";
 
 export default {
     'text-literal': TextLiteral,
@@ -93,5 +95,7 @@ export default {
     'json-field': JsonField,
     'thumb': Thumb,
     'inline-frame': InlineFrame,
-    'manual-order-controls': ManualOrderControls
+    'manual-order-controls': ManualOrderControls,
+    'has-many-field': HasManyField,
+    'modal': Modal
 };
