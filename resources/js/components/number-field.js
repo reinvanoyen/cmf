@@ -13,8 +13,11 @@ export default class NumberField extends TextField {
         step: null
     };
 
-    render() {
+    handleSubmit(data) {
+        data[this.props.name] = this.state.value || null;
+    }
 
+    render() {
         return (
             <Field
                 name={this.props.name}
