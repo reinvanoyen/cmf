@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ReinVanOyen\Cmf\Components;
 
+use ReinVanOyen\Cmf\Http\Resources\ModelResource;
+
 /**
  * Class TextLiteral
  * @package ReinVanOyen\Cmf\Components
@@ -14,6 +16,11 @@ class TextLiteral extends Component
      * @var string $text
      */
     private $text;
+
+    /**
+     * @var string $urlField
+     */
+    private $urlField;
 
     /**
      * TextLiteral constructor.
@@ -44,12 +51,25 @@ class TextLiteral extends Component
     }
 
     /**
-     * @param string $url
      * @return $this
      */
-    public function url(string $url)
+    public function url($url = true)
     {
+        if ($url !== true) {
+            $this->urlField = $url;
+        }
         $this->export('url', $url);
         return $this;
+    }
+
+    /**
+     * @param ModelResource $model
+     * @param array $attributes
+     */
+    public function provision(ModelResource $model, array &$attributes)
+    {
+        if ($this->urlField) {
+            $attributes[$this->getId().'_url'] = $model->{$this->urlField};
+        }
     }
 }

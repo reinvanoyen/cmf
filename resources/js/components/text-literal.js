@@ -10,13 +10,20 @@ export default class TextLiteral extends React.Component {
         style: ''
     };
 
+    goToUrl(e) {
+        e.stopPropagation();
+    }
+
     render() {
 
         let content = this.props.text;
 
         if (this.props.url) {
+
+            let href = (this.props.url === true ? content : this.props.data[this.props.id+'_url']);
+
             content = (
-                <a className="text-literal__link" target="_blank" href={this.props.url}>
+                <a className="text-literal__link" target="_blank" href={href} onClick={this.goToUrl.bind(this)}>
                     {this.props.text}
                 </a>
             );
