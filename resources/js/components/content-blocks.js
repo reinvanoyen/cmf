@@ -69,7 +69,9 @@ export default class ContentBlocks extends React.Component {
             blockData[this.props.typeColumn] = type;
             blockData[this.props.orderColumn] = index;
 
-            componentList.forEach(obj => obj.ref.current.handleSubmit(blockData));
+            componentList.forEach(obj => {
+                obj.ref.current.handleSubmit(blockData);
+            });
 
             payload.update.push(blockData);
         });

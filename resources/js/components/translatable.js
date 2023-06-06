@@ -98,6 +98,15 @@ class Translatable extends React.Component {
                 };
             }
 
+            // @TODO this is a dirty type check to make button-field work inside of translatable components
+            if (component.type === 'button-field') {
+                return {
+                    ...component,
+                    name: component.name+'_'+language,
+                    urlColumnName: component.urlColumnName+'_'+language
+                };
+            }
+
             return {
                 ...component,
                 name: component.name+'_'+language

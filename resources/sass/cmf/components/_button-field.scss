@@ -1,0 +1,37 @@
+@include block(button-field)
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: calc($rule / 3);
+
+    @include element(wrap)
+    {
+        display: inline-block;
+        border: 1px solid $color06;
+        border-radius: $border-radius-3;
+        padding: calc($rule / 4);
+    }
+
+    @include element(entry)
+    {
+        display: flex;
+        align-items: center;
+    }
+
+    @include element(button)
+    {
+        display: inline-block;
+        padding: calc($rule / 6) calc($rule / 2);
+        border-radius: $rule;
+        background-color: $fill-color-alt-1;
+    }
+
+    @include element(url)
+    {
+        @include type-11;
+        margin-top: calc($rule / 3);
+        text-decoration: underline;
+        color: $fill-color-alt-3;
+    }
+}

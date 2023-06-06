@@ -9,6 +9,7 @@ import EnumField from "./enum-field";
 import EnumView from "./enum-view";
 import Checkbox from "./checkbox";
 import BooleanView from "./boolean-view";
+import _buttonField from "./button-field";
 import Section from "./section";
 import ActionComponent from "./action-component";
 import Tabs from "./tabs";
@@ -65,6 +66,7 @@ export default {
     'email-field': EmailField,
     'checkbox': Checkbox,
     'boolean-view': BooleanView,
+    'button-field': _buttonField,
     'link': Link,
     'execute-link': ExecuteLink,
     'stack': Stack,

@@ -177,4 +177,7 @@ return [
     'no_tags_available' => 'Er zijn geen tags beschikbaar',
 
     'reloaded_plural' => ':plural zijn opnieuw ingeladen',
+
+    'edit_button_text' => 'Bewerk knop tekst',
+    'edit_button_url' => 'Bewerk knop url',
 ];

@@ -26,11 +26,6 @@ export default class TextToSlugField extends TextField {
         };
     }
 
-    handleSubmit(data) {
-        data[this.props.name] = this.state.value;
-        data[this.props.slugName] = this.state.slugValue;
-    }
-
     componentDidUpdate(prevProps) {
         if (this.props.data[this.props.name] !== prevProps.data[this.props.name]) {
             this.setState({
@@ -38,6 +33,17 @@ export default class TextToSlugField extends TextField {
                 slugValue: this.props.data[this.props.slugName]
             });
         }
+    }
+
+    handleSubmit(data) {
+        data[this.props.name] = this.state.value;
+        data[this.props.slugName] = this.state.slugValue;
+    }
+
+    getData(data) {
+        data[this.props.name] = this.state.value || '';
+        data[this.props.slugName] = this.state.slugValue || '';
+        return data;
     }
 
     handleChange(e) {

@@ -168,7 +168,7 @@ return [
     'confirm_selection' => 'Confirmer la sélection',
     'select_file' => 'Sélectionnez un fichier',
     'your_selection' => 'Votre sélection',
-    
+
     'files_uploaded' => 'Vos fichiers ont été téléchargés',
 
     'insert_singular_below' => 'Insérer :singular ci-dessous',
@@ -176,5 +176,8 @@ return [
     'tags' => 'Tags',
     'no_tags_available' => 'Aucun tag disponible',
 
-    'reloaded_plural' => ':plural rechargé(s)'
+    'reloaded_plural' => ':plural rechargé(s)',
+
+    'edit_button_text' => 'Edit button text',
+    'edit_button_url' => 'Edit button url',
 ];

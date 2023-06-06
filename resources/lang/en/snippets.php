@@ -177,4 +177,7 @@ return [
     'no_tags_available' => 'No tags available',
 
     'reloaded_plural' => 'Reloaded :plural',
+
+    'edit_button_text' => 'Edit button text',
+    'edit_button_url' => 'Edit button url',
 ];

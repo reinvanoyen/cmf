@@ -3,7 +3,9 @@
 namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
+use Symfony\Component\ErrorHandler\Debug;
 
 class Translatable extends Compound
 {

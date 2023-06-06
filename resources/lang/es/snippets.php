@@ -177,4 +177,7 @@ return[
     'no_tags_available' => 'Etiquetas no disponibles',
 
     'reloaded_plural' => ':plural recargado',
+
+    'edit_button_text' => 'Edit button text',
+    'edit_button_url' => 'Edit button url',
 ];

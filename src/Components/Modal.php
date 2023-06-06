@@ -2,6 +2,7 @@
 
 namespace ReinVanOyen\Cmf\Components;
 
+use ReinVanOyen\Cmf\Action\Index;
 use ReinVanOyen\Cmf\Traits\HasLabel;
 
 class Modal extends Compound
@@ -30,5 +31,15 @@ class Modal extends Compound
     public function type(): string
     {
         return 'modal';
+    }
+
+    /**
+     * @param string $style
+     * @return $this
+     */
+    public function style(string $style)
+    {
+        $this->export('style', $style);
+        return $this;
     }
 }

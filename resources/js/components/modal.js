@@ -4,15 +4,18 @@ import Overlay from "../core/ui/overlay";
 import Button from "../core/ui/button";
 import Window from "../core/ui/window";
 import Field from "../core/ui/field";
+import UiLink from "../core/ui/link";
 
 class Modal extends React.Component {
 
     static defaultProps = {
         title: '',
+        label: '',
         components: [],
         path: {},
         data: {},
-        errors: {}
+        errors: {},
+        style: null
     };
 
     constructor(props) {
@@ -29,7 +32,18 @@ class Modal extends React.Component {
     }
 
     handleSubmit(data) {
-        Object.assign(data, this.state.submitData);
+        this.componentList.forEach(obj => {
+            obj.ref.current.handleSubmit(data);
+        });
+    }
+
+    getData(data) {
+        this.componentList.forEach(obj => {
+            if (obj.ref.current.getData) {
+                obj.ref.current.getData(data);
+            }
+        });
+        return data;
     }
 
     open() {
@@ -44,10 +58,11 @@ class Modal extends React.Component {
         });
     }
 
-    store() {
+    store(cb = null) {
 
         let data = {};
         let submitData = {};
+
         this.componentList.forEach(obj => {
             if (obj.ref.current.getData) {
                 obj.ref.current.getData(data);
@@ -62,6 +77,10 @@ class Modal extends React.Component {
             data,
             submitData,
             isOpen: false
+        }, () => {
+            if (cb) {
+                cb();
+            }
         });
     }
 
@@ -87,7 +106,9 @@ class Modal extends React.Component {
                     closeable={true}
                     onClose={this.close.bind(this)}
                     footer={[
-                        <Button key={'confirm'} text={'Confirm'} onClick={this.store.bind(this)} />
+                        <Button key={'confirm'} text={'Confirm'} onClick={() => {
+                            this.store();
+                        }} />
                     ]}
                 >
                     {this.renderComponents()}
@@ -97,22 +118,19 @@ class Modal extends React.Component {
     }
 
     render() {
-
-        let widget;
-
-        if (this.state.isOpen) {
-            widget = this.renderWidget();
-        }
-
         return (
             <React.Fragment>
                 <Field
-                    label={this.props.label || this.props.title}
+                    label={this.props.label}
                     tooltip={this.props.tooltip}
                 >
-                    <Button style={['small', 'secondary']} text={this.props.title} onClick={this.open.bind(this)} />
+                    {this.props.style === 'link' ?
+                        <UiLink style={this.props.style} onClick={this.open.bind(this)} text={this.props.title} />
+                        : <Button style={['small', 'secondary']} text={this.props.title} onClick={this.open.bind(this)} />}
                 </Field>
-                {widget}
+                <div style={{display: (this.state.isOpen ? 'block' : 'none')}}>
+                    {this.renderWidget()}
+                </div>
             </React.Fragment>
         );
     }
