@@ -60,6 +60,9 @@ class NumberField extends TextField
      */
     public function save(Model $model, $request)
     {
-        $model->{$this->getName()} = $request->input($this->getName());
+        $value = $request->input($this->getName());
+        $value = ($value === 'null' ? null : $value);
+
+        $model->{$this->getName()} = $value;
     }
 }
