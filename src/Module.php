@@ -35,9 +35,29 @@ abstract class Module implements \JsonSerializable
      *
      * @return bool
      */
-    protected function inNavigation(): bool
+    public function inNavigation(): bool
     {
         return true;
+    }
+
+    /**
+     * Is the module available from the primary modules navigation?
+     *
+     * @return bool
+     */
+    public function inPrimaryNavigation(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Is the module available from the secondary user panel?
+     *
+     * @return bool
+     */
+    public function inSecondaryNavigation(): bool
+    {
+        return false;
     }
 
     /**
@@ -78,7 +98,6 @@ abstract class Module implements \JsonSerializable
         $this->exports['id'] = $this->id();
         $this->exports['title'] = $this->title();
         $this->exports['icon'] = $this->icon();
-        $this->exports['inNavigation'] = $this->inNavigation();
         $this->exports['path'] = [
             'module' => $this->id(),
         ];

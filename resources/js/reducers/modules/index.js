@@ -1,5 +1,7 @@
 const initialState = {
-    modules: []
+    all: [],
+    primary: [],
+    secondary: []
 };
 
 export default function modulesReducer(state = initialState, action) {
@@ -8,7 +10,9 @@ export default function modulesReducer(state = initialState, action) {
             // We need to return a new state object
             return {
                 ...state,
-                modules: action.payload
+                all: action.payload.all,
+                primary: action.payload.primary,
+                secondary: action.payload.secondary
             }
         }
         default:

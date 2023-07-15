@@ -8,7 +8,7 @@ import path from "../state/path";
 
 export default function Nav(props) {
 
-    const modules = useSelector(state => state.modules.modules);
+    const primaryModules = useSelector(state => state.modules.primary);
 
     const switchModule = (module) => {
 
@@ -71,10 +71,7 @@ export default function Nav(props) {
         return (
             <div className="nav">
                 <div>
-                    {modules.map(module => {
-                        if (! module.inNavigation) {
-                            return null;
-                        }
+                    {primaryModules.map(module => {
                         return (
                             <React.Fragment key={module.id}>
                                 <ContextMenu

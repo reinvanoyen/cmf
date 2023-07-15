@@ -1,0 +1,84 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(boolean-switcher)
+{
+    $padding: calc($rule / 6);
+    $width: $rule * 1.5;
+    $knob-size: calc($rule / 1.5);
+
+    $small-width: $rule;
+    $small-knob-size: calc($rule / 3);
+
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: calc($rule / 6) calc($rule / 6);
+    border-radius: $knob-size;
+    height: $knob-size + $padding;
+    width: $width + $padding;
+    background-color: $fill-color-alt-1;
+    transition: background-color .25s;
+
+    &:after
+    {
+        content: '';
+        position: absolute;
+        left: calc($padding / 2);
+        top: calc($padding / 2);
+        border-radius: 50%;
+        width: $knob-size;
+        height: $knob-size;
+        background-color: $color01;
+        box-shadow: $box-shadow-1;
+        transition: transform .25s;
+    }
+
+    @include modifier(alt)
+    {
+        background-color: $color01;
+
+        &:after
+        {
+            background-color: $fill-color-alt-2;
+        }
+
+        @include combine-modifier(checked)
+        {
+            &:after
+            {
+                background-color: $color01;
+            }
+        }
+    }
+
+    @include modifier(checked)
+    {
+        background-color: $primary-color-alt-1;
+
+        &:after
+        {
+            transform: translateX($width - $knob-size);
+        }
+    }
+
+    @include modifier(small)
+    {
+        height: $small-knob-size + $padding;
+        width: $small-width + $padding;
+
+        &:after
+        {
+            width: $small-knob-size;
+            height: $small-knob-size;
+        }
+
+        @include combine-modifier(checked)
+        {
+            &:after
+            {
+                transform: translateX($small-width - $small-knob-size);
+            }
+        }
+    }
+}

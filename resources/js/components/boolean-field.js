@@ -1,5 +1,6 @@
 import React from 'react';
 import Field from "../core/ui/field";
+import BooleanSwitcher from "../core/ui/boolean-switcher";
 
 export default class BooleanField extends React.Component {
 
@@ -48,7 +49,7 @@ export default class BooleanField extends React.Component {
                 label={this.props.label}
                 tooltip={this.props.tooltip}
             >
-                <div className={'boolean-field boolean-field--'+(this.state.value ? 'checked' : 'unchecked')} onClick={this.switch.bind(this)}></div>
+                <BooleanSwitcher checked={this.state.value} onClick={this.switch.bind(this)} />
             </Field>
         );
     }

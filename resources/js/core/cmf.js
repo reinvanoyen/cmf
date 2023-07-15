@@ -29,7 +29,8 @@ export default function Cmf(props) {
 
     const { isLoggedIn } = useSelector(state => state.auth);
     const { title } = useSelector(state => state.cmf);
-    const modules = useSelector(state => state.modules.modules);
+    const allModules = useSelector(state => state.modules.all);
+    const primaryModules = useSelector(state => state.modules.primary);
     const location = useSelector(state => state.location.current);
     const prevLocation = useSelector(state => state.location.previous);
     const dispatch = useDispatch();
@@ -59,16 +60,16 @@ export default function Cmf(props) {
 
             let currModule = null;
 
-            for (let i = 0; i < modules.length; i++) {
+            for (let i = 0; i < allModules.length; i++) {
 
-                if (modules[i].id === location.module) {
-                    currModule = modules[i];
+                if (allModules[i].id === location.module) {
+                    currModule = allModules[i];
                     break;
                 }
 
-                for (let j = 0; j < modules[i].submodules.length; j++) {
-                    if (modules[i].submodules[j].id === location.module) {
-                        currModule = modules[i].submodules[j];
+                for (let j = 0; j < allModules[i].submodules.length; j++) {
+                    if (allModules[i].submodules[j].id === location.module) {
+                        currModule = allModules[i].submodules[j];
                         break;
                     }
                 }
@@ -100,11 +101,11 @@ export default function Cmf(props) {
     }, [location]);
 
     useEffect(() => {
-        if (modules.length) {
+        if (primaryModules.length) {
             bindPopState();
             goToRequestedModule();
         }
-    }, [modules]);
+    }, [primaryModules]);
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -155,7 +156,7 @@ export default function Cmf(props) {
 
         // Get controller
         let controller = path.parseLocation(window.location);
-        let module = controller.module || modules[0].id;
+        let module = controller.module || primaryModules[0].id;
         let action = controller.action || 'index';
         let params = controller.params;
 
@@ -164,7 +165,7 @@ export default function Cmf(props) {
 
     const goToIndex = () => {
         // Go to the first module's index
-        path.goTo(modules[0].id, 'index');
+        path.goTo(primaryModules[0].id, 'index');
     }
 
     const render = () => {

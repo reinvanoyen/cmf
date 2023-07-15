@@ -33,7 +33,23 @@ class ModulesController extends Controller
      */
     public function index(Request $request)
     {
-        return ['data' => $this->pathResolver->modules(),];
+        $modules = collect($this->pathResolver->modules());
+
+        $primary = $modules->filter(function ($module) {
+            return ($module->inNavigation() && $module->inPrimaryNavigation());
+        })->values();
+
+        $secondary = $modules->filter(function ($module) {
+            return ($module->inNavigation() && $module->inSecondaryNavigation());
+        })->values();
+
+        return [
+            'data' => [
+                'all' => $modules,
+                'primary' => $primary,
+                'secondary' => $secondary,
+            ],
+        ];
     }
 
     /**

@@ -65,6 +65,9 @@
 @import 'cmf/core/ui/tree-item';
 @import 'cmf/core/ui/sticky-sidebar';
 
+// filters
+@import 'cmf/filters/boolean-filter';
+
 // actions
 @import 'cmf/actions/index';
 @import 'cmf/actions/edit';
@@ -106,7 +109,6 @@
 @import 'cmf/components/date-time-field';
 @import 'cmf/components/date-field';
 @import 'cmf/components/belongs-to-field';
-@import 'cmf/components/boolean-field';
 @import 'cmf/components/thumbnail';
 @import 'cmf/components/thumb';
 @import 'cmf/components/richtext-field';

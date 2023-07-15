@@ -8,11 +8,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: $rule;
-        height: $rule;
+        width: $rule * 1.25;
+        height: $rule * 1.25;
         margin-right: calc($rule / 2);
         background-color: $fill-color-alt-1;
         border-radius: 50%;
+        overflow: hidden;
+
+        img
+        {
+            display: block;
+            width: $rule * 1.25;
+            height: $rule * 1.25;
+        }
     }
 
     @include element(name)
@@ -24,5 +32,10 @@
     @include element(actions)
     {
         //
+    }
+
+    @include element(logout)
+    {
+        margin-top: calc($rule / 3);
     }
 }

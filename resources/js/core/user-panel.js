@@ -6,32 +6,54 @@ import Dropdown from "./ui/dropdown";
 import i18n from "../util/i18n";
 import { useDispatch, useSelector } from "react-redux";
 import ui from "./ui/util";
+import LinkList from "./ui/link-list";
+import path from "../state/path";
+import util from "./ui/util";
+import gravatar from "../util/gravatar";
 
 export default function UserPanel(props) {
 
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
+    const secondaryModules = useSelector(state => state.modules.secondary);
 
     const logout = async () => {
-        await api.auth.logout();
 
-        dispatch({ type: 'auth/loggedout' });
+        util.confirm({
+            title: i18n.get('snippets.logout'),
+            confirmButtonText: i18n.get('snippets.logout_confirm'),
+            confirm: async () => {
 
-        // Notify the user
-        ui.notify('User logged out');
+                await api.auth.logout();
+                dispatch({ type: 'auth/loggedout' });
+                // Notify the user
+                ui.notify('User logged out');
+            }
+        });
+    };
+
+    const switchModule = (moduleId) => {
+        path.goTo(moduleId, 'index');
+    };
+
+    const renderLinkList = () => {
+        return <LinkList links={secondaryModules.map(value => [value.title, value.id])} onClick={id => switchModule(id)} />;
     };
 
     return (
         <div className="user-panel">
             <div className="user-panel__avatar">
-                <Icon name={'person'} />
+                <img src={gravatar.get(user.email)} alt={user.name} />
             </div>
             <div className="user-panel__name">
                 {user.name}
             </div>
             <div className="user-panel__actions">
-                <Dropdown style={['secondary']} text={i18n.get('snippets.logout')}>
-                    <Button onClick={logout} style={'full'} text={i18n.get('snippets.logout_confirm')} />
+                <Dropdown style={['secondary']}>
+                    {renderLinkList()}
+                    <div className="user-panel__logout">
+                        <Button onClick={logout} style={['full', 'small']} text={i18n.get('snippets.logout')} />
+                    </div>
                 </Dropdown>
             </div>
         </div>
