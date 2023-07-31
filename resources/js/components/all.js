@@ -41,13 +41,14 @@ import JsonField from "./json-field";
 import DateField from "./date-field";
 import Thumb from "./thumb";
 import ColorField from "./color-field";
-import ManualOrderControls from "./manual-order-controls";
 import EnumSwitchField from "./enum-switch-field";
 import TextLiteral from "./text-literal";
 import TimeField from "./time-field";
 import InlineFrame from "./inline-frame";
 import HasManyField from "./has-many-field";
 import Modal from "./modal";
+import ManualOrderControls from "./manual-order-controls";
+import TreeOrderControls from "./tree-order-controls";
 
 export default {
     'text-literal': TextLiteral,
@@ -97,7 +98,8 @@ export default {
     'json-field': JsonField,
     'thumb': Thumb,
     'inline-frame': InlineFrame,
-    'manual-order-controls': ManualOrderControls,
     'has-many-field': HasManyField,
-    'modal': Modal
+    'modal': Modal,
+    'manual-order-controls': ManualOrderControls,
+    'tree-order-controls': TreeOrderControls
 };
