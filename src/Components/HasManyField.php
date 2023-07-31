@@ -4,8 +4,6 @@ namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use ReinVanOyen\Cmf\Http\Resources\ContentBlockResource;
-use ReinVanOyen\Cmf\Http\Resources\ModelCollection;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
@@ -133,6 +131,10 @@ class HasManyField extends Component
             $create = ($payload['create'] ?: []);
 
             $model::saved(function ($model) use ($deleteIds, $update, $create) {
+
+                // Forget about the event listener we just registered, so it only fires once
+                $model::flushEventListeners();
+
                 $this->deleteForeignItems($model, $deleteIds);
                 $this->updateForeignItems($model, $update);
                 $this->createForeignItems($model, $create);
