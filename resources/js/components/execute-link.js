@@ -8,8 +8,7 @@ import Overlay from "../core/ui/overlay";
 import Window from "../core/ui/window";
 import Form from "../core/ui/form";
 import components from "../rendering/components";
-import ReactDOM from "react-dom";
-import {createRoot} from "react-dom/client";
+import { createRoot } from "react-dom/client";
 
 class ExecuteLink extends React.Component {
 
@@ -46,7 +45,8 @@ class ExecuteLink extends React.Component {
     }
 
     redirect(response) {
-        path.handleRedirect(this.props, {id: response.data.id});
+        const props = {...this.props, refresh: true};
+        path.handleRedirect(props, {id: response.data.id});
     }
 
     handleClick() {
