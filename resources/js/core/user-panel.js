@@ -36,10 +36,6 @@ export default function UserPanel(props) {
         path.goTo(moduleId, 'index');
     };
 
-    const renderLinkList = () => {
-        return <LinkList links={secondaryModules.map(value => [value.title, value.id])} onClick={id => switchModule(id)} />;
-    };
-
     return (
         <div className="user-panel">
             <div className="user-panel__avatar">
@@ -50,9 +46,9 @@ export default function UserPanel(props) {
             </div>
             <div className="user-panel__actions">
                 <Dropdown style={['secondary']}>
-                    {renderLinkList()}
+                    <LinkList stopPropagation={false} links={secondaryModules.map(value => [value.title, value.id])} onClick={id => switchModule(id)} />
                     <div className="user-panel__logout">
-                        <Button onClick={logout} style={['full', 'small']} text={i18n.get('snippets.logout')} />
+                        <Button stopPropagation={false} onClick={logout} style={['full', 'small']} text={i18n.get('snippets.logout')} />
                     </div>
                 </Dropdown>
             </div>

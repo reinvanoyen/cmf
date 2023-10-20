@@ -55,9 +55,7 @@ class HasManyField extends Component
 
         $this->components(count($components) ? $components : $this->meta::create());
 
-        foreach ($this->meta::getSorting() as $column => $method) {
-            $this->orderBy($column, $method);
-        }
+        $this->sorter = $this->meta::sorter();
     }
 
     /**

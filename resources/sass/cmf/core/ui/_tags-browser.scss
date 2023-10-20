@@ -8,7 +8,7 @@
     @include element(selected)
     {
         border: 1px dashed $fill-color-alt-2;
-        border-radius: $border-radius-2;
+        border-radius: $border-radius-1;
         padding: calc($rule / 4);
         margin-bottom: calc($rule / 2);
     }
@@ -16,7 +16,7 @@
     @include element(available)
     {
         border: 1px dashed $fill-color-alt-2;
-        border-radius: $border-radius-2;
+        border-radius: $border-radius-1;
         padding: calc($rule / 4);
     }
 }

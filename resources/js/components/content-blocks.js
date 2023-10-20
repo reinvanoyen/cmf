@@ -223,10 +223,11 @@ export default class ContentBlocks extends React.Component {
             if (text) {
                 return (
                     <Button
-                        onClick={e => this.addBlock(types[0], index)}
                         icon={'add'}
                         style={['small', 'secondary']}
                         text={text}
+                        stopPropagation={false}
+                        onClick={e => this.addBlock(types[0], index)}
                     />
                 );
             }
@@ -234,6 +235,7 @@ export default class ContentBlocks extends React.Component {
                 <IconButton
                     name={'post_add'}
                     iconStyle={'small'}
+                    stopPropagation={false}
                     onClick={e => this.addBlock(types[0], index)}
                 />
             );
@@ -298,13 +300,14 @@ export default class ContentBlocks extends React.Component {
                         <IconButton key={0} style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />,
                         <IconButton key={1} style={['transparent', (i < this.state.addedBlocks.length - 1 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/>,
                         <Dropdown key={3} autoClose={true} openIcon={'more_horiz'} closeIcon={'more_horiz'}>
-                            <LinkList links={this.getTypeLinksInsertBelow()} onClick={type => this.addBlock(type, (i+1))} />
+                            <LinkList stopPropagation={false} links={this.getTypeLinksInsertBelow()} onClick={type => this.addBlock(type, (i+1))} />
                             <Divider />
                             <LinkList
                                 style={'warning'}
                                 links={[
                                     [str.toUpperCaseFirst(i18n.get('snippets.delete_singular', {singular: this.props.singular})), 'delete']
                                 ]}
+                                stopPropagation={false}
                                 onClick={action => this.optionDropdownClick(action, i, blockData.id)}
                             />
                         </Dropdown>

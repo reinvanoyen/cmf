@@ -21,6 +21,15 @@ class SelectList extends React.Component {
         };
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.defaultValues.length !== this.props.defaultValues.length) {
+            this.setState({
+                ...this.state,
+                values: this.props.defaultValues.map(v => `${v}`)
+            });
+        }
+    }
+
     renderOptions() {
 
         let options = [];

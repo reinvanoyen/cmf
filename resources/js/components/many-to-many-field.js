@@ -24,10 +24,12 @@ class ManyToManyField extends React.Component {
         plural: '',
         titleColumn: '',
         search: false,
+        filters: [],
         grid: []
     };
 
     constructor(props) {
+
         super(props);
 
         this.state = {
@@ -78,6 +80,7 @@ class ManyToManyField extends React.Component {
     }
 
     open() {
+        console.log(this.props.filters);
         this.setState({
             isOpen: true
         });
@@ -182,6 +185,7 @@ class ManyToManyField extends React.Component {
                         grid={this.props.grid}
                         components={this.props.components}
                         search={this.props.search}
+                        filters={this.props.filters}
                         onCancel={this.close.bind(this)}
                         onSelectionConfirm={this.onSelectionConfirm.bind(this)}
                         defaultSelectedItems={this.state.selectedItems}

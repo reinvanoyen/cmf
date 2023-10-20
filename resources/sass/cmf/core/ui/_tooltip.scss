@@ -13,7 +13,7 @@
         background-color: $fill-color;
         border: $border-width-1 solid $fill-color-alt-2;
         padding: calc($rule / 6) calc($rule / 3);
-        border-radius: $border-radius-3;
+        border-radius: $border-radius-1;
         max-width: 300px;
         backdrop-filter: blur(3px);
     }

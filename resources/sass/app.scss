@@ -20,6 +20,7 @@
 @import 'cmf/core/module/module';
 
 // core ui
+@import 'cmf/core/ui/index-row';
 @import 'cmf/core/ui/window';
 @import 'cmf/core/ui/divider';
 @import 'cmf/core/ui/hero';
@@ -64,6 +65,7 @@
 @import 'cmf/core/ui/directory-tree';
 @import 'cmf/core/ui/tree-item';
 @import 'cmf/core/ui/sticky-sidebar';
+@import 'cmf/core/ui/filters-tool';
 
 // filters
 @import 'cmf/filters/boolean-filter';

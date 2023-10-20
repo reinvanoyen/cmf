@@ -1,73 +1,61 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Dropdown from "../core/ui/dropdown";
 import SelectList from "../core/ui/select-list";
 import str from "../util/str";
-import ContextMenu from "../core/ui/context-menu";
+import {useSelector} from "react-redux";
 
-class EnumFilter extends React.Component {
+function EnumFilter(props) {
 
-    static defaultProps = {
-        id: 0,
-        type: '',
-        options: {},
-        field: '',
-        label: '',
-        onChange: () => {}
-    };
+    const [state, setState] = useState({
+        values: [],
+        humanReadableValue: 'All'
+    });
 
-    constructor(props) {
-        super(props);
+    useEffect(() => {
 
-        this.state = {
-            humanReadableValue: 'All'
-        };
+        const values = props.data['filter_'+props.id] ? props.data['filter_'+props.id].split(',') : [];
 
-        this.selectListRef = React.createRef();
-    }
-
-    handleChange(values = []) {
-
-        let readableValues = values.map(value => this.props.options[value]);
-
-        this.setState({
-            humanReadableValue: (readableValues.length ? readableValues.join(', ') : 'All')
+        setState({
+            ...state,
+            values,
+            humanReadableValue: (values.length ? values.join(', ') : 'All')
         });
+    }, [props.data]);
 
-        this.props.onChange(this.props.id, values.join(','));
+    const handleChange = (values = []) => {
+        props.onChange(props.id, values.join(','));
     }
 
-    clear() {
-        this.selectListRef.current.clear();
-    }
+    const render = () => {
 
-    onCtxMenuClick(action) {
-        if (action === 'clear') {
-            this.clear();
-        }
-    }
-
-    render() {
-
-        let label = (this.props.label ? this.props.label : str.toUpperCaseFirst(this.props.field));
+        const label = (props.label ? props.label : str.toUpperCaseFirst(props.field));
 
         return (
             <div className="enum-filter">
-                <ContextMenu onClick={this.onCtxMenuClick.bind(this)} links={[
-                    ['Clear this filter', 'clear']
-                ]}>
-                    <Dropdown stopPropagation={false} style={['secondary']} label={label} text={this.state.humanReadableValue}>
-                        <SelectList
-                            options={this.props.options}
-                            onChange={this.handleChange.bind(this)}
-                            onClear={this.handleChange.bind(this)}
-                            ref={this.selectListRef}
-                        />
-                    </Dropdown>
-                </ContextMenu>
+                <Dropdown stopPropagation={false} style={['secondary']} label={label} text={state.humanReadableValue}>
+                    <SelectList
+                        options={props.options}
+                        defaultValues={state.values}
+                        onChange={handleChange}
+                        onClear={handleChange}
+                    />
+                </Dropdown>
             </div>
         );
     }
+
+    return render();
 }
+
+EnumFilter.defaultProps = {
+    id: 0,
+    type: '',
+    options: {},
+    field: '',
+    label: '',
+    data: {},
+    onChange: () => {}
+};
 
 export default EnumFilter;

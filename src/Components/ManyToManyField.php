@@ -4,6 +4,7 @@ namespace ReinVanOyen\Cmf\Components;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use ReinVanOyen\Cmf\Filters\Filter;
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
 use ReinVanOyen\Cmf\Support\Str;
@@ -68,14 +69,15 @@ class ManyToManyField extends Component
 
         $this->components(count($components) ? $components : $this->meta::index());
 
-        if (count($this->meta::getSearchColumns())) {
-            $this->search($this->meta::getSearchColumns());
+        if ($this->meta::searcher()) {
+            $this->searcher($this->meta::searcher());
         }
-
         $this->paginate($this->meta::getPerPage());
 
-        foreach ($this->meta::getSorting() as $column => $method) {
-            $this->orderBy($column, $method);
+        $this->sorter = $this->meta::sorter();
+
+        foreach ($this->meta::filters() as $filter) {
+            $this->filter($filter);
         }
     }
 
@@ -85,6 +87,17 @@ class ManyToManyField extends Component
     public function type(): string
     {
         return 'many-to-many-field';
+    }
+
+    /**
+     * @param Filter $filter
+     * @return $this
+     */
+    public function filter(Filter $filter)
+    {
+        $this->filters[] = $filter;
+        $this->export('filters', $this->filters);
+        return $this;
     }
 
     /**

@@ -9,6 +9,8 @@
     @include element(status)
     {
         display: flex;
+        gap: calc($rule / 3);
+        align-items: center;
         justify-content: center;
         text-align: center;
     }
@@ -21,9 +23,13 @@
 
     @include element(prev)
     {
+        display: flex;
+        gap: calc($rule / 4);
     }
 
     @include element(next)
     {
+        display: flex;
+        gap: calc($rule / 4);
     }
 }

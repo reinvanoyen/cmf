@@ -15,8 +15,11 @@ export default {
             modifiers = [modifiers];
         }
 
-        let seperator = ' '+base+'--';
+        if (! modifiers.length) {
+            return base;
+        }
 
+        const seperator = ' '+base+'--';
         return base+(modifiers ? seperator+modifiers.join(seperator) : '');
     },
     shallowEqual(object1 = {}, object2 = {}) {

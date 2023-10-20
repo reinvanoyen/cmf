@@ -30,8 +30,8 @@
 @mixin type-4
 {
     @include default-font;
-    font-weight: 700;
-    font-size: 2.1rem;
+    font-weight: 900;
+    font-size: 2.75rem;
     line-height: 1.5;
     letter-spacing: -.02em;
 }
@@ -68,7 +68,7 @@
     @include default-font;
     font-weight: 700;
     font-size: 5rem;
-    line-height: 1.2;
+    line-height: 1;
     letter-spacing: -.02em;
 }
 
@@ -85,7 +85,7 @@
     @include default-font;
     font-weight: 700;
     font-size: 3rem;
-    line-height: 1.2;
+    line-height: 1;
     letter-spacing: -.02em;
 }
 
@@ -95,5 +95,14 @@
     font-weight: 500;
     font-size: .85rem;
     line-height: 1;
+    letter-spacing: -.02em;
+}
+
+@mixin type-12
+{
+    @include default-font;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.5;
     letter-spacing: -.02em;
 }

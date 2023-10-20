@@ -3,6 +3,9 @@
 namespace ReinVanOyen\Cmf;
 
 use Illuminate\Support\Str;
+use ReinVanOyen\Cmf\Searchers\Searcher;
+use ReinVanOyen\Cmf\Sorters\Sorter;
+use ReinVanOyen\Cmf\Sorters\StaticSorter;
 
 abstract class Meta
 {
@@ -20,16 +23,6 @@ abstract class Meta
      * @var int $perPage
      */
     protected static $perPage = 10;
-
-    /**
-     * @var array $search
-     */
-    protected static $search = [];
-
-    /**
-     * @var array $sort
-     */
-    protected static $sort = [];
 
     /**
      * @var array $indexGrid
@@ -97,23 +90,29 @@ abstract class Meta
     }
 
     /**
-     * Get the searchable columns for this meta
-     *
-     * @return array
+     * @return Sorter
      */
-    public static function getSearchColumns(): array
+    public static function sorter(): Sorter
     {
-        return static::$search;
+        return StaticSorter::make([
+            'created_at' => 'asc',
+        ]);
     }
 
     /**
-     * Get the default sorting columns and methods
-     *
+     * @return Searcher|null
+     */
+    public static function searcher(): ?Searcher
+    {
+        return null;
+    }
+
+    /**
      * @return array
      */
-    public static function getSorting(): array
+    public static function filters(): array
     {
-        return static::$sort;
+        return [];
     }
 
     /**

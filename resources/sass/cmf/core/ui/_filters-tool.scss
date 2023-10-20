@@ -1,0 +1,6 @@
+@include block(filters-tool)
+{
+    display: flex;
+    align-items: center;
+    gap: calc($rule / 2);
+}

@@ -2,6 +2,7 @@ import TextField from "./text-field";
 import NumberField from "./number-field";
 import TextView from "./text-view";
 import Link from "./link";
+import Icon from "./icon";
 import ExecuteLink from "./execute-link";
 import Stack from "./stack";
 import Translatable from "./translatable";
@@ -69,6 +70,7 @@ export default {
     'boolean-view': BooleanView,
     'button-field': _buttonField,
     'link': Link,
+    'icon': Icon,
     'execute-link': ExecuteLink,
     'stack': Stack,
     'translatable': Translatable,

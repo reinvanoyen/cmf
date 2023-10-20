@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import components from "../rendering/components";
-import filters from "../rendering/filters";
 import api from "../api/api";
 import path from "../state/path";
 import Pagination from "../core/ui/pagination";
 import Search from "../core/ui/search";
-import Link from "../core/ui/link";
 import str from "../util/str";
 import i18n from "../util/i18n";
 import ContextMenu from "../core/ui/context-menu";
-import util from "../core/ui/util";
 import usePrevious from "../hooks/use-previous";
-import useOnMount from "../hooks/use-on-mount";
+import FiltersTool from "../core/ui/filters-tool";
 
 function Index(props) {
 
@@ -20,25 +17,11 @@ function Index(props) {
         isLoading: true,
         rows: [],
         meta: null,
-        searchKeyword: null,
-        filterParams: {},
         hasActiveFilters: false
     });
 
-    const [filterParams, setFilterParams] = useState({});
-
     const prevDataId = usePrevious(props.data.id);
-    const { refresh } = useSelector(state => state.location);
-
-    let filterList = [];
-
-    /*
-    useOnMount(() => {
-        if (! props.restrictByFk && ! props.relationship) {
-            load();
-        }
-    });
-    */
+    const location = useSelector(state => state.location);
 
     useEffect(() => {
         if (props.restrictByFk || props.relationship) {
@@ -49,16 +32,27 @@ function Index(props) {
     });
 
     useEffect(() => {
-        load();
-    }, [state.searchKeyword, filterParams]);
+        load(location.current.params);
+    }, [location.current.params]);
 
     useEffect(() => {
-        if (refresh) {
-            load();
+        if (location.refresh) {
+            load(location.current.params);
         }
-    }, [refresh]);
+    }, [location.refresh]);
 
     const load = async (params = {}) => {
+
+        let hasActiveFilters = false;
+        // If filter params are set, add them to the http params
+        for (let i = 0; i < props.filters.length; i++) {
+            let filter = props.filters[i];
+            let filterId = filter.id;
+            if (location.current.params['filter_'+filterId]) {
+                params['filter_'+filterId] = location.current.params['filter_'+filterId];
+                hasActiveFilters = true;
+            }
+        }
 
         // Add FK to the params
         if (props.restrictByFk) {
@@ -70,24 +64,13 @@ function Index(props) {
             params.relation = props.data.id;
         }
 
-        // Search for search keyword
-        if (state.searchKeyword) {
-            params.search = state.searchKeyword;
-        }
-
-        // If filter params are set, add them to the http params
-        for (let filterId in filterParams) {
-            if (filterParams.hasOwnProperty(filterId)) {
-                params['filter_'+filterId] = filterParams[filterId];
-            }
-        }
-
         // Execute the get request
         const response = await api.execute.get(props.path, props.id,'load', params);
 
         setState({
             ...state,
             isLoading: false,
+            hasActiveFilters,
             rows: response.data.data,
             meta: response.data.meta || null
         });
@@ -100,63 +83,23 @@ function Index(props) {
     }
 
     const getRowStyle = () => {
-
-        const rowStyle = {
-            gridTemplateColumns: 'repeat('+props.components.length+', 1fr)'
+        return {
+            gridTemplateColumns: (props.grid.length ? props.grid.join('fr ')+'fr' : 'repeat('+props.components.length+', 1fr)')
         };
-
-        if (props.grid.length) {
-            rowStyle.gridTemplateColumns = props.grid.join('fr ')+'fr';
-        }
-
-        return rowStyle;
-    }
-
-    const renderFilters = () => {
-
-        filterList = filters.renderFiltersWith(props.filters, {}, props.path, (filter, i) => {
-            return (
-                <div className="index__header-filter" key={i}>
-                    {filter}
-                </div>
-            );
-        }, onFilterChange, true);
-
-        return filterList.map(obj => obj.filter);
-    }
-
-    const renderFiltersTool = () => {
-        if (props.filters.length) {
-            return (
-                <div className="index__header-filters-tool">
-                    {renderFilters()}
-                    <div className="index__header-clear-filters">
-                        <Link
-                            stopPropagation={false}
-                            onClick={state.hasActiveFilters ? clearFilters : null}
-                            text={i18n.get('snippets.clear_filters')}
-                            style={state.hasActiveFilters ? '' : 'disabled'}
-                        />
-                    </div>
-                </div>
-            );
-        }
-
-        return null;
     }
 
     const renderHeader = () => {
-
-        const indexSearch = (props.search ? <div className="index__header-search"><Search onSearch={keyword => search(keyword)}/></div> : null);
-
         return (
             <div className="index__header">
                 <div className="index__header-title">
                     {str.toUpperCaseFirst(props.plural)} {state.meta ? '('+state.meta.total+')' : null}
                 </div>
                 <div className="index__header-options">
-                    {indexSearch}
-                    {renderFiltersTool()}
+                    {(props.search ? (
+                        <div className="index__header-search">
+                            <Search value={location.current.params.search} onSearch={keyword => search(keyword)}/>
+                        </div>) : null)}
+                    {<FiltersTool filters={props.filters} data={location.current.params} onChange={params => filter(params)}/>}
                 </div>
             </div>
         );
@@ -185,10 +128,10 @@ function Index(props) {
 
     const renderPlaceholder = () => {
 
-        if (state.searchKeyword) {
+        if (props.path.params.search) {
             return (
                 <div className="index__placeholder">
-                    {i18n.get('snippets.no_plural_found_for_search', {plural: props.plural, search: state.searchKeyword})}
+                    {i18n.get('snippets.no_plural_found_for_search', {plural: props.plural, search: props.path.params.search})}
                 </div>
             );
         }
@@ -201,96 +144,103 @@ function Index(props) {
     }
 
     const renderRows = () => {
-
         if (state.rows.length) {
             return (
                 <div className="index__rows">
                     {state.rows.map(row => {
-                        let rowContent = props.components.map((component, i) => {
-                            return (
-                                <div className="index__component" key={i}>
-                                    {components.renderComponent(component, row, props.path)}
-                                </div>
-                            );
-                        });
-
                         return (
-                            <div className={'index__row'+(props.action ? ' index__row--clickable' : '')} key={row.id} style={getRowStyle()} onClick={props.action ? () => onRowClick(row) : null}>
-                                {rowContent}
+                            <div className="index__row" key={row.id}>
+                                {renderRow(row)}
                             </div>
                         );
                     })}
                 </div>
             );
         }
-
         return renderPlaceholder();
     }
 
-    const changePage = (page) => {
-        load({page});
-    }
+    const onCtxRowClick = (action, row) => {
+        if (action === 'open_new') {
+            path.goTo(props.path.module, props.action, {
+                id: row.id
+            }, true);
+        }
+    };
 
-    const onFilterChange = (filterId, filterValue) => {
+    const renderRow = (row) => {
+        const rowContent = props.components.map((component, i) => {
+            return (
+                <div className="index-row__component" key={i}>
+                    {components.renderComponent(component, row, props.path)}
+                </div>
+            );
+        });
 
-        if (filterValue) {
-            setFilterParams({
-                ...filterParams,
-                [filterId]: filterValue
-            });
-            setState({...state, hasActiveFilters: true});
-            return;
+        const rowActions = props.actions.map((component, i) => {
+            return (
+                <div className="index-row__action" key={i}>
+                    {components.renderComponent(component, row, props.path)}
+                </div>
+            );
+        });
+
+        const indexRow = (
+            <div className={'index-row'+(props.action ? ' index-row--clickable' : '')} onClick={props.action ? () => onRowClick(row) : null}>
+                <div className="index-row__content" style={getRowStyle()}>
+                    {rowContent}
+                </div>
+                <div className="index-row__actions">
+                    {rowActions}
+                </div>
+            </div>
+        );
+
+        if (! props.action) {
+            return indexRow;
         }
 
-        // Remove it
-        const { [filterId]: value, ...newFilterParams } = filterParams;
+        return (
+            <ContextMenu onClick={action => onCtxRowClick(action, row)} links={[['Open in new window', 'open_new']]}>
+                {indexRow}
+            </ContextMenu>
+        );
+    }
 
-        setFilterParams(newFilterParams);
-        setState({
-            ...state,
-            hasActiveFilters: (Object.keys(newFilterParams).length !== 0)
+    const changePage = (page) => {
+        path.goTo(location.current.module, location.current.action, {
+            ...location.current.params,
+            page
+        });
+    }
+
+    const search = (search) => {
+        path.goTo(location.current.module, location.current.action, {
+            ...location.current.params,
+            page: 1,
+            search
+        });
+    }
+
+    const filter = (params) => {
+        path.goTo(location.current.module, location.current.action, {
+            ...(props.path.params.search) && {search: props.path.params.search},
+            ...(props.path.params.page) && {page: 1},
+            ...params
         });
     }
 
     const clearFilters = () => {
-        filterList.forEach(obj => obj.ref.current.clear());
-
-        setFilterParams({});
-
-        setState({
-            ...state,
-            hasActiveFilters: false
-        });
-    }
-
-    const search = (keyword) => {
-        setState({
-            ...state,
-            searchKeyword: keyword
-        });
-    }
-
-    const onCtxMenuClick = (action) => {
-        if (action === 'refresh') {
-            load();
-            util.i18nNotify('snippets.reloaded_plural', {plural: props.plural});
-        } else if (action === 'clearFilters') {
-            clearFilters();
-        }
+        path.goTo(location.current.module, location.current.action, {});
     }
 
     const render = () => {
         return (
-            <ContextMenu onClick={onCtxMenuClick} links={[
-                ['Reload '+props.plural, 'refresh'],
-                (state.hasActiveFilters ? ['Clear filters', 'clearFilters'] : null)
-            ]}>
-                <div className={'index index--'+props.style+(state.isLoading ? ' index--loading' : '')}>
-                    {renderHeader()}
-                    {renderRows()}
-                    {renderFooter()}
-                </div>
-            </ContextMenu>
+            <div className={'index index--'+props.style+(state.isLoading ? ' index--loading' : '')}>
+                {renderHeader()}
+                {renderRows()}
+                {renderFooter()}
+            </div>
         );
     }
 
@@ -300,10 +250,11 @@ function Index(props) {
 Index.defaultProps = {
     type: '',
     components: [],
+    actions: [],
     path: {},
     id: 0,
     data: {},
-    params: null,
+    params: {},
     search: false,
     relationship: false,
     filters: [],

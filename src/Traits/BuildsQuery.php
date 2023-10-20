@@ -3,6 +3,9 @@
 namespace ReinVanOyen\Cmf\Traits;
 
 use Illuminate\Http\Request;
+use ReinVanOyen\Cmf\Action\CollectionAction;
+use ReinVanOyen\Cmf\Filters\Filter;
+use ReinVanOyen\Cmf\Searchers\Searcher;
 use ReinVanOyen\Cmf\Sorters\Sorter;
 
 trait BuildsQuery
@@ -28,11 +31,6 @@ trait BuildsQuery
     private $perPage;
 
     /**
-     * @var array $searchFields
-     */
-    private array $searchFields = [];
-
-    /**
      * @var array $where
      */
     private array $where = [];
@@ -56,6 +54,11 @@ trait BuildsQuery
      * @var Sorter $sorter
      */
     private $sorter;
+
+    /**
+     * @var Searcher $searcher
+     */
+    private $searcher;
 
     /**
      * @param string $column
@@ -126,12 +129,12 @@ trait BuildsQuery
     }
 
     /**
-     * @param array $searchFields
+     * @param Searcher $searcher
      * @return $this
      */
-    public function search(array $searchFields)
+    public function searcher(Searcher $searcher)
     {
-        $this->searchFields = $searchFields;
+        $this->searcher = $searcher;
         $this->export('search', true);
         return $this;
     }
@@ -196,18 +199,8 @@ trait BuildsQuery
             $query = $query->limit($this->limit);
         }
 
-        /*
-         * If the user is searching, add the search to the query
-         * */
-        if ($this->searchFields && $request->input('search')) {
-
-            $keyword = $request->input('search');
-
-            $query = $query->where(function ($query) use ($keyword) {
-                foreach ($this->searchFields as $searchField) {
-                    $query->orWhere($searchField, 'like', "%{$keyword}%");
-                }
-            });
+        if ($this->searcher) {
+            $query = $this->searcher->apply($request, $query);
         }
 
         /*

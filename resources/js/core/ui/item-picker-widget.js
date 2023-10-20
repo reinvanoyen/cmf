@@ -10,6 +10,8 @@ import StickySidebar from "./sticky-sidebar";
 import Window from "./window";
 import i18n from "../../util/i18n";
 import Pagination from "./pagination";
+import FiltersTool from "./filters-tool";
+import filters from "../../rendering/filters";
 
 class ItemPickerWidget extends React.Component {
 
@@ -22,6 +24,7 @@ class ItemPickerWidget extends React.Component {
         defaultSelectedItemIds: [],
         defaultSelectedItems: [],
         search: false,
+        filters: [],
         onSelectionChange: (ids, items) => {},
         onSelectionConfirm: (ids, items) => {},
         onCancel: () => {}
@@ -33,6 +36,8 @@ class ItemPickerWidget extends React.Component {
         this.state = {
             isLoading: true,
             searchKeyword: '',
+            hasActiveFilters: false,
+            filterParams: {},
             items: [],
             meta: null,
             selectedItemIds: this.props.defaultSelectedItemIds || [],
@@ -51,10 +56,22 @@ class ItemPickerWidget extends React.Component {
             params.search = this.state.searchKeyword;
         }
 
+        let hasActiveFilters = false;
+        // If filter params are set, add them to the http params
+        for (let i = 0; i < this.props.filters.length; i++) {
+            let filter = this.props.filters[i];
+            let filterId = filter.id;
+            if (this.state.filterParams['filter_'+filterId]) {
+                params['filter_'+filterId] = this.state.filterParams['filter_'+filterId];
+                hasActiveFilters = true;
+            }
+        }
+
         // Load the data from the backend (with id as param)
         api.execute.get(this.props.path, this.props.id,'load', params).then(response => {
             let items = response.data.data;
             this.setState({
+                hasActiveFilters,
                 isLoading: false,
                 items: items,
                 meta: response.data.meta || null
@@ -66,6 +83,14 @@ class ItemPickerWidget extends React.Component {
         this.setState({
             isLoading: true,
             searchKeyword: keyword
+        }, () => {
+            this.load();
+        });
+    }
+
+    filter(params) {
+        this.setState({
+            filterParams: params
         }, () => {
             this.load();
         });
@@ -230,9 +255,12 @@ class ItemPickerWidget extends React.Component {
                 title={str.toUpperCaseFirst(this.props.plural)}
                 closeable={true}
                 onClose={this.onCancel.bind(this)}
-                actions={[(this.props.search ? <Search key={'search'} onSearch={keyword => this.search(keyword)} /> : null)]}
+                actions={[
+                    (this.props.search ? <Search key={'search'} onSearch={keyword => this.search(keyword)} /> : null),
+                    <FiltersTool filters={this.props.filters} key={'filters'} data={this.state.filterParams} onChange={params => this.filter(params)}/>
+                ]}
                 footer={[
-                    <div className="item-picker-widget__footer">
+                    <div className="item-picker-widget__footer" key={'footer'}>
                         <div className="item-picker-widget__footer-pagination">
                             {this.renderPagination()}
                         </div>
@@ -253,7 +281,7 @@ class ItemPickerWidget extends React.Component {
                     </div>
                 ]}
             >
-                <StickySidebar sidebar={this.renderSidebar()}>
+                <StickySidebar sidebar={this.renderSidebar()} key={'sidebar'}>
                     {this.state.items.length ? this.renderRows() : this.renderPlaceholder()}
                 </StickySidebar>
             </Window>

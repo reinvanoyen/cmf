@@ -128,9 +128,9 @@ function FilePickerWidget(props) {
         if (name) {
             try {
                 const response = await api.media.createDirectory(name, (directory ? directory.id : null));
-                const directory = response.data.data;
+                const createdDirectory = response.data.data;
                 util.i18nNotify('snippets.directory_created');
-                dispatch({ type: 'media/directories/add', payload: directory });
+                dispatch({ type: 'media/directories/add', payload: createdDirectory });
             } catch (error) {
                 util.i18nNotify('snippets.changes_unsuccessful');
             }

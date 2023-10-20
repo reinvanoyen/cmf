@@ -28,11 +28,17 @@ export default {
     update(module, action, params = {}) {
         store.dispatch({ type: 'location/update', payload: {module, action, params}});
     },
-    goTo(module, action, params = {}) {
+    goTo(module, action, params = {}, newWindow = false) {
 
         const query = http.query(params);
+        const url = `${this.path}/${module}/${action}`+(query ? '?'+query : '');
 
-        window.history.pushState({}, '', this.path+'/'+module+'/'+action+(query ? '?'+query : ''));
+        if (newWindow) {
+            window.open(url);
+            return;
+        }
+
+        window.history.pushState({}, '', url);
 
         this.history.push({
             module: module,

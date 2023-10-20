@@ -3,11 +3,8 @@ $rule: 2rem;
 $border-width-1: 1px;
 $border-width-2: 1px;
 
-$border-radius-1: 8px;
-$border-radius-2: 10px;
-$border-radius-3: 3px;
-$border-radius-4: 0;
+$border-radius-1: var(--border-radius);
 
-$logo-emblem-block: $rule * 2;
+$logo-emblem-block: $rule * 1.5;
 
-$nav-width: 265px;
+$nav-width: 250px;

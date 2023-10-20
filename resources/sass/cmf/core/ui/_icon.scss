@@ -63,4 +63,16 @@
         font-size: 60px;
         color: $fill-color-alt-1;
     }
+
+    @include modifier(clickable)
+    {
+        color: $color13;
+        opacity: .5;
+        transition: opacity .25s;
+
+        &:hover
+        {
+            opacity: 1;
+        }
+    }
 }

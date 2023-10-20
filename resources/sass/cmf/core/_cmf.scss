@@ -8,7 +8,8 @@
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        background-color: $fill-color;
+        border-bottom: $border-width-1 solid $fill-color-alt-1;
+        //background-color: $fill-color;
     }
 
     @include element(logo)
@@ -22,7 +23,7 @@
 
         @include breakpoint(2)
         {
-            background-color: $fill-color-alt-1;
+            //background-color: $fill-color-alt-1;
         }
     }
 
@@ -40,6 +41,7 @@
     {
         display: flex;
         min-height: 100vh;
+        padding-top: calc($rule / 2);
     }
 
     @include element(nav)
@@ -85,7 +87,9 @@
             max-height: initial;
             overflow-y: auto;
             padding: $rule calc($rule / 2);
-            background-color: $fill-color;
+            padding-top: 0;
+            padding-right: 0;
+            //background-color: $fill-color;
             border: 0;
             border-radius: 0;
             box-shadow: none;
@@ -127,6 +131,7 @@
         @include breakpoint(2)
         {
             padding: $rule 0;
+            padding-top: 0;
         }
     }
 

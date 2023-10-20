@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use ReinVanOyen\Cmf\CmfApplicationServiceProvider;
 use ReinVanOyen\Cmf\Modules\WelcomeModule;
+use ReinVanOyen\Cmf\Modules\UserModule;
+use ReinVanOyen\Cmf\Modules\MediaLibraryModule;
 
 class CmfServiceProvider extends CmfApplicationServiceProvider
 {
@@ -11,6 +13,8 @@ class CmfServiceProvider extends CmfApplicationServiceProvider
     {
         return [
             WelcomeModule::class,
+            UserModule::class,
+            MediaLibraryModule::class,
         ];
     }
 }

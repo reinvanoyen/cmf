@@ -1,6 +1,6 @@
 @include block(section)
 {
-    border-radius: $border-radius-2;
+    border-radius: $border-radius-1;
     background-color: $fill-color;
 
     @include element(content)

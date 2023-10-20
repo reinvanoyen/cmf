@@ -48,6 +48,7 @@ class FrontController extends Controller
                 'fill_color_alt_1' => $primaryColorDesaturated->tint(85),
                 'fill_color_alt_2' => $primaryColorDesaturated->tint(75),
                 'fill_color_alt_3' => $primaryColorDesaturated->tint(50),
+                'border_radius' => config('cmf.theme.border_radius', '5px'),
             ],
             'cmf' => $this->cmf,
         ]);

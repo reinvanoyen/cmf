@@ -25,7 +25,7 @@ export default {
             let ref = (refs ? React.createRef() : null );
             let Filter = all[filter.type];
 
-            let rendered = renderCallback(<Filter {...filter} data={data} path={path} onChange={onChangeHandler} ref={ref} />, i);
+            let rendered = renderCallback(<Filter {...filter} data={data} path={path} onChange={onChangeHandler} />, i);
 
             return {
                 filter: rendered,

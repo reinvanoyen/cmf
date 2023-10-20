@@ -2,7 +2,6 @@
 {
     display: flex;
     align-items: center;
-    color: $color07;
 
     @include element(emblem)
     {
@@ -12,9 +11,9 @@
         height: $logo-emblem-block;
         width: $logo-emblem-block;
         background-color: $primary-color-alt-3;
-        color: $primary-color-alt-1;
+        color: $fill-color;
         border-radius: $border-radius-1;
-        @include type-4;
+        @include type-12;
     }
 
     @include element(name)

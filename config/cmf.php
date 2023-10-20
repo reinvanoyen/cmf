@@ -46,6 +46,7 @@ return [
         'primary_color' => '#6226db',
         'primary_color_spin' => -30,
         'primary_color_strength' => 50,
+        'border_radius' => '5px',
     ],
 
     /*

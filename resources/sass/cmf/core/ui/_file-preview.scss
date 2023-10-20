@@ -5,7 +5,7 @@
     display: block;
     width: $default-size;
     height: $default-size;
-    border-radius: $border-radius-3;
+    border-radius: $border-radius-1;
     overflow: hidden;
 
     @include modifier(compact-list)
@@ -32,7 +32,7 @@
         width: $default-size;
         height: $default-size;
         position: relative;
-        border-radius: $border-radius-3;
+        border-radius: $border-radius-1;
         border: $border-width-1 solid var(--color);
         overflow: hidden;
         color: var(--color);

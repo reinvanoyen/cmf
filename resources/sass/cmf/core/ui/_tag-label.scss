@@ -3,7 +3,7 @@
     background-color: rgba($color13, .35);
     color: $color01;
     @include type-2;
-    border-radius: $border-radius-3;
+    border-radius: $border-radius-1;
     padding: calc($rule / 8) calc($rule / 3);
 
     @include modifier(small)

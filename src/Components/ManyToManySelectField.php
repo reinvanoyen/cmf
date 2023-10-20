@@ -66,9 +66,7 @@ class ManyToManySelectField extends Component
         $this->titleColumn($this->meta::getTitleColumn());
         $this->create($this->meta::create(), $this->meta::sidebar());
 
-        foreach ($this->meta::getSorting() as $column => $method) {
-            $this->orderBy($column, $method);
-        }
+        $this->sorter = $this->meta::sorter();
     }
 
     /**

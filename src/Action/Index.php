@@ -28,16 +28,19 @@ class Index extends CollectionAction
         $this->paginate($this->getMeta()::getPerPage());
         $this->paginate($this->getMeta()::getPerPage());
         $this->grid($this->getMeta()::getIndexGrid());
+        $this->sorter($this->getMeta()::sorter());
 
         $this->components(count($components) ? $components : $this->getMeta()::index());
         $this->model = $this->getMeta()::getModel();
 
-        if (count($this->getMeta()::getSearchColumns())) {
-            $this->search($this->getMeta()::getSearchColumns());
+        $searcher = $this->getMeta()::searcher();
+
+        if ($searcher) {
+            $this->searcher($this->getMeta()::searcher());
         }
 
-        if ($this->getMeta()::getSorting()) {
-            $this->sorter(StaticSorter::make($this->getMeta()::getSorting()));
+        foreach ($this->getMeta()::filters() as $filter) {
+            $this->filter($filter);
         }
     }
 
@@ -102,6 +105,16 @@ class Index extends CollectionAction
     public function action(string $actionPath)
     {
         $this->export('action', $actionPath);
+        return $this;
+    }
+
+    /**
+     * @param array $actions
+     * @return $this
+     */
+    public function actions(array $actions)
+    {
+        $this->export('actions', $actions);
         return $this;
     }
 }

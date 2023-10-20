@@ -36,7 +36,7 @@
         display: inline-block;
         padding: calc($rule / 6) calc($rule / 3);
         margin-top: calc($rule / 3);
-        border-radius: $border-radius-3;
+        border-radius: $border-radius-1;
         background-color: $primary-color-alt-1;
         color: $color01;
         @include type-2;

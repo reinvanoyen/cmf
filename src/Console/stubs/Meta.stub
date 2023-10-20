@@ -31,13 +31,6 @@ class {{ model }}Meta extends Meta
     ];
 
     /**
-     * @var array $sort
-     */
-    protected static $sort = [
-        'id' => 'desc',
-    ];
-
-    /**
      * @return array
      */
     public static function index(): array

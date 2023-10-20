@@ -93,6 +93,18 @@ export default function mediaReducer(state = initialState, action) {
                 files
             }
         }
+        case 'media/files/changeProperties': {
+
+            const files = [...state.files].map(file => {
+                file[action.property] = (action.fileIds.includes(file.id) ? action.value : file[action.property]);
+                return file;
+            });
+
+            return {
+                ...state,
+                files
+            }
+        }
         case 'media/files/changeProperty': {
 
             const files = [...state.files].map(file => {

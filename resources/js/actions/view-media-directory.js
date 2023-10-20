@@ -189,14 +189,26 @@ function ViewMediaDirectory(props) {
     }
 
     const handleChangeFileProperty = async (property, value, fileId) => {
-
+        property = property.toLowerCase();
         if (['visibility', 'description', 'copyright'].includes(property)) {
-
             const apiCall = api.media['updateFile'+str.toUpperCaseFirst(property)];
-
             try {
                 await apiCall(value, fileId);
                 dispatch({ type: 'media/files/changeProperty', fileId, property, value });
+                util.notify(i18n.get('snippets.changes_successful'));
+            } catch(error) {
+                util.notify(i18n.get('snippets.changes_unsuccessful'));
+            }
+        }
+    }
+
+    const handleChangeFilesProperty = async (property, value, fileIds) => {
+        property = property.toLowerCase();
+        if (['visibility', 'description', 'copyright'].includes(property)) {
+            const apiCall = api.media['updateFiles'+str.toUpperCaseFirst(property)];
+            try {
+                await apiCall(value, fileIds);
+                dispatch({ type: 'media/files/changeProperties', fileIds, property, value });
                 util.notify(i18n.get('snippets.changes_successful'));
             } catch(error) {
                 util.notify(i18n.get('snippets.changes_unsuccessful'));
@@ -336,7 +348,7 @@ function ViewMediaDirectory(props) {
                 <MultiFileView
                     files={state.selectedFiles}
                     onDeleteFiles={() => confirmDeleteFiles(state.selectedFileIds, state.selectedFiles)}
-                    onChangeFilesProperty={(property, value) => handleChangeFileProperty(property, value, state.selectedFileIds)}
+                    onChangeFilesProperty={(property, value) => handleChangeFilesProperty(property, value, state.selectedFileIds)}
                     onMoveFiles={handleMoveFiles}
                 />
             );

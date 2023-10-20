@@ -6,6 +6,7 @@ import i18n from "../../util/i18n";
 class Search extends React.Component {
 
     static defaultProps = {
+        value: '',
         modifiers: ['negative'],
         placeholder: 'Type to search...',
         onSearch: keyword => {},
@@ -17,10 +18,19 @@ class Search extends React.Component {
         super(props);
 
         this.state = {
-            value: ''
+            value: props.value
         };
 
         this.searchTimeout = null;
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.value !== this.props.value) {
+            this.setState({
+                ...this.state,
+                value: this.props.value
+            });
+        }
     }
 
     handleChange(event) {
@@ -40,6 +50,7 @@ class Search extends React.Component {
     }
 
     search() {
+        clearTimeout(this.searchTimeout);
         this.props.onSearch(this.state.value);
     }
 

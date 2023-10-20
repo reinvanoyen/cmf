@@ -81,6 +81,12 @@ class Dropdown extends React.Component {
         });
     }
 
+    onContentClick(e) {
+        if (! e.target.classList.contains('dropdown__content')) {
+            this.close();
+        }
+    }
+
     render() {
 
         let button = (
@@ -110,7 +116,7 @@ class Dropdown extends React.Component {
                 <div className="dropdown__trigger">
                     {button}
                 </div>
-                <div className="dropdown__content">
+                <div className="dropdown__content" onClick={this.onContentClick.bind(this)}>
                     {this.props.children}
                 </div>
             </div>

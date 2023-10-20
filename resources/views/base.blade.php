@@ -31,6 +31,7 @@
             --fill-color-alt-1: {{ $theme['fill_color_alt_1'] }};
             --fill-color-alt-2: {{ $theme['fill_color_alt_2'] }};
             --fill-color-alt-3: {{ $theme['fill_color_alt_3'] }};
+            --border-radius: {{ $theme['border_radius'] }};
         }
     </style>
 

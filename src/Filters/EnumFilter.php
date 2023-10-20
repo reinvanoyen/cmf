@@ -20,13 +20,14 @@ class EnumFilter extends Filter
     private $options = [];
 
     /**
-     * EnumFilter constructor.
      * @param string $field
+     * @param $options
      */
-    public function __construct(string $field)
+    public function __construct(string $field, $options = [])
     {
         $this->field = $field;
         $this->export('field', $field);
+        $this->options($options);
     }
 
     /**
