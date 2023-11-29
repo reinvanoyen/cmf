@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    flex-grow: 1;
     padding: calc($rule / 3) calc($rule / 2);
     transition: background-color .25s;
     border-radius: $border-radius-1;

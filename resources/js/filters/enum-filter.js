@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import Dropdown from "../core/ui/dropdown";
 import SelectList from "../core/ui/select-list";
 import str from "../util/str";
-import {useSelector} from "react-redux";
 
 function EnumFilter(props) {
 

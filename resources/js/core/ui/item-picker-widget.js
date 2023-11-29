@@ -257,7 +257,7 @@ class ItemPickerWidget extends React.Component {
                 onClose={this.onCancel.bind(this)}
                 actions={[
                     (this.props.search ? <Search key={'search'} onSearch={keyword => this.search(keyword)} /> : null),
-                    <FiltersTool filters={this.props.filters} key={'filters'} data={this.state.filterParams} onChange={params => this.filter(params)}/>
+                    <FiltersTool path={this.props.path} filters={this.props.filters} key={'filters'} data={this.state.filterParams} onChange={params => this.filter(params)}/>
                 ]}
                 footer={[
                     <div className="item-picker-widget__footer" key={'footer'}>

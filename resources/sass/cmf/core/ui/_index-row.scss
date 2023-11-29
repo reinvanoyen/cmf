@@ -1,12 +1,18 @@
 @include block(index-row)
 {
     display: flex;
+    flex-grow: 1;
     padding: calc($rule / 2) $rule;
     transition: background-color .25s;
 
     @include modifier(clickable)
     {
         cursor: pointer;
+    }
+
+    @include modifier(grid)
+    {
+        padding: 0;
     }
 
     &:hover
@@ -26,5 +32,10 @@
         display: flex;
         align-items: center;
         gap: calc($rule / 2);
+    }
+
+    @include element(component)
+    {
+        display: flex;
     }
 }

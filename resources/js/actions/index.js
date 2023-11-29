@@ -99,7 +99,7 @@ function Index(props) {
                         <div className="index__header-search">
                             <Search value={location.current.params.search} onSearch={keyword => search(keyword)}/>
                         </div>) : null)}
-                    {<FiltersTool filters={props.filters} data={location.current.params} onChange={params => filter(params)}/>}
+                    {<FiltersTool path={props.path} filters={props.filters} data={location.current.params} onChange={params => filter(params)}/>}
                 </div>
             </div>
         );
@@ -186,8 +186,8 @@ function Index(props) {
         });
 
         const indexRow = (
-            <div className={'index-row'+(props.action ? ' index-row--clickable' : '')} onClick={props.action ? () => onRowClick(row) : null}>
-                <div className="index-row__content" style={getRowStyle()}>
+            <div className={'index-row index-row--'+props.style+' '+(props.action ? ' index-row--clickable' : '')} onClick={props.action ? () => onRowClick(row) : null}>
+                <div className="index-row__content" style={props.style === 'default' ? getRowStyle() : {}}>
                     {rowContent}
                 </div>
                 <div className="index-row__actions">

@@ -1,96 +1,87 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
-import ContextMenu from "../core/ui/context-menu";
 import Dropdown from "../core/ui/dropdown";
 import SelectList from "../core/ui/select-list";
 import str from "../util/str";
 import api from "../api/api";
+import useOnMount from "../hooks/use-on-mount";
 
-class BelongsToFilter extends React.Component {
+function BelongsToFilter(props) {
 
-    static defaultProps = {
-        id: 0,
-        type: '',
-        field: '',
-        label: '',
-        titleColumn: '',
-        onChange: () => {}
-    };
+    const [state, setState] = useState({
+        values: (props.data['filter_'+props.id] ? props.data['filter_'+props.id].split(',').map(v => parseInt(v)) : []),
+        options: {},
+        humanReadableValue: 'All'
+    })
 
-    constructor(props) {
-        super(props);
+    useOnMount(() => {
 
-        this.state = {
-            options: {},
-            humanReadableValue: 'All'
-        };
-
-        this.selectListRef = React.createRef();
-    }
-
-    componentDidMount() {
-        this.load();
-    }
-
-    load() {
         // Load the data from the backend (with id as param)
-        api.execute.get(this.props.path, this.props.id,'load', this.props.path.params).then(response => {
+        api.execute.get(props.path, props.id,'load', props.path.params).then(response => {
 
-            let options = {};
-            let data = response.data.data;
+            const options = {};
+            const data = response.data.data;
 
             data.forEach(row => {
-                options[row.id] = row[this.props.titleColumn];
+                options[row.id] = row[props.titleColumn];
             });
 
-            this.setState({
-                options: options
+            const readableValues = state.values.map(value => options[parseInt(value)]);
+
+            setState({
+                ...state,
+                options,
+                humanReadableValue: (readableValues.length ? readableValues.join(', ') : 'All')
             });
         });
-    }
+    })
 
-    handleChange(values = []) {
+    useEffect(() => {
 
-        let readableValues = values.map(value => this.state.options[value]);
+        const values = (props.data['filter_'+props.id] ? props.data['filter_'+props.id].split(',').map(v => parseInt(v)) : [])
+        const readableValues = values.map(value => state.options[parseInt(value)]);
 
-        this.setState({
+        setState({
+            ...state,
+            values,
             humanReadableValue: (readableValues.length ? readableValues.join(', ') : 'All')
         });
 
-        this.props.onChange(this.props.id, values.join(','));
-    }
+    }, [props.data])
 
-    clear() {
-        this.selectListRef.current.clear();
-    }
+    const handleChange = (values = []) => {
+        props.onChange(props.id, values.join(','));
+    };
 
-    onCtxMenuClick(action) {
-        if (action === 'clear') {
-            this.clear();
-        }
-    }
+    const render = () => {
 
-    render() {
-
-        let label = (this.props.label ? this.props.label : str.toUpperCaseFirst(this.props.field));
+        const label = (props.label ? props.label : str.toUpperCaseFirst(props.field));
 
         return (
             <div className="enum-filter">
-                <ContextMenu onClick={this.onCtxMenuClick.bind(this)} links={[
-                    ['Clear this filter', 'clear']
-                ]}>
-                    <Dropdown stopPropagation={false} style={['secondary']} label={label} text={this.state.humanReadableValue}>
-                        <SelectList
-                            options={this.state.options}
-                            onChange={this.handleChange.bind(this)}
-                            onClear={this.handleChange.bind(this)}
-                            ref={this.selectListRef}
-                        />
-                    </Dropdown>
-                </ContextMenu>
+                <Dropdown stopPropagation={false} style={['secondary']} label={label} text={state.humanReadableValue}>
+                    <SelectList
+                        options={state.options}
+                        defaultValues={state.values}
+                        onChange={handleChange}
+                        onClear={handleChange}
+                    />
+                </Dropdown>
             </div>
         );
     }
+
+    return render();
 }
+
+BelongsToFilter.defaultProps = {
+    id: 0,
+    type: '',
+    field: '',
+    label: '',
+    titleColumn: '',
+    data: {},
+    onChange: () => {}
+};
 
 export default BelongsToFilter;

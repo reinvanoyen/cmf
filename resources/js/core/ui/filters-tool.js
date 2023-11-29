@@ -43,7 +43,7 @@ function FiltersTool(props) {
     }
 
     const renderFilters = () => {
-        const filterList = filters.renderFiltersWith(props.filters, props.data, {}, (filter, i) => {
+        const filterList = filters.renderFiltersWith(props.filters, props.data, props.path, (filter, i) => {
             return (
                 <div className="filters-tool__filter" key={i}>
                     {filter}
@@ -84,7 +84,8 @@ function FiltersTool(props) {
 
 FiltersTool.defaultProps = {
     onChange: () => {},
-    data: {}
+    data: {},
+    path: {}
 };
 
 export default FiltersTool;

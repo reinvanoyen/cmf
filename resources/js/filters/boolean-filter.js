@@ -1,54 +1,53 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import str from "../util/str";
 import BooleanSwitcher from "../core/ui/boolean-switcher";
 
-class BooleanFilter extends React.Component {
+function BooleanFilter(props) {
 
-    static defaultProps = {
-        id: 0,
-        type: '',
-        field: '',
-        label: '',
-        onChange: () => {}
-    };
+    const [state, setState] = useState({
+        value: false
+    });
 
-    constructor(props) {
-        super(props);
+    useEffect(() => {
 
-        this.state = {
-            value: false
-        };
-    }
+        const value = props.data['filter_'+props.id] ? (String(props.data['filter_'+props.id]) === 'true') : false;
 
-    switch(values = []) {
-
-        this.setState({
-            value: ! this.state.value
-        }, () => {
-            this.props.onChange(this.props.id, this.state.value);
+        setState({
+            ...state,
+            value
         });
+
+    }, [props.data]);
+
+    const handleChange = () => {
+        props.onChange(props.id, ! state.value);
     }
 
-    clear() {
-        this.setState({
-            value: false
-        });
-    }
+    const render = () => {
 
-    render() {
-
-        let label = (this.props.label ? this.props.label : str.toUpperCaseFirst(this.props.field));
+        const label = (props.label ? props.label : str.toUpperCaseFirst(props.field));
 
         return (
-            <div className="boolean-filter" onClick={this.switch.bind(this)}>
+            <div className="boolean-filter" onClick={handleChange}>
                 <div className="boolean-filter__label">
                     {label}
                 </div>
-                <BooleanSwitcher checked={this.state.value} style={['alt', 'small']} />
+                <BooleanSwitcher checked={state.value} style={['alt', 'small']} />
             </div>
         );
     }
+
+    return render();
 }
+
+BooleanFilter.defaultProps = {
+    id: 0,
+    type: '',
+    field: '',
+    label: '',
+    data: {},
+    onChange: () => {}
+};
 
 export default BooleanFilter;

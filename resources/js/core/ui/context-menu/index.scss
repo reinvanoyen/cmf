@@ -38,6 +38,8 @@
 
 @include block(context-menu)
 {
+    width: 100%;
+
     @include element(menu)
     {
         animation: context-menu .25s;
@@ -56,6 +58,7 @@
 
     @include element(wrap)
     {
+        width: 100%;
         position: relative;
 
         @include block-modifier(open)
