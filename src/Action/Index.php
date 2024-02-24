@@ -117,4 +117,14 @@ class Index extends CollectionAction
         $this->export('actions', $actions);
         return $this;
     }
+
+    /**
+     * @param array $actions
+     * @return $this
+     */
+    public function bulkActions(array $actions)
+    {
+        $this->export('bulkActions', $actions);
+        return $this;
+    }
 }

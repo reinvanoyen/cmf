@@ -1,0 +1,43 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(checkbox)
+{
+    $padding: calc($rule / 4);
+    $width: calc($rule / 3);
+
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: calc($rule / 6) calc($rule / 6);
+    border-radius: $border-radius-1;
+    height: $width + $padding;
+    width: $width + $padding;
+    background-color: $fill-color-alt-1;
+    transition: background-color .25s;
+
+    &:after
+    {
+        content: '';
+        position: absolute;
+        left: calc($padding / 2);
+        top: calc($padding / 2);
+        border-radius: $border-radius-1;
+        width: $width;
+        height: $width;
+        background-color: $color01;
+        box-shadow: $box-shadow-1;
+        transition: transform .25s;
+        transform: scale(0);
+    }
+
+    @include modifier(checked)
+    {
+        background-color: $primary-color-alt-1;
+
+        &:after
+        {
+            transform: scale(1);
+        }
+    }
+}

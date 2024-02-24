@@ -10,12 +10,15 @@ import i18n from "../util/i18n";
 import ContextMenu from "../core/ui/context-menu";
 import usePrevious from "../hooks/use-previous";
 import FiltersTool from "../core/ui/filters-tool";
+import Checkbox from "../core/ui/checkbox";
+import clsx from "clsx";
 
 function Index(props) {
 
     const [state, setState] = useState({
         isLoading: true,
         rows: [],
+        selectedRowIds: [],
         meta: null,
         hasActiveFilters: false
     });
@@ -88,6 +91,25 @@ function Index(props) {
         };
     }
 
+    const renderBulkActions = () => {
+        if (!state.selectedRowIds.length) {
+            return null;
+        }
+
+        return props.bulkActions.map((component, i) => {
+            return (
+                <div className="index__header-bulk-action" key={i}>
+                    {components.renderComponent(component, {}, {
+                        ...props.path,
+                        params: {
+                            id: state.selectedRowIds
+                        }
+                    })}
+                </div>
+            );
+        });
+    };
+
     const renderHeader = () => {
         return (
             <div className="index__header">
@@ -95,6 +117,7 @@ function Index(props) {
                     {str.toUpperCaseFirst(props.plural)} {state.meta ? '('+state.meta.total+')' : null}
                 </div>
                 <div className="index__header-options">
+                    {renderBulkActions()}
                     {(props.search ? (
                         <div className="index__header-search">
                             <Search value={location.current.params.search} onSearch={keyword => search(keyword)}/>
@@ -160,6 +183,24 @@ function Index(props) {
         return renderPlaceholder();
     }
 
+    const toggleRowSelection = (row) => {
+        if(state.selectedRowIds.includes(row.id)) {
+            setState({
+                ...state,
+                selectedRowIds: state.selectedRowIds.filter(rowId => rowId !== row.id)
+            });
+            return;
+        }
+
+        setState({
+            ...state,
+            selectedRowIds: [
+                ...state.selectedRowIds,
+                row.id
+            ]
+        });
+    };
+
     const onCtxRowClick = (action, row) => {
         if (action === 'open_new') {
             path.goTo(props.path.module, props.action, {
@@ -169,6 +210,13 @@ function Index(props) {
     };
 
     const renderRow = (row) => {
+
+        const rowCheckbox = (props.bulkActions.length ? (
+            <div className="index-row__checkbox">
+                <Checkbox checked={state.selectedRowIds.includes(row.id)} onClick={e => toggleRowSelection(row)} />
+            </div>
+        ) : null);
+
         const rowContent = props.components.map((component, i) => {
             return (
                 <div className="index-row__component" key={i}>
@@ -186,7 +234,11 @@ function Index(props) {
         });
 
         const indexRow = (
-            <div className={'index-row index-row--'+props.style+' '+(props.action ? ' index-row--clickable' : '')} onClick={props.action ? () => onRowClick(row) : null}>
+            <div className={clsx(`index-row index-row--${props.style}`, {
+                'index-row--clickable': props.action,
+                'index-row--selected': state.selectedRowIds.includes(row.id)
+            })} onClick={props.action ? () => onRowClick(row) : null}>
+                {rowCheckbox}
                 <div className="index-row__content" style={props.style === 'default' ? getRowStyle() : {}}>
                     {rowContent}
                 </div>
@@ -251,6 +303,7 @@ Index.defaultProps = {
     type: '',
     components: [],
     actions: [],
+    bulkActions: [],
     path: {},
     id: 0,
     data: {},

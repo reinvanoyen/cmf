@@ -5,6 +5,21 @@
     padding: calc($rule / 2) $rule;
     transition: background-color .25s;
 
+    &:hover
+    {
+        background-color: $fill-color;
+    }
+
+    @include modifier(selected)
+    {
+        background-color: $fill-color-alt-1;
+        
+        &:hover
+        {
+            background-color: $fill-color-alt-1;
+        }
+    }
+
     @include modifier(clickable)
     {
         cursor: pointer;
@@ -15,9 +30,11 @@
         padding: 0;
     }
 
-    &:hover
+    @include element(checkbox)
     {
-        background-color: $fill-color;
+        display: flex;
+        align-items: center;
+        margin-right: calc($rule / 2);
     }
 
     @include element(content)
