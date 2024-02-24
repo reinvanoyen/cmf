@@ -1,43 +1,9 @@
-@include block(index)
+@include block(select-one)
 {
-    background-color: $color01;
     border-radius: $border-radius-1;
-    border: $border-width-2 solid $fill-color-alt-1;
-    transition: opacity .5s;
-
-    @include modifier(loading)
-    {
-        opacity: 0;
-    }
-
-    @include element(rows)
-    {
-        @include block-modifier(grid)
-        {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-gap: $rule;
-            padding: 0 $rule;
-        }
-    }
-
-    @include element(row)
-    {
-        border-bottom: $border-width-1 solid $fill-color;
-
-        @include block-modifier(grid)
-        {
-            display: flex;
-            padding: 0;
-            border: 0;
-            background-color: $color01;
-
-            &:hover
-            {
-                background-color: $color01;
-            }
-        }
-    }
+    border: $border-width-2 solid $fill-color;
+    background-color: $color01;
+    padding: $rule;
 
     @include element(component)
     {
@@ -48,78 +14,49 @@
         }
     }
 
-    @include element(placeholder)
+    @include element(options)
     {
-        text-align: center;
-        border-radius: $border-radius-1;
-        background-color: $fill-color;
-        padding: calc($rule / 2) $rule;
-        margin: 0 calc($rule / 2);
-        margin-bottom: calc($rule / 2);
+        display: grid;
+        gap: $rule;
+        grid-template-columns: repeat(4, 1fr);
     }
 
-    @include element(header)
+    @include element(option)
     {
-        display: flex;
-        flex-direction: column;
-        gap: calc($rule / 2);
-        padding: calc($rule / 2) $rule;
+        cursor: pointer;
+        border: $border-width-1 solid $fill-color;
+        padding: $rule;
+        transition: background-color .25s;
 
-        @include breakpoint(2)
+        &:hover
         {
-            flex-direction: row;
-            align-items: center;
+            background-color: $fill-color;
         }
-    }
 
-    @include element(header-title)
-    {
-        @include type-9;
-    }
-
-    @include element(header-options)
-    {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex-grow: 1;
-        gap: calc($rule / 2);
-
-        @include breakpoint(2)
+        @include modifier(selected)
         {
-            justify-content: flex-end;
+            background-color: $fill-color-alt-1;
+
+            &:hover
+            {
+                background-color: $fill-color-alt-1;
+            }
         }
-    }
-
-    @include element(header-search)
-    {
-        // for ref
-    }
-
-    @include element(header-filter)
-    {
-        margin-left: calc($rule / 2);
-
-        &:first-child
-        {
-            margin-left: 0;
-        }
-    }
-
-    @include element(header-filters-tool)
-    {
-        display: flex;
-        align-items: center;
-    }
-
-    @include element(header-clear-filters)
-    {
-        margin-left: calc($rule / 2);
     }
 
     @include element(footer)
     {
-        width: 100%;
-        padding: calc($rule / 2) $rule;
+        display: flex;
+        margin-top: $rule;
+    }
+
+    @include element(confirm)
+    {
+        margin-right: calc($rule / 3);
+    }
+
+    @include element(cancel)
+    {
+        //
     }
 }

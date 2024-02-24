@@ -1,66 +1,106 @@
-import React from 'react';
+import React, {useState} from 'react';
 import api from "../api/api";
 import path from "../state/path";
 import ui from "../core/ui/util";
 import Button from "../core/ui/button";
 import i18n from "../util/i18n";
+import useOnMount from "../hooks/use-on-mount";
+import components from "../rendering/components";
+import clsx from "clsx";
 
-class Delete extends React.Component {
+function SelectOne(props) {
 
-    static defaultProps = {
-        type: '',
-        components: [],
-        path: {},
-        id: 0,
-        data: {},
-        params: null,
-        redirect: 'index',
-        redirectBack: false,
-        singular: '',
-        plural: ''
+    const [state, setState] = useState({
+        options: [],
+        selectedOptionId: null,
+    });
+
+    useOnMount(() => {
+        loadOptions();
+    });
+
+    const loadOptions = async () => {
+        const response = await api.execute.get(props.path, props.id,'loadOptions', props.path.params);
+
+        setState({
+            ...state,
+            options: response.data.data
+        });
     };
 
-    constructor(props) {
-        super(props);
-
-        if (this.props.params) {
-            this.props.path.params = this.props.params;
-        }
-    }
-
-    delete() {
+    const execute = async () => {
         // Load the data from the backend (with id as param)
-        api.execute.get(this.props.path, this.props.id,'delete', this.props.path.params).then(response => {
-
-            // Redirect
-            this.redirect();
-
-            // Notify the user
-            ui.notify(i18n.get('snippets.singular_deleted', {singular: this.props.singular}));
+        await api.execute.get(props.path, props.id,'execute', {
+            selectedId: state.selectedOptionId,
+            ids: state.options.map(option => option.id),
         });
+        // Redirect
+        redirect();
+        // Notify the user
+        ui.notify(i18n.get('snippets.singular_deleted', {singular: props.singular}));
     }
 
-    redirect() {
-        path.handleRedirect(this.props);
+    const redirect = () => {
+        path.handleRedirect(props);
     }
 
-    render() {
-        return (
-            <div className="delete">
-                <div className="delete__text">
-                    {i18n.get('snippets.delete_singular_text', {singular: this.props.singular})}
+    const selectOption = (option) => {
+        setState({
+            ...state,
+            selectedOptionId: option.id,
+        });
+    };
+
+    return (
+        <div className="select-one">
+            <div className="select-one__options">
+                {state.options.map((option, index) => {
+                    return (
+                        <div className={clsx({
+                            'select-one__option': true,
+                            'select-one__option--selected': state.selectedOptionId === option.id
+                        })} key={index} onClick={e => selectOption(option)}>
+                            {props.components.map((component, i) => {
+                                return (
+                                    <div className="index-row__component" key={i}>
+                                        {components.renderComponent(component, option, props.path)}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    );
+                })}
+            </div>
+            <div className="select-one__footer">
+                <div className="select-one__confirm">
+                    <Button
+                        onClick={execute}
+                        text={i18n.get('snippets.delete_singular_confirm', {singular: props.singular})}
+                    />
                 </div>
-                <div className="delete__footer">
-                    <div className="delete__confirm">
-                        <Button onClick={this.delete.bind(this)} text={i18n.get('snippets.delete_singular_confirm', {singular: this.props.singular})} />
-                    </div>
-                    <div className="delete__cancel">
-                        <Button onClick={this.redirect.bind(this)} text={i18n.get('snippets.delete_singular_cancel')} style={'secondary'} />
-                    </div>
+                <div className="select-one__cancel">
+                    <Button
+                        onClick={redirect}
+                        text={i18n.get('snippets.delete_singular_cancel')}
+                        style={'secondary'}
+                    />
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
-export default Delete;
+SelectOne.defaultProps = {
+    type: '',
+    components: [],
+    path: {},
+    id: 0,
+    data: {},
+    params: null,
+    redirect: 'index',
+    redirectBack: false,
+    singular: '',
+    plural: ''
+};
+
+export default SelectOne;

@@ -13,7 +13,7 @@
     @include modifier(selected)
     {
         background-color: $fill-color-alt-1;
-        
+
         &:hover
         {
             background-color: $fill-color-alt-1;

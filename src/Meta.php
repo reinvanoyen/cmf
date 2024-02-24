@@ -118,6 +118,14 @@ abstract class Meta
     /**
      * @return array
      */
+    public static function card(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
     public static function sidebar(): array
     {
         return [];

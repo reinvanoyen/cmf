@@ -8,6 +8,7 @@ import CustomController from "./custom-controller";
 import CreateWizard from "./create-wizard";
 import ViewMediaDirectory from "./view-media-directory";
 import Dashboard from "./dashboard";
+import SelectOne from "./select-one";
 
 export default {
     'index': Index,
@@ -19,5 +20,6 @@ export default {
     'dashboard': Dashboard,
     'export': Export,
     'custom-controller': CustomController,
-    'view-media-directory': ViewMediaDirectory
+    'view-media-directory': ViewMediaDirectory,
+    'select-one': SelectOne
 };

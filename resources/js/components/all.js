@@ -103,5 +103,5 @@ export default {
     'has-many-field': HasManyField,
     'modal': Modal,
     'manual-order-controls': ManualOrderControls,
-    'tree-order-controls': TreeOrderControls
+    'tree-order-controls': TreeOrderControls,
 };
