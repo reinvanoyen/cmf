@@ -37,7 +37,7 @@ function SelectOne(props) {
         // Redirect
         redirect();
         // Notify the user
-        ui.notify(i18n.get('snippets.singular_deleted', {singular: props.singular}));
+        ui.notify('Success');
     }
 
     const redirect = () => {
@@ -75,13 +75,13 @@ function SelectOne(props) {
                 <div className="select-one__confirm">
                     <Button
                         onClick={execute}
-                        text={i18n.get('snippets.delete_singular_confirm', {singular: props.singular})}
+                        text={i18n.get('snippets.select_singular_confirm', {singular: props.singular})}
                     />
                 </div>
                 <div className="select-one__cancel">
                     <Button
                         onClick={redirect}
-                        text={i18n.get('snippets.delete_singular_cancel')}
+                        text={i18n.get('snippets.select_singular_cancel')}
                         style={'secondary'}
                     />
                 </div>

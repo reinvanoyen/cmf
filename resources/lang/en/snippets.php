@@ -102,6 +102,9 @@ return [
     'delete_singular_confirm' => 'Delete :singular',
     'delete_singular_cancel' => 'Cancel',
 
+    'select_singular_confirm' => 'Select :singular',
+    'select_singular_cancel' => 'Cancel',
+
     'singular_created' => ':singular was created',
     'singular_updated' => ':singular was updated',
     'singular_deleted' => ':singular was deleted',
