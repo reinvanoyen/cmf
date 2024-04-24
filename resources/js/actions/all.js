@@ -9,8 +9,10 @@ import CreateWizard from "./create-wizard";
 import ViewMediaDirectory from "./view-media-directory";
 import Dashboard from "./dashboard";
 import SelectOne from "./select-one";
+import BulkDelete from "./bulk-delete";
 
 export default {
+    'bulk-delete': BulkDelete,
     'index': Index,
     'edit': Edit,
     'create': Create,
