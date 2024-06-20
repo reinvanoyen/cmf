@@ -1,7 +1,7 @@
 @import 'resources/sass/settings';
 @import 'resources/sass/tools';
 
-@include block(checkbox)
+@include block(radiobutton)
 {
     $padding: calc($rule / 4);
     $width: calc($rule / 3);
@@ -10,7 +10,7 @@
     cursor: pointer;
     display: inline-block;
     padding: calc($rule / 6) calc($rule / 6);
-    border-radius: $border-radius-2;
+    border-radius: 100%;
     height: $width + $padding;
     width: $width + $padding;
     background-color: $fill-color-alt-1;
@@ -22,7 +22,7 @@
         position: absolute;
         left: calc($padding / 2);
         top: calc($padding / 2);
-        border-radius: $border-radius-2;
+        border-radius: 100%;
         width: $width;
         height: $width;
         background-color: $color01;

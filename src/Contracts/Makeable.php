@@ -12,7 +12,7 @@ interface Makeable
      * @param mixed ...$arguments
      * @return mixed
      */
-    public static function make(...$arguments);
+    public static function make(...$arguments): mixed;
 
     /**
      * @param int $id

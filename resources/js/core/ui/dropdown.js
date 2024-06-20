@@ -10,6 +10,7 @@ class Dropdown extends React.Component {
         text: '',
         style: [],
         autoClose: false,
+        autoCloseOnContentClick: true,
         openIcon: 'expand_more',
         closeIcon: 'expand_less',
         stopPropagation: true
@@ -82,7 +83,7 @@ class Dropdown extends React.Component {
     }
 
     onContentClick(e) {
-        if (! e.target.classList.contains('dropdown__content')) {
+        if (! e.target.classList.contains('dropdown__content') && this.props.autoCloseOnContentClick) {
             this.close();
         }
     }

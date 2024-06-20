@@ -68,7 +68,7 @@ function Index(props) {
         }
 
         // Execute the get request
-        const response = await api.execute.get(props.path, props.id,'load', params);
+        const response = await api.execute.get(props.path, props.id,'loadIndexData', params);
 
         setState({
             ...state,
@@ -122,7 +122,14 @@ function Index(props) {
                         <div className="index__header-search">
                             <Search value={location.current.params.search} onSearch={keyword => search(keyword)}/>
                         </div>) : null)}
-                    {<FiltersTool path={props.path} filters={props.filters} data={location.current.params} onChange={params => filter(params)}/>}
+                    {props.filters.length && (
+                        <FiltersTool
+                            path={props.path}
+                            filters={props.filters}
+                            data={location.current.params}
+                            onChange={params => filter(params)}
+                        />
+                    )}
                 </div>
             </div>
         );
@@ -275,7 +282,11 @@ function Index(props) {
     }
 
     const filter = (params) => {
+
+        const hasFilters = Object.keys(params).length;
+
         path.goTo(location.current.module, location.current.action, {
+            ...(hasFilters) && {filters: true},
             ...(props.path.params.search) && {search: props.path.params.search},
             ...(props.path.params.page) && {page: 1},
             ...params

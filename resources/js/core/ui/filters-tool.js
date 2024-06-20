@@ -7,7 +7,7 @@ function FiltersTool(props) {
 
     const [state, setState] = useState({
         params: props.data,
-        hasActiveFilters: false
+        hasActiveFilters: false,
     });
 
     useEffect(() => {
@@ -20,9 +20,10 @@ function FiltersTool(props) {
                 hasActiveFilters = true;
             }
         }
+
         setState({...state, hasActiveFilters});
 
-    }, [state.params])
+    }, [state.params]);
 
     const onFilterChange = (filterId, filterValue) => {
 
@@ -39,8 +40,23 @@ function FiltersTool(props) {
 
         // Remove the filter
         const { ['filter_'+filterId]: removedProperty, ...params } = state.params;
-        setState({params});
+        setState({
+            ...state,
+            params: {
+                filters: true,
+                ...params
+            }
+        });
     }
+
+    const clear = () => {
+        setState({
+            ...state,
+            params: {
+                filters: true
+            }
+        });
+    };
 
     const renderFilters = () => {
         const filterList = filters.renderFiltersWith(props.filters, props.data, props.path, (filter, i) => {
@@ -51,13 +67,6 @@ function FiltersTool(props) {
             );
         }, onFilterChange);
         return filterList.map(obj => obj.filter);
-    };
-
-    const clear = () => {
-        setState({
-            ...state,
-            params: {}
-        });
     };
 
     // If there's no filters, render nothing

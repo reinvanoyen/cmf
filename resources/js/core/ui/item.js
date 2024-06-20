@@ -1,6 +1,7 @@
 import React from 'react';
 import IconButton from "./icon-button";
 import components from "../../rendering/components";
+import Checkbox from "./checkbox";
 
 class Item extends React.Component {
 
@@ -36,10 +37,7 @@ class Item extends React.Component {
 
         return (
             <div className="item__checkbox">
-                <IconButton
-                    name={(this.props.isSelected ? 'check_box' : 'check_box_outline_blank')}
-                    style={'transparent'}
-                />
+                <Checkbox checked={this.props.isSelected} />
             </div>
         );
     }

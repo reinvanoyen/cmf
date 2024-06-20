@@ -14,9 +14,9 @@ abstract class Sorter implements Exportable, Makeable, \JsonSerializable
     use CanBeMade;
 
     /**
-     * @var CollectionAction $action
+     * @var $action
      */
-    private CollectionAction $action;
+    private $action;
 
     /**
      * @param Request $request
@@ -29,9 +29,10 @@ abstract class Sorter implements Exportable, Makeable, \JsonSerializable
     }
 
     /**
-     * @param CollectionAction $action
+     * @param $action
+     * @return void
      */
-    public function resolve(CollectionAction $action)
+    public function resolve($action): void
     {
         $this->action = $action;
     }

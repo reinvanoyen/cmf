@@ -8,6 +8,7 @@ use ReinVanOyen\Cmf\Http\Resources\ModelCollection;
 use ReinVanOyen\Cmf\Sorters\Sorter;
 use ReinVanOyen\Cmf\Traits\BuildsQuery;
 use ReinVanOyen\Cmf\Traits\HasSingularPlural;
+use ReinVanOyen\Cmf\Traits\HasSorter;
 
 /**
  * Class CollectionAction
@@ -17,6 +18,7 @@ abstract class CollectionAction extends Action
 {
     use BuildsQuery;
     use HasSingularPlural;
+    use HasSorter;
 
     /**
      * @var array $components
@@ -32,18 +34,6 @@ abstract class CollectionAction extends Action
         $filter->resolve($this);
         $this->filters[] = $filter;
         $this->export('filters', $this->filters);
-        return $this;
-    }
-
-    /**
-     * @param Sorter $sorter
-     * @return $this
-     */
-    public function sorter(Sorter $sorter)
-    {
-        $sorter->resolve($this);
-        $this->sorter = $sorter;
-        $this->export('sorter', $this->sorter);
         return $this;
     }
 

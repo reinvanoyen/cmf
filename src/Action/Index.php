@@ -2,8 +2,8 @@
 
 namespace ReinVanOyen\Cmf\Action;
 
+use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Components\Component;
-use ReinVanOyen\Cmf\Sorters\StaticSorter;
 
 class Index extends CollectionAction
 {
@@ -126,5 +126,14 @@ class Index extends CollectionAction
     {
         $this->export('bulkActions', $actions);
         return $this;
+    }
+
+    /**
+     * @param Request $request
+     * @return \ReinVanOyen\Cmf\Http\Resources\ModelCollection
+     */
+    public function apiLoadIndexData(Request $request)
+    {
+        return $this->apiLoad($request);
     }
 }

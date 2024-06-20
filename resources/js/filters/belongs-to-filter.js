@@ -9,48 +9,77 @@ import useOnMount from "../hooks/use-on-mount";
 function BelongsToFilter(props) {
 
     const [state, setState] = useState({
-        values: (props.data['filter_'+props.id] ? props.data['filter_'+props.id].split(',').map(v => parseInt(v)) : []),
+        hasLoadedOptions: false,
+        values: [],
         options: {},
         humanReadableValue: 'All'
-    })
+    });
+
+    const buildValue = value => `value_${value}`;
+    const unbuildValue = value => parseInt(value.slice(('value_').length));
+    const makeHumanReadableList = list => {
+        if (! list.length) {
+            return 'All';
+        }
+        if (list.length > 3) {
+            return `${list[0]} and ${list.length-1} more`;
+        }
+        return list.join(', ');
+    };
+
+    const loadFilterOptions = async () => {
+
+        const response = await api.execute.get(props.path, props.id,'loadOptions', props.path.params);
+        const data = response.data.data;
+        const defaultValues = response.data.default;
+
+        const options = {};
+        data.forEach(row => {
+            options[buildValue(row.id)] = row[props.titleColumn];
+        });
+
+        setState({
+            ...state,
+            hasLoadedOptions: true,
+            defaultValues,
+            options,
+        });
+    };
 
     useOnMount(() => {
+        const isFiltering = Object.keys(props.data).length;
 
-        // Load the data from the backend (with id as param)
-        api.execute.get(props.path, props.id,'load', props.path.params).then(response => {
+        if (! isFiltering) {
 
-            const options = {};
-            const data = response.data.data;
+            props.onChange(props.id, props.defaultValues.map(value => value.id).join(','));
 
-            data.forEach(row => {
-                options[row.id] = row[props.titleColumn];
-            });
+        } else {
+            loadFilterOptions();
+        }
+    });
 
-            const readableValues = state.values.map(value => options[parseInt(value)]);
-
-            setState({
-                ...state,
-                options,
-                humanReadableValue: (readableValues.length ? readableValues.join(', ') : 'All')
-            });
-        });
-    })
+    useEffect(() => {
+        if (! state.hasLoadedOptions) {
+            loadFilterOptions();
+        }
+    }, [state.hasLoadedOptions]);
 
     useEffect(() => {
 
-        const values = (props.data['filter_'+props.id] ? props.data['filter_'+props.id].split(',').map(v => parseInt(v)) : [])
-        const readableValues = values.map(value => state.options[parseInt(value)]);
+        const values = (props.data['filter_'+props.id] ? props.data['filter_'+props.id].split(',').map(v => parseInt(v)) : []);
+        const readableValues = values.map(value => state.options[buildValue(value)]);
 
         setState({
             ...state,
             values,
-            humanReadableValue: (readableValues.length ? readableValues.join(', ') : 'All')
+            humanReadableValue: makeHumanReadableList(readableValues),
         });
 
-    }, [props.data])
+    }, [props.data, state.hasLoadedOptions]);
 
     const handleChange = (values = []) => {
-        props.onChange(props.id, values.join(','));
+        values = values.map(value => unbuildValue(value)).join(',');
+        props.onChange(props.id, values);
     };
 
     const render = () => {
@@ -59,10 +88,16 @@ function BelongsToFilter(props) {
 
         return (
             <div className="enum-filter">
-                <Dropdown stopPropagation={false} style={['secondary']} label={label} text={state.humanReadableValue}>
+                <Dropdown
+                    stopPropagation={false}
+                    autoCloseOnContentClick={false}
+                    style={['secondary']}
+                    label={label}
+                    text={state.humanReadableValue}
+                >
                     <SelectList
                         options={state.options}
-                        defaultValues={state.values}
+                        defaultValues={state.values.map(value => buildValue(value))}
                         onChange={handleChange}
                         onClear={handleChange}
                     />
@@ -80,6 +115,8 @@ BelongsToFilter.defaultProps = {
     field: '',
     label: '',
     titleColumn: '',
+    usesDefaultValues: false,
+    defaultValues: [],
     data: {},
     onChange: () => {}
 };

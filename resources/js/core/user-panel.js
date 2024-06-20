@@ -45,7 +45,7 @@ export default function UserPanel(props) {
                 {user.name}
             </div>
             <div className="user-panel__actions">
-                <Dropdown style={['secondary']}>
+                <Dropdown style={['secondary']} stopPropagation={false}>
                     <LinkList stopPropagation={false} links={secondaryModules.map(value => [value.title, value.id])} onClick={id => switchModule(id)} />
                     <div className="user-panel__logout">
                         <Button stopPropagation={false} onClick={logout} style={['full', 'small']} text={i18n.get('snippets.logout')} />

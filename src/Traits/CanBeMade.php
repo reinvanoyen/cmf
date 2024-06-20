@@ -17,10 +17,10 @@ trait CanBeMade
     private bool $isResolved = false;
 
     /**
-     * @param mixed ...$arguments
-     * @return static
+     * @param ...$arguments
+     * @return mixed
      */
-    public static function make(...$arguments)
+    public static function make(...$arguments): mixed
     {
         $makeable = new static(...$arguments);
         app(MakeableStorage::class)->store($makeable);

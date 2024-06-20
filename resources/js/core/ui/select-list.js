@@ -1,6 +1,8 @@
 import React from 'react';
 import Icon from "./icon";
 import i18n from "../../util/i18n";
+import Checkbox from "./checkbox";
+import RadioButton from "./radiobutton";
 
 class SelectList extends React.Component {
 
@@ -54,7 +56,7 @@ class SelectList extends React.Component {
                 options.push(
                     <div className={'select-list__option'+(isSelected ? ' select-list__option--selected' : '')} onClick={e => this.handleOptionClick(value)} key={value}>
                         <div className="select-list__option-icon">
-                            {this.props.multiple ? <Icon name={isSelected ? 'check_box' : 'check_box_outline_blank'} /> : <Icon name={isSelected ? 'radio_button_checked' : 'radio_button_unchecked'} />}
+                            {this.props.multiple ? <Checkbox checked={isSelected} /> : <RadioButton checked={isSelected} />}
                         </div>
                         <div className="select-list__option-value">
                             {this.props.options[value]}
