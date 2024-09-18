@@ -16,12 +16,18 @@ class ManualOrderSorter extends Sorter
     private string $column;
 
     /**
-     * ManualOrderSorter constructor.
-     * @param string $column
+     * @var string $sortMethod
      */
-    public function __construct(string $column)
+    private string $sortMethod;
+
+    /**
+     * @param string $column
+     * @param string $sortMethod
+     */
+    public function __construct(string $column, string $sortMethod = 'asc')
     {
         $this->column = $column;
+        $this->sortMethod = $sortMethod;
     }
 
     /**
@@ -39,7 +45,7 @@ class ManualOrderSorter extends Sorter
      */
     public function apply(Request $request, $query)
     {
-        return $query->orderBy($this->column, 'asc');
+        return $query->orderBy($this->column, $this->sortMethod);
     }
 
     /**
