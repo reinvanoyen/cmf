@@ -52,7 +52,9 @@ class DateTimeField extends Component
      */
     public function save(Model $model, Request $request)
     {
-        $model->{$this->getName()} = $request->input($this->getName());
+        if ($request->input($this->getName())) {
+            $model->{$this->getName()} = $request->input($this->getName());
+        }
     }
 
     /**

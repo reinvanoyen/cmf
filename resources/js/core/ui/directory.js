@@ -19,19 +19,21 @@ function Directory(props) {
         }
 
         return (
-            <div className={'directory directory--'+viewMode} onClick={e => props.onClick(e, props.directory)}>
-                <div className="directory__icon">
-                    <Icon name={'folder'} style={[iconStyle, 'alt']} />
-                </div>
-                <div className="directory__content">
-                    <div className="directory__name">
-                        {props.directory.name}
+            <>
+                <div className={'directory directory--'+viewMode} onClick={e => props.onClick(e, props.directory)}>
+                    <div className="directory__icon">
+                        <Icon name={'folder'} style={[iconStyle, 'alt']} />
                     </div>
-                    <div className="directory__type">
-                        {i18n.get('snippets.directory')}
+                    <div className="directory__content">
+                        <div className="directory__name">
+                            {props.directory.name}
+                        </div>
+                        <div className="directory__type">
+                            {i18n.get('snippets.directory')}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         );
     }
 
