@@ -3,8 +3,6 @@
 namespace ReinVanOyen\Cmf\Traits;
 
 use Illuminate\Http\Request;
-use ReinVanOyen\Cmf\Action\CollectionAction;
-use ReinVanOyen\Cmf\Filters\Filter;
 use ReinVanOyen\Cmf\Searchers\Searcher;
 use ReinVanOyen\Cmf\Sorters\Sorter;
 
@@ -56,9 +54,24 @@ trait BuildsQuery
     private $sorter;
 
     /**
+     * @var callable $customQueryFunction
+     */
+    private $customQueryFunction;
+
+    /**
      * @var Searcher $searcher
      */
     private $searcher;
+
+    /**
+     * @param callable $customQueryFunction
+     * @return $this
+     */
+    public function query(callable $customQueryFunction)
+    {
+        $this->customQueryFunction = $customQueryFunction;
+        return $this;
+    }
 
     /**
      * @param string $column
@@ -160,14 +173,16 @@ trait BuildsQuery
          * Build a base query
          * */
         if ($this->restrictByFk) {
-
             $query = $this->model::where($this->restrictByFk, $request->input('foreign'));
-
         } else if ($this->relationship) {
             $query = $this->model::find($request->input('relation'))
                 ->{$this->relationship}();
         } else {
             $query = $this->model::query();
+        }
+
+        if ($this->customQueryFunction) {
+            call_user_func($this->customQueryFunction, $query);
         }
 
         /*
