@@ -1,0 +1,9 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(drag-insert-placeholder)
+{
+    height: 2px;
+    width: 100%;
+    background-color: $primary-color;
+}

@@ -80,7 +80,6 @@ class ManyToManyField extends React.Component {
     }
 
     open() {
-        console.log(this.props.filters);
         this.setState({
             isOpen: true
         });

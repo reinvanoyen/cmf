@@ -1,0 +1,10 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(drag-placeholder)
+{
+    background-color: $primary-color;
+    border-radius: $border-radius-1;
+    color: $color01;
+    padding: calc($rule / 6) calc($rule / 3);
+}

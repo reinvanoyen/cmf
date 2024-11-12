@@ -3,7 +3,6 @@
 namespace ReinVanOyen\Cmf\Action;
 
 use ReinVanOyen\Cmf\Components\Component;
-use ReinVanOyen\Cmf\Sorters\StaticSorter;
 
 class Index extends CollectionAction
 {
@@ -36,7 +35,7 @@ class Index extends CollectionAction
         $searcher = $this->getMeta()::searcher();
 
         if ($searcher) {
-            $this->searcher($this->getMeta()::searcher());
+            $this->searcher($searcher);
         }
 
         foreach ($this->getMeta()::filters() as $filter) {

@@ -1,4 +1,5 @@
 import Index from "./index";
+import TreeIndex from "./tree-index";
 import Edit from "./edit";
 import Create from "./create";
 import Delete from "./delete";
@@ -14,6 +15,7 @@ import BulkDelete from "./bulk-delete";
 export default {
     'bulk-delete': BulkDelete,
     'index': Index,
+    'tree-index': TreeIndex,
     'edit': Edit,
     'create': Create,
     'create-wizard': CreateWizard,

@@ -1,0 +1,37 @@
+@import 'resources/sass/settings';
+@import 'resources/sass/tools';
+
+@include block(tree)
+{
+    @include element(item)
+    {
+        // for ref
+    }
+}
+
+@include block(tree-row)
+{
+    cursor: pointer;
+    padding: calc($rule / 3) $rule;
+    transition: background-color .25s;
+
+    @include modifier(drop-target)
+    {
+        background-color: $fill-color-alt-1;
+    }
+
+    &:hover
+    {
+        background-color: $fill-color;
+    }
+
+    @include element(content)
+    {
+        display: flex;
+    }
+
+    @include element(toggle)
+    {
+        margin-right: calc($rule / 2);
+    }
+}

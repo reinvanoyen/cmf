@@ -17,6 +17,11 @@ class ModelResource extends JsonResource
     private static $fields = [];
 
     /**
+     * @var array $aliases
+     */
+    private static $aliases = [];
+
+    /**
      * @param array $components
      */
     public static function provision(array $components)
@@ -30,6 +35,15 @@ class ModelResource extends JsonResource
     public static function fields(array $fields)
     {
         self::$fields = $fields;
+    }
+
+    /**
+     * @param array $aliases
+     * @return void
+     */
+    public static function aliases(array $aliases)
+    {
+        self::$aliases = $aliases;
     }
 
     /**
@@ -50,7 +64,11 @@ class ModelResource extends JsonResource
         }
 
         foreach (self::$fields as $field) {
-            $attributes[$field] = $this->{$field};
+            if (isset(self::$aliases[$field])) {
+                $attributes[self::$aliases[$field]] = $this->{$field};
+            } else {
+                $attributes[$field] = $this->{$field};
+            }
         }
 
         return $attributes;

@@ -23,6 +23,14 @@ class ModelCollection extends ResourceCollection
     }
 
     /**
+     * @param array $aliases
+     */
+    public static function aliases(array $aliases)
+    {
+        ModelResource::aliases($aliases);
+    }
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
