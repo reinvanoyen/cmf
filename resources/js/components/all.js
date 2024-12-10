@@ -50,6 +50,7 @@ import HasManyField from "./has-many-field";
 import Modal from "./modal";
 import ManualOrderControls from "./manual-order-controls";
 import TreeOrderControls from "./tree-order-controls";
+import Foreign from "./foreign";
 
 export default {
     'text-literal': TextLiteral,
@@ -104,4 +105,5 @@ export default {
     'modal': Modal,
     'manual-order-controls': ManualOrderControls,
     'tree-order-controls': TreeOrderControls,
+    'foreign': Foreign,
 };

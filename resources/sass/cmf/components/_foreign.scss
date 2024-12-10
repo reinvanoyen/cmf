@@ -1,0 +1,5 @@
+@include block(foreign)
+{
+    display: grid;
+    grid-gap: $rule;
+}

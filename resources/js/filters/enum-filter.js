@@ -14,11 +14,12 @@ function EnumFilter(props) {
     useEffect(() => {
 
         const values = props.data['filter_'+props.id] ? props.data['filter_'+props.id].split(',') : [];
+        const readableValues = values.map(value => props.options[value]).filter(value => value);
 
         setState({
             ...state,
             values,
-            humanReadableValue: (values.length ? values.join(', ') : 'All')
+            humanReadableValue: (readableValues.length ? readableValues.join(', ') : 'All')
         });
     }, [props.data]);
 
