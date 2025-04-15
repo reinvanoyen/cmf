@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import helpers from "../../util/helpers";
 
 function Icon(props) {

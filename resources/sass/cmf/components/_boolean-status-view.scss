@@ -1,0 +1,16 @@
+@include block(boolean-status-view)
+{
+    background-color: $fill-color-alt-2;
+    color: $color02;
+    @include type-2;
+    border-radius: $border-radius-1;
+    font-size: .75rem;
+    padding: calc($rule / 8) calc($rule / 6);
+    white-space: nowrap;
+
+    @include modifier(checked)
+    {
+        color: $color01;
+        background-color: $success-color;
+    }
+}

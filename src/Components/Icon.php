@@ -2,8 +2,15 @@
 
 namespace ReinVanOyen\Cmf\Components;
 
+use ReinVanOyen\Cmf\Http\Resources\ModelResource;
+
 class Icon extends Component
 {
+    /**
+     * @var $urlColumn
+     */
+    private $urlColumn;
+
     /**
      * @param string $name
      */
@@ -31,6 +38,16 @@ class Icon extends Component
     }
 
     /**
+     * @param string $urlColumn
+     * @return $this
+     */
+    public function toUrl(string $urlColumn)
+    {
+        $this->urlColumn = $urlColumn;
+        return $this;
+    }
+
+    /**
      * @param mixed $style
      * @return $this
      */
@@ -38,5 +55,16 @@ class Icon extends Component
     {
         $this->export('style', $style);
         return $this;
+    }
+
+    /**
+     * @param ModelResource $model
+     * @param array $attributes
+     */
+    public function provision(ModelResource $model, array &$attributes)
+    {
+        if ($this->urlColumn) {
+            $attributes[$this->getId().'_to_url_icon'] = $model->{$this->urlColumn};
+        }
     }
 }

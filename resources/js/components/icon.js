@@ -6,6 +6,13 @@ function Icon(props) {
 
     const goTo = () => {
 
+        const toUrl = props.data[`${props.id}_to_url_icon`];
+
+        if (toUrl) {
+            window.open(toUrl);
+            return;
+        }
+
         let params = {};
 
         if (props.data && props.data.id) {
@@ -18,7 +25,7 @@ function Icon(props) {
     }
 
     return (
-        <UIIcon name={props.name} onClick={goTo} />
+        <UIIcon name={props.name} style={['clickable']} onClick={goTo} />
     );
 }
 

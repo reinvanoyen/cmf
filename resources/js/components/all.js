@@ -51,6 +51,7 @@ import Modal from "./modal";
 import ManualOrderControls from "./manual-order-controls";
 import TreeOrderControls from "./tree-order-controls";
 import Foreign from "./foreign";
+import BooleanStatusView from "./boolean-status-view";
 
 export default {
     'text-literal': TextLiteral,
@@ -72,6 +73,7 @@ export default {
     'button-field': _buttonField,
     'link': Link,
     'icon': Icon,
+    'boolean-status-view': BooleanStatusView,
     'execute-link': ExecuteLink,
     'stack': Stack,
     'translatable': Translatable,

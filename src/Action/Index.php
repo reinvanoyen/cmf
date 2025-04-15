@@ -2,7 +2,9 @@
 
 namespace ReinVanOyen\Cmf\Action;
 
+use Illuminate\Http\Request;
 use ReinVanOyen\Cmf\Components\Component;
+use ReinVanOyen\Cmf\Http\Resources\ModelCollection;
 
 class Index extends CollectionAction
 {
@@ -10,6 +12,11 @@ class Index extends CollectionAction
      * @var string $model
      */
     protected $model;
+
+    /**
+     * @var $actions
+     */
+    private $actions;
 
     /**
      * Index constructor.
@@ -113,6 +120,7 @@ class Index extends CollectionAction
      */
     public function actions(array $actions)
     {
+        $this->actions = $actions;
         $this->export('actions', $actions);
         return $this;
     }
@@ -125,5 +133,19 @@ class Index extends CollectionAction
     {
         $this->export('bulkActions', $actions);
         return $this;
+    }
+
+    /**
+     * @param Request $request
+     * @return ModelCollection
+     */
+    public function apiLoad(Request $request)
+    {
+        ModelCollection::provision(array_merge(
+            $this->components,
+            $this->actions
+        ));
+
+        return new ModelCollection($this->getResults($request));
     }
 }
