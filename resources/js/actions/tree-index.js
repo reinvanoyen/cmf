@@ -46,9 +46,11 @@ function TreeIndex(props) {
     };
 
     const handleRowClick = (row) => {
-        path.goTo(props.path.module, props.action, {
-            id: row.id
-        });
+        if (props.action) {
+            path.goTo(props.path.module, props.action, {
+                id: row.id
+            });
+        }
     }
 
     const renderHeader = () => {
@@ -74,9 +76,11 @@ function TreeIndex(props) {
         if (state.rows.length) {
             return <Tree
                 data={state.rows}
+                path={props.path}
                 onParentChange={handleParentChange}
                 onOrderChange={handleOrderChange}
                 onClick={handleRowClick}
+                actions={props.actions}
             />;
         }
 
@@ -97,6 +101,7 @@ function TreeIndex(props) {
 
 TreeIndex.defaultProps = {
     type: '',
+    actions: [],
     components: [],
     path: {},
     id: 0,

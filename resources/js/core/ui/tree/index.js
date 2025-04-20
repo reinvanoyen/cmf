@@ -7,25 +7,36 @@ import Icon from "../icon";
 import DragInsertPlaceholder from "../drag-insert-placeholder";
 import clsx from "clsx";
 import DragPlaceholder from "../drag-placeholder";
+import components from "../../../rendering/components";
 
-function TreeRow({onClick, isDroppable, isDropTarget, isOpen, onToggle, text, depth}) {
+function TreeRow({onClick, isDroppable, isDropTarget, isOpen, onToggle, text, depth, actions = [], hasChildren}) {
     return (
         <div onClick={onClick} className={clsx('tree__item tree-row', {
             'tree-row--drop-target': isDropTarget
         })}>
-            <div className="tree-row__content" style={{ paddingInlineStart: depth * 25 }}>
+            <div className="tree-row__body" style={{ paddingInlineStart: depth * 25 }}>
                 {isDroppable && (
                     <div className="tree-row__toggle">
-                        <Icon name={(isOpen ? 'expand_more' : 'chevron_right')} onClick={onToggle} />
+                        {hasChildren && (
+                            <Icon name={(isOpen ? 'expand_more' : 'chevron_right')} onClick={onToggle} />
+                        )}
+                        {! hasChildren && <Icon name={'chevron_right'} style={['disabled', 'small']} />}
                     </div>
                 )}
-                {text}
+                <div className="tree-row__content">
+                    {text}
+                </div>
+                {actions.length && (
+                    <div className="tree-row__actions">
+                        {actions}
+                    </div>
+                )}
             </div>
         </div>
     );
 }
 
-function Tree({data, onParentChange = null, onOrderChange = null, onClick = null}) {
+function Tree({data, path, onParentChange = null, onOrderChange = null, onClick = null, actions = []}) {
 
     const [treeData, setTreeData] = useState(data);
 
@@ -50,6 +61,16 @@ function Tree({data, onParentChange = null, onOrderChange = null, onClick = null
         }
     };
 
+    const renderActions = (rowData) => {
+        return actions.map((component, i) => {
+            return (
+                <div className="tree-row__action" key={i}>
+                    {components.renderComponent(component, rowData, path)}
+                </div>
+            );
+        });
+    }
+
     return (
         <div className="tree">
             <DndProvider backend={MultiBackend} options={getBackendOptions()}>
@@ -61,17 +82,21 @@ function Tree({data, onParentChange = null, onOrderChange = null, onClick = null
                     listItemComponent={'div'}
                     dropTargetOffset={5}
                     insertDroppableFirst={false}
-                    render={(node, { isDropTarget, depth, isOpen, onToggle }) => (
-                        <TreeRow
-                            onClick={() => handleClick(node)}
-                            isDropTarget={isDropTarget}
-                            isDroppable={node.droppable}
-                            onToggle={onToggle}
-                            depth={depth}
-                            isOpen={isOpen}
-                            text={node.text}
-                        />
-                    )}
+                    render={(node, { isDropTarget, depth, isOpen, onToggle, hasChild }) => {
+                        return (
+                            <TreeRow
+                                onClick={() => handleClick(node)}
+                                hasChildren={hasChild}
+                                isDropTarget={isDropTarget}
+                                isDroppable={node.droppable}
+                                onToggle={onToggle}
+                                depth={depth}
+                                isOpen={isOpen}
+                                text={node.text}
+                                actions={renderActions(node)}
+                            />
+                        );
+                    }}
                     dragPreviewRender={(monitorProps) => (
                         <DragPlaceholder text={monitorProps.item.text} />
                     )}

@@ -43,6 +43,11 @@
         opacity: .75;
     }
 
+    @include modifier(disabled)
+    {
+        opacity: .2;
+    }
+
     @include modifier(medium)
     {
         font-size: 30px;

@@ -9,14 +9,9 @@ use ReinVanOyen\Cmf\Http\Resources\ModelCollection;
 class Index extends CollectionAction
 {
     /**
-     * @var string $model
+     * @var array $actions
      */
-    protected $model;
-
-    /**
-     * @var $actions
-     */
-    private $actions;
+    private array $actions = [];
 
     /**
      * Index constructor.

@@ -28,6 +28,16 @@ class TreeIndex extends Action
     private string $orderColumn;
 
     /**
+     * @var array $actions
+     */
+    private array $actions = [];
+
+    /**
+     * @var array $components
+     */
+    protected $components = [];
+
+    /**
      * @param string $meta
      * @param string $parentRelationName
      * @param string $orderColumn
@@ -67,6 +77,17 @@ class TreeIndex extends Action
     }
 
     /**
+     * @param array $actions
+     * @return $this
+     */
+    public function actions(array $actions)
+    {
+        $this->actions = $actions;
+        $this->export('actions', $actions);
+        return $this;
+    }
+
+    /**
      * @param Request $request
      * @return TreeModelCollection
      */
@@ -77,6 +98,18 @@ class TreeIndex extends Action
 
         return new TreeModelCollection($this->model::orderBy($this->orderColumn)->get());
     }
+
+    /**
+     * @param Request $request
+     * @return ModelCollection
+     */
+    /*
+    public function apiLoad(Request $request)
+    {
+        ModelCollection::provision($this->components);
+
+        return new ModelCollection($this->getResults($request));
+    }*/
 
     /**
      * @param $ids

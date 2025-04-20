@@ -21,7 +21,7 @@ abstract class CollectionAction extends Action
     /**
      * @var array $components
      */
-    protected $components;
+    protected $components = [];
 
     /**
      * @param Filter $filter

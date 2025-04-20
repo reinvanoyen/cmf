@@ -25,7 +25,7 @@
         background-color: $fill-color;
     }
 
-    @include element(content)
+    @include element(body)
     {
         display: flex;
     }
@@ -33,5 +33,17 @@
     @include element(toggle)
     {
         margin-right: calc($rule / 2);
+    }
+
+    @include element(content)
+    {
+        flex-grow: 1;
+    }
+
+    @include element(actions)
+    {
+        display: flex;
+        align-items: center;
+        gap: calc($rule / 2);
     }
 }
