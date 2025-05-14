@@ -1,0 +1,37 @@
+@include block(richtext-view)
+{
+    display: flex;
+    align-items: flex-start;
+
+    @include element(label)
+    {
+        margin-right: $rule;
+        opacity: .75;
+        width: 25%;
+        flex-grow: 0;
+    }
+
+    @include element(value)
+    {
+        display: flex;
+        flex-direction: column;
+        gap: calc($rule / 2);
+        width: 75%;
+        flex-grow: 1;
+
+        strong
+        {
+            font-weight: bold;
+        }
+
+        em
+        {
+            font-style: italic;
+        }
+
+        a
+        {
+            text-decoration: underline;
+        }
+    }
+}

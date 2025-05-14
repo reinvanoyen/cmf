@@ -1,0 +1,27 @@
+@include block(belongs-to-view)
+{
+    display: flex;
+    align-items: center;
+
+    @include element(label)
+    {
+        margin-right: $rule;
+        opacity: .75;
+        width: 25%;
+        flex-grow: 0;
+    }
+
+    @include element(value)
+    {
+        display: inline-flex;
+        align-items: center;
+        width: 75%;
+        flex-grow: 1;
+    }
+
+    @include modifier(primary)
+    {
+        @include type-3;
+        color: $color13;
+    }
+}

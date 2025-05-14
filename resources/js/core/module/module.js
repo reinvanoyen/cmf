@@ -11,7 +11,7 @@ function Module(props) {
         const headerComponents = header.map((component, i) => {
             return (
                 <div className={'module__header-component'} key={i}>
-                    {components.renderComponent(component, {}, props.path)}
+                    {components.renderComponent(component, props.path.params, props.path)}
                 </div>
             );
         });

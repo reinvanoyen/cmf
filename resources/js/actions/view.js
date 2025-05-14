@@ -8,13 +8,14 @@ function View(props) {
         props.path.params = props.params;
     }
 
-    const {state, setState} = useState({
+    const [state, setState] = useState({
         data: {}
     });
 
     useEffect(() => {
         load();
     }, []);
+
 
     const load = () => {
         // Load the data from the backend (with id as param)

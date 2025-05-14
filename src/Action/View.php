@@ -8,9 +8,9 @@ use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 class View extends Action
 {
     /**
-     * Edit constructor.
      * @param string $meta
      * @param array $components
+     * @throws \ReinVanOyen\Cmf\Exceptions\InvalidMetaException
      */
     public function __construct(string $meta, array $components = [])
     {

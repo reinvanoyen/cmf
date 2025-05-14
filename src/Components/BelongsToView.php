@@ -33,6 +33,16 @@ class BelongsToView extends Component
     }
 
     /**
+     * @param string $style
+     * @return $this
+     */
+    public function style(string $style)
+    {
+        $this->export('style', $style);
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function type(): string

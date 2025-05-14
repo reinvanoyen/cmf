@@ -52,6 +52,7 @@ import ManualOrderControls from "./manual-order-controls";
 import TreeOrderControls from "./tree-order-controls";
 import Foreign from "./foreign";
 import BooleanStatusView from "./boolean-status-view";
+import RichTextView from "./richtext-view";
 
 export default {
     'text-literal': TextLiteral,
@@ -66,6 +67,7 @@ export default {
     'text-field': TextField,
     'text-to-slug-field': TextToSlugField,
     'text-view': TextView,
+    'richtext-view': RichTextView,
     'password-field': PasswordField,
     'email-field': EmailField,
     'checkbox': Checkbox,

@@ -3,7 +3,7 @@ import TreeIndex from "./tree-index";
 import Edit from "./edit";
 import Create from "./create";
 import Delete from "./delete";
-import View from "./View";
+import View from "./view";
 import Export from "./export";
 import CustomController from "./custom-controller";
 import CreateWizard from "./create-wizard";
