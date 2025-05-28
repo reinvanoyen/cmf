@@ -10,6 +10,29 @@
         opacity: 0;
     }
 
+    @include element(header-labels)
+    {
+        display: flex;
+        @include type-2;
+        color: $color07;
+        padding: calc($rule / 2) $rule;
+        border-bottom: $border-width-1 solid $fill-color;
+        background-color: $fill-color;
+    }
+
+    @include element(header-labels-content)
+    {
+        flex-grow: 1;
+        display: grid;
+        align-items: center;
+        grid-gap: calc($rule / 2);
+    }
+
+    @include element(header-labels-actions)
+    {
+        visibility: hidden;
+    }
+
     @include element(rows)
     {
         @include block-modifier(grid)

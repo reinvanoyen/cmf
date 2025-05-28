@@ -166,6 +166,36 @@ function Index(props) {
         );
     }
 
+    const renderHeaderLabels = () => {
+
+        const rowActions = props.actions.map((component, i) => {
+            return (
+                <div className="index__header-labels-action" key={i}>
+                    {components.renderComponent(component, {}, props.path)}
+                </div>
+            );
+        });
+
+        if (props.headerLabels.length) {
+            return (
+                <div className="index__header-labels">
+                    <div className="index__header-labels-content" style={getRowStyle()}>
+                        {props.headerLabels.map((label, index) => {
+                            return (
+                                <div className="index__header-label" key={index}>
+                                    {label}
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className="index__header-labels-actions">
+                        {rowActions}
+                    </div>
+                </div>
+            );
+        }
+    }
+
     const renderRows = () => {
         if (state.rows.length) {
             return (
@@ -180,6 +210,7 @@ function Index(props) {
                 </div>
             );
         }
+
         return renderPlaceholder();
     }
 
@@ -290,6 +321,7 @@ function Index(props) {
         return (
             <div className={'index index--'+props.style+(state.isLoading ? ' index--loading' : '')}>
                 {renderHeader()}
+                {renderHeaderLabels()}
                 {renderRows()}
                 {renderFooter()}
             </div>
@@ -304,6 +336,8 @@ Index.defaultProps = {
     components: [],
     actions: [],
     bulkActions: [],
+    headerLabels: [],
+    grid: [],
     path: {},
     id: 0,
     data: {},

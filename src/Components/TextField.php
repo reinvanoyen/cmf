@@ -67,6 +67,16 @@ class TextField extends Component
     }
 
     /**
+     * @param string $value
+     * @return $this
+     */
+    public function default(string $value)
+    {
+        $this->export('default', $value);
+        return $this;
+    }
+
+    /**
      * @param ModelResource $model
      * @param array $attributes
      */

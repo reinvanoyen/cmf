@@ -14,6 +14,11 @@ class Index extends CollectionAction
     private array $actions = [];
 
     /**
+     * @var array $headerLabels
+     */
+    private array $headerLabels = [];
+
+    /**
      * Index constructor.
      *
      * @param string $meta
@@ -30,6 +35,7 @@ class Index extends CollectionAction
         $this->paginate($this->getMeta()::getPerPage());
         $this->grid($this->getMeta()::getIndexGrid());
         $this->sorter($this->getMeta()::sorter());
+        $this->headerLabels($this->getMeta()::getIndexHeaderLabels());
 
         $this->components(count($components) ? $components : $this->getMeta()::index());
         $this->model = $this->getMeta()::getModel();
@@ -96,6 +102,17 @@ class Index extends CollectionAction
     public function style(string $style)
     {
         $this->export('style', $style);
+        return $this;
+    }
+
+    /**
+     * @param array $labels
+     * @return $this
+     */
+    public function headerLabels(array $labels)
+    {
+        $this->headerLabels = $labels;
+        $this->export('headerLabels', $labels);
         return $this;
     }
 

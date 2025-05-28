@@ -90,6 +90,14 @@ abstract class Meta
     }
 
     /**
+     * @return array
+     */
+    public static function getIndexHeaderLabels(): array
+    {
+        return [];
+    }
+
+    /**
      * @return Sorter
      */
     public static function sorter(): Sorter

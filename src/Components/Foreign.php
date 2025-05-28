@@ -41,6 +41,11 @@ class Foreign extends Compound
     public function provision(ModelResource $model, array &$attributes)
     {
         $foreignModel = $model->{$this->relationship};
+
+        if (! $foreignModel) {
+            return;
+        }
+
         $modelResource = new ModelResource($foreignModel);
 
         foreach ($this->components as $component) {
@@ -56,10 +61,16 @@ class Foreign extends Compound
     {
         $foreignModel = $model->{$this->relationship};
 
+        if (!$foreignModel) {
+            $foreignModel = $model->{$this->relationship}()->make();
+        }
+
         foreach ($this->components as $component) {
             $component->save($foreignModel, $request);
         }
 
         $foreignModel->save();
+
+        $model->{$this->relationship}()->associate($foreignModel);
     }
 }
