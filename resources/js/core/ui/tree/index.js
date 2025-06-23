@@ -26,11 +26,11 @@ function TreeRow({onClick, isDroppable, isDropTarget, isOpen, onToggle, text, de
                 <div className="tree-row__content">
                     {text}
                 </div>
-                {actions.length && (
+                {actions.length ? (
                     <div className="tree-row__actions">
                         {actions}
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );

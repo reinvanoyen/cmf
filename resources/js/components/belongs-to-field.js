@@ -44,7 +44,11 @@ class BelongsToField extends React.Component {
     }
 
     getData(data) {
-        data[this.props.name] = (this.state.value ? this.state.options.find(opt => opt.id === this.state.value) : null);
+        if (this.state.value) {
+            data[this.props.name] = {
+                id: this.state.value
+            };
+        }
         return data;
     }
 
