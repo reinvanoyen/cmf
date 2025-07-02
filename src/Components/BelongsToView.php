@@ -4,7 +4,6 @@ namespace ReinVanOyen\Cmf\Components;
 
 use ReinVanOyen\Cmf\Http\Resources\ModelResource;
 use ReinVanOyen\Cmf\RelationshipMetaGuesser;
-use ReinVanOyen\Cmf\Support\Str;
 use ReinVanOyen\Cmf\Traits\HasLabel;
 use ReinVanOyen\Cmf\Traits\HasName;
 
@@ -26,7 +25,6 @@ class BelongsToView extends Component
     public function __construct(string $name, string $meta = null)
     {
         $this->name($name);
-        $this->label(Str::labelify($name));
 
         $meta = $meta ?: RelationshipMetaGuesser::getMeta($name);
         $this->titleColumn($meta::getTitleColumn());

@@ -30,7 +30,9 @@
 
     @include element(header-labels-actions)
     {
+        display: flex;
         visibility: hidden;
+        gap: calc($rule / 2);
     }
 
     @include element(rows)
