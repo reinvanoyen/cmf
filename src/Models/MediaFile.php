@@ -46,6 +46,30 @@ class MediaFile extends Model
     }
 
     /**
+     * Moves the file to another disk
+     * @param string $toDisk
+     * @return void
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function moveToDisk(string $toDisk)
+    {
+        $fromDisk = $this->disk;
+
+        // Get the file
+        $file = Storage::disk($fromDisk)->get($this->filename);
+
+        // Store the file on the destination disk
+        Storage::disk($toDisk)->put($this->filename, $file);
+
+        // Update the disk on the db for this file
+        $this->disk = $toDisk;
+        $this->save();
+
+        // Delete the file from the original disk
+        Storage::disk($fromDisk)->delete($this->filename);
+    }
+
+    /**
      * Removes all conversions
      */
     public function clearConversions()
