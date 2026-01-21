@@ -5,7 +5,15 @@
 
     @include element(trigger)
     {
-        //
+        @include block-modifier(small)
+        {
+            .icon-button
+            {
+                padding: 0;
+                width: calc($rule / 1.25);
+                height: calc($rule / 1.25);
+            }
+        }
     }
 
     @include element(button)

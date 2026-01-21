@@ -12,6 +12,13 @@
     background-color: $fill-color-alt-1;
     color: $color02;
 
+    @include modifier(small)
+    {
+        padding: 0;
+        width: calc($rule / 1.25);
+        height: calc($rule / 1.25);
+    }
+
     &:hover
     {
         background-color: $fill-color-alt-2;

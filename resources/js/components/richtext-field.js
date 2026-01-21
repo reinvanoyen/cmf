@@ -3,7 +3,8 @@ import Field from "../core/ui/field";
 import Trix from 'trix';
 import { TrixEditor } from "react-trix";
 import "trix/dist/trix.css";
-import file from "../util/file";
+
+Trix.config.textAttributes.sup = {tagName: 'sup', inheritable: false};
 
 export default class RichtextField extends React.Component {
 
@@ -11,7 +12,8 @@ export default class RichtextField extends React.Component {
         data: {},
         label: '',
         name: '',
-        tooltip: ''
+        tooltip: '',
+        allowBlocks: false,
     };
 
     constructor(props) {
@@ -25,8 +27,6 @@ export default class RichtextField extends React.Component {
 
     handleEditorReady(editor) {
 
-        Trix.config.textAttributes.sup = {tagName: 'sup', inheritable: false};
-
         let toolbarEl = editor.element.editorController.toolbarController.element;
         let buttonHTML = '<button type="button" data-trix-attribute="sup" class="trix-button">A<sup>2</sup></button>';
 
@@ -34,10 +34,25 @@ export default class RichtextField extends React.Component {
         if (buttonGroupEl) {
             buttonGroupEl.insertAdjacentHTML('beforeend', buttonHTML);
         }
-        let blockToolsEl = toolbarEl.querySelector('.trix-button-group--block-tools');
-        if (blockToolsEl) {
-            blockToolsEl.remove();
+
+        // Remove unneeded tools
+        if (! this.props.allowBlocks) {
+            let blockToolsEl = toolbarEl.querySelector('.trix-button-group--block-tools');
+            if (blockToolsEl) {
+                blockToolsEl.remove();
+            }
+        } else {
+            let quoteToolEl = toolbarEl.querySelector('.trix-button--icon-quote');
+            let codeToolEl = toolbarEl.querySelector('.trix-button--icon-code');
+
+            if (quoteToolEl) {
+                quoteToolEl.remove();
+            }
+            if (codeToolEl) {
+                codeToolEl.remove();
+            }
         }
+
         let fileToolsEl = toolbarEl.querySelector('.trix-button-group--file-tools');
         if (fileToolsEl) {
             fileToolsEl.remove();
@@ -86,7 +101,7 @@ export default class RichtextField extends React.Component {
                 <div className="richtext-field">
                     <TrixEditor
                         key={this.state.redrawKey}
-                        value={this.props.data[this.props.name] || ''}
+                        value={this.state.value || ''}
                         onChange={this.handleChange.bind(this)}
                         onEditorReady={this.handleEditorReady.bind(this)}
                     />

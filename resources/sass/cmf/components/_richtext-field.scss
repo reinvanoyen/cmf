@@ -1,7 +1,35 @@
 @include block(richtext-field)
 {
+    trix-toolbar
+    {
+        .trix-button.trix-active
+        {
+            background-color: $fill-color-alt-1;
+        }
+
+        .trix-button-group
+        {
+            border: $border-width-1 solid $fill-color-alt-1;
+            border-radius: $border-radius-1;
+        }
+
+        .trix-button
+        {
+            border-bottom: 0;
+        }
+
+        .trix-button:not(:first-child)
+        {
+            border-left: $border-width-1 solid $fill-color-alt-1;
+        }
+    }
+
     trix-editor
     {
+        border: $border-width-1 solid $fill-color-alt-1;
+        border-radius: $border-radius-1;
+        color: $color13;
+
         strong
         {
             font-weight: bold;
@@ -24,9 +52,7 @@
         pre,
         blockquote
         {
-            padding: calc($rule / 4);
-            border: 1px dashed $color06;
-            margin-bottom: calc($rule / 4);
+            margin-bottom: calc($rule / 2);
 
             &:last-child
             {
@@ -56,10 +82,8 @@
 
         h1
         {
-            padding: calc($rule / 4);
-            border: 1px dashed $color06;
-            font-size: 1.25rem;
-            font-weight: bold;
+            @include type-3;
+            color: $color13;
             margin-bottom: calc($rule / 4);
 
             &:last-child

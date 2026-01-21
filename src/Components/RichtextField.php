@@ -28,6 +28,15 @@ class RichtextField extends Component
     }
 
     /**
+     * @return $this
+     */
+    public function allowBlocks()
+    {
+        $this->export('allowBlocks', true);
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function type(): string

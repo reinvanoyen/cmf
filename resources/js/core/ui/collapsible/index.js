@@ -23,7 +23,7 @@ function Collapsible(props) {
             return;
         }
 
-        return <IconButton name={(state.isOpen ? 'remove' : 'add')} iconStyle={'mini'} onClick={toggle} />;
+        return <IconButton style={['small']} name={(state.isOpen ? 'remove' : 'add')} iconStyle={'mini'} onClick={toggle} />;
     }
 
     const renderContent = () => {

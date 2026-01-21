@@ -297,9 +297,21 @@ export default class ContentBlocks extends React.Component {
             return (
                 <div className="content-blocks__item" key={i}>
                     <Collapsible title={blockData.name} actions={[
-                        <IconButton key={0} style={['transparent', (i > 0 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_upward'} onClick={e => this.sortUp(i)} />,
-                        <IconButton key={1} style={['transparent', (i < this.state.addedBlocks.length - 1 ? 'enabled' : 'disabled')]} iconStyle={'mini'} name={'arrow_downward'} onClick={e => this.sortDown(i)}/>,
-                        <Dropdown key={3} autoClose={true} openIcon={'more_horiz'} closeIcon={'more_horiz'}>
+                        <IconButton
+                            key={0}
+                            style={['small', 'transparent', (i > 0 ? 'enabled' : 'disabled')]}
+                            iconStyle={'mini'}
+                            name={'arrow_upward'}
+                            onClick={e => this.sortUp(i)}
+                        />,
+                        <IconButton
+                            key={1}
+                            style={['small', 'transparent', (i < this.state.addedBlocks.length - 1 ? 'enabled' : 'disabled')]}
+                            iconStyle={'mini'}
+                            name={'arrow_downward'}
+                            onClick={e => this.sortDown(i)}
+                        />,
+                        <Dropdown style={['small']} key={3} autoClose={true} openIcon={'more_horiz'} closeIcon={'more_horiz'}>
                             <LinkList stopPropagation={false} links={this.getTypeLinksInsertBelow()} onClick={type => this.addBlock(type, (i+1))} />
                             <Divider />
                             <LinkList
@@ -314,6 +326,17 @@ export default class ContentBlocks extends React.Component {
                     ]}>
                         {componentList.map(obj => obj.component)}
                     </Collapsible>
+                    {i < this.state.addedBlocks.length - 1 && (
+                        <div className="content-blocks__divider">
+                            <Dropdown style={['small']} key={3} autoClose={true} openIcon={'add'} closeIcon={'remove'}>
+                                <LinkList
+                                    links={this.getTypeLinks()}
+                                    stopPropagation={false}
+                                    onClick={type => this.addBlock(type, (i+1))}
+                                />
+                            </Dropdown>
+                        </div>
+                    )}
                 </div>
             );
         });

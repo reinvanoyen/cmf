@@ -12,16 +12,27 @@
 
     @include element(item)
     {
-        margin-bottom: calc($rule / 4);
-
-        &:last-child
-        {
-            margin-bottom: 0;
-        }
     }
 
     @include element(component)
     {
         // for ref
+    }
+    
+    @include element(divider)
+    {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: calc($rule / 4) 0;
+        padding: 2px 0;
+        opacity: .2;
+        border: $border-width-1 dashed $fill-color-alt-1;
+
+        &:hover
+        {
+            opacity: 1;
+        }
     }
 }
