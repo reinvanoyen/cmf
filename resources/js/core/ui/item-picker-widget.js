@@ -159,23 +159,26 @@ class ItemPickerWidget extends React.Component {
                     <div className="item-picker-widget__selection-header">
                         Your selection ({this.state.selectedItems.length})
                     </div>
-                    {this.state.selectedItems.map((item, i) => {
-                        return (
-                            <Item
-                                key={i}
-                                item={item}
-                                titleColumn={this.props.titleColumn}
-                                actions={[
-                                    <IconButton
-                                        key={'delete'}
-                                        name={'delete'}
-                                        style={'transparent'}
-                                        onClick={e => this.deselect(item)}
-                                    />
-                                ]}
-                            />
-                        );
-                    })}
+                    <div className="item-picker-widget__selection-content">
+                        {this.state.selectedItems.map((item, i) => {
+                            return (
+                                <Item
+                                    style={['compact', 'alt']}
+                                    key={i}
+                                    item={item}
+                                    titleColumn={this.props.titleColumn}
+                                    actions={[
+                                        <IconButton
+                                            key={'delete'}
+                                            name={'delete'}
+                                            style={'transparent'}
+                                            onClick={e => this.deselect(item)}
+                                        />
+                                    ]}
+                                />
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }

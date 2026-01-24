@@ -25,12 +25,7 @@
 
     @include element(row)
     {
-        margin-bottom: 1px;
-
-        &:last-child
-        {
-            margin-bottom: 0;
-        }
+        border-bottom: $border-width-1 solid $fill-color;
     }
 
     @include element(selection)
@@ -44,5 +39,12 @@
         text-transform: uppercase;
         padding-left: calc($rule / 2);
         margin-bottom: calc($rule / 2);
+    }
+
+    @include element(selection-content)
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
     }
 }

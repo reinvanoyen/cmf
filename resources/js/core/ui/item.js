@@ -1,12 +1,14 @@
 import React from 'react';
-import IconButton from "./icon-button";
 import components from "../../rendering/components";
+import Checkbox from "./checkbox";
+import helpers from "../../util/helpers";
 
 class Item extends React.Component {
 
     static defaultProps = {
         path: {},
         item: {},
+        style: [],
         titleColumn: '',
         isSelected: false,
         selectionMode: false,
@@ -36,10 +38,7 @@ class Item extends React.Component {
 
         return (
             <div className="item__checkbox">
-                <IconButton
-                    name={(this.props.isSelected ? 'check_box' : 'check_box_outline_blank')}
-                    style={'transparent'}
-                />
+                <Checkbox checked={this.props.isSelected} />
             </div>
         );
     }
@@ -81,7 +80,7 @@ class Item extends React.Component {
 
     render() {
         return (
-            <div className={'item'+(this.props.isSelected ? ' item--selected' : '')} onClick={e => this.props.onClick(e, this.props.item)}>
+            <div className={helpers.className('item', this.props.style)+(this.props.isSelected ? ' item--selected' : '')} onClick={e => this.props.onClick(e, this.props.item)}>
                 {this.renderSelectionMode()}
                 <div className="item__content">
                     {this.renderItemContent()}

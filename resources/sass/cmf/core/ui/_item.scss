@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: calc($rule / 3) calc($rule / 2);
+    padding: calc($rule / 2) $rule;
     transition: background-color .25s;
     border-radius: $border-radius-1;
     cursor: pointer;
@@ -13,17 +13,30 @@
         background-color: $fill-color;
     }
 
+    @include modifier(alt)
+    {
+        background-color: $fill-color;
+    }
+
+    @include modifier(compact)
+    {
+        padding: calc($rule / 4) calc($rule / 2);
+    }
+
     @include modifier(selected)
     {
         background-color: $fill-color-alt-1;
 
-        &:hover { background-color: $fill-color-alt-1; }
+        &:hover
+        {
+            background-color: $fill-color-alt-1;
+        }
     }
 
     @include element(content)
     {
+        overflow: hidden;
         flex-grow: 1;
-        padding: calc($rule / 2);
     }
 
     @include element(row)
@@ -46,5 +59,8 @@
     @include element(name)
     {
         @include type-2;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }
