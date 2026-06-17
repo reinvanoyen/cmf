@@ -47,6 +47,22 @@ class ExecuteLink extends Component
         return $this;
     }
 
+    public function openInNewWindow()
+    {
+        $this->export('openInNewWindow', true);
+        return $this;
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function confirm(string $text)
+    {
+        $this->export('confirm', $text);
+        return $this;
+    }
+
     /**
      * @param array $components
      * @return $this

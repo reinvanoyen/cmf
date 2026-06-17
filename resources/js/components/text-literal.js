@@ -14,6 +14,10 @@ export default class TextLiteral extends React.Component {
         e.stopPropagation();
     }
 
+    handleSubmit(data) {
+        // Do nothing
+    }
+
     render() {
 
         let content = this.props.text;

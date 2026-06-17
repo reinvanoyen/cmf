@@ -161,6 +161,10 @@ api.media.moveFiles = (directory, fileIds) => {
 * */
 api.modules.index = () => axios.get(`cmf/api/modules`);
 
+api.modules.createExecuteUrl = (path, execute) => {
+    return `cmf/api/modules/${path.module}/${path.action}/${execute}`;
+};
+
 api.modules.action = (path, params = {}) => {
     return axios.get(`cmf/api/modules/${path.module}/${path.action}`, {params});
 };

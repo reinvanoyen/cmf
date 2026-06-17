@@ -45,11 +45,16 @@ class Execute extends Action
      */
     public function apiHandle(Request $request)
     {
-        $modelClass = $this->getMeta()::getModel();
-        $modelInstance = $modelClass::findOrFail($request->input('id'));
+        if ($request->input('id')) {
 
-        $result = call_user_func($this->handle, $modelInstance, $request);
+            $modelClass = $this->getMeta()::getModel();
+            $modelInstance = $modelClass::findOrFail($request->input('id'));
 
-        return new ModelResource($modelInstance);
+            $result = call_user_func($this->handle, $modelInstance, $request);
+
+            return new ModelResource($modelInstance);
+        }
+
+        return call_user_func($this->handle, $request);
     }
 }
